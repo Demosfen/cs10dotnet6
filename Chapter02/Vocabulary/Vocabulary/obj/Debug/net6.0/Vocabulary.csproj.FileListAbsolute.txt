@@ -1,0 +1,5 @@
+F:\C#\Code\Chapter02\Vocabulary\Vocabulary\obj\Debug\net6.0\Vocabulary.csproj.AssemblyReference.cache
+F:\C#\Code\Chapter02\Vocabulary\Vocabulary\obj\Debug\net6.0\Vocabulary.GeneratedMSBuildEditorConfig.editorconfig
+F:\C#\Code\Chapter02\Vocabulary\Vocabulary\obj\Debug\net6.0\Vocabulary.AssemblyInfoInputs.cache
+F:\C#\Code\Chapter02\Vocabulary\Vocabulary\obj\Debug\net6.0\Vocabulary.AssemblyInfo.cs
+F:\C#\Code\Chapter02\Vocabulary\Vocabulary\obj\Debug\net6.0\Vocabulary.csproj.CoreCompileInputs.cache
