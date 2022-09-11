@@ -1,0 +1,15 @@
+F:\C#\Code\Chapter02-vscode\Numbers\bin\Debug\net6.0\Numbers.exe
+F:\C#\Code\Chapter02-vscode\Numbers\bin\Debug\net6.0\Numbers.deps.json
+F:\C#\Code\Chapter02-vscode\Numbers\bin\Debug\net6.0\Numbers.runtimeconfig.json
+F:\C#\Code\Chapter02-vscode\Numbers\bin\Debug\net6.0\Numbers.dll
+F:\C#\Code\Chapter02-vscode\Numbers\bin\Debug\net6.0\Numbers.pdb
+F:\C#\Code\Chapter02-vscode\Numbers\obj\Debug\net6.0\Numbers.csproj.AssemblyReference.cache
+F:\C#\Code\Chapter02-vscode\Numbers\obj\Debug\net6.0\Numbers.GeneratedMSBuildEditorConfig.editorconfig
+F:\C#\Code\Chapter02-vscode\Numbers\obj\Debug\net6.0\Numbers.AssemblyInfoInputs.cache
+F:\C#\Code\Chapter02-vscode\Numbers\obj\Debug\net6.0\Numbers.AssemblyInfo.cs
+F:\C#\Code\Chapter02-vscode\Numbers\obj\Debug\net6.0\Numbers.csproj.CoreCompileInputs.cache
+F:\C#\Code\Chapter02-vscode\Numbers\obj\Debug\net6.0\Numbers.dll
+F:\C#\Code\Chapter02-vscode\Numbers\obj\Debug\net6.0\refint\Numbers.dll
+F:\C#\Code\Chapter02-vscode\Numbers\obj\Debug\net6.0\Numbers.pdb
+F:\C#\Code\Chapter02-vscode\Numbers\obj\Debug\net6.0\Numbers.genruntimeconfig.cache
+F:\C#\Code\Chapter02-vscode\Numbers\obj\Debug\net6.0\ref\Numbers.dll
