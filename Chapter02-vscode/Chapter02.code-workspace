@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "Numbers"
+		},
+		{
+			"path": "Variables"
 		}
 	]
 }
