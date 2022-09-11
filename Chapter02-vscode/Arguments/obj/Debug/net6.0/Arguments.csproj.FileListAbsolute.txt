@@ -1,0 +1,15 @@
+F:\C#\Code\Chapter02-vscode\Arguments\bin\Debug\net6.0\Arguments.exe
+F:\C#\Code\Chapter02-vscode\Arguments\bin\Debug\net6.0\Arguments.deps.json
+F:\C#\Code\Chapter02-vscode\Arguments\bin\Debug\net6.0\Arguments.runtimeconfig.json
+F:\C#\Code\Chapter02-vscode\Arguments\bin\Debug\net6.0\Arguments.dll
+F:\C#\Code\Chapter02-vscode\Arguments\bin\Debug\net6.0\Arguments.pdb
+F:\C#\Code\Chapter02-vscode\Arguments\obj\Debug\net6.0\Arguments.csproj.AssemblyReference.cache
+F:\C#\Code\Chapter02-vscode\Arguments\obj\Debug\net6.0\Arguments.GeneratedMSBuildEditorConfig.editorconfig
+F:\C#\Code\Chapter02-vscode\Arguments\obj\Debug\net6.0\Arguments.AssemblyInfoInputs.cache
+F:\C#\Code\Chapter02-vscode\Arguments\obj\Debug\net6.0\Arguments.AssemblyInfo.cs
+F:\C#\Code\Chapter02-vscode\Arguments\obj\Debug\net6.0\Arguments.csproj.CoreCompileInputs.cache
+F:\C#\Code\Chapter02-vscode\Arguments\obj\Debug\net6.0\Arguments.dll
+F:\C#\Code\Chapter02-vscode\Arguments\obj\Debug\net6.0\refint\Arguments.dll
+F:\C#\Code\Chapter02-vscode\Arguments\obj\Debug\net6.0\Arguments.pdb
+F:\C#\Code\Chapter02-vscode\Arguments\obj\Debug\net6.0\Arguments.genruntimeconfig.cache
+F:\C#\Code\Chapter02-vscode\Arguments\obj\Debug\net6.0\ref\Arguments.dll

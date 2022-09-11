@@ -53,12 +53,36 @@
 
 // // ************************************************
 
-Console.WriteLine($"default(int) = {default(int)}");
-Console.WriteLine($"default(bool) = {default(bool)}");
-Console.WriteLine($"default(DateTime) = {default(DateTime)}");
-Console.WriteLine($"default(string) = {default(string)}");
+// Console.WriteLine($"default(int) = {default(int)}");
+// Console.WriteLine($"default(bool) = {default(bool)}");
+// Console.WriteLine($"default(DateTime) = {default(DateTime)}");
+// Console.WriteLine($"default(string) = {default(string)}");
 
-int number = 13;
-Console.WriteLine($"number has been set to: {number}");
-number = default;
-Console.WriteLine($"number has been reset to its default: {number}");
+// int number = 13;
+// Console.WriteLine($"number has been set to: {number}");
+// number = default;
+// Console.WriteLine($"number has been reset to its default: {number}");
+
+// // ************************************************
+
+// string[] names;
+// names = new string[4];
+// // storing items at index positions
+// names[0] = "Kate";
+// names[1] = "Jack";
+// names[2] = "Rebecca";
+// names[3] = "Tom";
+// // looping through the names
+// for (int i = 0; i < names.Length; i++)
+// {
+// // output the item at index position i
+// Console.WriteLine(names[i]);
+// }
+
+string[] names2 = new[] { "Kate", "Jack", "Rebecca", "Tom" };
+for (int i = 0; i < names2.Length; i++)
+{
+// output the item at index position i
+Console.WriteLine(names2[i]);
+}
+// ************************************************

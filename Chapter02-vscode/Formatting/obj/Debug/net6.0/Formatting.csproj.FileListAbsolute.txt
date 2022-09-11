@@ -1,0 +1,15 @@
+F:\C#\Code\Chapter02-vscode\Formatting\bin\Debug\net6.0\Formatting.exe
+F:\C#\Code\Chapter02-vscode\Formatting\bin\Debug\net6.0\Formatting.deps.json
+F:\C#\Code\Chapter02-vscode\Formatting\bin\Debug\net6.0\Formatting.runtimeconfig.json
+F:\C#\Code\Chapter02-vscode\Formatting\bin\Debug\net6.0\Formatting.dll
+F:\C#\Code\Chapter02-vscode\Formatting\bin\Debug\net6.0\Formatting.pdb
+F:\C#\Code\Chapter02-vscode\Formatting\obj\Debug\net6.0\Formatting.csproj.AssemblyReference.cache
+F:\C#\Code\Chapter02-vscode\Formatting\obj\Debug\net6.0\Formatting.GeneratedMSBuildEditorConfig.editorconfig
+F:\C#\Code\Chapter02-vscode\Formatting\obj\Debug\net6.0\Formatting.AssemblyInfoInputs.cache
+F:\C#\Code\Chapter02-vscode\Formatting\obj\Debug\net6.0\Formatting.AssemblyInfo.cs
+F:\C#\Code\Chapter02-vscode\Formatting\obj\Debug\net6.0\Formatting.csproj.CoreCompileInputs.cache
+F:\C#\Code\Chapter02-vscode\Formatting\obj\Debug\net6.0\Formatting.dll
+F:\C#\Code\Chapter02-vscode\Formatting\obj\Debug\net6.0\refint\Formatting.dll
+F:\C#\Code\Chapter02-vscode\Formatting\obj\Debug\net6.0\Formatting.pdb
+F:\C#\Code\Chapter02-vscode\Formatting\obj\Debug\net6.0\Formatting.genruntimeconfig.cache
+F:\C#\Code\Chapter02-vscode\Formatting\obj\Debug\net6.0\ref\Formatting.dll
