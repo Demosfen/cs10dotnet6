@@ -7,4 +7,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Using Remove="System.Threading" />
+    <Using Include="System.Numerics" />
+  </ItemGroup>
+
 </Project>
