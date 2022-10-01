@@ -1,0 +1,15 @@
+F:\C#\Code\Chapter03-vscode\Operators\obj\Debug\net6.0\Operators.csproj.AssemblyReference.cache
+F:\C#\Code\Chapter03-vscode\Operators\obj\Debug\net6.0\Operators.GeneratedMSBuildEditorConfig.editorconfig
+F:\C#\Code\Chapter03-vscode\Operators\obj\Debug\net6.0\Operators.AssemblyInfoInputs.cache
+F:\C#\Code\Chapter03-vscode\Operators\obj\Debug\net6.0\Operators.AssemblyInfo.cs
+F:\C#\Code\Chapter03-vscode\Operators\obj\Debug\net6.0\Operators.csproj.CoreCompileInputs.cache
+F:\C#\Code\Chapter03-vscode\Operators\bin\Debug\net6.0\Operators.exe
+F:\C#\Code\Chapter03-vscode\Operators\bin\Debug\net6.0\Operators.deps.json
+F:\C#\Code\Chapter03-vscode\Operators\bin\Debug\net6.0\Operators.runtimeconfig.json
+F:\C#\Code\Chapter03-vscode\Operators\bin\Debug\net6.0\Operators.dll
+F:\C#\Code\Chapter03-vscode\Operators\bin\Debug\net6.0\Operators.pdb
+F:\C#\Code\Chapter03-vscode\Operators\obj\Debug\net6.0\Operators.dll
+F:\C#\Code\Chapter03-vscode\Operators\obj\Debug\net6.0\refint\Operators.dll
+F:\C#\Code\Chapter03-vscode\Operators\obj\Debug\net6.0\Operators.pdb
+F:\C#\Code\Chapter03-vscode\Operators\obj\Debug\net6.0\Operators.genruntimeconfig.cache
+F:\C#\Code\Chapter03-vscode\Operators\obj\Debug\net6.0\ref\Operators.dll
