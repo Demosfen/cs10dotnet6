@@ -7,4 +7,8 @@ build_property.InvariantGlobalization =
 build_property.PlatformNeutralAssembly = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = HelloCS
+<<<<<<< HEAD
 build_property.ProjectDir = f:\C#\Code\Chapter01\HelloCS\
+=======
+build_property.ProjectDir = f:\C#\Code\cs10dotnet6\Chapter01\HelloCS\
+>>>>>>> 7c708632f720765fc640fc926083a65eae707c8d

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\C#\\Code\\cs10dotnet6\\Chapter02-vscode\\Numbers\\Numbers.csproj": {}
+    "F:\\C#\\Code\\cs10dotnet6\\Chapter02-vscode\\Exercise02\\Exercise02.csproj": {}
   },
   "projects": {
-    "F:\\C#\\Code\\cs10dotnet6\\Chapter02-vscode\\Numbers\\Numbers.csproj": {
+    "F:\\C#\\Code\\cs10dotnet6\\Chapter02-vscode\\Exercise02\\Exercise02.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\C#\\Code\\cs10dotnet6\\Chapter02-vscode\\Numbers\\Numbers.csproj",
-        "projectName": "Numbers",
-        "projectPath": "F:\\C#\\Code\\cs10dotnet6\\Chapter02-vscode\\Numbers\\Numbers.csproj",
+        "projectUniqueName": "F:\\C#\\Code\\cs10dotnet6\\Chapter02-vscode\\Exercise02\\Exercise02.csproj",
+        "projectName": "Exercise02",
+        "projectPath": "F:\\C#\\Code\\cs10dotnet6\\Chapter02-vscode\\Exercise02\\Exercise02.csproj",
         "packagesPath": "C:\\Users\\Alexander\\.nuget\\packages\\",
-        "outputPath": "F:\\C#\\Code\\cs10dotnet6\\Chapter02-vscode\\Numbers\\obj\\",
+        "outputPath": "F:\\C#\\Code\\cs10dotnet6\\Chapter02-vscode\\Exercise02\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Alexander\\AppData\\Roaming\\NuGet\\NuGet.Config"
