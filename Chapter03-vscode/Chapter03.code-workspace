@@ -8,6 +8,15 @@
 		},
 		{
 			"path": "BooleanOperators"
+		},
+		{
+			"path": "BitwiseAndShiftOperators"
+		},
+		{
+			"path": "SelectionStatements"
+		},
+		{
+			"path": "IterationStatements"
 		}
 	],
 	"settings": {}

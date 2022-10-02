@@ -1,0 +1,15 @@
+F:\C#\Code\Chapter03-vscode\BitwiseAndShiftOperators\bin\Debug\net6.0\BitwiseAndShiftOperators.exe
+F:\C#\Code\Chapter03-vscode\BitwiseAndShiftOperators\bin\Debug\net6.0\BitwiseAndShiftOperators.deps.json
+F:\C#\Code\Chapter03-vscode\BitwiseAndShiftOperators\bin\Debug\net6.0\BitwiseAndShiftOperators.runtimeconfig.json
+F:\C#\Code\Chapter03-vscode\BitwiseAndShiftOperators\bin\Debug\net6.0\BitwiseAndShiftOperators.dll
+F:\C#\Code\Chapter03-vscode\BitwiseAndShiftOperators\bin\Debug\net6.0\BitwiseAndShiftOperators.pdb
+F:\C#\Code\Chapter03-vscode\BitwiseAndShiftOperators\obj\Debug\net6.0\BitwiseAndShiftOperators.csproj.AssemblyReference.cache
+F:\C#\Code\Chapter03-vscode\BitwiseAndShiftOperators\obj\Debug\net6.0\BitwiseAndShiftOperators.GeneratedMSBuildEditorConfig.editorconfig
+F:\C#\Code\Chapter03-vscode\BitwiseAndShiftOperators\obj\Debug\net6.0\BitwiseAndShiftOperators.AssemblyInfoInputs.cache
+F:\C#\Code\Chapter03-vscode\BitwiseAndShiftOperators\obj\Debug\net6.0\BitwiseAndShiftOperators.AssemblyInfo.cs
+F:\C#\Code\Chapter03-vscode\BitwiseAndShiftOperators\obj\Debug\net6.0\BitwiseAndShiftOperators.csproj.CoreCompileInputs.cache
+F:\C#\Code\Chapter03-vscode\BitwiseAndShiftOperators\obj\Debug\net6.0\BitwiseAndShiftOperators.dll
+F:\C#\Code\Chapter03-vscode\BitwiseAndShiftOperators\obj\Debug\net6.0\refint\BitwiseAndShiftOperators.dll
+F:\C#\Code\Chapter03-vscode\BitwiseAndShiftOperators\obj\Debug\net6.0\BitwiseAndShiftOperators.pdb
+F:\C#\Code\Chapter03-vscode\BitwiseAndShiftOperators\obj\Debug\net6.0\BitwiseAndShiftOperators.genruntimeconfig.cache
+F:\C#\Code\Chapter03-vscode\BitwiseAndShiftOperators\obj\Debug\net6.0\ref\BitwiseAndShiftOperators.dll
