@@ -1,27 +1,30 @@
 ﻿using static System.Console;
 
-int a = 0;
+float a = 0;
 int b = 3;
 int c = 5;
 int d = 15;
 
-//float[] array1 = new float[] { 0, 0, 0 };
 string message;
-/*
+
 while (a < 101)
 {
     a++;
 
-    message = a.ToString() switch
+    message = a switch
     {
-        % 3 == 0 => "Fizz ",
-        % 5 == 0 => "Buzz ",
-        % 15 == 0 => "FizzBuzz ",
+        % 15 == 0
+            => "FizzBuzz ",
+        % 5 == 0
+            => "Buzz ",
+        % 3 == 0
+            => "Fizz ",
         _ => $"{a.ToString()} "
     };
     WriteLine(message);
 }
-*/
+
+/*
 while (a < 101)
 {
     a++;
@@ -42,3 +45,4 @@ while (a < 101)
         WriteLine($"{a}  \r");
     }
 }
+*/
