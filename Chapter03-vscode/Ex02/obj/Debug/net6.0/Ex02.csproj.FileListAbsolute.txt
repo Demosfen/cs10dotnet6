@@ -1,0 +1,15 @@
+F:\C#\Code\Chapter03-vscode\Ex02\bin\Debug\net6.0\Ex02.exe
+F:\C#\Code\Chapter03-vscode\Ex02\bin\Debug\net6.0\Ex02.deps.json
+F:\C#\Code\Chapter03-vscode\Ex02\bin\Debug\net6.0\Ex02.runtimeconfig.json
+F:\C#\Code\Chapter03-vscode\Ex02\bin\Debug\net6.0\Ex02.dll
+F:\C#\Code\Chapter03-vscode\Ex02\bin\Debug\net6.0\Ex02.pdb
+F:\C#\Code\Chapter03-vscode\Ex02\obj\Debug\net6.0\Ex02.csproj.AssemblyReference.cache
+F:\C#\Code\Chapter03-vscode\Ex02\obj\Debug\net6.0\Ex02.GeneratedMSBuildEditorConfig.editorconfig
+F:\C#\Code\Chapter03-vscode\Ex02\obj\Debug\net6.0\Ex02.AssemblyInfoInputs.cache
+F:\C#\Code\Chapter03-vscode\Ex02\obj\Debug\net6.0\Ex02.AssemblyInfo.cs
+F:\C#\Code\Chapter03-vscode\Ex02\obj\Debug\net6.0\Ex02.csproj.CoreCompileInputs.cache
+F:\C#\Code\Chapter03-vscode\Ex02\obj\Debug\net6.0\Ex02.dll
+F:\C#\Code\Chapter03-vscode\Ex02\obj\Debug\net6.0\refint\Ex02.dll
+F:\C#\Code\Chapter03-vscode\Ex02\obj\Debug\net6.0\Ex02.pdb
+F:\C#\Code\Chapter03-vscode\Ex02\obj\Debug\net6.0\Ex02.genruntimeconfig.cache
+F:\C#\Code\Chapter03-vscode\Ex02\obj\Debug\net6.0\ref\Ex02.dll
