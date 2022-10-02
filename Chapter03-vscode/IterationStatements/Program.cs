@@ -7,7 +7,7 @@ while (x < 10)
     WriteLine(x);
     x++;
 }
-*/
+
 int attempts = 0;
 string? password;
 string message;
@@ -38,3 +38,19 @@ WriteLine("Correct!");
 
 Kill_label:
 WriteLine("Stop!");
+*/
+
+string[] names = { "Adam", "Barry", "Charlie" };
+foreach (string name in names)
+{
+    WriteLine($"{name} has {name.Length} characters.");
+}
+
+/*
+IEnumerator e = names.GetEnumerator();
+while (e.MoveNext())
+{
+    string name = (string)e.Current; // Current is read-only!
+    WriteLine($"{name} has {name.Length} characters.");
+}
+*/

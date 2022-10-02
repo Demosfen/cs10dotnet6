@@ -17,6 +17,12 @@
 		},
 		{
 			"path": "IterationStatements"
+		},
+		{
+			"path": "CastingConverting"
+		},
+		{
+			"path": "HandlingExceptions"
 		}
 	],
 	"settings": {}
