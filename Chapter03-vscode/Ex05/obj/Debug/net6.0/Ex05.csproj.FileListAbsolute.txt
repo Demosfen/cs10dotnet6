@@ -1,0 +1,15 @@
+F:\C#\Code\cs10dotnet6\Chapter03-vscode\Ex05\bin\Debug\net6.0\Ex05.exe
+F:\C#\Code\cs10dotnet6\Chapter03-vscode\Ex05\bin\Debug\net6.0\Ex05.deps.json
+F:\C#\Code\cs10dotnet6\Chapter03-vscode\Ex05\bin\Debug\net6.0\Ex05.runtimeconfig.json
+F:\C#\Code\cs10dotnet6\Chapter03-vscode\Ex05\bin\Debug\net6.0\Ex05.dll
+F:\C#\Code\cs10dotnet6\Chapter03-vscode\Ex05\bin\Debug\net6.0\Ex05.pdb
+F:\C#\Code\cs10dotnet6\Chapter03-vscode\Ex05\obj\Debug\net6.0\Ex05.csproj.AssemblyReference.cache
+F:\C#\Code\cs10dotnet6\Chapter03-vscode\Ex05\obj\Debug\net6.0\Ex05.GeneratedMSBuildEditorConfig.editorconfig
+F:\C#\Code\cs10dotnet6\Chapter03-vscode\Ex05\obj\Debug\net6.0\Ex05.AssemblyInfoInputs.cache
+F:\C#\Code\cs10dotnet6\Chapter03-vscode\Ex05\obj\Debug\net6.0\Ex05.AssemblyInfo.cs
+F:\C#\Code\cs10dotnet6\Chapter03-vscode\Ex05\obj\Debug\net6.0\Ex05.csproj.CoreCompileInputs.cache
+F:\C#\Code\cs10dotnet6\Chapter03-vscode\Ex05\obj\Debug\net6.0\Ex05.dll
+F:\C#\Code\cs10dotnet6\Chapter03-vscode\Ex05\obj\Debug\net6.0\refint\Ex05.dll
+F:\C#\Code\cs10dotnet6\Chapter03-vscode\Ex05\obj\Debug\net6.0\Ex05.pdb
+F:\C#\Code\cs10dotnet6\Chapter03-vscode\Ex05\obj\Debug\net6.0\Ex05.genruntimeconfig.cache
+F:\C#\Code\cs10dotnet6\Chapter03-vscode\Ex05\obj\Debug\net6.0\ref\Ex05.dll
