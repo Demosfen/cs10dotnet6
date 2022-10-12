@@ -6,7 +6,7 @@ int c = 5;
 int d = 15;
 
 string message;
-
+/*
 while (a < 101)
 {
     a++;
@@ -23,8 +23,8 @@ while (a < 101)
     };
     WriteLine(message);
 }
+*/
 
-/*
 while (a < 101)
 {
     a++;
@@ -45,4 +45,3 @@ while (a < 101)
         WriteLine($"{a}  \r");
     }
 }
-*/

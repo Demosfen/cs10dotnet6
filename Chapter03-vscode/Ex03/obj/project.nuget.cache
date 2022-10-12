@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "EGFuvDEMNBDs+AyP5oMdarO/Qe2tZjpuUu3yTl1+mic4cY2AEEwcGtrP2KGYrFzNGTVwRz2eyjFpBHW3qQOA+g==",
+  "dgSpecHash": "xr/A8f++jbxoyoSBS88rQtkZg0gnd+SvIOyX2Qe0S1ozb7Sb1b4tm5vffeDh1WJazMK49lm6TdKXzExWDHWX9Q==",
   "success": true,
-  "projectFilePath": "F:\\C#\\Code\\Chapter03-vscode\\Ex03\\Ex03.csproj",
+  "projectFilePath": "F:\\C#\\Code\\cs10dotnet6\\Chapter03-vscode\\Ex03\\Ex03.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
