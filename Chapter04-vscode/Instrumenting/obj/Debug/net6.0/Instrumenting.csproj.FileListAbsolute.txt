@@ -1,0 +1,15 @@
+F:\C#\Code\cs10dotnet6\Chapter04-vscode\Instrumenting\bin\Debug\net6.0\Instrumenting.exe
+F:\C#\Code\cs10dotnet6\Chapter04-vscode\Instrumenting\bin\Debug\net6.0\Instrumenting.deps.json
+F:\C#\Code\cs10dotnet6\Chapter04-vscode\Instrumenting\bin\Debug\net6.0\Instrumenting.runtimeconfig.json
+F:\C#\Code\cs10dotnet6\Chapter04-vscode\Instrumenting\bin\Debug\net6.0\Instrumenting.dll
+F:\C#\Code\cs10dotnet6\Chapter04-vscode\Instrumenting\bin\Debug\net6.0\Instrumenting.pdb
+F:\C#\Code\cs10dotnet6\Chapter04-vscode\Instrumenting\obj\Debug\net6.0\Instrumenting.csproj.AssemblyReference.cache
+F:\C#\Code\cs10dotnet6\Chapter04-vscode\Instrumenting\obj\Debug\net6.0\Instrumenting.GeneratedMSBuildEditorConfig.editorconfig
+F:\C#\Code\cs10dotnet6\Chapter04-vscode\Instrumenting\obj\Debug\net6.0\Instrumenting.AssemblyInfoInputs.cache
+F:\C#\Code\cs10dotnet6\Chapter04-vscode\Instrumenting\obj\Debug\net6.0\Instrumenting.AssemblyInfo.cs
+F:\C#\Code\cs10dotnet6\Chapter04-vscode\Instrumenting\obj\Debug\net6.0\Instrumenting.csproj.CoreCompileInputs.cache
+F:\C#\Code\cs10dotnet6\Chapter04-vscode\Instrumenting\obj\Debug\net6.0\Instrumenting.dll
+F:\C#\Code\cs10dotnet6\Chapter04-vscode\Instrumenting\obj\Debug\net6.0\refint\Instrumenting.dll
+F:\C#\Code\cs10dotnet6\Chapter04-vscode\Instrumenting\obj\Debug\net6.0\Instrumenting.pdb
+F:\C#\Code\cs10dotnet6\Chapter04-vscode\Instrumenting\obj\Debug\net6.0\Instrumenting.genruntimeconfig.cache
+F:\C#\Code\cs10dotnet6\Chapter04-vscode\Instrumenting\obj\Debug\net6.0\ref\Instrumenting.dll
