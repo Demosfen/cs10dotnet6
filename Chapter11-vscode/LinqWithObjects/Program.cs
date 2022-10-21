@@ -22,7 +22,8 @@ WriteLine("Writing queries");
 //var query = names.Where(NameLongerThanFour);
 var query = names
 .Where(name => name.Length > 4)
-.OrderBy(name => name.Length);
+.OrderBy(name => name.Length)
+.ThenBy(name => name);
 
 foreach (string item in query)
 {
