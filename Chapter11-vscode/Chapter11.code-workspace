@@ -1,0 +1,25 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../Chapter03-vscode/Ex04"
+		},
+		{
+			"path": "../Chapter03-vscode/Ex05"
+		},
+		{
+			"path": "../Chapter04-vscode/WritingFunctions"
+		},
+		{
+			"path": "../Chapter04-vscode/Instrumenting"
+		},
+		{
+			"path": "LinqWithObjects"
+		}
+	],
+	"settings": {
+		"editor.formatOnType": true
+	}
+}
