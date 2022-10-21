@@ -20,7 +20,7 @@ foreach (string name in query1)
 WriteLine("Writing queries");
 //var query = names.Where(new Func<string, bool>(NameLongerThanFour));
 //var query = names.Where(NameLongerThanFour);
-var query = names
+IOrderedEnumerable<string> query = names
 .Where(name => name.Length > 4)
 .OrderBy(name => name.Length)
 .ThenBy(name => name);
@@ -34,3 +34,24 @@ foreach (string item in query)
 {
     return name.Length > 4;
 }*/
+
+WriteLine("Filtering by type");
+List<Exception> exceptions = new()
+{
+new ArgumentException(),
+new SystemException(),
+new IndexOutOfRangeException(),
+new InvalidOperationException(),
+new NullReferenceException(),
+new InvalidCastException(),
+new OverflowException(),
+new DivideByZeroException(),
+new ApplicationException()
+};
+
+IEnumerable<ArithmeticException> arithmeticExceptionsQuery = exceptions.OfType<ArithmeticException>();
+
+foreach (ArithmeticException exception in arithmeticExceptionsQuery)
+{
+WriteLine(exception);
+}
