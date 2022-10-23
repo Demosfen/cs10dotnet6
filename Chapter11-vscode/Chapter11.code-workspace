@@ -17,6 +17,9 @@
 		},
 		{
 			"path": "LinqWithObjects"
+		},
+		{
+			"path": "LinqWIthSets"
 		}
 	],
 	"settings": {
