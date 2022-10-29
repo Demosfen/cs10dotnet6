@@ -1,0 +1,43 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../Chapter03-vscode/Ex04"
+		},
+		{
+			"path": "../Chapter03-vscode/Ex05"
+		},
+		{
+			"path": "../Chapter04-vscode/WritingFunctions"
+		},
+		{
+			"path": "../Chapter04-vscode/Instrumenting"
+		},
+		{
+			"path": "../Chapter11-vscode/LinqWithObjects"
+		},
+		{
+			"path": "../Chapter11-vscode/LinqWIthSets"
+		},
+		{
+			"path": "../Chapter04-vscode/CalculatorLib"
+		},
+		{
+			"path": "../Chapter04-vscode/CallStackExceptionHandlingLib"
+		},
+		{
+			"path": "../Chapter04-vscode/CallStackExceptionHandling"
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "PrimeFactorsRun"
+		}
+	],
+	"settings": {
+		"editor.formatOnType": true
+	}
+}
