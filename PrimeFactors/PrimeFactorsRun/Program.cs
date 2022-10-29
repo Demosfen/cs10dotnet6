@@ -32,5 +32,5 @@ static void CallPrimeFactor()
         WriteLine("Integer only!!!");
     }     
         
-    WriteLine(@"Bye!");
+    WriteLine("Bye!");
 }

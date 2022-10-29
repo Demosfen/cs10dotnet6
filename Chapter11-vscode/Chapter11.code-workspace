@@ -20,6 +20,18 @@
 		},
 		{
 			"path": "LinqWIthSets"
+		},
+		{
+			"path": "../Chapter04-vscode/CalculatorLib"
+		},
+		{
+			"path": "../Chapter04-vscode/CallStackExceptionHandlingLib"
+		},
+		{
+			"path": "../Chapter04-vscode/CallStackExceptionHandling"
+		},
+		{
+			"path": "../Chapter04-vscode/PrimeFactors"
 		}
 	],
 	"settings": {
