@@ -62,7 +62,7 @@ WriteLine(format: "{0} earned {1:C} interest.",
     arg0: gerrierAccount.AccountName,
     arg1: gerrierAccount.Balance * BankAccount.InterestRate);
 
-WriteLine($"{bob.Name} is {Person.Species}"); //почему нельзя bob.Species? 
+WriteLine($"{bob.Name} is {Person.Species}"); // TODO: почему нельзя bob.Species? 
                                               //Ведь константа входит в перечень полей типа Person?
 
 WriteLine($"{bob.Name} was born on {bob.HomePlanet}");
