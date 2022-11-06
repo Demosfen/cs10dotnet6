@@ -5,15 +5,17 @@ Person bob = new();
 WriteLine(bob.ToString());
 
 bob.Name = "Bob Smith";
-bob.DateofBirth = new DateTime(1965, 12, 22); // C# 1.0 or later
+bob.DateOfBirth = new DateTime(1965, 12, 22); // C# 1.0 or later
 bob.FavoriteAncientWonder = WondersOfTheAncientWorld.StatueOfZeusAtOlympia;
 bob.BucketList = WondersOfTheAncientWorld.HangingGardensOfBabylon | WondersOfTheAncientWorld.MausoleumAtHalicarnassus;
 bob.Children.Add(new Person { Name = "Alfred" });
 bob.Children.Add(new Person { Name = "Zoe" });
+bob.WriteToConsole();
+WriteLine(bob.GetOrigin());
 
 WriteLine(format: "{0} was born on {1:dddd, d MMMM yyyy}",
     arg0: bob.Name,
-    arg1: bob.DateofBirth);
+    arg1: bob.DateOfBirth);
 
 WriteLine(format:
     "{0}'s favorite wonder is {1}. It's integer is {2}.",
@@ -37,12 +39,12 @@ foreach(Person child in bob.Children)
 Person alice = new()
 {
     Name = "Alice Jones",
-    DateofBirth = new(1987, 12, 12) // C# 9.0 or later  
+    DateOfBirth = new(1987, 12, 12) // C# 9.0 or later  
 };
 
 WriteLine(format: "{0} was born on {1:dddd, d MMMM yyyy}",
     arg0: alice.Name,
-    arg1: alice.DateofBirth);
+    arg1: alice.DateOfBirth);
 
 //Create Bank Account of Jones and static field InterestRate
 BankAccount.InterestRate = 0.012M;
