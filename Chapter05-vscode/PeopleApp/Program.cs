@@ -84,3 +84,33 @@ WriteLine(format:
         arg0: gunny.Name,
         arg1: gunny.HomePlanet,
         arg2: gunny.Instantiated);
+
+(string, int) fruit = bob.GetFruit();
+WriteLine($"{fruit.Item1} & {fruit.Item2}");
+
+var namedFruit = bob.GetNamedFruit();
+WriteLine($"There are {namedFruit.Number} {namedFruit.Name}");
+
+var thing1 = ("Naville", 4);
+WriteLine($"{thing1.Item1} has {thing1.Item2}");
+
+var thing2 = (bob.Name, bob.Children.Count);
+WriteLine($"{thing2.Name} has {thing2.Count} children");
+
+// store return value in a tuple variable with two fields
+(string TheName, int TheNumber) tupleWithNamedFields = bob.GetNamedFruit();
+// tupleWithNamedFields.TheName
+// tupleWithNamedFields.TheNumber
+// deconstruct return value into two separate variables
+(string name, int number) = bob.GetNamedFruit();
+// name
+// number
+
+(string fruitName, int fruitNumber) = bob.GetFruit();
+WriteLine($"Deconstructed: {fruitName}, {fruitNumber}");
+
+// Deconstructing a Person
+var (name1, dob1) = bob;
+WriteLine($"Deconstructed: {name1}, {dob1}");
+var (name2, dob2, fav2) = bob;
+WriteLine($"Deconstructed: {name2}, {dob2}, {fav2}");
