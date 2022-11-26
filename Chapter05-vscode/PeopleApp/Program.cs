@@ -114,3 +114,108 @@ var (name1, dob1) = bob;
 WriteLine($"Deconstructed: {name1}, {dob1}");
 var (name2, dob2, fav2) = bob;
 WriteLine($"Deconstructed: {name2}, {dob2}, {fav2}");
+
+WriteLine(bob.SayHello());
+WriteLine(bob.SayHello("Emily"));
+
+WriteLine(bob.OptionalParameters());
+WriteLine(bob.OptionalParameters("Jump!", 98.0));
+WriteLine(bob.OptionalParameters(number: 52.7, command: "Hide!"));
+WriteLine(bob.OptionalParameters("Poke!", active: false));
+
+int a = 10;
+int b = 20;
+int c = 30;
+
+WriteLine($"Before a = {a}, b = {b}, c = {c}");
+bob.PassingParameters(a, ref b, out c);
+WriteLine($"After: a = {a}, b = {b}, c = {c}");
+
+int d = 10;
+int e = 20;
+
+WriteLine($"Before: d = {d}, e = {e}, f doesn't exist yet!");
+bob.PassingParameters(d, ref e, out int f);
+WriteLine($"After: d = {d}, e = {e}, f = {f}");
+
+Person sam = new()
+{
+    Name = "Sam",
+    DateOfBirth = new(1972, 1, 27)
+};
+
+WriteLine(sam.Origin);
+WriteLine(sam.Greeting);
+WriteLine(sam.Age);
+
+sam.FavoriteIceCream = "Chocolate Fudge";
+
+WriteLine($"Sam's favorite ice-cream flavor is {sam.FavoriteIceCream}.");
+
+sam.FavoritePrimaryColor = "Red";
+WriteLine($"Sam's favorite primary color is {sam.FavoritePrimaryColor}.");
+
+sam.Children.Add(new() { Name = "Charlie" });
+sam.Children.Add(new() { Name = "Ella" });
+
+WriteLine($"Sam's first child is {sam.Children[0].Name}");
+WriteLine($"Sam's second child is {sam.Children[1].Name}");
+
+WriteLine($"Sam's first child is {sam[0].Name}");
+WriteLine($"Sam's second child is {sam[1].Name}");
+
+object[] passengers = {
+    new FirstClassPassenger { AirMiles = 1_499 },
+    new FirstClassPassenger {AirMiles = 16_572},
+    new BusinessClassPassenger(),
+    new CoachClassPassenger { CarryOnKG = 20},
+    new CoachClassPassenger { CarryOnKG = 0}
+};
+
+foreach (object passenger in passengers)
+{
+    decimal flightCost = passenger switch
+    {/*
+        FirstClassPassenger p when p.AirMiles > 3500 => 1500M,
+        FirstClassPassenger p when p.AirMiles > 15000 => 1750M,
+        FirstClassPassenger _ => 2000M, */
+        FirstClassPassenger p => p.AirMiles switch
+        {
+            > 3500 => 1500M,
+            > 1500 => 1750M,
+            _       => 2000M
+        },
+
+        BusinessClassPassenger _ => 1000M,
+        CoachClassPassenger { CarryOnKG: < 10.0 } => 500M,
+        CoachClassPassenger _ => 650M,
+        _ => 800M
+    };
+
+    WriteLine($"Flight COsts {flightCost:C} for {passenger}");
+}
+
+ImmutablePerson jeff = new()
+{
+    FirstName = "Jeff",
+    LastName = "Swimger"
+};
+
+//jeff.FirstName = "Geoff";
+
+ImmutableVehicle car = new()
+{
+    Brand = "Mazda MX-5 RF",
+    Color = "Soul Red Crystal Metallic",
+    Wheels = 4
+};
+
+ImmutableVehicle repaintedCar = car 
+    with { Color = "Polymetal Grey Metallic" };
+
+WriteLine($"Original car color was {car.Color}.");
+WriteLine($"New car color is {repaintedCar.Color}.");
+
+ImmutableAnimal oscar = new ("Oscar", "Labrador");
+var (who, what) = oscar; // calls Deconstruct method
+WriteLine($"{who} is a {what}.");
