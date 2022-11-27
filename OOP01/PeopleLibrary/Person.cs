@@ -4,13 +4,19 @@ using System.Collections.Generic;
 
 public class Person
 {
-    public readonly string name = "John";
-    int age;
-    public virtual string SayHello => $"Hello! My name is {name}";
-    public void SetAge (int n)
+    protected int age;
+    protected readonly string name;
+    public virtual void SayHello() 
     {
-        age = n;
+        WriteLine($"Hello! My name is {name}");
+    } 
+    public Person(string initialName)
+    {
+        name = initialName;
     }
-    public int SayAge => age;
+    public void SetAge (int age)
+    {
+        this.age = age;
+    }
 
 }

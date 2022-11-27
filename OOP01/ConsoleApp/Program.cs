@@ -1,16 +1,16 @@
 ﻿using People.Library;
 using static System.Console;
 
-Person person = new();
-person.SetAge(22);
-WriteLine(person.SayHello);
+Person sosok = new("Sosok Slepuhin");
+sosok.SayHello();
 
-Student student = new();
-student.SetAge(22);
-WriteLine(student.Study);
-WriteLine(student.SayAge);
+Student alex = new("Alex Ozr");
+alex.SetAge(35);
+alex.Study();
+alex.SayAge();
 
-Professor teacher = new();
-teacher.SetAge(65);
-WriteLine(teacher.SayHello);
-WriteLine(teacher.Explain);
+Professor masha = new("Masha Voloshina");
+masha.SetAge(65);
+masha.SetAge(20);
+masha.SayHello();
+masha.Explain();
