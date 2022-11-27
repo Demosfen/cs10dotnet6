@@ -4,7 +4,7 @@ namespace People.Library;
 
 public class Student: Person
 {
-    public Student(string initialName) : base(initialName) {}
+    public Student(string Name) : base(Name) {}
 
     public void Study()
     {
@@ -13,6 +13,6 @@ public class Student: Person
 
     public void SayAge()
     {
-        WriteLine($"I'm {age} years old");
+        WriteLine($"I'm {Age} years old");
     }
 }
