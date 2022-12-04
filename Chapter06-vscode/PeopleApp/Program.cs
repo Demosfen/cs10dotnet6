@@ -25,8 +25,8 @@ WriteLine($"5! is {Person.Factorial(5)}");
 //TODO: В какой момент начинаем слушать? Как выглядит фиически делегат? Массив адресов памяти метода или...?
 static  void Harry_Shout(object? sender, EventArgs e)
     {
-        if (sender is null) return;
-        Person p = (Person)sender; //TODO: пояснить запись и последовательность
+        if (sender is not Person p) return;
+        
         WriteLine($"{p.Name} is this angry: {p.AngerLevel}.");
     }
 
