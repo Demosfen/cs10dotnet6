@@ -21,10 +21,11 @@ format: "{0}'s first child is named \"{1}\".",
 WriteLine($"5! is {Person.Factorial(5)}");
 
 //TODO: Почему метод определяется в коде?
+//TODO: Необходимо разъяснить структуру и последовательность событий
 static  void Harry_Shout(object? sender, EventArgs e)
     {
         if (sender is null) return;
-        Person p = (Person)sender;
+        Person p = (Person)sender; //TODO: пояснить запись и последовательность
         WriteLine($"{p.Name} is this angry: {p.AngerLevel}.");
     }
 
