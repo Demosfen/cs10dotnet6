@@ -8,7 +8,7 @@ public class Person: object
     public string? Name;
     public DateTime DateOfBirth;
     public List<Person> Children = new();
-    public EventHandler? Shout;
+    public event EventHandler? Shout;
     public int AngerLevel;
 
         //static method to multiply
