@@ -23,12 +23,12 @@ WriteLine($"5! is {Person.Factorial(5)}");
 //TODO: Почему метод определяется в коде?
 //TODO: Необходимо разъяснить структуру и последовательность событий
 //TODO: В какой момент начинаем слушать? Как выглядит фиически делегат? Массив адресов памяти метода или...?
-static  void Harry_Shout(object? sender, EventArgs e)
-    {
-        if (sender is not Person p) return;
-        
-        WriteLine($"{p.Name} is this angry: {p.AngerLevel}.");
-    }
+static void Harry_Shout(object? sender, EventArgs e)
+{
+    if (sender is not Person p) return;
+
+    WriteLine($"{p.Name} is this angry: {p.AngerLevel}.");
+}
 
 harry.Shout += Harry_Shout;
 
@@ -53,3 +53,15 @@ WriteLine(format: "Key {0} has value: {1}",
 WriteLine(format: "Key {0} has value: {1}",
     arg0: harry,
     arg1: lookupObject[harry]);
+
+Dictionary<int, string> lookupIntString = new();
+
+lookupIntString.Add(key: 1, value: "Alpha");
+lookupIntString.Add(key: 2, value: "Beta");
+lookupIntString.Add(key: 3, value: "Gamma");
+lookupIntString.Add(key: 4, value: "Delta");
+
+key = 3;
+WriteLine(format: "Key {0} has value: {1}",
+    arg0: key,
+    arg1: lookupIntString[key]);
