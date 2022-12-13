@@ -2,7 +2,7 @@
 
 namespace Packt.Shared;
 
-public class Person: object
+public class Person : object, IComparable<Person>
 {
     //fields
     public string? Name;
@@ -11,7 +11,7 @@ public class Person: object
     public event EventHandler? Shout;
     public int AngerLevel;
 
-        //static method to multiply
+    //static method to multiply
     public static Person Procreate(Person p1, Person p2)
     {
         Person baby = new()
@@ -26,14 +26,14 @@ public class Person: object
     }
 
     //Instance method of procreate
-    public Person ProcreateWith (Person partner)
+    public Person ProcreateWith(Person partner)
     {
         return Procreate(this, partner);
     }
 
     public static Person operator *(Person p1, Person p2)
     {
-        return Person.Procreate(p1, p2);    
+        return Person.Procreate(p1, p2);
     }
 
     //Methods
@@ -67,11 +67,17 @@ public class Person: object
         {
 
             Shout?.Invoke(this, EventArgs.Empty);
- /*           if (Shout != 0)
-            {
-                Shout(this, EventArgs.Empty);
-            }  */
+            /*           if (Shout != 0)
+                       {
+                           Shout(this, EventArgs.Empty);
+                       }  */
         }
+    }
+
+    public int CompareTo(Person? other)
+    {
+        if (Name is null) return 0;
+        return Name.CompareTo(other?.Name);
     }
 
 }
