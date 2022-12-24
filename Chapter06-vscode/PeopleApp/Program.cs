@@ -112,3 +112,61 @@ john.HireDate = new(year: 2014, month: 11, day: 23);
 WriteLine($"{john.Name} was hired on {john.HireDate:dd/MM/yy}");
 
 WriteLine(john.ToString());
+
+Employee aliceInEmployee = new()
+{ Name = "Alice", EmployeeCode = "AA123" };
+
+Person aliceInPerson = aliceInEmployee;
+aliceInEmployee.WriteToConsole();
+aliceInPerson.WriteToConsole();
+WriteLine(aliceInEmployee.ToString());
+WriteLine(aliceInPerson.ToString());
+
+//if (aliceInPerson is Employee)
+//{
+//    WriteLine($"{nameof(aliceInPerson)} IS an Employee");
+//    Employee explicitAlice = (Employee)aliceInPerson;
+//}
+
+if (aliceInPerson is Employee explicitAlice)
+{
+    WriteLine($"{nameof(aliceInPerson)} IS an Employee");
+    // safely do something with explicitAlice
+}
+
+Employee? aliceAsEmployee = aliceInPerson as Employee;
+
+if (aliceAsEmployee != null)
+{
+    WriteLine($"{nameof(aliceInPerson)} AS an Employee");
+    // safely do something with aliceAsEmployee
+}
+
+try
+{
+    john.TimeTravel(when: new(1999, 12, 31));
+    john.TimeTravel(when: new(1950, 12, 25));
+}
+catch (PersonException ex)
+{
+    WriteLine(ex.Message);
+}
+
+string email1 = "pamela@test.com";
+string email2 = "ian&test.com";
+
+WriteLine("{0} is a valid e-mail address: {1}",
+    arg0: email1,
+    arg1: StringExtensions.IsValidEmail(email1));
+
+WriteLine("{0} is a valid e-mail address: {1}",
+    arg0: email2,
+    arg1: StringExtensions.IsValidEmail(email2));
+
+WriteLine("{0} is a valid e-mail address: {1}",
+    arg0: email1,
+    arg1: email1.IsValidEmail());
+
+WriteLine("{0} is a valid e-mail address: {1}",
+    arg0: email2,
+    arg1: email2.IsValidEmail());
