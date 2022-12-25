@@ -5,7 +5,7 @@ namespace ClimbingLibUnitTests
 {
     public class ClimbingUnitTests
     {
-        [Fact]
+        [Fact(DisplayName = "If stairs consist of 4 stair.")]
         public void StairCount4()
         {
             int stairCount = 4;
@@ -16,6 +16,7 @@ namespace ClimbingLibUnitTests
             int actual = stairs.ClimbingStairs(stairCount);
 
             //assert
+            Assert.NotNull(actual);
             Assert.Equal(expected, actual);
         }
 
@@ -30,6 +31,7 @@ namespace ClimbingLibUnitTests
             int actual = stairs.ClimbingStairs(stairCount);
 
             //assert
+            Assert.
             Assert.Equal(expected, actual);
         }
     }

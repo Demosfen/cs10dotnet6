@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ClimbingStairs", "ClimbingStairs", "{49AB7B5E-854C-4896-9328-0D940A7DE5D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClimbingStairs", "ClimbingStairs\ClimbingStairs.csproj", "{D46D253B-640A-4CEA-9CC5-F98D6020ED93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClimbingLib", "ClimbingStairs\ClimbingLib\ClimbingLib.csproj", "{98B09FD7-8E5D-438A-B194-A974FC6ED8DF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ClimbingStairs", "ClimbingStairs", "{2794620F-A50A-425C-8E99-5D89C0439E6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClimbingStairs", "ClimbingStairs\ClimbingStairs.csproj", "{4F83396D-A403-4B34-B66A-912AFD775E9D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClimbingLib", "ClimbingStairs\ClimbingLib\ClimbingLib.csproj", "{F023FDA2-5E36-4127-B6EC-42489EDA093A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClimbingStairsAlternative", "ClimbingStairsAlternative\ClimbingStairsAlternative.csproj", "{26EAB640-86BB-461E-A3CC-7B7EADB93B2D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClimbingLibUnitTests", "ClimbingStairs\ClimbingLibUnitTests\ClimbingLibUnitTests.csproj", "{8BF681D7-4115-4867-A295-ACB61B5CE615}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,20 +20,21 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{98B09FD7-8E5D-438A-B194-A974FC6ED8DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{98B09FD7-8E5D-438A-B194-A974FC6ED8DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{98B09FD7-8E5D-438A-B194-A974FC6ED8DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{98B09FD7-8E5D-438A-B194-A974FC6ED8DF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4F83396D-A403-4B34-B66A-912AFD775E9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4F83396D-A403-4B34-B66A-912AFD775E9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4F83396D-A403-4B34-B66A-912AFD775E9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4F83396D-A403-4B34-B66A-912AFD775E9D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{26EAB640-86BB-461E-A3CC-7B7EADB93B2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{26EAB640-86BB-461E-A3CC-7B7EADB93B2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{26EAB640-86BB-461E-A3CC-7B7EADB93B2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{26EAB640-86BB-461E-A3CC-7B7EADB93B2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D46D253B-640A-4CEA-9CC5-F98D6020ED93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D46D253B-640A-4CEA-9CC5-F98D6020ED93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D46D253B-640A-4CEA-9CC5-F98D6020ED93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D46D253B-640A-4CEA-9CC5-F98D6020ED93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F023FDA2-5E36-4127-B6EC-42489EDA093A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F023FDA2-5E36-4127-B6EC-42489EDA093A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F023FDA2-5E36-4127-B6EC-42489EDA093A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F023FDA2-5E36-4127-B6EC-42489EDA093A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BF681D7-4115-4867-A295-ACB61B5CE615}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BF681D7-4115-4867-A295-ACB61B5CE615}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BF681D7-4115-4867-A295-ACB61B5CE615}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BF681D7-4115-4867-A295-ACB61B5CE615}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{98B09FD7-8E5D-438A-B194-A974FC6ED8DF} = {49AB7B5E-854C-4896-9328-0D940A7DE5D5}
+		{F023FDA2-5E36-4127-B6EC-42489EDA093A} = {2794620F-A50A-425C-8E99-5D89C0439E6D}
+		{8BF681D7-4115-4867-A295-ACB61B5CE615} = {2794620F-A50A-425C-8E99-5D89C0439E6D}
 	EndGlobalSection
 EndGlobal
