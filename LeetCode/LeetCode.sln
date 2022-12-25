@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClimbingLib", "ClimbingStai
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClimbingStairs", "ClimbingStairs\ClimbingStairs.csproj", "{4F83396D-A403-4B34-B66A-912AFD775E9D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClimbingStairsAlternative", "ClimbingStairsAlternative\ClimbingStairsAlternative.csproj", "{26EAB640-86BB-461E-A3CC-7B7EADB93B2D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{4F83396D-A403-4B34-B66A-912AFD775E9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F83396D-A403-4B34-B66A-912AFD775E9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F83396D-A403-4B34-B66A-912AFD775E9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26EAB640-86BB-461E-A3CC-7B7EADB93B2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26EAB640-86BB-461E-A3CC-7B7EADB93B2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26EAB640-86BB-461E-A3CC-7B7EADB93B2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26EAB640-86BB-461E-A3CC-7B7EADB93B2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{98B09FD7-8E5D-438A-B194-A974FC6ED8DF} = {49AB7B5E-854C-4896-9328-0D940A7DE5D5}
