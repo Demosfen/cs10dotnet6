@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClimbingStairs", "ClimbingStairs\ClimbingStairs.csproj", "{D46D253B-640A-4CEA-9CC5-F98D6020ED93}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ClimbingStairs", "ClimbingStairs", "{2794620F-A50A-425C-8E99-5D89C0439E6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClimbingLib", "ClimbingStairs\ClimbingLib\ClimbingLib.csproj", "{F023FDA2-5E36-4127-B6EC-42489EDA093A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClimbingStairs.Algorythm", "ClimbingStairs\ClimbingStairs.Algorythm\ClimbingStairs.Algorythm.csproj", "{6B1FFED6-5823-406D-BC8F-29065989474C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClimbingLibUnitTests", "ClimbingStairs\ClimbingLibUnitTests\ClimbingLibUnitTests.csproj", "{8BF681D7-4115-4867-A295-ACB61B5CE615}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClimbingStairs.Console", "ClimbingStairs\ClimbingStairs.Console\ClimbingStairs.Console.csproj", "{632FFA9D-5442-4144-A12C-3D3AA4FC50C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClimbingStairs.Tests", "ClimbingStairs\ClimbingStairs.Tests\ClimbingStairs.Tests.csproj", "{9E28C9CD-09C4-486D-B5B6-B43757E58A03}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,21 +20,22 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D46D253B-640A-4CEA-9CC5-F98D6020ED93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D46D253B-640A-4CEA-9CC5-F98D6020ED93}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D46D253B-640A-4CEA-9CC5-F98D6020ED93}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D46D253B-640A-4CEA-9CC5-F98D6020ED93}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F023FDA2-5E36-4127-B6EC-42489EDA093A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F023FDA2-5E36-4127-B6EC-42489EDA093A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F023FDA2-5E36-4127-B6EC-42489EDA093A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F023FDA2-5E36-4127-B6EC-42489EDA093A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8BF681D7-4115-4867-A295-ACB61B5CE615}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8BF681D7-4115-4867-A295-ACB61B5CE615}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8BF681D7-4115-4867-A295-ACB61B5CE615}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8BF681D7-4115-4867-A295-ACB61B5CE615}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B1FFED6-5823-406D-BC8F-29065989474C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B1FFED6-5823-406D-BC8F-29065989474C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B1FFED6-5823-406D-BC8F-29065989474C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B1FFED6-5823-406D-BC8F-29065989474C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{632FFA9D-5442-4144-A12C-3D3AA4FC50C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{632FFA9D-5442-4144-A12C-3D3AA4FC50C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{632FFA9D-5442-4144-A12C-3D3AA4FC50C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{632FFA9D-5442-4144-A12C-3D3AA4FC50C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E28C9CD-09C4-486D-B5B6-B43757E58A03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E28C9CD-09C4-486D-B5B6-B43757E58A03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E28C9CD-09C4-486D-B5B6-B43757E58A03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E28C9CD-09C4-486D-B5B6-B43757E58A03}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{F023FDA2-5E36-4127-B6EC-42489EDA093A} = {2794620F-A50A-425C-8E99-5D89C0439E6D}
-		{8BF681D7-4115-4867-A295-ACB61B5CE615} = {2794620F-A50A-425C-8E99-5D89C0439E6D}
+		{6B1FFED6-5823-406D-BC8F-29065989474C} = {2794620F-A50A-425C-8E99-5D89C0439E6D}
+		{632FFA9D-5442-4144-A12C-3D3AA4FC50C2} = {2794620F-A50A-425C-8E99-5D89C0439E6D}
+		{9E28C9CD-09C4-486D-B5B6-B43757E58A03} = {2794620F-A50A-425C-8E99-5D89C0439E6D}
 	EndGlobalSection
 EndGlobal

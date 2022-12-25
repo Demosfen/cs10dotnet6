@@ -1,17 +1,17 @@
-﻿using System;
+﻿namespace ClimbingStairs.Common;
 
-namespace Climbing.Lib;
-
-public class Stairs
+public sealed class Stairs
 {
     /// <summary>
     /// Fibonacchi (n-1)th element
     /// </summary>
     private int fib1 = 1;
+    
     /// <summary>
     /// Fibonacchi nth element
     /// </summary>
     private int fib2 = 1;
+    
     public int ClimbingStairs(int n)
     {
         while (n-- > 0)
@@ -22,5 +22,4 @@ public class Stairs
 
         return fib1;
     }
-
 }
