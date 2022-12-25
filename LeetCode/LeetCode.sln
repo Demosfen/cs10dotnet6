@@ -3,6 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ClimbingStairs", "ClimbingStairs", "{49AB7B5E-854C-4896-9328-0D940A7DE5D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClimbingLib", "ClimbingStairs\ClimbingLib\ClimbingLib.csproj", "{98B09FD7-8E5D-438A-B194-A974FC6ED8DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClimbingStairs", "ClimbingStairs\ClimbingStairs.csproj", "{4F83396D-A403-4B34-B66A-912AFD775E9D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -10,5 +16,18 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{98B09FD7-8E5D-438A-B194-A974FC6ED8DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98B09FD7-8E5D-438A-B194-A974FC6ED8DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98B09FD7-8E5D-438A-B194-A974FC6ED8DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98B09FD7-8E5D-438A-B194-A974FC6ED8DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F83396D-A403-4B34-B66A-912AFD775E9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F83396D-A403-4B34-B66A-912AFD775E9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F83396D-A403-4B34-B66A-912AFD775E9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F83396D-A403-4B34-B66A-912AFD775E9D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{98B09FD7-8E5D-438A-B194-A974FC6ED8DF} = {49AB7B5E-854C-4896-9328-0D940A7DE5D5}
 	EndGlobalSection
 EndGlobal
