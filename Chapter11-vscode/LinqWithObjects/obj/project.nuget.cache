@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "xH15kj3eL1XUdQG0pLwdpHA6U2KscfuDdtG0G+F+zWUaLGxvPezTxAIZdzWYuV8Sroy/Pp+kTLFB36ZRO21BKw==",
+  "dgSpecHash": "IcISCqSsKQl+eo1ocEI212f4cn3sqMJrDk5R7RRCs4DGFsJ2PmEo+yBrRkIyuKSjmvYUJN8gwfYOiYlhoNp8mQ==",
   "success": true,
-  "projectFilePath": "F:\\C#\\Code\\cs10dotnet6\\Chapter11-vscode\\LinqWithObjects\\LinqWithObjects.csproj",
+  "projectFilePath": "F:\\C#\\Code\\Chapter11-vscode\\LinqWithObjects\\LinqWithObjects.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
