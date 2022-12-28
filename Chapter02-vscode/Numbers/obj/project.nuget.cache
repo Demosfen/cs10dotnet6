@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "CeGe3avgromWWxu9TkCY4Tw789BsBx3nIDeREss6anCuw0cY2XbqOBIFTsdnxVbsRJiECQXWAB7ZtB2BBXg8wA==",
+  "dgSpecHash": "bMjQKvTiq/uV7Lub8pM0S8dwOpBi6R8eHMHlXZ1COECN7RZ3c6zrxf24/SE3u9GKzEtfAKpw0w17GC0Xysrn8g==",
   "success": true,
-  "projectFilePath": "F:\\C#\\Code\\cs10dotnet6\\Chapter02-vscode\\Numbers\\Numbers.csproj",
+  "projectFilePath": "F:\\C#\\Code\\Chapter02-vscode\\Numbers\\Numbers.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
