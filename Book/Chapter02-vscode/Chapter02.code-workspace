@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "Vocabulary"
+		},
+		{
+			"path": "Numbers"
+		},
+		{
+			"path": "Variables"
+		},
+		{
+			"path": "Formatting"
+		},
+		{
+			"path": "Arguments"
+		}
+	]
+}
