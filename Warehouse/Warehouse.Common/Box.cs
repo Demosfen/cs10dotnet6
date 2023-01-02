@@ -23,6 +23,11 @@ public sealed class Box : Object
     private decimal _depth;
     
     /// <summary>
+    /// Volume of a box initially calculated as Width * Depth * Height
+    /// </summary>
+    private decimal _volume;
+    
+    /// <summary>
     /// A non-nullable box weight.
     /// </summary>
     private decimal _weight;
@@ -37,5 +42,13 @@ public sealed class Box : Object
     /// </summary>
     public DateTime ProductionDate;
     
-    
+    public Box()
+    {
+        _id = Guid.NewGuid();
+        _width = 2;
+        _height = 2;
+        _depth = 2;
+        _volume = _width * _height * _depth;
+
+    }
 }
