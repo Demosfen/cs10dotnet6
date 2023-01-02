@@ -25,11 +25,16 @@ public sealed class Pallet : Object
     /// <summary>
     /// A non-nullable pallet weight.
     /// </summary>
-    private decimal _weight;
+    private decimal _weight = 30;
     
     /// <summary>
     /// List of boxes on the pallet.
     /// </summary>
     public List<Box> Boxes = new ();
+    
+    /// <summary>
+    /// Date of pallet expiration (= 100 days + ProductionDate)
+    /// </summary>
+    public DateTime ExpiryDate;
     
 }

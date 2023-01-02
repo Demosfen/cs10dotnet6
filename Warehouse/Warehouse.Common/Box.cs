@@ -1,6 +1,6 @@
 ﻿namespace Warehouse.Common;
 
-public sealed class Box
+public sealed class Box : Object
 {
     /// <summary>
     /// A non-nullable box ID.   
@@ -26,4 +26,16 @@ public sealed class Box
     /// A non-nullable box weight.
     /// </summary>
     private decimal _weight;
+
+    /// <summary>
+    /// Date of box expiration (= 100 + ProductionDate)
+    /// </summary>
+    public DateTime ExpiryDate;
+
+    /// <summary>
+    /// Date of box production.
+    /// </summary>
+    public DateTime ProductionDate;
+    
+    
 }
