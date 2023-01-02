@@ -30,7 +30,7 @@ public abstract class ObjProps
     /// Object weight, which can be calculated or set
     /// during runtime
     /// </summary>
-    private readonly decimal _weight;
+    private decimal _weight;
 
     public string Id
     {
@@ -60,6 +60,6 @@ public abstract class ObjProps
     public decimal Weight
     {
         get => _weight;
-        init => _weight = value;
+        set => _weight = value;
     }
 };
