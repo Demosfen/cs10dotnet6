@@ -4,4 +4,4 @@ using ClimbingStairs.Common;
 Stairs stairs1 = new();
 int stair = 6;
 
-WriteLine($"Stairs consistiong of {stair} has {stairs1.ClimbingStairs(stair)} climbing methods.");
+WriteLine($"Stairs consisting of {stair} has {stairs1.ClimbingStairs(stair)} climbing methods.");

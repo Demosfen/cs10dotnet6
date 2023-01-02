@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClimbingStairs.Console", "C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClimbingStairs.Tests", "ClimbingStairs\ClimbingStairs.Tests\ClimbingStairs.Tests.csproj", "{9E28C9CD-09C4-486D-B5B6-B43757E58A03}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SingleNumber", "SingleNumber", "{FDA75264-6D41-4329-BAEE-3921DC4B3422}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SingleNumber.Algorythm", "SingleNumber\SingleNumber.Algorythm\SingleNumber.Algorythm.csproj", "{1980A82D-2066-4C0D-9459-0EA14E410059}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,10 +36,15 @@ Global
 		{9E28C9CD-09C4-486D-B5B6-B43757E58A03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E28C9CD-09C4-486D-B5B6-B43757E58A03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E28C9CD-09C4-486D-B5B6-B43757E58A03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1980A82D-2066-4C0D-9459-0EA14E410059}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1980A82D-2066-4C0D-9459-0EA14E410059}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1980A82D-2066-4C0D-9459-0EA14E410059}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1980A82D-2066-4C0D-9459-0EA14E410059}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6B1FFED6-5823-406D-BC8F-29065989474C} = {2794620F-A50A-425C-8E99-5D89C0439E6D}
 		{632FFA9D-5442-4144-A12C-3D3AA4FC50C2} = {2794620F-A50A-425C-8E99-5D89C0439E6D}
 		{9E28C9CD-09C4-486D-B5B6-B43757E58A03} = {2794620F-A50A-425C-8E99-5D89C0439E6D}
+		{1980A82D-2066-4C0D-9459-0EA14E410059} = {FDA75264-6D41-4329-BAEE-3921DC4B3422}
 	EndGlobalSection
 EndGlobal
