@@ -1,4 +1,4 @@
-﻿namespace Warehouse.Common;
+﻿namespace Warehouse.Data;
 
 public sealed class Box : Object
 {
@@ -45,9 +45,9 @@ public sealed class Box : Object
     public Box()
     {
         _id = Guid.NewGuid();
-        _width = 2;
-        _height = 2;
-        _depth = 2;
+        _width = 1;
+        _height = 1;
+        _depth = 1;
         _volume = _width * _height * _depth;
 
     }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using static System.Console;
 
-namespace Warehouse.Common;
+namespace Warehouse.Data;
 
 public sealed class Warehouse : Object
 {

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization.Metadata;
 
-namespace Warehouse.Common;
+namespace Warehouse.Data;
 
 public sealed class Pallet : Object
 {
