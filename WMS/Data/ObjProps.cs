@@ -9,7 +9,7 @@ public abstract class ObjProps
     /// <summary>
     /// Object id
     /// </summary>
-    private readonly int _id;
+    private readonly string _id;
 
     /// <summary>
     /// Object width
@@ -32,10 +32,10 @@ public abstract class ObjProps
     /// </summary>
     private readonly decimal _weight;
 
-    public int Id
+    public string Id
     {
         get => _id;
-        init => _id = String.IsNullOrEmpty(_id.ToString())
+        init => _id = String.IsNullOrEmpty(_id)
             ? throw new ArgumentException("Shouldn't be null or empty", nameof(_id))
             : value;
     }
