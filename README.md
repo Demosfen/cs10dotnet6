@@ -8,3 +8,4 @@ This repository contains educational materials collected during C#10 .NET 6 trai
 - [x] [Chapter 05](Book/Chapter05-vscode)
 - [x] [Chapter 06](Book/Chapter06-vscode)
 - [ ] [Chapter 07](Book/Chapter02-vscode)
+- [ ] https://github.com/Demosfen/cs10dotnet6/tree/main/Book/Chapter01-vscode
