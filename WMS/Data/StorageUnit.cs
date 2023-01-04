@@ -7,11 +7,6 @@
 public abstract class StorageUnit
 {
     /// <summary>
-    /// Object id
-    /// </summary>
-    private readonly Guid _id;
-
-    /// <summary>
     /// Object width
     /// </summary>
     private readonly decimal _width;
@@ -32,8 +27,10 @@ public abstract class StorageUnit
     /// </summary>
     private decimal _weight;
     
-    
-    public Guid Id => _id;
+    /// <summary>
+    /// Unit ID getter
+    /// </summary>
+    public Guid Id { get; }
 
     /// <summary>
     /// Constructor which strictly encourage developers to
@@ -49,7 +46,7 @@ public abstract class StorageUnit
         decimal depth, 
         decimal weight)
     {
-        _id = Guid.NewGuid();
+        Id = Guid.NewGuid();
         _width = width;
         _height = height;
         _depth = depth;
