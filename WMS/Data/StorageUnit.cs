@@ -32,6 +32,8 @@ public abstract class StorageUnit
     /// </summary>
     private decimal _weight;
 
+    public Guid Id => _id;
+
     /// <summary>
     /// Constructor which strictly encourage developers to
     /// initialize basic properties of storage unit.
