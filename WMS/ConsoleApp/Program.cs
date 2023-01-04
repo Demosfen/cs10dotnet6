@@ -8,4 +8,3 @@ Box box1 = new(1,1,1,1);
 
 WriteLine(palette1.Id);
 WriteLine(palette2.Id);
-

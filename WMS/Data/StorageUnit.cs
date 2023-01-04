@@ -31,7 +31,8 @@ public abstract class StorageUnit
     /// during runtime
     /// </summary>
     private decimal _weight;
-
+    
+    
     public Guid Id => _id;
 
     /// <summary>
