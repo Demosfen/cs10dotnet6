@@ -4,7 +4,7 @@
 /// This is an abstract class, which contains common properties
 /// for rectangle objects of a warehouse.
 /// </summary>
-public abstract class ObjProps
+public abstract class StorageUnit
 {
     /// <summary>
     /// Object id
@@ -32,34 +32,12 @@ public abstract class ObjProps
     /// </summary>
     private decimal _weight;
 
-    public string Id
+    protected StorageUnit(string id, decimal width, decimal height, decimal depth, decimal weight)
     {
-        get => _id;
-        init => _id = String.IsNullOrEmpty(_id)
-            ? throw new ArgumentException("Shouldn't be null or empty", nameof(_id))
-            : value;
-    }
-    
-    public decimal Width
-    {
-        get => _width;
-        init => _width = value;
-    }
-
-    public decimal Height
-    {
-        get => _height;
-        init => _height = value;
-    }
-
-    public decimal Depth 
-    {
-        get => _depth;
-        init => _depth = value;
-    }
-    public decimal Weight
-    {
-        get => _weight;
-        set => _weight = value;
+        _id = id ?? throw new ArgumentNullException(nameof(id));
+        _width = width;
+        _height = height;
+        _depth = depth;
+        _weight = weight;
     }
 };

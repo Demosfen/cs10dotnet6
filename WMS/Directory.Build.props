@@ -21,7 +21,7 @@
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
 
-    <!--Add analyzers
+    <!--Add analyzers-->
     <ItemGroup>
         <PackageReference Include="JetBrains.Annotations" Version="2022.3.1">
             <PrivateAssets>All</PrivateAssets>
@@ -32,6 +32,6 @@
         <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3">
             <PrivateAssets>All</PrivateAssets>
         </PackageReference>
-    </ItemGroup>-->
+    </ItemGroup>
     
 </Project>
