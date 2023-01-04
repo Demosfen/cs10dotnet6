@@ -9,7 +9,7 @@ public abstract class StorageUnit
     /// <summary>
     /// Object id
     /// </summary>
-    private readonly string _id;
+    private readonly Guid _id;
 
     /// <summary>
     /// Object width
@@ -36,20 +36,17 @@ public abstract class StorageUnit
     /// Constructor which strictly encourage developers to
     /// initialize basic properties of storage unit.
     /// </summary>
-    /// <param name="id">Unit ID</param>
     /// <param name="width">Unit width</param>
     /// <param name="height">Unit height</param>
     /// <param name="depth">Unit depth</param>
     /// <param name="weight">Unit weight</param>
-    /// <exception cref="ArgumentNullException"></exception>
     protected StorageUnit
-        (string id, 
-        decimal width, 
+        (decimal width, 
         decimal height, 
         decimal depth, 
         decimal weight)
     {
-        _id = id ?? throw new ArgumentNullException(nameof(id), "Unit ID should exist!");
+        _id = Guid.NewGuid();
         _width = width;
         _height = height;
         _depth = depth;
