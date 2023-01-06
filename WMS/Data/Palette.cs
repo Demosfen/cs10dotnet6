@@ -7,10 +7,13 @@ public class Palette : StorageUnit
 {
     public List<Box>? Boxes = new List<Box>();
 
-    public Palette
-        (decimal width, 
-            decimal height, 
-            decimal depth, 
-            decimal weight) 
-        : base(width, height, depth, weight) {}
+    public Palette(
+        decimal width, 
+        decimal height, 
+        decimal depth, 
+        decimal weight, 
+        DateTime production = default,
+        DateTime expiryDate = default,
+        int expiryDays = default)
+        : base(width, height, depth, weight, production, expiryDate, expiryDays) { }
 }

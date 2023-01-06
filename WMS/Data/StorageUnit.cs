@@ -6,31 +6,47 @@
 /// </summary>
 public abstract class StorageUnit
 {
+    public Guid Id { get; }
     /// <summary>
     /// Object width
     /// </summary>
-    private readonly decimal _width;
+    public decimal Width { get; }
 
     /// <summary>
     /// Object height
     /// </summary>
-    private readonly decimal _height;
+    public decimal Height { get; }
 
     /// <summary>
     /// Object depth
     /// </summary>
-    private readonly decimal _depth;
+    public decimal Depth { get; }
+    
+    /// <summary>
+    /// Unit volume. Computed automatically
+    /// </summary>
+    public decimal Volume { get; }
 
     /// <summary>
     /// Object weight, which can be calculated or set
     /// during runtime
     /// </summary>
-    private decimal _weight;
+    public decimal Weight { get; }
+
+    /// <summary>
+    /// Unit production date/time
+    /// </summary>
+    public DateTime Production { get; }
     
     /// <summary>
-    /// Unit ID getter
+    /// Unit expiry date/time
     /// </summary>
-    public Guid Id { get; }
+    public DateTime ExpiryDate { get; }
+    
+    /// <summary>
+    /// Unit expiry days number
+    /// </summary>
+    public int ExpiryDays { get; }
 
     /// <summary>
     /// Constructor which strictly encourage developers to
@@ -40,16 +56,26 @@ public abstract class StorageUnit
     /// <param name="height">Unit height</param>
     /// <param name="depth">Unit depth</param>
     /// <param name="weight">Unit weight</param>
-    protected StorageUnit
-        (decimal width, 
+    /// <param name="production">Unit production Date/Time</param>
+    /// <param name="expiry">Unit expiry date</param>
+    /// <param name="expiryDate">Unit expiry date</param>
+    /// <param name="expiryDays">Unit expiry days</param>
+    protected StorageUnit(
+        decimal width, 
         decimal height, 
         decimal depth, 
-        decimal weight)
+        decimal weight,
+        DateTime production = default,
+        DateTime expiryDate = default,
+        int expiryDays = default)
     {
         Id = Guid.NewGuid();
-        _width = width;
-        _height = height;
-        _depth = depth;
-        _weight = weight;
+        Width = width;
+        Height = height;
+        Depth = depth;
+        Weight = weight;
+        Production = production;
+        ExpiryDate = expiryDate;
+        ExpiryDays = expiryDays;
     }
 };
