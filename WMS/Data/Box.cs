@@ -7,7 +7,10 @@ public class Box : StorageUnit
         decimal height, 
         decimal depth, 
         decimal weight, 
-        DateTime production, 
-        DateTime expiry) 
-        : base(width, height, depth, weight, production, expiry) { }
+        DateTime production = default, 
+        DateTime expiryDate = default, 
+        int expiryDays = default) 
+        : base(width, height, depth, weight, production, expiryDate, expiryDays)
+    {
+    }
 }
