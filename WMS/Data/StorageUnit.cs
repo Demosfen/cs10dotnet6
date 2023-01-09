@@ -33,7 +33,7 @@ public abstract class StorageUnit
     /// Object weight, which can be calculated or set
     /// during runtime
     /// </summary>
-    public decimal Weight { get; }
+    public decimal Weight { get; set; }
 
     /// <summary>
     /// Unit production date/time
@@ -74,6 +74,7 @@ public abstract class StorageUnit
         Width = width;
         Height = height;
         Depth = depth;
+        Volume = Width * Height * Depth;
         Weight = weight;
         ExpiryDays = expiryDays;
         
