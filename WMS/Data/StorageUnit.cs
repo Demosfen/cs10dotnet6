@@ -38,12 +38,12 @@ public abstract class StorageUnit
     /// <summary>
     /// Unit production date/time
     /// </summary>
-    public DateTime Production { get; }
+    public DateTime? ProductionDate { get; }
     
     /// <summary>
     /// Unit expiry date/time
     /// </summary>
-    public DateTime ExpiryDate { get; }
+    public DateTime? ExpiryDate { get; }
     
     /// <summary>
     /// Unit expiry days number
@@ -58,7 +58,7 @@ public abstract class StorageUnit
     /// <param name="height">Unit height</param>
     /// <param name="depth">Unit depth</param>
     /// <param name="weight">Unit weight</param>
-    /// <param name="production">Unit production Date/Time</param>
+    /// <param name="productionDate">Unit production Date/Time</param>
     /// <param name="expiryDate">Unit expiry date</param>
     /// <param name="expiryDays">Unit expiry days</param>
     protected StorageUnit(
@@ -66,7 +66,7 @@ public abstract class StorageUnit
         decimal height,
         decimal depth,
         decimal weight,
-        DateTime? production = null,
+        DateTime? productionDate = null,
         DateTime? expiryDate = null,
         double expiryDays = 100)
     {
@@ -77,18 +77,17 @@ public abstract class StorageUnit
         Weight = weight;
         ExpiryDays = expiryDays;
         
-        WriteLine(production);
+        if (expiryDate == null && productionDate == null)
+            throw new ArgumentException(
+                "Both Production and Expiry dates shouldn't be null simultaneously");
+        
+        ExpiryDate = expiryDate ?? productionDate!.Value.AddDays(expiryDays);
 
-        if (production is null)
-        {
-            WriteLine("Production Date is null...");
-        }
+        ProductionDate = productionDate;
+
+        if (ExpiryDate <= ProductionDate)
+            throw new ArgumentException(
+                "Expiry date cannot be lower than Production date!", 
+                ExpiryDate.ToString());
     }
-    /*
-    if (production is null)
-    Production = production ?? throw new ArgumentNullException(message:
-            "Both Expiry Date and Production Date is null. You should type one of them.", 
-            paramName: production.ToString());
-    ExpiryDate = Production.Value.AddDays(expiryDays);
-}*/
 }

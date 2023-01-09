@@ -12,8 +12,8 @@ public class Palette : StorageUnit
         decimal height, 
         decimal depth, 
         decimal weight, 
-        DateTime production = default,
-        DateTime expiryDate = default,
-        int expiryDays = default)
-        : base(width, height, depth, weight, production, expiryDate, expiryDays) { }
+        DateTime? productionDate = null,
+        DateTime? expiryDate = null,
+        double expiryDays = 100)
+        : base(width, height, depth, weight, productionDate, expiryDate, expiryDays) { }
 }
