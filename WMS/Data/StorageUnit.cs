@@ -8,7 +8,16 @@ namespace WMS.Data;
 /// </summary>
 public abstract class StorageUnit
 {
+    /// <summary>
+    /// Unit default expiry days
+    /// </summary>
+    protected const double ExpiryDays = 100;
+    
+    /// <summary>
+    /// Unit ID
+    /// </summary>
     public Guid Id { get; }
+    
     /// <summary>
     /// Object width
     /// </summary>
@@ -44,11 +53,6 @@ public abstract class StorageUnit
     /// Unit expiry date/time
     /// </summary>
     public DateTime? ExpiryDate { get; }
-    
-    /// <summary>
-    /// Unit expiry days number
-    /// </summary>
-    public double ExpiryDays { get; }
 
     /// <summary>
     /// Constructor which strictly encourage developers to
@@ -60,35 +64,34 @@ public abstract class StorageUnit
     /// <param name="weight">Unit weight</param>
     /// <param name="productionDate">Unit production Date/Time</param>
     /// <param name="expiryDate">Unit expiry date</param>
-    /// <param name="expiryDays">Unit expiry days</param>
     protected StorageUnit(
         decimal width,
         decimal height,
         decimal depth,
         decimal weight,
         DateTime? productionDate = null,
-        DateTime? expiryDate = null,
-        double expiryDays = 100)
+        DateTime? expiryDate = null)
     {
         Id = Guid.NewGuid();
         Width = width;
         Height = height;
         Depth = depth;
-        Volume = Width * Height * Depth;
-        Weight = weight;
-        ExpiryDays = expiryDays;
-        
+
         if (expiryDate == null && productionDate == null)
+        {
             throw new ArgumentException(
                 "Both Production and Expiry dates shouldn't be null simultaneously");
-        
-        ExpiryDate = expiryDate ?? productionDate!.Value.AddDays(expiryDays);
+        }
 
-        ProductionDate = productionDate;
+        if (productionDate != null)
+        {
+            ProductionDate = productionDate;
+            
+            ExpiryDate = expiryDate ?? productionDate.Value.AddDays(ExpiryDays);
+        }
 
         if (ExpiryDate <= ProductionDate)
             throw new ArgumentException(
-                "Expiry date cannot be lower than Production date!", 
-                ExpiryDate.ToString());
+                "Expiry date cannot be lower than Production date!", paramName: nameof(ExpiryDate));
     }
 }
