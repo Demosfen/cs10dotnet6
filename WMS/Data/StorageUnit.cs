@@ -1,4 +1,6 @@
-﻿namespace WMS.Data;
+﻿using static System.Console;
+
+namespace WMS.Data;
 
 /// <summary>
 /// This is an abstract class, which contains common properties
@@ -46,7 +48,7 @@ public abstract class StorageUnit
     /// <summary>
     /// Unit expiry days number
     /// </summary>
-    public int ExpiryDays { get; }
+    public double ExpiryDays { get; }
 
     /// <summary>
     /// Constructor which strictly encourage developers to
@@ -57,25 +59,36 @@ public abstract class StorageUnit
     /// <param name="depth">Unit depth</param>
     /// <param name="weight">Unit weight</param>
     /// <param name="production">Unit production Date/Time</param>
-    /// <param name="expiry">Unit expiry date</param>
     /// <param name="expiryDate">Unit expiry date</param>
     /// <param name="expiryDays">Unit expiry days</param>
     protected StorageUnit(
-        decimal width, 
-        decimal height, 
-        decimal depth, 
+        decimal width,
+        decimal height,
+        decimal depth,
         decimal weight,
-        DateTime production = default,
-        DateTime expiryDate = default,
-        int expiryDays = default)
+        DateTime? production = null,
+        DateTime? expiryDate = null,
+        double expiryDays = 100)
     {
         Id = Guid.NewGuid();
         Width = width;
         Height = height;
         Depth = depth;
         Weight = weight;
-        Production = production;
-        ExpiryDate = expiryDate;
         ExpiryDays = expiryDays;
+        
+        WriteLine(production);
+
+        if (production is null)
+        {
+            WriteLine("Production Date is null...");
+        }
     }
-};
+    /*
+    if (production is null)
+    Production = production ?? throw new ArgumentNullException(message:
+            "Both Expiry Date and Production Date is null. You should type one of them.", 
+            paramName: production.ToString());
+    ExpiryDate = Production.Value.AddDays(expiryDays);
+}*/
+}
