@@ -32,17 +32,17 @@ public abstract class StorageUnit
     /// Object depth
     /// </summary>
     public decimal Depth { get; }
-    
+
     /// <summary>
-    /// Unit volume. Computed automatically
+    /// Unit volume
     /// </summary>
-    public decimal Volume { get; }
+    public virtual decimal Volume => Width * Height * Depth;
 
     /// <summary>
     /// Object weight, which can be calculated or set
     /// during runtime
     /// </summary>
-    public decimal Weight { get; set; }
+    public virtual decimal Weight { get; }
 
     /// <summary>
     /// Unit production date/time
@@ -76,22 +76,28 @@ public abstract class StorageUnit
         Width = width;
         Height = height;
         Depth = depth;
+        Weight = weight;
 
         if (expiryDate == null && productionDate == null)
         {
             throw new ArgumentException(
-                "Both Production and Expiry dates shouldn't be null simultaneously");
+                "Both Production and Expiry dates shouldn't be null simultaneously",
+                paramName: nameof(expiryDate));
         }
 
         if (productionDate != null)
         {
             ProductionDate = productionDate;
             
-            ExpiryDate = expiryDate ?? productionDate.Value.AddDays(ExpiryDays);
+            ExpiryDate = expiryDate ?? 
+                         productionDate.Value.AddDays(ExpiryDays);
         }
 
         if (ExpiryDate <= ProductionDate)
+        {
             throw new ArgumentException(
-                "Expiry date cannot be lower than Production date!", paramName: nameof(ExpiryDate));
+                "Expiry date cannot be lower than Production date!", 
+                paramName: nameof(ExpiryDate));
+        }
     }
 }
