@@ -10,7 +10,20 @@ public sealed class Palette : StorageUnit
     /// </summary>
     private const decimal _defaultWeight = 30;
 
-    public override decimal Volume { get; }
+    public override decimal Volume
+    {
+        get
+        {
+            if (Boxes != null)
+            {
+                return _defaultWeight + Boxes.Count;
+            }
+            else
+            {
+                return _defaultWeight;
+            }
+        }
+    }
     public override decimal Weight { get; }
 
     /// <summary>

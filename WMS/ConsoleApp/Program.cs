@@ -7,6 +7,9 @@ Palette palette1 = new (
     new DateTime(2008,1,1));
 
 warehouse.Palettes.Add(palette1);
+WriteLine(palette1.Width);
+WriteLine(palette1.Height);
+WriteLine(palette1.Depth);
 WriteLine(palette1.ProductionDate);
 WriteLine(palette1.ExpiryDate);
 WriteLine(palette1.Weight);
