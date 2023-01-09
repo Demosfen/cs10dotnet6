@@ -10,13 +10,22 @@ public sealed class Palette : StorageUnit
     /// </summary>
     private const decimal _defaultWeight = 30;
 
-    public override decimal Volume
+    public override decimal Volume { get; }
+
+    public override decimal Weight
     {
         get
         {
             if (Boxes != null)
             {
-                return _defaultWeight + Boxes.Count;
+                decimal boxesWeight = 0;
+        
+                foreach (var box in Boxes)
+                {
+                    boxesWeight += box.Weight;
+                }
+
+                return boxesWeight + _defaultWeight;
             }
             else
             {
@@ -24,7 +33,6 @@ public sealed class Palette : StorageUnit
             }
         }
     }
-    public override decimal Weight { get; }
 
     /// <summary>
     /// Boxes on the palette
