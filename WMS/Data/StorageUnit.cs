@@ -1,6 +1,4 @@
-﻿using static System.Console;
-
-namespace WMS.Data;
+﻿namespace WMS.Data;
 
 /// <summary>
 /// This is an abstract class, which contains common properties

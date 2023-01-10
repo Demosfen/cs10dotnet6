@@ -8,38 +8,43 @@ public sealed class Palette : StorageUnit
     /// <summary>
     /// Empty palette weight
     /// </summary>
-    private const decimal _defaultWeight = 30;
+    private const decimal DefaultWeight = 30;
 
-    public override decimal Volume { get; }
-
-    public override decimal Weight
+    public override decimal Volume
     {
         get
         {
-            if (Boxes != null)
-            {
-                decimal boxesWeight = 0;
-        
-                foreach (var box in Boxes)
-                {
-                    boxesWeight += box.Weight;
-                }
+            decimal paletteVolume = 0;
 
-                return boxesWeight + _defaultWeight;
-            }
-            else
+            foreach (var box in Boxes)
             {
-                return _defaultWeight;
+                paletteVolume += box.Volume;
             }
+            
+            return Width*Height*Depth + paletteVolume;
         }
     }
 
     /// <summary>
     /// Boxes on the palette
     /// </summary>
-    public List<Box>? Boxes = new List<Box>();
+    public List<Box> Boxes = new List<Box>();
 
-    /// <inheritdoc />
+    public override decimal Weight
+    {
+        get
+        {
+            decimal boxesWeight = 0;
+
+            foreach (var box in Boxes)
+            {
+                boxesWeight += box.Weight;
+            }
+            
+            return DefaultWeight + boxesWeight;
+        }
+    }
+
     public Palette(
         decimal width,
         decimal height,
@@ -47,8 +52,5 @@ public sealed class Palette : StorageUnit
         decimal weight,
         DateTime? productionDate = null,
         DateTime? expiryDate = null)
-        : base(width, height, depth, weight, productionDate, expiryDate)
-    {
-        Weight = _defaultWeight;
-    }
+        : base(width, height, depth, weight, productionDate, expiryDate) { }
 }
