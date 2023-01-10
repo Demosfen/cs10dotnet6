@@ -9,7 +9,17 @@ public sealed class Palette : StorageUnit
     /// Empty palette weight
     /// </summary>
     private const decimal DefaultWeight = 30;
+    
+    /// <summary>
+    /// Boxes on the palette
+    /// </summary>
+    public List<Box> Boxes = new List<Box>();
 
+    /// <summary>
+    /// Palette volume computed as
+    /// empty palette volume plus
+    /// sum of boxes volume
+    /// </summary>
     public override decimal Volume
     {
         get
@@ -26,10 +36,10 @@ public sealed class Palette : StorageUnit
     }
 
     /// <summary>
-    /// Boxes on the palette
+    /// Palette weight computed as
+    /// empty palette weight and
+    /// sum of boxes weight
     /// </summary>
-    public List<Box> Boxes = new List<Box>();
-
     public override decimal Weight
     {
         get
