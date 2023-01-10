@@ -21,11 +21,10 @@ public sealed class Palette : StorageUnit
     /// empty palette volume plus
     /// sum of boxes volume
     /// </summary>
-    public override decimal Volume => 
-        Width * Height * Depth 
-        + GetAllBoxes()
-            .Sum(box => box.Volume);
-
+    public override decimal Volume =>
+        (from box in Boxes select box.Volume).Sum()
+        + Width * Height * Depth;
+    
     /// <summary>
     /// Palette weight computed as
     /// empty palette weight and
