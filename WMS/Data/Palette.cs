@@ -35,17 +35,28 @@ public sealed class Palette : StorageUnit
         + GetAllBoxes()
             .Sum(box => box.Weight);
 
+    /// <summary>
+    /// Palette expiry date computed as
+    /// the minimal box exp. date.
+    /// </summary>
     public override DateTime? ExpiryDate =>
         (from box in Boxes select box.ExpiryDate).Min();
 
+    /// <summary>
+    /// Default palette constructor
+    /// </summary>
+    /// <param name="width">Palette width</param>
+    /// <param name="height">Palette height</param>
+    /// <param name="depth">Palette depth</param>
+    /// <param name="weight">Palette weight</param>
     public Palette(
         decimal width,
         decimal height,
         decimal depth,
-        decimal weight,
-        DateTime? productionDate = null,
-        DateTime? expiryDate = null)
-        : base(width, height, depth, weight, productionDate, expiryDate) { }
+        decimal weight)
+        : base(width, height, depth, weight)
+    {
+    }
 
     /// <summary>
     /// Method returning a list of boxes
