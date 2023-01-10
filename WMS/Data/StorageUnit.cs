@@ -50,7 +50,7 @@ public abstract class StorageUnit
     /// <summary>
     /// Unit expiry date/time
     /// </summary>
-    public DateTime? ExpiryDate { get; }
+    public virtual DateTime? ExpiryDate { get; }
 
     /// <summary>
     /// Constructor which strictly encourage developers to
