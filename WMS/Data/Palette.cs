@@ -30,7 +30,7 @@ public sealed class Palette : StorageUnit
     /// empty palette weight and
     /// sum of boxes weight
     /// </summary>
-    public override decimal Weight => 
+    public override decimal? Weight => 
         DefaultWeight
         + GetAllBoxes()
             .Sum(box => box.Weight);
@@ -48,13 +48,11 @@ public sealed class Palette : StorageUnit
     /// <param name="width">Palette width</param>
     /// <param name="height">Palette height</param>
     /// <param name="depth">Palette depth</param>
-    /// <param name="weight">Palette weight</param>
     public Palette(
         decimal width,
         decimal height,
-        decimal depth,
-        decimal weight)
-        : base(width, height, depth, weight)
+        decimal depth)
+        : base(width, height, depth)
     {
     }
 

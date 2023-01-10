@@ -7,8 +7,7 @@ internal class Program
     {
         Warehouse warehouse = new();
         Palette palette1 = new (
-            10,10,10,10, 
-            new DateTime(2007,1,1));
+            10,10,10);
 
         palette1.Boxes.Add(new Box(1,1,1,5,
             new DateTime(2007,1,1, 1, 1,0)));

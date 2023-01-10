@@ -9,7 +9,7 @@ public abstract class StorageUnit
     /// <summary>
     /// Unit default expiry days
     /// </summary>
-    private const int ExpiryDays = 100;
+    protected const int ExpiryDays = 100;
     
     /// <summary>
     /// Unit ID
@@ -40,17 +40,17 @@ public abstract class StorageUnit
     /// Object weight, which can be calculated or set
     /// during runtime
     /// </summary>
-    public virtual decimal Weight { get; }
+    public virtual decimal? Weight { get; }
 
     /// <summary>
     /// Unit production date/time
     /// </summary>
-    public DateTime? ProductionDate { get; }
+    public DateTime? ProductionDate { get; set; }
     
     /// <summary>
     /// Unit expiry date/time
     /// </summary>
-    public virtual DateTime? ExpiryDate { get; }
+    public virtual DateTime? ExpiryDate { get; set; }
 
     /// <summary>
     /// Constructor which strictly encourage developers to
@@ -66,7 +66,7 @@ public abstract class StorageUnit
         decimal width,
         decimal height,
         decimal depth,
-        decimal weight,
+        decimal? weight = null,
         DateTime? productionDate = null,
         DateTime? expiryDate = null)
     {
@@ -75,27 +75,6 @@ public abstract class StorageUnit
         Height = height;
         Depth = depth;
         Weight = weight;
-
-        if (expiryDate == null && productionDate == null)
-        {
-            throw new ArgumentException(
-                "Both Production and Expiry dates shouldn't be null simultaneously",
-                paramName: nameof(expiryDate));
-        }
-
-        if (productionDate != null)
-        {
-            ProductionDate = productionDate;
-            
-            ExpiryDate = expiryDate ?? 
-                         productionDate.Value.AddDays(ExpiryDays);
-        }
-
-        if (ExpiryDate <= ProductionDate)
-        {
-            throw new ArgumentException(
-                "Expiry date cannot be lower than Production date!", 
-                paramName: nameof(ExpiryDate));
-        }
+        ProductionDate = productionDate;
     }
 }
