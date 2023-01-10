@@ -68,7 +68,7 @@ public sealed class Palette : StorageUnit
     /// Output of all information about
     /// boxes on the palette
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Palette info</returns>
     public override string ToString()
     {
         return $"\n" +
