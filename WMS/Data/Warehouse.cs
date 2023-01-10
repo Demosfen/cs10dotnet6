@@ -5,5 +5,5 @@
 /// </summary>
 public sealed class Warehouse
 {
-    public List<Palette> Palettes = new List<Palette>();
+    public readonly List<Palette> Palettes = new List<Palette>();
 }

@@ -13,7 +13,7 @@ public sealed class Palette : StorageUnit
     /// <summary>
     /// Boxes on the palette
     /// </summary>
-    public List<Box> Boxes = new List<Box>();
+    public readonly List<Box> Boxes = new List<Box>();
 
     /// <summary>
     /// Palette volume computed as

@@ -9,7 +9,7 @@ public abstract class StorageUnit
     /// <summary>
     /// Unit default expiry days
     /// </summary>
-    protected const double ExpiryDays = 100;
+    private const int ExpiryDays = 100;
     
     /// <summary>
     /// Unit ID
