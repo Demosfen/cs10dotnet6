@@ -53,8 +53,7 @@ public sealed class Palette : StorageUnit
         decimal height,
         decimal depth)
         : base(width, height, depth, DefaultWeight)
-    {
-    }
+    { }
 
     /// <summary>
     /// Output of all information about
