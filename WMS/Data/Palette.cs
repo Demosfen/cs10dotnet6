@@ -22,7 +22,7 @@ public sealed class Palette : StorageUnit
     /// sum of boxes volume
     /// </summary>
     public override decimal Volume =>
-        Width * Height * Depth
+        base.Volume
         + Boxes.Sum(box => box.Volume);
     
     /// <summary>
@@ -51,9 +51,8 @@ public sealed class Palette : StorageUnit
     public Palette(
         decimal width,
         decimal height,
-        decimal depth,
-        decimal weight = default)
-        : base(width, height, depth, weight)
+        decimal depth)
+        : base(width, height, depth, DefaultWeight)
     {
     }
 
