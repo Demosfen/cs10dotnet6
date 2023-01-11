@@ -40,7 +40,7 @@ public abstract class StorageUnit
     /// Object weight, which can be calculated or set
     /// during runtime
     /// </summary>
-    public virtual decimal Weight { get; }
+    public abstract decimal Weight { get; }
 
     /// <summary>
     /// Unit production date/time
@@ -74,7 +74,6 @@ public abstract class StorageUnit
         Width = width;
         Height = height;
         Depth = depth;
-        Weight = weight;
         ProductionDate = productionDate;
     }
 }

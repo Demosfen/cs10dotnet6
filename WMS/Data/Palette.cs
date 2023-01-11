@@ -22,8 +22,8 @@ public sealed class Palette : StorageUnit
     /// sum of boxes volume
     /// </summary>
     public override decimal Volume =>
-        (from box in Boxes select box.Volume).Sum()
-        + Width * Height * Depth;
+        Width * Height * Depth
+        + Boxes.Sum(box => box.Volume);
     
     /// <summary>
     /// Palette weight computed as
@@ -31,16 +31,15 @@ public sealed class Palette : StorageUnit
     /// sum of boxes weight
     /// </summary>
     public override decimal Weight => 
-        DefaultWeight
-        + GetAllBoxes()
-            .Sum(box => box.Weight);
+        DefaultWeight 
+        + Boxes.Sum(box => box.Weight);
 
     /// <summary>
     /// Palette expiry date computed as
     /// the minimal box exp. date.
     /// </summary>
     public override DateTime? ExpiryDate =>
-        (from box in Boxes select box.ExpiryDate).Min();
+        Boxes.Min(box => box.ExpiryDate);
 
     /// <summary>
     /// Default palette constructor
@@ -48,6 +47,7 @@ public sealed class Palette : StorageUnit
     /// <param name="width">Palette width</param>
     /// <param name="height">Palette height</param>
     /// <param name="depth">Palette depth</param>
+    /// <param name="weight">Palette weight</param>
     public Palette(
         decimal width,
         decimal height,
@@ -58,20 +58,13 @@ public sealed class Palette : StorageUnit
     }
 
     /// <summary>
-    /// Method returning a list of boxes
-    /// </summary>
-    /// <returns>a List of Boxes</returns>
-    public IEnumerable<Box> GetAllBoxes() => Boxes;
-
-    /// <summary>
     /// Output of all information about
     /// boxes on the palette
     /// </summary>
     /// <returns>Palette info</returns>
     public override string ToString()
     {
-        return $"\n" +
-               $"Palette {Id} contains:\n" +
+        return $"Palette {Id} contains:\n" +
                $"Boxes count: {Boxes.Count}\n" +
                $"Weight: {Weight} kilos\n" +
                $"Volume: {Volume} cubic decimeters\n" +

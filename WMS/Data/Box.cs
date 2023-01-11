@@ -2,6 +2,11 @@
 
 public sealed class Box : StorageUnit
 {
+    /// <summary>
+    /// Box weight
+    /// </summary>
+    public override decimal Weight { get; }
+    
     public Box(
         decimal width, 
         decimal height, 
@@ -11,6 +16,8 @@ public sealed class Box : StorageUnit
         DateTime? expiryDate = null) 
         : base(width, height, depth, weight, productionDate, expiryDate)
     {
+        Weight = weight;
+        
         if (expiryDate == null && productionDate == null)
         {
             throw new ArgumentException(
