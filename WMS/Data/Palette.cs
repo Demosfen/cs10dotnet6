@@ -1,5 +1,4 @@
 ﻿namespace WMS.Data;
-using System.Linq;
 
 /// <summary>
 /// A class describing palette
@@ -88,6 +87,11 @@ public sealed class Palette : StorageUnit, IAddDeleteBox
 
     public void DeleteBox(Box box)
     {
+        if (Boxes.Count == 0)
+        {
+            throw new ArithmeticException("No boxes left!");
+        }
+        
         Boxes.Remove(box);
     }
 }
