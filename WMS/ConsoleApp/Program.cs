@@ -25,10 +25,8 @@ internal class Program
         WriteLine(palette1.ToString());
         
         palette1.DeleteBox(box1);
-        palette1.DeleteBox(box1);
         palette1.DeleteBox(box2);
-        palette1.DeleteBox(box2);
-        
+
         WriteLine(palette1.ToString());
     }
 }
