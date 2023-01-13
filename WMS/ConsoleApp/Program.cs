@@ -19,6 +19,7 @@ internal class Program
             new DateTime(2009,1,1));    
 
         palette1.AddBox(box1);
+        palette1.AddBox(box1);
         palette1.AddBox(box2);
 
         WriteLine(palette1.ToString());
