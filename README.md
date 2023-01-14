@@ -7,4 +7,7 @@ This repository contains educational materials collected during C#10 .NET 6 trai
 - [x] [Chapter 04](Book/Chapter04-vscode)
 - [x] [Chapter 05](Book/Chapter05-vscode)
 - [x] [Chapter 06](Book/Chapter06-vscode)
-- [ ] [Chapter 07](Book/Chapter02-vscode)
+- [ ] [Chapter 07](Book/Chapter07)
+- [ ] [Chapter 08](Book/Chapter08)
+- [ ] [Chapter 09](Book/Chapter09)
+
