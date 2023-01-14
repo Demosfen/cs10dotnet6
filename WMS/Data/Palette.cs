@@ -3,7 +3,7 @@
 /// <summary>
 /// A class describing palette
 /// </summary>
-public sealed class Palette : StorageUnit, IAddDeleteBox
+public sealed class Palette : StorageUnit
 {
     /// <summary>
     /// Empty palette weight
