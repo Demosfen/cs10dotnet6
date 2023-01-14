@@ -1,10 +1,9 @@
 ﻿namespace WMS.Data;
-using System.Linq;
 
 /// <summary>
 /// A class describing palette
 /// </summary>
-public sealed class Palette : StorageUnit
+public sealed class Palette : StorageUnit, IAddDeleteBox
 {
     /// <summary>
     /// Empty palette weight
@@ -14,7 +13,7 @@ public sealed class Palette : StorageUnit
     /// <summary>
     /// Boxes on the palette
     /// </summary>
-    public readonly List<Box> Boxes = new();
+    private readonly List<Box> Boxes = new();
 
     /// <summary>
     /// Palette volume computed as
@@ -67,5 +66,32 @@ public sealed class Palette : StorageUnit
                $"Weight: {Weight} kilos\n" +
                $"Volume: {Volume} cubic decimeters\n" +
                $"Exp. Date: {ExpiryDate}.";
+    }
+
+    public void AddBox(Box box)
+    {
+        if (box.Width > Width)
+        {
+            throw new ArgumentException(
+                "Width of the box shouldn't be greater than palette.");
+        }
+
+        if (box.Depth > Depth)
+        {
+            throw new ArgumentException(
+                "Depth of the box shouldn't be greater than palette.");
+        }
+        
+        Boxes.Add(box);
+    }
+
+    public void DeleteBox(Box box)
+    {
+        if (Boxes.Count == 0)
+        {
+            throw new ArithmeticException("No boxes left!");
+        }
+        
+        Boxes.Remove(box);
     }
 }
