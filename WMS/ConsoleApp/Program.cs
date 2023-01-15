@@ -16,7 +16,7 @@ internal class Program
             new DateTime(2008,1,1));
         Box box2 = new(
             1, 1, 1, 3,
-            new DateTime(2009,1,1));    
+            new DateTime(2009,1,1));
 
         palette1.AddBox(box1);
         palette1.AddBox(box1);
@@ -24,7 +24,7 @@ internal class Program
 
         WriteLine(palette1.ToString());
         
-        //palette1.DeleteBox(box1);
+        palette1.DeleteBox(box1.Id);
         //palette1.DeleteBox(box2);
         //WriteLine(palette1.ToString());
         //palette1.PrintAllBoxes();

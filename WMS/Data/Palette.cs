@@ -13,32 +13,32 @@ public sealed class Palette : StorageUnit
     /// <summary>
     /// Boxes on the palette
     /// </summary>
-    private readonly List<Box> Boxes = new();
+    private readonly List<Box> _boxes = new();
+
+    public IReadOnlyCollection<Box> Boxes => _boxes;
 
     /// <summary>
     /// Palette volume computed as
     /// empty palette volume plus
     /// sum of boxes volume
     /// </summary>
-    public override decimal Volume =>
-        base.Volume
-        + Boxes.Sum(box => box.Volume);
+    public override decimal Volume 
+        => base.Volume + _boxes.Sum(box => box.Volume);
     
     /// <summary>
     /// Palette weight computed as
     /// empty palette weight and
     /// sum of boxes weight
     /// </summary>
-    public override decimal Weight => 
-        DefaultWeight 
-        + Boxes.Sum(box => box.Weight);
+    public override decimal Weight 
+        => DefaultWeight + _boxes.Sum(box => box.Weight);
 
     /// <summary>
     /// Palette expiry date computed as
     /// the minimal box exp. date.
     /// </summary>
     public override DateTime? ExpiryDate =>
-        Boxes.Min(box => box.ExpiryDate);
+        _boxes.Min(box => box.ExpiryDate);
 
     /// <summary>
     /// Default palette constructor
@@ -51,7 +51,7 @@ public sealed class Palette : StorageUnit
         decimal width,
         decimal height,
         decimal depth)
-        : base(width, height, depth, DefaultWeight)
+        : base(width, height, depth)
     { }
 
     /// <summary>
@@ -62,7 +62,7 @@ public sealed class Palette : StorageUnit
     public override string ToString()
     {
         return $"Palette {Id} contains:\n" +
-               $"Boxes count: {Boxes.Count}\n" +
+               $"Boxes count: {_boxes.Count}\n" +
                $"Weight: {Weight} kilos\n" +
                $"Volume: {Volume} cubic decimeters\n" +
                $"Exp. Date: {ExpiryDate}.\n";
@@ -82,36 +82,35 @@ public sealed class Palette : StorageUnit
                 "Depth of the box shouldn't be greater than palette.");
         }
         
-        Boxes.Add(box);
+        // TODO validate adding existing box
+        
+        _boxes.Add(box);
     }
 
-    public void DeleteBox(Box box)
+    public void DeleteBox(Guid boxId)
     {
-        if (Boxes.Count == 0)
-        {
-            throw new ArithmeticException("No boxes left!");
-        }
-        
-        Boxes.Remove(box);
+        var box = _boxes.SingleOrDefault(x => x.Id == boxId)
+                  ?? throw new InvalidOperationException($"Box with id = {boxId} wasn't found");
+
+        _boxes.Remove(box);
     }
 
     /// <summary>
     /// Print all boxes on the palette
     /// to the Console
     /// </summary>
-    /// <param name="palette"></param>
     public void PrintAllBoxes()
     {
-        if (Boxes.Count != 0)
+        if (_boxes.Count != 0)
         {
-            foreach (var box in Boxes)
+            foreach (var box in _boxes)
             {
-                System.Console.WriteLine(box.ToString());
+                Console.WriteLine(box.ToString());
             }
         }
         else
         {
-            System.Console.WriteLine("No boxes to output!");
+            Console.WriteLine("No boxes to output!");
         }
     }
 }

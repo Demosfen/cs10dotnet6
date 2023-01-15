@@ -1,12 +1,21 @@
 ﻿namespace WMS.Data;
 
+/// <summary>
+/// Box
+/// </summary>
 public sealed class Box : StorageUnit
 {
-    /// <summary>
-    /// Box weight
-    /// </summary>
+    /// <inheritdoc />
     public override decimal Weight { get; }
+
+    /// <summary>
+    /// Unit production date/time
+    /// </summary>
+    public DateTime? ProductionDate { get; }
     
+    /// <inheritdoc />
+    public override DateTime? ExpiryDate { get; }
+
     public Box(
         decimal width, 
         decimal height, 
@@ -14,7 +23,7 @@ public sealed class Box : StorageUnit
         decimal weight, 
         DateTime? productionDate = null, 
         DateTime? expiryDate = null) 
-        : base(width, height, depth, weight, productionDate, expiryDate)
+        : base(width, height, depth)
     {
         Weight = weight;
         
@@ -31,6 +40,10 @@ public sealed class Box : StorageUnit
             
             ExpiryDate = expiryDate ?? 
                          productionDate.Value.AddDays(ExpiryDays);
+        }
+        else
+        {
+            ExpiryDate = expiryDate;
         }
 
         if (ExpiryDate <= ProductionDate)

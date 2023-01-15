@@ -14,7 +14,7 @@ public abstract class StorageUnit
     /// <summary>
     /// Unit ID
     /// </summary>
-    protected Guid Id { get; }
+    public Guid Id { get; }
     
     /// <summary>
     /// Object width
@@ -43,14 +43,9 @@ public abstract class StorageUnit
     public abstract decimal Weight { get; }
 
     /// <summary>
-    /// Unit production date/time
-    /// </summary>
-    protected DateTime? ProductionDate { get; set; }
-    
-    /// <summary>
     /// Unit expiry date/time
     /// </summary>
-    public virtual DateTime? ExpiryDate { get; set; }
+    public abstract DateTime? ExpiryDate { get; }
 
     /// <summary>
     /// Constructor which strictly encourage developers to
@@ -59,21 +54,14 @@ public abstract class StorageUnit
     /// <param name="width">Unit width</param>
     /// <param name="height">Unit height</param>
     /// <param name="depth">Unit depth</param>
-    /// <param name="weight">Unit weight</param>
-    /// <param name="productionDate">Unit production Date/Time</param>
-    /// <param name="expiryDate">Unit expiry date</param>
     protected StorageUnit(
         decimal width,
         decimal height,
-        decimal depth,
-        decimal weight,
-        DateTime? productionDate = null,
-        DateTime? expiryDate = null)
+        decimal depth)
     {
         Id = Guid.NewGuid();
         Width = width;
         Height = height;
         Depth = depth;
-        ProductionDate = productionDate;
     }
 }
