@@ -1,4 +1,6 @@
-﻿namespace WMS.Data;
+﻿using System.Text.Json.Serialization;
+
+namespace WMS.Data;
 
 /// <summary>
 /// A class describing palette
@@ -15,6 +17,7 @@ public sealed class Palette : StorageUnit
     /// </summary>
     private readonly List<Box> _boxes = new();
 
+    [JsonInclude]
     public IReadOnlyCollection<Box> Boxes => _boxes;
 
     /// <summary>
@@ -47,6 +50,7 @@ public sealed class Palette : StorageUnit
     /// <param name="height">Palette height</param>
     /// <param name="depth">Palette depth</param>
     /// <param name="weight">Palette weight</param>
+    [JsonConstructor]
     public Palette(
         decimal width,
         decimal height,
@@ -93,24 +97,5 @@ public sealed class Palette : StorageUnit
                   ?? throw new InvalidOperationException($"Box with id = {boxId} wasn't found");
 
         _boxes.Remove(box);
-    }
-
-    /// <summary>
-    /// Print all boxes on the palette
-    /// to the Console
-    /// </summary>
-    public void PrintAllBoxes()
-    {
-        if (_boxes.Count != 0)
-        {
-            foreach (var box in _boxes)
-            {
-                Console.WriteLine(box.ToString());
-            }
-        }
-        else
-        {
-            Console.WriteLine("No boxes to output!");
-        }
     }
 }

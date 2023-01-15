@@ -1,4 +1,6 @@
-﻿namespace WMS.Data;
+﻿using System.Text.Json.Serialization;
+
+namespace WMS.Data;
 
 /// <summary>
 /// Box
@@ -6,16 +8,20 @@
 public sealed class Box : StorageUnit
 {
     /// <inheritdoc />
+    [JsonInclude]
     public override decimal Weight { get; }
 
     /// <summary>
     /// Unit production date/time
     /// </summary>
+    [JsonInclude]
     public DateTime? ProductionDate { get; }
     
     /// <inheritdoc />
+    [JsonInclude]
     public override DateTime? ExpiryDate { get; }
 
+    [JsonConstructor]
     public Box(
         decimal width, 
         decimal height, 

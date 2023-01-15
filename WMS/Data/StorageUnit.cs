@@ -1,4 +1,6 @@
-﻿namespace WMS.Data;
+﻿using System.Text.Json.Serialization;
+
+namespace WMS.Data;
 
 /// <summary>
 /// This is an abstract class, which contains common properties
@@ -14,21 +16,25 @@ public abstract class StorageUnit
     /// <summary>
     /// Unit ID
     /// </summary>
+    [JsonInclude]
     public Guid Id { get; }
     
     /// <summary>
     /// Object width
     /// </summary>
+    [JsonInclude]
     public decimal Width { get; }
 
     /// <summary>
     /// Object height
     /// </summary>
+    [JsonInclude]
     public decimal Height { get; }
 
     /// <summary>
     /// Object depth
     /// </summary>
+    [JsonInclude]
     public decimal Depth { get; }
 
     /// <summary>
@@ -40,11 +46,13 @@ public abstract class StorageUnit
     /// Object weight, which can be calculated or set
     /// during runtime
     /// </summary>
+    [JsonInclude]
     public abstract decimal Weight { get; }
 
     /// <summary>
     /// Unit expiry date/time
     /// </summary>
+    [JsonInclude]
     public abstract DateTime? ExpiryDate { get; }
 
     /// <summary>
@@ -54,6 +62,7 @@ public abstract class StorageUnit
     /// <param name="width">Unit width</param>
     /// <param name="height">Unit height</param>
     /// <param name="depth">Unit depth</param>
+    [JsonConstructor]
     protected StorageUnit(
         decimal width,
         decimal height,
