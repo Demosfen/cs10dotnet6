@@ -40,19 +40,18 @@ public abstract class StorageUnit
     /// <summary>
     /// Unit volume
     /// </summary>
+    [JsonIgnore]
     public virtual decimal Volume => Width * Height * Depth;
 
     /// <summary>
     /// Object weight, which can be calculated or set
     /// during runtime
     /// </summary>
-    [JsonInclude]
     public abstract decimal Weight { get; }
 
     /// <summary>
     /// Unit expiry date/time
     /// </summary>
-    [JsonInclude]
     public abstract DateTime? ExpiryDate { get; }
 
     /// <summary>

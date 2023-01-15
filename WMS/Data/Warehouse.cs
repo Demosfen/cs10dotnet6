@@ -7,6 +7,6 @@ namespace WMS.Data;
 /// </summary>
 public sealed class Warehouse
 {
-    [JsonInclude]
-    public readonly List<Palette> Palettes = new();
+    [JsonInclude] 
+    public List<Palette> Palettes { get; } = new();
 }

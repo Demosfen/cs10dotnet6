@@ -25,6 +25,7 @@ public sealed class Palette : StorageUnit
     /// empty palette volume plus
     /// sum of boxes volume
     /// </summary>
+    [JsonIgnore]
     public override decimal Volume 
         => base.Volume + _boxes.Sum(box => box.Volume);
     
@@ -33,6 +34,7 @@ public sealed class Palette : StorageUnit
     /// empty palette weight and
     /// sum of boxes weight
     /// </summary>
+    [JsonIgnore]
     public override decimal Weight 
         => DefaultWeight + _boxes.Sum(box => box.Weight);
 
@@ -40,8 +42,8 @@ public sealed class Palette : StorageUnit
     /// Palette expiry date computed as
     /// the minimal box exp. date.
     /// </summary>
-    public override DateTime? ExpiryDate =>
-        _boxes.Min(box => box.ExpiryDate);
+    [JsonIgnore]
+    public override DateTime? ExpiryDate => _boxes.Min(box => box.ExpiryDate);
 
     /// <summary>
     /// Default palette constructor
