@@ -14,7 +14,7 @@ public abstract class StorageUnit
     /// <summary>
     /// Unit ID
     /// </summary>
-    public Guid Id { get; }
+    protected Guid Id { get; }
     
     /// <summary>
     /// Object width
@@ -45,7 +45,7 @@ public abstract class StorageUnit
     /// <summary>
     /// Unit production date/time
     /// </summary>
-    public DateTime? ProductionDate { get; set; }
+    protected DateTime? ProductionDate { get; set; }
     
     /// <summary>
     /// Unit expiry date/time

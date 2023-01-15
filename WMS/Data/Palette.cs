@@ -65,7 +65,7 @@ public sealed class Palette : StorageUnit
                $"Boxes count: {Boxes.Count}\n" +
                $"Weight: {Weight} kilos\n" +
                $"Volume: {Volume} cubic decimeters\n" +
-               $"Exp. Date: {ExpiryDate}.";
+               $"Exp. Date: {ExpiryDate}.\n";
     }
 
     public void AddBox(Box box)
@@ -93,5 +93,25 @@ public sealed class Palette : StorageUnit
         }
         
         Boxes.Remove(box);
+    }
+
+    /// <summary>
+    /// Print all boxes on the palette
+    /// to the Console
+    /// </summary>
+    /// <param name="palette"></param>
+    public void PrintAllBoxes()
+    {
+        if (Boxes.Count != 0)
+        {
+            foreach (var box in Boxes)
+            {
+                System.Console.WriteLine(box.ToString());
+            }
+        }
+        else
+        {
+            System.Console.WriteLine("No boxes to output!");
+        }
     }
 }

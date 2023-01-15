@@ -40,4 +40,14 @@ public sealed class Box : StorageUnit
                 paramName: nameof(ExpiryDate));
         }
     }
+
+    public override string ToString()
+    {
+        return $"The box with ID {Id} has:\n" +
+               $"Size (WxHxD): {Width}x{Height}x{Depth} decimeters,\n" +
+               $"Volume: {Volume} decimeters,\n" +
+               $"Weight: {Weight} kilo(s),\n" +
+               $"Production date: {ProductionDate},\n" +
+               $"Expiry date: {ExpiryDate}.\n";
+    }
 }
