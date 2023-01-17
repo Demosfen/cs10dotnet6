@@ -27,7 +27,14 @@ public class WarehouseRepository: IWarehouseRepository
 
     public void Save(Warehouse warehouse, string fileName)
     {
-        var json = JsonSerializer.Serialize(warehouse, _options);
-        File.WriteAllText(fileName, json, Encoding.UTF8);
+        string filePath = System.IO.Path.Combine(System.Environment.CurrentDirectory, fileName);
+
+        using (Stream fileStream = File.Create(filePath))
+        {
+            JsonSerializer.Serialize<Warehouse>(
+                utf8Json: fileStream, value: warehouse, _options);
+        }
+        /*var json = JsonSerializer.Serialize(warehouse, _options);
+        File.WriteAllText(fileName, json, Encoding.UTF8);*/
     }
 }
