@@ -81,6 +81,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWithFileSystems", "Chapter09\WorkingWithFileSystems\WorkingWithFileSystems.csproj", "{D37FC700-A8C2-4E55-92F6-3650A59B9BC0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chapter09", "Chapter09", "{E7A74683-0500-4249-8A36-4D12E90F1A43}"
+	ProjectSection(SolutionItems) = preProject
+		Chapter09\Exercise 9.1.md = Chapter09\Exercise 9.1.md
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWithStreams", "Chapter09\WorkingWithStreams\WorkingWithStreams.csproj", "{EBCE4B67-2952-48E8-B149-4FDBF64CC232}"
 EndProject
