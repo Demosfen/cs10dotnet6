@@ -86,6 +86,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWithStreams", "Chapt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWithEncodings", "Chapter09\WorkingWithEncodings\WorkingWithEncodings.csproj", "{2C8032D2-9804-4F04-B250-34AB4E76C453}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWithSerialization", "Chapter09\WorkingWithSerialization\WorkingWithSerialization.csproj", "{435369E6-8E24-4C82-B7AC-D0FE2674061A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -126,6 +128,7 @@ Global
 		{D37FC700-A8C2-4E55-92F6-3650A59B9BC0} = {E7A74683-0500-4249-8A36-4D12E90F1A43}
 		{EBCE4B67-2952-48E8-B149-4FDBF64CC232} = {E7A74683-0500-4249-8A36-4D12E90F1A43}
 		{2C8032D2-9804-4F04-B250-34AB4E76C453} = {E7A74683-0500-4249-8A36-4D12E90F1A43}
+		{435369E6-8E24-4C82-B7AC-D0FE2674061A} = {E7A74683-0500-4249-8A36-4D12E90F1A43}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C6ED4DC2-05BC-49C6-A481-F23074BB117D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -264,5 +267,9 @@ Global
 		{2C8032D2-9804-4F04-B250-34AB4E76C453}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C8032D2-9804-4F04-B250-34AB4E76C453}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C8032D2-9804-4F04-B250-34AB4E76C453}.Release|Any CPU.Build.0 = Release|Any CPU
+		{435369E6-8E24-4C82-B7AC-D0FE2674061A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{435369E6-8E24-4C82-B7AC-D0FE2674061A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{435369E6-8E24-4C82-B7AC-D0FE2674061A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{435369E6-8E24-4C82-B7AC-D0FE2674061A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -27,13 +27,8 @@ internal class Program
         warehouse.Palettes.Add(palette1);
 
         WriteLine(palette1.ToString());
-        
-        //palette1.DeleteBox(box1.Id);
-        //palette1.DeleteBox(box2);
-        //WriteLine(palette1.ToString());
-        //palette1.PrintAllBoxes();
-        
-        //palette1.AddBox(box2);
+
+        var plt1 = palette1.Boxes;
 
         var repository = new WarehouseRepository();
         repository.Save(warehouse, "warehouse.json");
