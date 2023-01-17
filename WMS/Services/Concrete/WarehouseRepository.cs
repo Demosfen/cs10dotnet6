@@ -2,14 +2,18 @@ using System.Text;
 using WMS.Data;
 using WMS.Services.Abstract;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace WMS.Services.Concrete;
 
 public class WarehouseRepository: IWarehouseRepository
 {
-    private static readonly JsonSerializerOptions _options = new JsonSerializerOptions()
+    private static readonly JsonSerializerOptions _options = new()
     {
-        // TODO ...
+        IncludeFields = true,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        PropertyNameCaseInsensitive = true,
+        WriteIndented = true
     };
     
     public Warehouse Read(string fileName)

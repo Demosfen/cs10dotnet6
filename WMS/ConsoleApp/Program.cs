@@ -12,6 +12,8 @@ internal class Program
         Warehouse warehouse = new();
         Palette palette1 = new (
             10,10,10);
+        
+        warehouse.Palettes.Add(palette1);
 
         Box box1 = new(
             10, 1, 10, 5,
@@ -21,20 +23,14 @@ internal class Program
             new DateTime(2009,1,1));
 
         palette1.AddBox(box1);
-        //palette1.AddBox(box1);
         palette1.AddBox(box2);
-        
-        warehouse.Palettes.Add(palette1);
-
-        WriteLine(palette1.ToString());
+        palette1.AddBox(box1);
 
         var plt1 = palette1.Boxes;
 
-        var repository = new WarehouseRepository();
+        WarehouseRepository repository = new();
         repository.Save(warehouse, "warehouse.json");
 
-        var loadedWarehouse = repository.Read("warehouse.json");
-        
-        palette1.PrintAllBoxes();
+        //var loadedWarehouse = repository.Read("warehouse.json");
     }
 }

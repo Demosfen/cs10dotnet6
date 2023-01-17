@@ -16,31 +16,26 @@ public abstract class StorageUnit
     /// <summary>
     /// Unit ID
     /// </summary>
-    [JsonInclude]
     public Guid Id { get; }
     
     /// <summary>
     /// Object width
     /// </summary>
-    [JsonInclude]
     public decimal Width { get; }
 
     /// <summary>
     /// Object height
     /// </summary>
-    [JsonInclude]
     public decimal Height { get; }
 
     /// <summary>
     /// Object depth
     /// </summary>
-    [JsonInclude]
     public decimal Depth { get; }
 
     /// <summary>
     /// Unit volume
     /// </summary>
-    [JsonIgnore]
     public virtual decimal Volume => Width * Height * Depth;
 
     /// <summary>
@@ -61,7 +56,6 @@ public abstract class StorageUnit
     /// <param name="width">Unit width</param>
     /// <param name="height">Unit height</param>
     /// <param name="depth">Unit depth</param>
-    [JsonConstructor]
     protected StorageUnit(
         decimal width,
         decimal height,

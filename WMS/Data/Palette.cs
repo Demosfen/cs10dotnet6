@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace WMS.Data;
+﻿namespace WMS.Data;
 
 /// <summary>
 /// A class describing palette
@@ -16,8 +14,7 @@ public sealed class Palette : StorageUnit
     /// Boxes on the palette
     /// </summary>
     private readonly List<Box> _boxes = new();
-
-    [JsonInclude]
+    
     public IReadOnlyCollection<Box> Boxes => _boxes;
 
     /// <summary>
@@ -25,7 +22,6 @@ public sealed class Palette : StorageUnit
     /// empty palette volume plus
     /// sum of boxes volume
     /// </summary>
-    [JsonIgnore]
     public override decimal Volume 
         => base.Volume + _boxes.Sum(box => box.Volume);
     
@@ -34,7 +30,6 @@ public sealed class Palette : StorageUnit
     /// empty palette weight and
     /// sum of boxes weight
     /// </summary>
-    [JsonIgnore]
     public override decimal Weight 
         => DefaultWeight + _boxes.Sum(box => box.Weight);
 
@@ -42,7 +37,6 @@ public sealed class Palette : StorageUnit
     /// Palette expiry date computed as
     /// the minimal box exp. date.
     /// </summary>
-    [JsonIgnore]
     public override DateTime? ExpiryDate => _boxes.Min(box => box.ExpiryDate);
 
     /// <summary>
@@ -51,8 +45,6 @@ public sealed class Palette : StorageUnit
     /// <param name="width">Palette width</param>
     /// <param name="height">Palette height</param>
     /// <param name="depth">Palette depth</param>
-    /// <param name="weight">Palette weight</param>
-    [JsonConstructor]
     public Palette(
         decimal width,
         decimal height,
@@ -87,9 +79,18 @@ public sealed class Palette : StorageUnit
             throw new ArgumentException(
                 "Depth of the box shouldn't be greater than palette.");
         }
+
+        foreach (var existingBox in _boxes)
+        {
+            if (existingBox.Id == box.Id)
+            {
+                Console.WriteLine(
+                    $"The box {box.Id} already added to the palette{Id}! Skipping...");
+                return;
+            }
+        }
         
-        // TODO validate adding existing box
-        
+        Console.WriteLine($"The box {box.Id} added to the palette {Id}.");
         _boxes.Add(box);
     }
 
