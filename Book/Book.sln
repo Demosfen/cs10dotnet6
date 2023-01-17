@@ -88,6 +88,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWithEncodings", "Cha
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWithSerialization", "Chapter09\WorkingWithSerialization\WorkingWithSerialization.csproj", "{435369E6-8E24-4C82-B7AC-D0FE2674061A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWithJson", "Chapter09\WorkingWithJson\WorkingWithJson.csproj", "{58695ABB-32BB-4DB9-8E94-5B75A7201C0B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -129,6 +131,7 @@ Global
 		{EBCE4B67-2952-48E8-B149-4FDBF64CC232} = {E7A74683-0500-4249-8A36-4D12E90F1A43}
 		{2C8032D2-9804-4F04-B250-34AB4E76C453} = {E7A74683-0500-4249-8A36-4D12E90F1A43}
 		{435369E6-8E24-4C82-B7AC-D0FE2674061A} = {E7A74683-0500-4249-8A36-4D12E90F1A43}
+		{58695ABB-32BB-4DB9-8E94-5B75A7201C0B} = {E7A74683-0500-4249-8A36-4D12E90F1A43}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C6ED4DC2-05BC-49C6-A481-F23074BB117D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -271,5 +274,9 @@ Global
 		{435369E6-8E24-4C82-B7AC-D0FE2674061A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{435369E6-8E24-4C82-B7AC-D0FE2674061A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{435369E6-8E24-4C82-B7AC-D0FE2674061A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58695ABB-32BB-4DB9-8E94-5B75A7201C0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58695ABB-32BB-4DB9-8E94-5B75A7201C0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58695ABB-32BB-4DB9-8E94-5B75A7201C0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58695ABB-32BB-4DB9-8E94-5B75A7201C0B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

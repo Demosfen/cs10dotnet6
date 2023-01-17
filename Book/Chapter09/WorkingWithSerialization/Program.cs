@@ -3,7 +3,7 @@ using Packt.Shared; // Person
 using static System.Console;
 using static System.Environment;
 using static System.IO.Path;
-
+using NewJson = System.Text.Json.JsonSerializer;
 
 // create an object graph
 List<Person> people = new()
@@ -58,6 +58,37 @@ using (FileStream xmlLoad = File.Open(path, FileMode.Open))
 if (xs.Deserialize(xmlLoad) is List<Person> loadedPeople)
     {
         foreach (Person p in loadedPeople)
+        {
+            WriteLine("{0} has {1} children.",
+                p.LastName, p.Children?.Count ?? 0);
+        }
+    }
+}
+
+string jsonPath = Combine(CurrentDirectory,"people.json");
+
+using (StreamWriter jsonStream = File.CreateText(jsonPath))
+{
+    Newtonsoft.Json.JsonSerializer jss = new();
+    
+    jss.Serialize(jsonStream, people);
+}
+
+WriteLine();
+WriteLine("Written {0:N0} bytes of JSON to: {1}",
+    arg0: new FileInfo(jsonPath).Length,
+    arg1: jsonPath);
+// Display the serialized object graph
+WriteLine(File.ReadAllText(jsonPath));
+
+using (FileStream jsonLoad = File.Open(jsonPath, FileMode.Open))
+{
+    List<Person>? loadedPeople = await NewJson.DeserializeAsync(utf8Json: jsonLoad,
+        returnType: typeof(List<Person>)) as List<Person>;
+    
+    if (loadedPeople is not null)
+    {
+        foreach (var p in loadedPeople)
         {
             WriteLine("{0} has {1} children.",
                 p.LastName, p.Children?.Count ?? 0);
