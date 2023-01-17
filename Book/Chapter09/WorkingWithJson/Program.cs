@@ -45,7 +45,7 @@ public class Book
         Title = title;
     }
 // properties
-    public string Title { get; set; }
+    public string Title { get; }
     public string? Author { get; set; }
 // fields
     [JsonInclude] // include this field
