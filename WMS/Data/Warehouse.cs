@@ -6,7 +6,9 @@ namespace WMS.Data;
 /// A class which describes a warehouse.
 /// </summary>
 public sealed class Warehouse
-{
-    [JsonInclude] 
-    public List<Palette> Palettes { get; } = new();
+{ 
+    /// <summary>
+    /// Palettes stored in warehouse
+    /// </summary>
+    public List <Palette> Palettes { get; } = new();
 }

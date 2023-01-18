@@ -1,8 +1,9 @@
 using System.Text;
 using WMS.Data;
 using WMS.Services.Abstract;
+using WMS.Services.Models.Serialization;
 using System.Text.Json;
-using System.Text.Json.Serialization;
+using System.Text.Json.Nodes;
 
 namespace WMS.Services.Concrete;
 
@@ -16,14 +17,17 @@ public class WarehouseRepository: IWarehouseRepository
         WriteIndented = true
     };
     
-    public async Task<Warehouse> Read(string fileName)
+    public async Task<RootObject> Read(string fileName)
     {
         string filePath = Path.Combine(Environment.CurrentDirectory, fileName);
 
         using FileStream openStream = File.OpenRead(filePath);
+
+        var json = await File.ReadAllTextAsync(filePath, Encoding.UTF8);
+
+        //JsonNode? result1 = JsonObject.Parse(json);
         
-        //var json = await File.ReadAllTextAsync(filePath, Encoding.UTF8);
-        var result = await JsonSerializer.DeserializeAsync<Warehouse>(openStream, _options)
+        var result = await JsonSerializer.DeserializeAsync<RootObject>(openStream, _options)
                      ?? throw new Exception("There is nothing to deserialize...");
 
         return result;
@@ -38,7 +42,5 @@ public class WarehouseRepository: IWarehouseRepository
         await JsonSerializer.SerializeAsync<Warehouse>(
             utf8Json: fileStream, value: warehouse, _options);
         await fileStream.DisposeAsync();
-        /*var json = JsonSerializer.Serialize(warehouse, _options);
-        File.WriteAllText(fileName, json, Encoding.UTF8);*/
     }
 }

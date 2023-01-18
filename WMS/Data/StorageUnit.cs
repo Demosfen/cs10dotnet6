@@ -56,7 +56,7 @@ public abstract class StorageUnit
     /// <param name="width">Unit width</param>
     /// <param name="height">Unit height</param>
     /// <param name="depth">Unit depth</param>
-    protected StorageUnit(
+    public StorageUnit(
         decimal width,
         decimal height,
         decimal depth)

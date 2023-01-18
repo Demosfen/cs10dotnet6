@@ -1,4 +1,6 @@
-﻿namespace WMS.Data;
+﻿using System.Text.Json.Serialization;
+
+namespace WMS.Data;
 
 /// <summary>
 /// A class describing palette
@@ -14,7 +16,7 @@ public sealed class Palette : StorageUnit
     /// Boxes on the palette
     /// </summary>
     private readonly List<Box> _boxes = new();
-    
+
     public IReadOnlyCollection<Box> Boxes => _boxes;
 
     /// <summary>
@@ -89,7 +91,7 @@ public sealed class Palette : StorageUnit
                 return;
             }
         }
-        
+
         Console.WriteLine($"The box {box.Id} added to the palette {Id}.");
         _boxes.Add(box);
     }
