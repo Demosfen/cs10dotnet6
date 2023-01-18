@@ -17,7 +17,7 @@ public class WarehouseRepository: IWarehouseRepository
         WriteIndented = true
     };
     
-    public async Task<RootObject> Read(string fileName)
+    public async Task<WarehouseModel> Read(string fileName)
     {
         string filePath = Path.Combine(Environment.CurrentDirectory, fileName);
 
@@ -27,8 +27,10 @@ public class WarehouseRepository: IWarehouseRepository
 
         //JsonNode? result1 = JsonObject.Parse(json);
         
-        var result = await JsonSerializer.DeserializeAsync<RootObject>(openStream, _options)
+        var result = await JsonSerializer.DeserializeAsync<WarehouseModel>(openStream, _options)
                      ?? throw new Exception("There is nothing to deserialize...");
+        
+        
 
         return result;
     }
