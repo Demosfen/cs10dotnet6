@@ -16,24 +16,28 @@ public class WarehouseRepository: IWarehouseRepository
         WriteIndented = true
     };
     
-    public Warehouse Read(string fileName)
+    public async Task<Warehouse> Read(string fileName)
     {
-        var json = File.ReadAllText(fileName, Encoding.UTF8);
-        var result = JsonSerializer.Deserialize<Warehouse>(json, _options)
-                     ?? throw new Exception("TODO");
+        string filePath = Path.Combine(Environment.CurrentDirectory, fileName);
+
+        using FileStream openStream = File.OpenRead(filePath);
+        
+        //var json = await File.ReadAllTextAsync(filePath, Encoding.UTF8);
+        var result = await JsonSerializer.DeserializeAsync<Warehouse>(openStream, _options)
+                     ?? throw new Exception("There is nothing to deserialize...");
 
         return result;
     }
 
-    public void Save(Warehouse warehouse, string fileName)
+    public async Task Save(Warehouse warehouse, string fileName)
     {
-        string filePath = System.IO.Path.Combine(System.Environment.CurrentDirectory, fileName);
+        string filePath = Path.Combine(Environment.CurrentDirectory, fileName);
 
-        using (Stream fileStream = File.Create(filePath))
-        {
-            JsonSerializer.Serialize<Warehouse>(
-                utf8Json: fileStream, value: warehouse, _options);
-        }
+        using FileStream fileStream = File.Create(filePath);
+        
+        await JsonSerializer.SerializeAsync<Warehouse>(
+            utf8Json: fileStream, value: warehouse, _options);
+        await fileStream.DisposeAsync();
         /*var json = JsonSerializer.Serialize(warehouse, _options);
         File.WriteAllText(fileName, json, Encoding.UTF8);*/
     }

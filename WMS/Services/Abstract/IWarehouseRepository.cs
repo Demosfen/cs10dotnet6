@@ -4,7 +4,7 @@ namespace WMS.Services.Abstract;
 
 public interface IWarehouseRepository
 {
-    Warehouse Read(string fileName);
+    Task<Warehouse> Read(string fileName);
 
-    void Save(Warehouse warehouse, string fileName);
+    Task Save(Warehouse warehouse, string fileName);
 }

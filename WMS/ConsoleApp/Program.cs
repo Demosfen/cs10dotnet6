@@ -7,7 +7,7 @@ namespace WMS.ConsoleApp;
 
 internal class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         Warehouse warehouse = new();
         Palette palette1 = new (
@@ -26,11 +26,13 @@ internal class Program
         palette1.AddBox(box2);
         palette1.AddBox(box1);
 
-        var plt1 = palette1.Boxes;
+        //var plt1 = palette1.Boxes;
 
         WarehouseRepository repository = new();
-        repository.Save(warehouse, "warehouse.json");
+        await repository.Save(warehouse, "warehouse.json");
 
-        //var loadedWarehouse = repository.Read("warehouse.json");
+        Warehouse loadedWarehouse = await repository.Read("warehouse.json");
+        
+        WriteLine(loadedWarehouse.Palettes[0]);
     }
 }
