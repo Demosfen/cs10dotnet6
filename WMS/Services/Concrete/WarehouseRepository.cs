@@ -3,7 +3,7 @@ using WMS.Data;
 using WMS.Services.Abstract;
 using WMS.Services.Models.Serialization;
 using System.Text.Json;
-using System.Text.Json.Nodes;
+using AutoMapper;
 
 namespace WMS.Services.Concrete;
 
@@ -16,21 +16,21 @@ public class WarehouseRepository: IWarehouseRepository
         PropertyNameCaseInsensitive = true,
         WriteIndented = true
     };
-    
-    public async Task<WarehouseModel> Read(string fileName)
+
+    public async Task<Warehouse> Read(string fileName)
     {
         string filePath = Path.Combine(Environment.CurrentDirectory, fileName);
 
         using FileStream openStream = File.OpenRead(filePath);
 
-        var json = await File.ReadAllTextAsync(filePath, Encoding.UTF8);
-
-        //JsonNode? result1 = JsonObject.Parse(json);
-        
-        var result = await JsonSerializer.DeserializeAsync<WarehouseModel>(openStream, _options)
+        var modelResult = await JsonSerializer.DeserializeAsync<WarehouseModel>(openStream, _options)
                      ?? throw new Exception("There is nothing to deserialize...");
         
-        
+        var config = new MapperConfiguration(
+            cfg => cfg.CreateMap<WarehouseModel, Warehouse>());
+        var mapper = new Mapper(config);
+
+        Warehouse result = mapper.Map<Warehouse>(modelResult);
 
         return result;
     }
