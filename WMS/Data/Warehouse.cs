@@ -8,5 +8,10 @@ public sealed class Warehouse
     /// <summary>
     /// Palettes stored in warehouse
     /// </summary>
-    public List <Palette> Palettes { get; } = new List<Palette>();
+    public List <Palette> Palettes { get; } = new();
+
+    public Warehouse()
+    {
+        
+    }
 }

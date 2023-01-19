@@ -33,6 +33,6 @@ internal class Program
 
         var loadedWarehouse = await repository.Read("warehouse.json");
         
-        WriteLine(loadedWarehouse.Palettes[0]);
+        WriteLine(loadedWarehouse.Palettes.ToString());
     }
 }

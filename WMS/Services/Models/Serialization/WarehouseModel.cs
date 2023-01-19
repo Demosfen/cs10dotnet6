@@ -2,6 +2,11 @@ namespace WMS.Services.Models.Serialization;
 
 public sealed class WarehouseModel
 {
-    public List<PaletteModel> Palettes = new List<PaletteModel>();
+    public WarehouseModel(List<PaletteModel> palettes)
+    {
+        Palettes = palettes;
+    }
+
+    public List <PaletteModel> Palettes { get; }
 }
 
