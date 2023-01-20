@@ -4,13 +4,13 @@ public class PaletteModel
 {
         public PaletteModel(
             List<BoxModel> boxes, 
-            int volume, 
-            int weight, 
-            string expiryDate, 
-            string id, 
-            int width, 
-            int height, 
-            int depth)
+            decimal volume, 
+            decimal weight, 
+            DateTime expiryDate, 
+            Guid id, 
+            decimal width, 
+            decimal height, 
+            decimal depth)
         {
             Boxes = boxes;
             Volume = volume;
@@ -23,11 +23,11 @@ public class PaletteModel
         }
 
         public List<BoxModel> Boxes { get; }
-        public int Volume { get; }
-        public int Weight { get; }
-        public string ExpiryDate { get; }
-        public string Id { get; }
-        public int Width { get; }
-        public int Height { get; }
-        public int Depth { get; }
+        public decimal Volume { get; }
+        public decimal Weight { get; }
+        public DateTime ExpiryDate { get; }
+        public Guid Id { get; }
+        public decimal Width { get; }
+        public decimal Height { get; }
+        public decimal Depth { get; }
 }

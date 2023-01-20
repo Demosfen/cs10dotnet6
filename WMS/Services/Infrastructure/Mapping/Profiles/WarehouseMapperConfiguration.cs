@@ -8,8 +8,6 @@ public class WarehouseMapperConfiguration : Profile
 {
     public WarehouseMapperConfiguration()
     {
-        CreateMap<WarehouseModel, Warehouse>()
-            .ForMember(x=> x.Palettes, 
-                o => o.MapFrom(p=>p.Palettes));
+        CreateMap<WarehouseModel, Warehouse>();
     }
 }

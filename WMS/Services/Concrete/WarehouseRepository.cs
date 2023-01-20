@@ -9,6 +9,8 @@ namespace WMS.Services.Concrete;
 
 public class WarehouseRepository: IWarehouseRepository
 {
+    private static IMapper Mapper { get; set; } = null!;
+    
     private static readonly JsonSerializerOptions _options = new()
     {
         IncludeFields = true,
@@ -17,33 +19,37 @@ public class WarehouseRepository: IWarehouseRepository
         WriteIndented = true
     };
 
-    private static IMapper Mapper { get; set; } = null!;
-
-    public static void CreateMapper()
+    private static void CreateWarehouseMapper()
     {
-        var mapperConfiguration = new MapperConfiguration(x =>
-            x.AddProfile<WarehouseMapperConfiguration>());
-        
+        var mapperConfiguration = new MapperConfiguration(
+            x =>
+            {
+                x.AddProfile<WarehouseMapperConfiguration>();
+                x.AddProfile<PaletteMapperConfiguration>();
+                x.AddProfile<BoxMapperConfiguration>();
+            });
+
         mapperConfiguration.AssertConfigurationIsValid();
 
         Mapper = mapperConfiguration.CreateMapper();
     }
 
+    /// <summary>
+    /// Reading warehouse saved state
+    /// </summary>
+    /// <param name="fileName">Warehouse JSON saved file</param>
+    /// <returns>Instantiated object of Warehouse type</returns>
+    /// <exception cref="Exception">If no saved json file</exception>
     public async Task<Warehouse> Read(string fileName)
     {
-        string filePath = Path.Combine(Environment.CurrentDirectory, fileName);
+        var filePath = Path.Combine(Environment.CurrentDirectory, fileName);
 
-        using FileStream openStream = File.OpenRead(filePath);
+        await using FileStream openStream = File.OpenRead(filePath);
 
         var modelResult = await JsonSerializer.DeserializeAsync<WarehouseModel>(openStream, _options)
                      ?? throw new Exception("There is nothing to deserialize...");
         
-        /*var config = new MapperConfiguration(
-            cfg => cfg.CreateMap<WarehouseModel, Warehouse>());        
-
-        var mapper = new Mapper(config);
-
-        Warehouse result = mapper.Map<Warehouse>(modelResult);*/
+        CreateWarehouseMapper();
 
         var result = Mapper.Map<Warehouse>(modelResult);
 

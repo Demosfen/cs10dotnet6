@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace WMS.Data;
+﻿namespace WMS.Data;
 
 /// <summary>
 /// A class describing palette
@@ -61,11 +59,13 @@ public sealed class Palette : StorageUnit
     /// <returns>Palette info</returns>
     public override string ToString()
     {
-        return $"Palette {Id} contains:\n" +
+        return $"------------------------\n" +
+               $"Palette {Id}:\n" +
                $"Boxes count: {_boxes.Count}\n" +
                $"Weight: {Weight} kilos\n" +
                $"Volume: {Volume} cubic decimeters\n" +
-               $"Exp. Date: {ExpiryDate}.\n";
+               $"Exp. Date: {ExpiryDate}.\n" +
+               $"------------------------";
     }
 
     public void AddBox(Box box)
@@ -96,11 +96,12 @@ public sealed class Palette : StorageUnit
         _boxes.Add(box);
     }
 
-    public void DeleteBox(Guid boxId)
+    public void DeleteBox(Box box)
     {
-        var box = _boxes.SingleOrDefault(x => x.Id == boxId)
-                  ?? throw new InvalidOperationException($"Box with id = {boxId} wasn't found");
+        var boxId = _boxes.SingleOrDefault(x => x.Id == box.Id)
+                  ?? throw new InvalidOperationException($"Box with id = {box.Id} wasn't found");
 
+        Console.WriteLine($"Box with {box.Id} was removed from the warehouse.");
         _boxes.Remove(box);
     }
 }

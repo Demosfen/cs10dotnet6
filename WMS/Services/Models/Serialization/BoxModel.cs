@@ -3,14 +3,14 @@ namespace WMS.Services.Models.Serialization;
 public class BoxModel
 {
     public BoxModel(
-        int weight, 
-        string productionDate, 
-        string expiryDate, 
-        int volume, 
-        string id, 
-        int width, 
-        int height, 
-        int depth)
+        decimal weight, 
+        DateTime productionDate, 
+        DateTime expiryDate, 
+        decimal volume, 
+        Guid id, 
+        decimal width, 
+        decimal height, 
+        decimal depth)
     {
         Weight = weight;
         ProductionDate = productionDate;
@@ -22,12 +22,12 @@ public class BoxModel
         Depth = depth;
     }
 
-    public int Weight { get; }
-    public string ProductionDate { get; }
-    public string ExpiryDate { get; }
-    public int Volume { get; }
-    public string Id { get; }
-    public int Width { get; }
-    public int Height { get; }
-    public int Depth { get; }
+    public decimal Weight { get; }
+    public DateTime ProductionDate { get; }
+    public DateTime ExpiryDate { get; }
+    public decimal Volume { get; }
+    public Guid Id { get; }
+    public decimal Width { get; }
+    public decimal Height { get; }
+    public decimal Depth { get; }
 }

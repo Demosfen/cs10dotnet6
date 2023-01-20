@@ -9,7 +9,6 @@ internal class Program
 {
     public static async Task Main(string[] args)
     {
-        Warehouse warehouse = new();
         Palette palette1 = new (
             10,10,10);
 
@@ -23,16 +22,27 @@ internal class Program
         palette1.AddBox(box1);
         palette1.AddBox(box2);
         palette1.AddBox(box1);
+        palette1.DeleteBox(box1);
+        palette1.AddBox(box1);
         
-        warehouse.Palettes.Add(palette1);
+        Warehouse warehouse = new();
+        
+        warehouse.AddPalette(palette1);
+        warehouse.AddPalette(palette1);
 
-        //var plt1 = palette1.Boxes;
+        WriteLine(warehouse);
+        
+        //warehouse.Palettes.Add(palette1); //not allowed!
 
         WarehouseRepository repository = new();
-        await repository.Save(warehouse, "warehouse.json");
+        await repository.Save(warehouse, "warehouse.json").ConfigureAwait(false);
 
-        var loadedWarehouse = await repository.Read("warehouse.json");
+        Warehouse loadedWarehouse = await repository.Read("warehouse.json").ConfigureAwait(false);
         
-        WriteLine(loadedWarehouse.Palettes.ToString());
+        WriteLine(loadedWarehouse);
+        
+        loadedWarehouse.DeletePalette(palette1);
+        
+        WriteLine(loadedWarehouse);
     }
 }
