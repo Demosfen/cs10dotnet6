@@ -102,6 +102,7 @@ public sealed class Palette : StorageUnit
                   ?? throw new InvalidOperationException($"Box with id = {box.Id} wasn't found");
 
         Console.WriteLine($"Box with {box.Id} was removed from the warehouse.");
+        
         _boxes.Remove(box);
     }
 }

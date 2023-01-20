@@ -8,7 +8,7 @@ public sealed class Warehouse
     /// <summary>
     /// Palettes stored in warehouse
     /// </summary>
-    private List <Palette> _palettes { get; } = new();
+    private readonly List <Palette> _palettes = new();
 
     public IReadOnlyCollection<Palette> Palettes => _palettes;
     
@@ -56,6 +56,7 @@ public sealed class Warehouse
                   ?? throw new InvalidOperationException($"Palette with id = {palette.Id} wasn't found");
         
         Console.WriteLine($"Palette with {palette.Id} was removed from the warehouse.");
+        
         _palettes.Remove(palette);
         
     }
