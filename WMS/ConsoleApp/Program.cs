@@ -37,7 +37,7 @@ internal class Program
         WarehouseRepository repository = new();
         await repository.Save(warehouse, "warehouse.json").ConfigureAwait(false);
 
-        Warehouse loadedWarehouse = await repository.Read("warehouse.json").ConfigureAwait(false);
+        var loadedWarehouse = await repository.Read("warehouse.json").ConfigureAwait(false);
         
         WriteLine(loadedWarehouse);
         
@@ -46,7 +46,7 @@ internal class Program
         WriteLine(warehouse);
         
         loadedWarehouse.DeletePalette(palette1);
-        
+
         WriteLine(loadedWarehouse); //TODO fix bug with deletion of the palette from deserialized object
     }
 }
