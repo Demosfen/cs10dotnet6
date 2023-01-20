@@ -16,7 +16,7 @@ public abstract class StorageUnit
     /// <summary>
     /// Unit ID
     /// </summary>
-    public Guid Id { get; }
+    public Guid Id { get; private set; }
     
     /// <summary>
     /// Object width
