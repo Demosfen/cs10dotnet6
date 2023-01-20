@@ -9,5 +9,6 @@ public class PaletteMapperConfiguration: Profile
     public PaletteMapperConfiguration()
     {
         CreateMap<PaletteModel, Palette>();
+        CreateMap<Palette, PaletteModel>();
     }
 }

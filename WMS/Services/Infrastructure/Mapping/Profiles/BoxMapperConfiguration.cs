@@ -9,5 +9,6 @@ public class BoxMapperConfiguration : Profile
     public BoxMapperConfiguration()
     {
         CreateMap<BoxModel, Box>();
+        CreateMap<Box, BoxModel>();
     }
 }

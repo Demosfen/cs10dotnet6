@@ -9,5 +9,6 @@ public class WarehouseMapperConfiguration : Profile
     public WarehouseMapperConfiguration()
     {
         CreateMap<WarehouseModel, Warehouse>();
+        CreateMap<Warehouse, WarehouseModel>();
     }
 }

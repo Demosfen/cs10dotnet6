@@ -43,6 +43,6 @@ internal class Program
         
         loadedWarehouse.DeletePalette(palette1);
         
-        WriteLine(loadedWarehouse);
+        WriteLine(warehouse);
     }
 }

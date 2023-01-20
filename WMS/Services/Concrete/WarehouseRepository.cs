@@ -59,7 +59,7 @@ public class WarehouseRepository: IWarehouseRepository
     /// <summary>
     /// Saving current warehouse state
     /// </summary>
-    /// <param name="warehouse">Storung palettes</param>
+    /// <param name="warehouse">Storage of the palettes</param>
     /// <param name="fileName">File name of json file</param>
     public async Task Save(Warehouse warehouse, string fileName)
     {
@@ -67,8 +67,13 @@ public class WarehouseRepository: IWarehouseRepository
 
         using FileStream fileStream = File.Create(filePath);
         
-        await JsonSerializer.SerializeAsync<Warehouse>(
-            utf8Json: fileStream, value: warehouse, _options);
+        CreateWarehouseMapper();
+        
+        await JsonSerializer.SerializeAsync(
+            utf8Json: fileStream, 
+            value: Mapper.Map<WarehouseModel>(warehouse), 
+            _options);
+        
         await fileStream.DisposeAsync();
     }
 }
