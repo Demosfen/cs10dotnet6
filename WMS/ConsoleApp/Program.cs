@@ -41,8 +41,12 @@ internal class Program
         
         WriteLine(loadedWarehouse);
         
-        loadedWarehouse.DeletePalette(palette1);
+        warehouse.DeletePalette(palette1);
         
         WriteLine(warehouse);
+        
+        loadedWarehouse.DeletePalette(palette1);
+        
+        WriteLine(loadedWarehouse); //TODO fix bug with deletion of the palette from deserialized object
     }
 }
