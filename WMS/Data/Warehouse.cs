@@ -14,21 +14,18 @@ public sealed class Warehouse
     
     public override string ToString()
     {
-        if (_palettes != null)
+        if (_palettes.Count == 0)
         {
-            if (_palettes.Count == 0)
-            {
-                return $"Warehouse contains no palettes.";
-            }
-            
-            Console.WriteLine($"Warehouse contains {_palettes.Count} palette(s). They are:");
-            
-            foreach (var palette in _palettes)
-            {
-                return $"{palette}";   
-            }
+            return $"Warehouse contains no palettes.";
         }
-        
+            
+        Console.WriteLine($"Warehouse contains {_palettes.Count} palette(s). They are:");
+            
+        foreach (var palette in _palettes)
+        {
+            return $"{palette}";   
+        }
+
         var msg = "No palettes found on the warehouse!";
         
         return msg;
