@@ -1,6 +1,5 @@
 ﻿using WMS.Data;
 using WMS.Services.Concrete;
-using WMS.Services.Extensions;
 using static System.Console;
 
 namespace WMS.ConsoleApp;
