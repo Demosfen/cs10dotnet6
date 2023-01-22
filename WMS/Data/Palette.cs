@@ -59,13 +59,11 @@ public sealed class Palette : StorageUnit
     /// <returns>Palette info</returns>
     public override string ToString()
     {
-        return $"------------------------\n" +
-               $"Palette {Id}:\n" +
+        return $"Palette {Id}:\n" +
                $"Boxes count: {_boxes.Count}\n" +
                $"Weight: {Weight} kilos\n" +
                $"Volume: {Volume} cubic decimeters\n" +
-               $"Exp. Date: {ExpiryDate}.\n" +
-               $"------------------------";
+               $"Exp. Date: {ExpiryDate}.\n";
     }
 
     public void AddBox(Box box)
