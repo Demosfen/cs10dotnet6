@@ -9,8 +9,4 @@
       <ProjectReference Include="..\Services\Services.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <PackageReference Include="FluentAssertions" Version="6.9.0" />
-    </ItemGroup>
-
 </Project>
