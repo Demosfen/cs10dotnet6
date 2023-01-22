@@ -55,10 +55,10 @@ public sealed class Warehouse
         }
     }*/
 
-    public void DeletePalette(Palette palette)
+    public void DeletePalette(Guid paletteId)
     {
-        var paletteId = _palettes.SingleOrDefault(x => x.Id == palette.Id)
-                  ?? throw new InvalidOperationException($"Palette with id = {palette.Id} wasn't found");
+        var palette = _palettes.SingleOrDefault(x => x.Id == paletteId)
+                  ?? throw new InvalidOperationException($"Palette with id = {paletteId} wasn't found");
         
         Console.WriteLine($"Palette with {palette.Id} was removed from the warehouse.");
         
