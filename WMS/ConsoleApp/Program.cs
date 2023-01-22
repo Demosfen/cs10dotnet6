@@ -1,6 +1,6 @@
 ﻿using WMS.Data;
 using WMS.Services.Concrete;
-using WMS.Services.Extensions;
+using WMS.Services.Helpers;
 using static System.Console;
 
 namespace WMS.ConsoleApp;
@@ -23,6 +23,7 @@ internal class Program
         Box box2 = new(
             1, 1, 1, 3,
             new DateTime(2009,1,1));
+        
 
         // add boxes to the palette: ok!
         palette1.AddBox(box1);
@@ -54,16 +55,19 @@ internal class Program
 
         var loadedWarehouse = await repository.Read("warehouse.json").ConfigureAwait(false);
         
-        WriteLine(loadedWarehouse);
+        //WriteLine(loadedWarehouse);
         
         // palette deletion from the initial warehouse: ok!
         warehouse.DeletePalette(palette1);
         
-        WriteLine(warehouse);
+       // WriteLine(warehouse);
         
         // palette deletion from the deserialized warehouse: bug!
         loadedWarehouse.DeletePalette(palette1);
 
-        WriteLine(loadedWarehouse); //TODO fix bug with deletion of the palette from deserialized object
+       // WriteLine(loadedWarehouse); //TODO fix bug with deletion of the palette from deserialized object
+
+       WriteLine(WarehouseHelper.GetWarehouse());
+       WriteLine("Stop!");
     }
 }

@@ -22,12 +22,7 @@ public class WarehouseRepository: IWarehouseRepository
     private static void CreateWarehouseMapper()
     {
         var mapperConfiguration = new MapperConfiguration(
-            x =>
-            {
-                x.AddProfile<WarehouseMapperConfiguration>();
-                x.AddProfile<PaletteMapperConfiguration>();
-                x.AddProfile<BoxMapperConfiguration>();
-            });
+            x => x.AddProfile<WarehouseMapperConfiguration>());
 
         mapperConfiguration.AssertConfigurationIsValid();
 
