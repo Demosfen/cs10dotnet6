@@ -59,7 +59,7 @@ internal class Program
         // palette deletion from the initial warehouse: ok!
         warehouse.DeletePalette(palette1.Id);
         
-       // WriteLine(warehouse);
+       WriteLine(warehouse);
         
         // palette deletion from the deserialized warehouse: bug!
         loadedWarehouse.DeletePalette(palette1.Id);
