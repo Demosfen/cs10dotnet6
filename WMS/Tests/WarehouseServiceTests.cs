@@ -13,7 +13,12 @@ public class WarehouseServiceTests
     public async void Repository_ShouldSaveAndReturnWarehouse_WhenCall()
     {
         // Arrange
-        Warehouse _sut = WarehouseHelper.GetWarehouse();
+        
+        
+        
+        Warehouse _sut = new Warehouse();
+        
+        
         
         // Act
         WarehouseRepository repository = new();
