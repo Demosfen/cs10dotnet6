@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace WMS.Data;
+﻿namespace WMS.Data;
 
 /// <summary>
 /// This is an abstract class, which contains common properties

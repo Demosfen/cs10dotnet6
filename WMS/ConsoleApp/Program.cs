@@ -1,6 +1,5 @@
 ﻿using WMS.Data;
 using WMS.Services.Concrete;
-using WMS.Services.Helpers;
 using static System.Console;
 
 namespace WMS.ConsoleApp;
@@ -65,9 +64,8 @@ internal class Program
         // palette deletion from the deserialized warehouse: bug!
         loadedWarehouse.DeletePalette(palette1.Id);
 
-       // WriteLine(loadedWarehouse); //TODO fix bug with deletion of the palette from deserialized object
+       WriteLine(loadedWarehouse);
 
-       WriteLine(WarehouseHelper.GetWarehouse());
        WriteLine("Stop!");
     }
 }
