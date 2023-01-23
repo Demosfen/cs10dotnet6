@@ -22,6 +22,7 @@ internal class Program
         Box box2 = new(
             1, 1, 1, 3,
             new DateTime(2009,1,1));
+        
 
         // add boxes to the palette: ok!
         palette1.AddBox(box1);
@@ -53,16 +54,18 @@ internal class Program
 
         var loadedWarehouse = await repository.Read("warehouse.json").ConfigureAwait(false);
         
-        WriteLine(loadedWarehouse);
+        //WriteLine(loadedWarehouse);
         
         // palette deletion from the initial warehouse: ok!
-        warehouse.DeletePalette(palette1);
+        warehouse.DeletePalette(palette1.Id);
         
-        WriteLine(warehouse);
+       // WriteLine(warehouse);
         
         // palette deletion from the deserialized warehouse: bug!
-        loadedWarehouse.DeletePalette(palette1);
+        loadedWarehouse.DeletePalette(palette1.Id);
 
-        WriteLine(loadedWarehouse); //TODO fix bug with deletion of the palette from deserialized object
+       WriteLine(loadedWarehouse);
+
+       WriteLine("Stop!");
     }
 }

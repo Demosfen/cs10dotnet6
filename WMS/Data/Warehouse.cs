@@ -42,15 +42,23 @@ public sealed class Warehouse
                 return;
             }
         }
-
+        
         Console.WriteLine($"The palette {palette.Id} added to the warehouse.");
         _palettes.Add(palette);
     }
-
-    public void DeletePalette(Palette palette)
+    /*
+    public void AddPaletteList(List<Palette> palettes)
     {
-        var paletteId = _palettes.SingleOrDefault(x => x.Id == palette.Id)
-                  ?? throw new InvalidOperationException($"Palette with id = {palette.Id} wasn't found");
+        foreach (var palette in palettes)
+        {
+            _palettes.Add(palette);
+        }
+    }*/
+
+    public void DeletePalette(Guid paletteId)
+    {
+        var palette = _palettes.SingleOrDefault(x => x.Id == paletteId)
+                  ?? throw new InvalidOperationException($"Palette with id = {paletteId} wasn't found");
         
         Console.WriteLine($"Palette with {palette.Id} was removed from the warehouse.");
         

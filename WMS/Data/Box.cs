@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace WMS.Data;
+﻿namespace WMS.Data;
 
 /// <summary>
 /// Box

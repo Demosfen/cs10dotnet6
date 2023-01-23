@@ -9,7 +9,7 @@ namespace WMS.Services.Concrete;
 
 public class WarehouseRepository: IWarehouseRepository
 {
-    private static IMapper Mapper { get; set; } = null!;
+    private static Lazy<IMapper> Mapper { get; } = new(CreateWarehouseMapper);
     
     private static readonly JsonSerializerOptions _options = new()
     {
@@ -19,19 +19,16 @@ public class WarehouseRepository: IWarehouseRepository
         WriteIndented = true
     };
 
-    private static void CreateWarehouseMapper()
+    private static IMapper CreateWarehouseMapper()
     {
         var mapperConfiguration = new MapperConfiguration(
-            x =>
-            {
-                x.AddProfile<WarehouseMapperConfiguration>();
-                x.AddProfile<PaletteMapperConfiguration>();
-                x.AddProfile<BoxMapperConfiguration>();
-            });
+            x => x.AddProfile<WarehouseMapperConfiguration>());
 
         mapperConfiguration.AssertConfigurationIsValid();
 
-        Mapper = mapperConfiguration.CreateMapper();
+        var mapper = mapperConfiguration.CreateMapper();
+
+        return mapper;
     }
 
     /// <summary>
@@ -51,7 +48,7 @@ public class WarehouseRepository: IWarehouseRepository
         
         CreateWarehouseMapper();
 
-        var result = Mapper.Map<Warehouse>(modelResult);
+        var result = Mapper.Value.Map<Warehouse>(modelResult);
 
         return result;
     }
@@ -65,13 +62,13 @@ public class WarehouseRepository: IWarehouseRepository
     {
         string filePath = Path.Combine(Environment.CurrentDirectory, fileName);
 
-        using FileStream fileStream = File.Create(filePath);
+        await using FileStream fileStream = File.Create(filePath);
         
         CreateWarehouseMapper();
         
         await JsonSerializer.SerializeAsync(
             utf8Json: fileStream, 
-            value: Mapper.Map<WarehouseModel>(warehouse), 
+            value: Mapper.Value.Map<WarehouseModel>(warehouse), 
             _options);
         
         await fileStream.DisposeAsync();

@@ -10,5 +10,11 @@ public class WarehouseMapperConfiguration : Profile
     {
         CreateMap<WarehouseModel, Warehouse>();
         CreateMap<Warehouse, WarehouseModel>();
+        
+        CreateMap<PaletteModel, Palette>();
+        CreateMap<Palette, PaletteModel>();
+        
+        CreateMap<BoxModel, Box>();
+        CreateMap<Box, BoxModel>();
     }
 }
