@@ -6,7 +6,7 @@ using Xunit;
 
 namespace WMS.Tests;
 
-public class WarehouseServiceTests
+public class WarehouseRepositoryTests
 {
     private readonly Warehouse _sut = new Warehouse();
     
@@ -17,7 +17,7 @@ public class WarehouseServiceTests
         var fixture = new Fixture();
         
         fixture.Customizations.Add(
-            new RandomNumericSequenceGenerator(0, 10, 1));
+            new RandomNumericSequenceGenerator(0, 10));
 
         var box1 = fixture.Create<Box>();
         var palette1 = fixture.Create<Palette>();
