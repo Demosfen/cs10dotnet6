@@ -9,10 +9,12 @@ namespace WMS.Tests;
 
 public class WarehouseRepositoryTests
 {
+    private protected static readonly string JsonFileName = "TestWarehouse.json";
+    
     private readonly Warehouse _sut = new Warehouse();
     
     [Fact]
-    public async void Repository_ShouldSaveAndReturnWarehouse_WhenCall()
+    public async void Repository_ShouldSaveAndReturnWarehouse()
     {
         // Arrange
 
@@ -26,11 +28,11 @@ public class WarehouseRepositoryTests
 
         var palette1 = new Palette(5, 6, 7);
 
-        var _sut = new Warehouse();
+        var warehouse = new Warehouse();
         
         palette1.AddBox(box1);
         palette1.AddBox(box2);
-        _sut.AddPalette(palette1);
+        warehouse.AddPalette(palette1);
         
         /*
          //TODO: 1. Autofixture + Customizations if Readonly Properties; 2. DateTime/int ranges; 3. Suppress Exceptions?
@@ -48,13 +50,13 @@ public class WarehouseRepositoryTests
         */
 
         // Act
-        WarehouseRepository repository = new();
+        WarehouseRepository _sut = new();
         
-        await repository.Save(_sut, "TestWarehouse.json").ConfigureAwait(false);
+        await _sut.Save(warehouse, JsonFileName).ConfigureAwait(false);
 
-        var result = await repository.Read("TestWarehouse.json").ConfigureAwait(false);
+        var result = await _sut.Read(JsonFileName).ConfigureAwait(false);
         
         // Assert
-        result.Should().BeEquivalentTo(_sut);
+        result.Should().BeEquivalentTo(warehouse);
     }
 }
