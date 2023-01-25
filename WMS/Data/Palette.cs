@@ -61,9 +61,10 @@ public sealed class Palette : StorageUnit
     {
         return $"Palette {Id}:\n" +
                $"Boxes count: {_boxes.Count}\n" +
-               $"Weight: {Weight} kilos\n" +
-               $"Volume: {Volume} cubic decimeters\n" +
-               $"Exp. Date: {ExpiryDate}.\n";
+               $"Weight: {Weight}\n" +
+               $"Volume: {Volume}\n" +
+               $"Exp. Date: {ExpiryDate},\n" +
+               $"Size: {Width}x{Height}x{Depth} \n";
     }
 
     public void AddBox(Box box)
