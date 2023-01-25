@@ -1,4 +1,6 @@
-﻿namespace WMS.Data;
+﻿using Microsoft.CodeAnalysis.VisualBasic.Syntax;
+
+namespace WMS.Data;
 
 /// <summary>
 /// This is an abstract class, which contains common properties
@@ -59,6 +61,11 @@ public abstract class StorageUnit
         decimal height,
         decimal depth)
     {
+        if (width <= 0 | height <=0 | depth <= 0)
+        {
+            throw new ArgumentException("Unit size (Height, Width or Depth) shouldn't be less or equal zero!");
+        }
+
         Id = Guid.NewGuid();
         Width = width;
         Height = height;
