@@ -69,6 +69,12 @@ public sealed class Palette : StorageUnit
 
     public void AddBox(Box box)
     {
+        if (box.Width > Width & box.Depth > Depth & box.Depth > Depth)
+        {
+            throw new ArgumentException(
+                "Box size (HxWxD) greater than palette!");
+        }
+        
         if (box.Width > Width)
         {
             throw new ArgumentException(

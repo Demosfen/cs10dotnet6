@@ -25,13 +25,17 @@ public sealed class Box : StorageUnit
         DateTime? expiryDate = null) 
         : base(width, height, depth)
     {
+        if (weight <= 0)
+        {
+            throw new ArgumentException("Unit weight shouldn't be less or equal zero!");
+        }
+        
         Weight = weight;
         
         if (expiryDate == null && productionDate == null)
         {
             throw new ArgumentException(
-                "Both Production and Expiry dates shouldn't be null simultaneously",
-                paramName: nameof(expiryDate));
+                "Both Production and Expiry dates shouldn't be null simultaneously");
         }
 
         if (productionDate != null)
@@ -49,8 +53,7 @@ public sealed class Box : StorageUnit
         if (ExpiryDate <= ProductionDate)
         {
             throw new ArgumentException(
-                "Expiry date cannot be lower than Production date!", 
-                paramName: nameof(ExpiryDate));
+                "Expiry date cannot be lower than Production date!");
         }
     }
 
