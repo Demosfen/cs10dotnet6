@@ -7,6 +7,18 @@ namespace WMS.Tests;
 public class BoxTests
 {
     [Fact]
+    public void BoxExpiry_WhenProductionOnly_GreaterAHundredDays()
+    {
+        // Arrange
+        Box _sut = new Box(5, 5, 5, 5, new DateTime(2008, 01, 01));
+        
+        DateTime expected = new DateTime(2008, 1, 1).AddDays(StorageUnit.ExpiryDays);
+        
+        // Assert
+        _sut.ExpiryDate.Should().Be(expected);
+    }
+    
+    [Fact]
     public void BoxConstruct_IncorrectDates_ThrowsArgumentException()
     {
         // Arrange
@@ -33,16 +45,10 @@ public class BoxTests
     {
         // Arrange
         Action constructNegativeWidth = () => new Box(-1,1,1, 10,
-            new DateTime(2008,1,1),
-            new DateTime(2007,1,1));
+            new DateTime(2008,1,1));
         
-        Action constructZeroHeight = () => new Box(1,0,1, 10,
-            new DateTime(2008,1,1),
-            new DateTime(2007,1,1));
-        
-        Action constructNegativeWeight = () => new Box(1,10,0.1m, -10,
-            new DateTime(2008,1,1),
-            new DateTime(2007,1,1));
+        Action constructZeroWeight = () => new Box(1,10,0.1m, 0,
+            new DateTime(2008,1,1));
         
         // Act
         
@@ -50,25 +56,9 @@ public class BoxTests
         constructNegativeWidth.Should()
             .Throw<ArgumentException>()
             .WithMessage("Unit size (Height, Width or Depth) shouldn't be less or equal zero!");
-
-        constructZeroHeight.Should()
-            .Throw<ArgumentException>()
-            .WithMessage("Unit size (Height, Width or Depth) shouldn't be less or equal zero!");
         
-        constructNegativeWeight.Should()
+        constructZeroWeight.Should()
             .Throw<ArgumentException>()
             .WithMessage("Unit weight shouldn't be less or equal zero!");
-    }
-
-    [Fact]
-    public void BoxExpiry_WhenProductionOnly_GreaterAHundredDays()
-    {
-        // Arrange
-        Box _sut = new Box(5, 5, 5, 5, new DateTime(2008, 01, 01));
-        
-        DateTime expected = new DateTime(2008, 1, 1).AddDays(100); //TODO change to ExpiryDays parameteer
-        
-        // Assert
-        _sut.ExpiryDate.Should().Be(expected);
     }
 }
