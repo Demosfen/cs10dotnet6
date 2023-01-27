@@ -8,7 +8,7 @@ public sealed class Palette : StorageUnit
     /// <summary>
     /// Empty palette weight
     /// </summary>
-    private const decimal DefaultWeight = 30;
+    public const decimal DefaultWeight = 30;
     
     /// <summary>
     /// Boxes on the palette
