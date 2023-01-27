@@ -19,6 +19,7 @@ internal class Program
             
         
         warehouse.AddPalette(SmallPaletteOptional1);
+        warehouse.AddPalette(SmallPaletteOptional2);
         warehouse.AddPalette(SmallPalette);
         warehouse.AddPalette(MediumPalette);
         warehouse.AddPalette(BigPalette);
