@@ -2,6 +2,8 @@ using WMS.Data;
 using FluentAssertions;
 using Xunit;
 
+using static WMS.Tests.HelperObjects;
+
 namespace WMS.Tests;
 
 public class BoxTests
@@ -10,12 +12,26 @@ public class BoxTests
     public void BoxExpiry_WhenProductionOnly_GreaterAHundredDays()
     {
         // Arrange
-        Box _sut = new Box(5, 5, 5, 5, new DateTime(2008, 01, 01));
+        var sut = new Box(5, 5, 5, 5, new DateTime(2008, 01, 01));
         
         DateTime expected = new DateTime(2008, 1, 1).AddDays(StorageUnit.ExpiryDays);
         
         // Assert
-        _sut.ExpiryDate.Should().Be(expected);
+        sut.ExpiryDate.Should().Be(expected);
+    }
+
+    [Fact]
+    public void BoxVolume_ShouldBe_WidthXHeightXDepth()
+    {
+        // Arrange
+        var sut = BigBox;
+        
+        // Act
+        decimal expected = BigBox.Width * BigBox.Height * BigBox.Depth;
+        
+        //Assert
+
+        sut.Volume.Should().Be(expected);
     }
     
     [Fact]

@@ -13,25 +13,30 @@ public class WarehouseRepositoryTests
     public async void Repository_ShouldSaveAndReturnWarehouse()
     {
         // Arrange
-        SmallPalette.AddBox(SmallBox);
+        var firstPalette = SmallPalette;
+        var secondPalette = MediumPalette;
+        var thirdPalette = BigPalette;
+        Warehouse warehouse = new ();
         
-        MediumPalette.AddBox(SmallBox);
-        MediumPalette.AddBox(MediumBox);
+        firstPalette.AddBox(SmallBox);
         
-        BigPalette.AddBox(SmallBox);
-        BigPalette.AddBox(MediumBox);
-        BigPalette.AddBox(BigBox);
+        secondPalette.AddBox(SmallBox);
+        secondPalette.AddBox(MediumBox);
+        
+        thirdPalette.AddBox(SmallBox);
+        thirdPalette.AddBox(MediumBox);
+        thirdPalette.AddBox(BigBox);
         
         warehouse.AddPalette(SmallPalette);
         warehouse.AddPalette(MediumPalette);
         warehouse.AddPalette(BigPalette);
 
         // Act
-        WarehouseRepository _sut = new();
+        WarehouseRepository sut = new();
         
-        await _sut.Save(warehouse, JsonFileName).ConfigureAwait(false);
+        await sut.Save(warehouse, JsonFileName).ConfigureAwait(false);
 
-        var result = await _sut.Read(JsonFileName).ConfigureAwait(false);
+        var result = await sut.Read(JsonFileName).ConfigureAwait(false);
         
         // Assert
         result.Should().BeEquivalentTo(warehouse);

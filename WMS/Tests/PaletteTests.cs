@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using FluentAssertions;
 using WMS.Data;
 using Xunit;
@@ -19,8 +20,11 @@ public class PaletteTests
         sut.AddBox(BigBox);
         
         // Assert
-        sut.Boxes.Count
-            .Should().Be(3);
+        sut.Boxes.Should()
+            .NotBeEmpty().And
+            .Contain(SmallBox).And
+            .Contain(MediumBox).And
+            .Contain(BigBox);
     }
 
     [Fact]
@@ -40,18 +44,37 @@ public class PaletteTests
     }
 
     [Fact]
-    public void PaletteWeight_ShouldBeSumOfBoxes()
+    public void PaletteWeight_ShouldBeSumOfBoxesWeight_PlusDefault()
     {
         // Arrange
         var sut = MediumPalette;
         
+        var expected = SmallBox.Weight + MediumBox.Weight + Palette.DefaultWeight;
+        
         // Act
         sut.AddBox(SmallBox);
         sut.AddBox(MediumBox);
-
-        var expected = SmallBox.Weight + MediumBox.Weight + Palette.DefaultWeight;
-
+        
+        // Assert
         sut.Weight.Should().Be(expected);
+    }
+    
+    [Fact]
+    public void PaletteVolume_ShouldBeSumOfBoxesVolume_PlusDefault()
+    {
+        // Arrange
+        var sut = BigPalette;
+        
+        var expected = SmallBox.Volume + MediumBox.Volume + BigBox.Volume + BigPalette.Volume;
+
+        // Act
+        sut.AddBox(SmallBox);
+        sut.AddBox(MediumBox);
+        sut.AddBox(BigBox);
+
+        //Assert
+
+        sut.Volume.Should().Be(expected);
     }
     
     [Fact]

@@ -19,16 +19,11 @@ internal static class HelperObjects
         
     public static readonly Box BigBox = new (
         20, 20, 20, 20,
-        new DateTime(2010, 01, 01),
-        new DateTime(2011, 01, 01));
+        new DateTime(2010, 01, 01));
 
     public static readonly Palette SmallPalette = new (1, 1, 1);
 
     public static Palette MediumPalette = new (5, 5, 5);
 
     public static Palette BigPalette = new(20, 20, 20);
-
-    public static readonly Warehouse warehouse = new ();
-    
-    
 }
