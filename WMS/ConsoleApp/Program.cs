@@ -2,6 +2,8 @@
 using WMS.Services.Concrete;
 using static System.Console;
 
+using static WMS.Data.HelperObjects;
+
 namespace WMS.ConsoleApp;
 
 internal class Program
@@ -11,8 +13,31 @@ internal class Program
         // create a warehouse
         Warehouse warehouse = new();
         
+        warehouse.AddPalette(SmallPalette);
+        warehouse.AddPalette(MediumPalette);
+        warehouse.AddPalette(BigPalette);
+        
+        SmallPalette.AddBox(SmallBox);
+        
+        MediumPalette.AddBox(SmallBox);
+        MediumPalette.AddBox(MediumBox);
+        
+        BigPalette.AddBox(SmallBox);
+        BigPalette.AddBox(MediumBox);
+        BigPalette.AddBox(BigBox);
+        
+        // create warehouse repo, serializing/deserializing warehouse, save and load: ok!
+        WarehouseRepository repository = new();
+        
+        await repository.Save(warehouse, "warehouse.json").ConfigureAwait(false);
+
+        var loadedWarehouse = await repository.Read("warehouse.json").ConfigureAwait(false);
+        
+        WriteLine(loadedWarehouse);
+
+        /*
         // create a palette
-        Palette palette1 = new (
+        var palette1 = new (
             10,10,10);
 
         //create two boxes
@@ -66,6 +91,6 @@ internal class Program
 
        WriteLine(loadedWarehouse);
 
-       WriteLine("Stop!");
+       WriteLine("Stop!");*/
     }
 }

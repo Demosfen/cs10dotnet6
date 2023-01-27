@@ -59,12 +59,25 @@ public sealed class Palette : StorageUnit
     /// <returns>Palette info</returns>
     public override string ToString()
     {
-        return $"Palette {Id}:\n" +
-               $"Boxes count: {_boxes.Count}\n" +
-               $"Weight: {Weight}\n" +
-               $"Volume: {Volume}\n" +
-               $"Exp. Date: {ExpiryDate},\n" +
-               $"Size: {Width}x{Height}x{Depth} \n";
+        if (_boxes.Count == 0)
+        {
+            return $"Palette contains no boxes.";
+        }
+
+        var msg = $"Palette {Id}:\n" +
+                  $"Boxes count: {_boxes.Count},\n" +
+                  $"WxHxD: {Width}x{Height}x{Depth},\n" +
+                  $"Volume: {Volume},\n" +
+                  $"Weight: {Weight},\n" +
+                  $"Expiry Date: {ExpiryDate},\n" +
+                  $"Boxes on the palette:\n";
+        
+        foreach (var box in _boxes)
+        {
+            msg += box.ToString();
+        }
+
+        return msg;
     }
 
     public void AddBox(Box box)

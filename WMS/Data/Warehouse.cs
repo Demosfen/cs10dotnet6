@@ -18,16 +18,14 @@ public sealed class Warehouse
         {
             return $"Warehouse contains no palettes.";
         }
-            
-        Console.WriteLine($"Warehouse contains {_palettes.Count} palette(s). They are:");
-            
+
+        var msg = $"Warehouse contains {Palettes.Count} palettes:\n";
+        
         foreach (var palette in _palettes)
         {
-            return $"{palette}";   
+            msg += palette.ToString();
         }
 
-        var msg = "No palettes found on the warehouse!";
-        
         return msg;
     }
 
