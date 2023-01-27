@@ -69,14 +69,12 @@ public sealed class Palette : StorageUnit
                   $"WxHxD: {Width}x{Height}x{Depth},\n" +
                   $"Volume: {Volume},\n" +
                   $"Weight: {Weight},\n" +
-                  $"Expiry Date: {ExpiryDate},\n" +
-                  $"Boxes on the palette:\n";
-        
+                  $"Expiry Date: {ExpiryDate},\n";
+        /*
         foreach (var box in _boxes)
         {
             msg += box.ToString();
-        }
-
+        }*/
         return msg;
     }
 

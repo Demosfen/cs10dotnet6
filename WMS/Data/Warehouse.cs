@@ -44,14 +44,6 @@ public sealed class Warehouse
         Console.WriteLine($"The palette {palette.Id} added to the warehouse.");
         _palettes.Add(palette);
     }
-    /*
-    public void AddPaletteList(List<Palette> palettes)
-    {
-        foreach (var palette in palettes)
-        {
-            _palettes.Add(palette);
-        }
-    }*/
 
     public void DeletePalette(Guid paletteId)
     {

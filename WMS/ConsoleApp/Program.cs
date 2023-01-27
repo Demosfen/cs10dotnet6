@@ -33,7 +33,18 @@ internal class Program
 
         var loadedWarehouse = await repository.Read("warehouse.json").ConfigureAwait(false);
         
-        WriteLine(loadedWarehouse);
+        //WriteLine(loadedWarehouse);
+
+        List<Palette> sortedWarehouse = new List<Palette>(loadedWarehouse.Palettes
+            .Where(p => p.ExpiryDate.HasValue)
+            .OrderBy(p => p.ExpiryDate!.Value));
+
+        foreach (var palette in sortedWarehouse)
+        {
+            WriteLine(palette);
+        }
+
+
 
         /*
         // create a palette
