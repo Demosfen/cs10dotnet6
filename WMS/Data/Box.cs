@@ -59,7 +59,7 @@ public sealed class Box : StorageUnit
 
     public override string ToString()
     {
-        return $"ID: {Id},\n" +
+        return $"Box ID: {Id},\n" +
                $"Size (WxHxD): {Width}x{Height}x{Depth},\n" +
                $"Volume: {Volume},\n" +
                $"Weight: {Weight},\n" +

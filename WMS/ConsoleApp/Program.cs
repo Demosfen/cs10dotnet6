@@ -12,12 +12,22 @@ internal class Program
     {
         // create a warehouse
         Warehouse warehouse = new();
+
+        var SmallPaletteOptional1 = new Palette(2, 2, 2);
+
+        var SmallPaletteOptional2 = new Palette(2, 2, 2);
+            
         
+        warehouse.AddPalette(SmallPaletteOptional1);
         warehouse.AddPalette(SmallPalette);
         warehouse.AddPalette(MediumPalette);
         warehouse.AddPalette(BigPalette);
         
+        SmallPaletteOptional1.AddBox(new Box(0.1m,0.1m,0.1m,10,new DateTime(2010,01,01)));
+        SmallPaletteOptional2.AddBox(new Box(0.2m,0.3m,0.4m,12, new DateTime(2011,1,1)));
+
         SmallPalette.AddBox(SmallBox);
+        SmallPalette.AddBox(new Box(0.5m,0.5m,0.5m,20,new DateTime(2010,01,01)));
         
         MediumPalette.AddBox(SmallBox);
         MediumPalette.AddBox(MediumBox);
@@ -35,73 +45,28 @@ internal class Program
         
         //WriteLine(loadedWarehouse);
 
-        List<Palette> sortedWarehouse = new List<Palette>(loadedWarehouse.Palettes
+        var sortedPalettes = new List<Palette>(loadedWarehouse.Palettes
             .Where(p => p.ExpiryDate.HasValue)
-            .OrderBy(p => p.ExpiryDate!.Value));
+            .OrderBy(p => p.ExpiryDate!.Value)
+            .ThenBy(p => p.Weight));
+        
+        WriteLine("\nSorted by ExpiryDate and Weight palettes:\n");
 
-        foreach (var palette in sortedWarehouse)
+        foreach (var palette in sortedPalettes)
         {
             WriteLine(palette);
         }
+        
+        WriteLine("\nThree palettes with max Expiry SortedBy Volume:\n");
 
+        var threePalettes = new List<Palette>(sortedPalettes
+            .OrderByDescending(p => p.ExpiryDate)
+            .ThenBy(p => p.Volume))
+            .Take(3);
 
-
-        /*
-        // create a palette
-        var palette1 = new (
-            10,10,10);
-
-        //create two boxes
-        Box box1 = new(
-            10, 1, 10, 5,
-            new DateTime(2008,1,1));
-        Box box2 = new(
-            1, 1, 1, 3,
-            new DateTime(2009,1,1));
-        
-
-        // add boxes to the palette: ok!
-        palette1.AddBox(box1);
-        palette1.AddBox(box2);
-        
-        // add box1 second time and checking the verification: ok!
-        palette1.AddBox(box1);
-        
-        // checking the deletion of the box: ok!
-        palette1.DeleteBox(box1);
-        
-        // return the box on the palette
-        palette1.AddBox(box1);
-        
-        // put the palette into the warehouse: ok!
-        warehouse.AddPalette(palette1);
-        
-        // verify if put palette twice: ok!
-        warehouse.AddPalette(palette1);
-
-        WriteLine(warehouse);
-        
-        //warehouse.Palettes.Add(palette1); // check readonly properties: ok!
-
-        // create warehouse repo, serializing/deserializing warehouse, save and load: ok!
-        WarehouseRepository repository = new();
-        
-        await repository.Save(warehouse, "warehouse.json").ConfigureAwait(false);
-
-        var loadedWarehouse = await repository.Read("warehouse.json").ConfigureAwait(false);
-        
-        //WriteLine(loadedWarehouse);
-        
-        // palette deletion from the initial warehouse: ok!
-        warehouse.DeletePalette(palette1.Id);
-        
-       WriteLine(warehouse);
-        
-        // palette deletion from the deserialized warehouse: bug!
-        loadedWarehouse.DeletePalette(palette1.Id);
-
-       WriteLine(loadedWarehouse);
-
-       WriteLine("Stop!");*/
+        foreach (var palette in threePalettes)
+        {
+            WriteLine(palette);
+        }
     }
 }
