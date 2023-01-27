@@ -62,8 +62,8 @@ internal class Program
 
         var threePalettes = new List<Palette>(sortedPalettes
             .OrderByDescending(p => p.ExpiryDate)
-            .ThenBy(p => p.Volume))
-            .Take(3);
+            .ThenBy(p => p.Volume)
+            .Take(3));
 
         foreach (var palette in threePalettes)
         {
