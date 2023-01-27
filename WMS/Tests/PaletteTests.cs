@@ -32,6 +32,7 @@ public class PaletteTests
     {
         // Arrange
         var sut = BigPalette;
+        
         DateTime? expected = SmallBox.ExpiryDate; //TODO check if it is correct?
         
         // Act
@@ -83,8 +84,6 @@ public class PaletteTests
         // Arrange
         Action constructNegativeWidth = () => new Palette(-1, 0, -0.1m);
 
-        // Act
-
         // Assert
         constructNegativeWidth.Should()
             .Throw<ArgumentException>()
@@ -96,9 +95,7 @@ public class PaletteTests
     {
         // Arrange
         Action addOversizeBox = () => SmallPalette.AddBox(BigBox);
-        
-        // Act
-        
+
         // Assert
         addOversizeBox.Should()
             .Throw<ArgumentException>()

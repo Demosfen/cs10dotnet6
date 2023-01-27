@@ -26,7 +26,6 @@ public class BoxTests
         // Arrange
         var sut = BigBox;
         
-        // Act
         decimal expected = BigBox.Width * BigBox.Height * BigBox.Depth;
         
         //Assert
@@ -60,13 +59,11 @@ public class BoxTests
     public void BoxConstruct_IncorrectSize_ThrowsArgumentException()
     {
         // Arrange
-        Action constructNegativeWidth = () => new Box(-1,1,1, 10,
+        Action constructNegativeWidth = () => new Box(-1,0,-0.1m, 10,
             new DateTime(2008,1,1));
         
         Action constructZeroWeight = () => new Box(1,10,0.1m, 0,
             new DateTime(2008,1,1));
-        
-        // Act
         
         // Assert
         constructNegativeWidth.Should()

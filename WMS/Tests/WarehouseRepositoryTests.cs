@@ -16,8 +16,12 @@ public class WarehouseRepositoryTests
         var firstPalette = SmallPalette;
         var secondPalette = MediumPalette;
         var thirdPalette = BigPalette;
+        
         Warehouse warehouse = new ();
         
+        WarehouseRepository sut = new();
+        
+        // Act
         firstPalette.AddBox(SmallBox);
         
         secondPalette.AddBox(SmallBox);
@@ -31,9 +35,6 @@ public class WarehouseRepositoryTests
         warehouse.AddPalette(MediumPalette);
         warehouse.AddPalette(BigPalette);
 
-        // Act
-        WarehouseRepository sut = new();
-        
         await sut.Save(warehouse, JsonFileName).ConfigureAwait(false);
 
         var result = await sut.Read(JsonFileName).ConfigureAwait(false);
