@@ -69,7 +69,7 @@ public sealed class Palette : StorageUnit
                   $"WxHxD: {Width}x{Height}x{Depth},\n" +
                   $"Volume: {Volume},\n" +
                   $"Weight: {Weight},\n" +
-                  $"Expiry Date: {ExpiryDate},\n";
+                  $"Expiry Date: {ExpiryDate},\n"; //TODO does information about boxes needed (see below)?
         /*
         foreach (var box in _boxes)
         {

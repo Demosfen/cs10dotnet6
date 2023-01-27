@@ -45,9 +45,9 @@ internal class Program
         
         //WriteLine(loadedWarehouse);
 
-        var sortedPalettes = new List<Palette>(loadedWarehouse.Palettes
+        var sortedPalettes = new List<Palette>(loadedWarehouse.Palettes //TODO how to group?
             .Where(p => p.ExpiryDate.HasValue)
-            .OrderBy(p => p.ExpiryDate!.Value)
+            .OrderBy(p => p.ExpiryDate!.Value)      //TODO why doesn't HasValue work? 
             .ThenBy(p => p.Weight));
         
         WriteLine("\nSorted by ExpiryDate and Weight palettes:\n");
