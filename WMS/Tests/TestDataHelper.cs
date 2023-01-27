@@ -1,16 +1,22 @@
-namespace WMS.Data;
+using WMS.Data;
 
-public static class HelperObjects
+namespace WMS.Tests;
+
+public static class TestDataHelper
 {
     public const string JsonFileName = "TestWarehouse.json";
 
-    public static readonly Box SmallBox = new (
-        1,1,1,10,
-        new DateTime(2010,10,01));
-    
-    public static readonly Box MediumBox = new (
-        5, 5, 5, 5,
-        new DateTime(2009, 01, 01));
+    public static Box GetBox()
+    {
+        return  new(1, 1, 1, 10,
+            new DateTime(2010, 10, 01));
+    }
+
+    public static Palette MediumBox()
+    {
+        return new(5, 5, 5, 5,
+            new DateTime(2009, 01, 01));  
+    }
         
     public static readonly Box BigBox = new (
         20, 20, 20, 1,

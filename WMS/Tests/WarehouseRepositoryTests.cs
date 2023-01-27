@@ -4,7 +4,7 @@ using FluentAssertions;
 using WMS.Services.Concrete;
 using Xunit;
 
-using static WMS.Data.HelperObjects;
+using static WMS.Tests.TestDataHelper;
 
 namespace WMS.Tests;
 

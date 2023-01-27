@@ -2,8 +2,6 @@
 using WMS.Services.Concrete;
 using static System.Console;
 
-using static WMS.Data.HelperObjects;
-
 namespace WMS.ConsoleApp;
 
 internal class Program
@@ -20,23 +18,10 @@ internal class Program
         
         warehouse.AddPalette(SmallPaletteOptional1);
         warehouse.AddPalette(SmallPaletteOptional2);
-        warehouse.AddPalette(SmallPalette);
-        warehouse.AddPalette(MediumPalette);
-        warehouse.AddPalette(BigPalette);
         
         SmallPaletteOptional1.AddBox(new Box(0.1m,0.1m,0.1m,10,new DateTime(2010,01,01)));
         SmallPaletteOptional2.AddBox(new Box(0.2m,0.3m,0.4m,12, new DateTime(2011,1,1)));
 
-        SmallPalette.AddBox(SmallBox);
-        SmallPalette.AddBox(new Box(0.5m,0.5m,0.5m,20,new DateTime(2010,01,01)));
-        
-        MediumPalette.AddBox(SmallBox);
-        MediumPalette.AddBox(MediumBox);
-        
-        BigPalette.AddBox(SmallBox);
-        BigPalette.AddBox(MediumBox);
-        BigPalette.AddBox(BigBox);
-        
         // create warehouse repo, serializing/deserializing warehouse, save and load: ok!
         WarehouseRepository repository = new();
         
@@ -48,7 +33,7 @@ internal class Program
 
         var sortedPalettes = new List<Palette>(loadedWarehouse.Palettes //TODO how to group?
             .Where(p => p.ExpiryDate.HasValue)
-            .OrderBy(p => p.ExpiryDate!.Value)      //TODO why doesn't HasValue work? 
+            .OrderBy(p => p.ExpiryDate)      //TODO why doesn't HasValue work? 
             .ThenBy(p => p.Weight));
         
         WriteLine("\nSorted by ExpiryDate and Weight palettes:\n");

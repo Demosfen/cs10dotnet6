@@ -2,7 +2,7 @@ using WMS.Data;
 using FluentAssertions;
 using Xunit;
 
-using static WMS.Data.HelperObjects;
+using static WMS.Tests.TestDataHelper;
 
 namespace WMS.Tests;
 
@@ -42,8 +42,6 @@ public class BoxTests
             new DateTime(2007,1,1));
         
         Action noExpiryAndProduction = () => new Box(1,1,1, 10);
-        
-        // Act
         
         // Assert
         incorrectExpiryAndProduction.Should()

@@ -2,7 +2,7 @@ using FluentAssertions;
 using WMS.Data;
 using Xunit;
 
-using static WMS.Data.HelperObjects;
+using static WMS.Tests.TestDataHelper;
 
 namespace WMS.Tests;
 
