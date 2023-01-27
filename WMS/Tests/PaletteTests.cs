@@ -31,13 +31,19 @@ public class PaletteTests
     {
         // Arrange
         var sut = BigPalette;
-        
-        DateTime? expected = SmallBox.ExpiryDate; //TODO check if it is correct?
-        
+
+        var boxes = new List<Box>();
+
         // Act
         sut.AddBox(SmallBox);
         sut.AddBox(MediumBox);
         sut.AddBox(BigBox);
+        
+        boxes.Add(SmallBox);
+        boxes.Add(MediumBox);
+        boxes.Add(BigBox);
+        
+        DateTime? expected = boxes.Min(box => box.ExpiryDate);
         
         // Assert
         sut.ExpiryDate.Should().Be(expected);
