@@ -1,8 +1,6 @@
-using WMS.Data;
+namespace WMS.Data;
 
-namespace WMS.Tests;
-
-internal static class HelperObjects
+public static class HelperObjects
 {
     public const string JsonFileName = "TestWarehouse.json";
 
