@@ -1,7 +1,7 @@
 ﻿namespace WMS.Data;
 
 /// <summary>
-/// Box
+/// Box haha
 /// </summary>
 public sealed class Box : StorageUnit
 {
