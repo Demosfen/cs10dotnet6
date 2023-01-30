@@ -18,8 +18,8 @@ public static class TestDataHelper
     [System.Flags]
     public enum PaletteSamples : byte
     {
-        None            = 0b_0000_0000,
-        Palette1X1X1        = 0b_0000_0001,
+        None               = 0b_0000_0000,
+        Palette1X1X1        = 0b_0000_0001,            
         Palette5X5X5        = 0b_0000_0010,
         Palette10X10X10     = 0b_0000_0100
     }
