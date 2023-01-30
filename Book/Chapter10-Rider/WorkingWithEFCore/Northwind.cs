@@ -17,14 +17,5 @@ public class Northwind : DbContext
 
             optionsBuilder.UseSqlite($"Filename={path}");
         }
-        else
-        {
-            string connection = "Data Source=.;" +
-                                "Initial Catalog=Northwind;" +
-                                "Integrated Security=true;" +
-                                "MultipleActiveResultSets=true;";
-
-            optionsBuilder.UseSqlite(connection);
-        }
     }
 }

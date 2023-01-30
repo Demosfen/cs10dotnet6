@@ -5,26 +5,39 @@ namespace WMS.Tests;
 public static class TestDataHelper
 {
     public const string JsonFileName = "TestWarehouse.json";
+    
+    [System.Flags]
+    public enum BoxSamples : byte
+    {
+        None            = 0b_0000_0000,
+        Box1X1X1        = 0b_0000_0001,
+        Box5X5X5        = 0b_0000_0010,
+        Box10X10X10     = 0b_0000_0100
+    }
+    
+    [System.Flags]
+    public enum PaletteSamples : byte
+    {
+        None            = 0b_0000_0000,
+        Palette1X1X1        = 0b_0000_0001,
+        Palette5X5X5        = 0b_0000_0010,
+        Palette10X10X10     = 0b_0000_0100
+    }
 
-    public static Box GetBox()
+    public static Box GetBox(sample, DateTime)
     {
         return  new(1, 1, 1, 10,
             new DateTime(2010, 10, 01));
     }
-
-    public static Palette MediumBox()
+    
+    public static Palette GetPalette()
     {
-        return new(5, 5, 5, 5,
-            new DateTime(2009, 01, 01));  
-    }
+        switch (sample,)
+        {
+            
+        }
         
-    public static readonly Box BigBox = new (
-        20, 20, 20, 1,
-        new DateTime(2007, 01, 01));
-
-    public static readonly Palette SmallPalette = new (1, 1, 1);
-
-    public static Palette MediumPalette = new (5, 5, 5);
-
-    public static Palette BigPalette = new(20, 20, 20);
+        return  new(1, 1, 1, 10,
+            new DateTime(2010, 10, 01));
+    }
 }
