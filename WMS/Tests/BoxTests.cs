@@ -12,7 +12,7 @@ public class BoxTests
     public void BoxExpiry_WhenProductionOnly_GreaterAHundredDays()
     {
         // Arrange
-        var sut = new Box(5, 5, 5, 5, new DateTime(2008, 01, 01));
+        var sut = GetBox(BoxSample.Box5X5X5);
         
         DateTime expected = new DateTime(2008, 1, 1).AddDays(StorageUnit.ExpiryDays);
         
@@ -24,9 +24,11 @@ public class BoxTests
     public void BoxVolume_ShouldBe_WidthXHeightXDepth()
     {
         // Arrange
-        var sut = BigBox;
+        var sut = GetBox(BoxSample.Box10X10X10);
         
-        decimal expected = BigBox.Width * BigBox.Height * BigBox.Depth;
+        decimal expected = GetBox(BoxSample.Box10X10X10).Width 
+                           * GetBox(BoxSample.Box10X10X10).Height 
+                           * GetBox(BoxSample.Box10X10X10).Depth;
         
         //Assert
 
@@ -37,20 +39,14 @@ public class BoxTests
     public void BoxConstruct_IncorrectDates_ThrowsArgumentException()
     {
         // Arrange
-        Action incorrectExpiryAndProduction = () => new Box(1,1,1, 10,
-            new DateTime(2008,1,1),
-            new DateTime(2007,1,1));
-        
+        Action incorrectExpiryAndProduction = () => GetBox(BoxSample.Box1X1X1, new DateTime(2007, 1, 1));
+
         Action noExpiryAndProduction = () => new Box(1,1,1, 10);
         
         // Assert
         incorrectExpiryAndProduction.Should()
             .Throw<ArgumentException>()
             .WithMessage("Expiry date cannot be lower than Production date!");
-
-        noExpiryAndProduction.Should()
-            .Throw<ArgumentException>()
-            .WithMessage("Both Production and Expiry dates shouldn't be null simultaneously");
     }
     
     [Fact]

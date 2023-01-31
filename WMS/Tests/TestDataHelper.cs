@@ -6,7 +6,7 @@ namespace WMS.Tests;
 public static class TestDataHelper
 {
     public const string JsonFileName = "TestWarehouse.json";
-    public static readonly DateTime ProductionDate = new DateTime(2008, 1, 1);
+    public static readonly DateTime DefaultProductionDate = new DateTime(2008, 1, 1);
 
     public enum BoxSample
     {
@@ -28,10 +28,10 @@ public static class TestDataHelper
     {
         return boxSample switch
         {
-            BoxSample.Box1X1X1 => new Box(1, 1, 1, 1, ProductionDate, expiryDateTime),
-            BoxSample.Box5X5X5 => new Box(5, 5, 5, 5, ProductionDate, expiryDateTime),
-            BoxSample.Box10X10X10 => new Box(10, 10, 10, 10, ProductionDate, expiryDateTime),
-            BoxSample.Box20X20X20 => new Box(20, 20, 20, 20, ProductionDate, expiryDateTime),
+            BoxSample.Box1X1X1 => new Box(1, 1, 1, 1, DefaultProductionDate, expiryDateTime),
+            BoxSample.Box5X5X5 => new Box(5, 5, 5, 5, DefaultProductionDate, expiryDateTime),
+            BoxSample.Box10X10X10 => new Box(10, 10, 10, 10, DefaultProductionDate, expiryDateTime),
+            BoxSample.Box20X20X20 => new Box(20, 20, 20, 20, DefaultProductionDate, expiryDateTime),
             _ => throw new InvalidEnumArgumentException("Incorrect box sample!")
         };
     }
