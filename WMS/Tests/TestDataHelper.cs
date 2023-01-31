@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using WMS.Data;
 
 namespace WMS.Tests;
@@ -5,39 +6,44 @@ namespace WMS.Tests;
 public static class TestDataHelper
 {
     public const string JsonFileName = "TestWarehouse.json";
-    
-    [System.Flags]
-    public enum BoxSamples : byte
+
+    public enum BoxSample
     {
-        None            = 0b_0000_0000,
-        Box1X1X1        = 0b_0000_0001,
-        Box5X5X5        = 0b_0000_0010,
-        Box10X10X10     = 0b_0000_0100
-    }
-    
-    [System.Flags]
-    public enum PaletteSamples : byte
-    {
-        None               = 0b_0000_0000,
-        Palette1X1X1        = 0b_0000_0001,            
-        Palette5X5X5        = 0b_0000_0010,
-        Palette10X10X10     = 0b_0000_0100
+        Box1X1X1,
+        Box5X5X5,
+        Box10X10X10,
+        Box20X20X20
     }
 
-    public static Box GetBox(sample, DateTime)
+    public enum PaletteSample
     {
-        return  new(1, 1, 1, 10,
-            new DateTime(2010, 10, 01));
+        Palette1X1X1,         
+        Palette5X5X5,
+        Palette10X10X10,
+        Palette20X20X20
     }
     
-    public static Palette GetPalette()
+    public static Box GetBox(BoxSample boxSample, DateTime? expiryDateTime = null)
     {
-        switch (sample,)
+        return boxSample switch
         {
-            
-        }
-        
-        return  new(1, 1, 1, 10,
-            new DateTime(2010, 10, 01));
+            BoxSample.Box1X1X1 => new Box(1, 1, 1, 1, new DateTime(2008, 1, 1), expiryDateTime),
+            BoxSample.Box5X5X5 => new Box(5, 5, 5, 5, new DateTime(2008, 1, 1), expiryDateTime),
+            BoxSample.Box10X10X10 => new Box(10, 10, 10, 10, new DateTime(2008, 1, 1), expiryDateTime),
+            BoxSample.Box20X20X20 => new Box(20, 20, 20, 20, new DateTime(2008, 1, 1), expiryDateTime),
+            _ => throw new InvalidEnumArgumentException("Incorrect box sample!")
+        };
+    }
+    
+    public static Palette GetPalette(PaletteSample paletteSample)
+    {
+        return paletteSample switch
+        {
+            PaletteSample.Palette1X1X1 => new Palette(1, 1, 1),
+            PaletteSample.Palette5X5X5 => new Palette(5, 5, 5),
+            PaletteSample.Palette10X10X10 => new Palette(10, 10, 10),
+            PaletteSample.Palette20X20X20 => new Palette(20, 20, 20),
+            _ => throw new ArgumentException("Incorrect palette sample!")
+        };
     }
 }

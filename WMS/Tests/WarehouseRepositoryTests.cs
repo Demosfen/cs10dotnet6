@@ -14,27 +14,27 @@ public class WarehouseRepositoryTests
     public async void Repository_ShouldSaveAndReturnWarehouse()
     {
         // Arrange
-        var firstPalette = SmallPalette;
-        var secondPalette = MediumPalette;
-        var thirdPalette = BigPalette;
+        var SmallPalette = GetPalette(PaletteSample.Palette1X1X1);
+        var MediumPalette = GetPalette(PaletteSample.Palette5X5X5);
+        var LargePalette = GetPalette(PaletteSample.Palette10X10X10);
         
         Warehouse warehouse = new ();
         
         WarehouseRepository sut = new();
         
         // Act
-        firstPalette.AddBox(SmallBox);
+        SmallPalette.AddBox(GetBox(BoxSample.Box1X1X1));
         
-        secondPalette.AddBox(SmallBox);
-        secondPalette.AddBox(MediumBox);
+        MediumPalette.AddBox(GetBox(BoxSample.Box1X1X1));
+        MediumPalette.AddBox(GetBox(BoxSample.Box5X5X5));
         
-        thirdPalette.AddBox(SmallBox);
-        thirdPalette.AddBox(MediumBox);
-        thirdPalette.AddBox(BigBox);
+        LargePalette.AddBox(GetBox(BoxSample.Box1X1X1));
+        LargePalette.AddBox(GetBox(BoxSample.Box5X5X5));
+        LargePalette.AddBox(GetBox(BoxSample.Box10X10X10));
         
         warehouse.AddPalette(SmallPalette);
         warehouse.AddPalette(MediumPalette);
-        warehouse.AddPalette(BigPalette);
+        warehouse.AddPalette(LargePalette);
 
         await sut.Save(warehouse, JsonFileName).ConfigureAwait(false);
 
