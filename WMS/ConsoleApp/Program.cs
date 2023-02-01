@@ -32,8 +32,8 @@ internal class Program
         
         //WriteLine(loadedWarehouse);
 
-        var sortedPalettes = warehouse.SortByExpiryAndWeight();
-        
+        var sortedPalettes = WareHouseQueryService.SortByExpiryAndWeight(warehouse);
+
         WriteLine("\nSorted by ExpiryDate and Weight palettes:\n");
 
         foreach (var palette in sortedPalettes)
@@ -43,7 +43,7 @@ internal class Program
         
         WriteLine("\nThree palettes with max Expiry SortedBy Volume:\n");
 
-        var threePalettes = warehouse.ChooseThreePalettesByExpiryAndVolume();
+        var threePalettes = WareHouseQueryService.ChooseThreePalettesByExpiryAndVolume(warehouse);
 
         foreach (var palette in threePalettes)
         {
