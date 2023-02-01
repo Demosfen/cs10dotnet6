@@ -4,7 +4,7 @@ namespace WMS.Services.Abstract;
 
 public interface IWarehouseQueryService
 {
-    List<Palette> SortByExpiryAndWeight();
+    List<Palette> SortByExpiryAndWeight(Warehouse warehouse);
 
-    List<Palette> ChooseThreePalettesByExpiryAndVolume();
+    List<Palette> ChooseThreePalettesByExpiryAndVolume(Warehouse warehouse);
 }
