@@ -12,16 +12,16 @@ internal class Program
         // create a warehouse
         Warehouse warehouse = new();
 
-        var SmallPaletteOptional1 = new Palette(2, 2, 2);
+        var smallPaletteOptional1 = new Palette(2, 2, 2);
 
-        var SmallPaletteOptional2 = new Palette(2, 2, 2);
+        var smallPaletteOptional2 = new Palette(2, 2, 2);
             
         
-        warehouse.AddPalette(SmallPaletteOptional1);
-        warehouse.AddPalette(SmallPaletteOptional2);
+        warehouse.AddPalette(smallPaletteOptional1);
+        warehouse.AddPalette(smallPaletteOptional2);
         
-        SmallPaletteOptional1.AddBox(new Box(0.1m,0.1m,0.1m,10,new DateTime(2010,01,01)));
-        SmallPaletteOptional2.AddBox(new Box(0.2m,0.3m,0.4m,12, new DateTime(2011,1,1)));
+        smallPaletteOptional1.AddBox(new Box(0.1m,0.1m,0.1m,10,new DateTime(2010,01,01)));
+        smallPaletteOptional2.AddBox(new Box(0.2m,0.3m,0.4m,12, new DateTime(2011,1,1)));
 
         // create warehouse repo, serializing/deserializing warehouse, save and load: ok!
         WarehouseRepository repository = new();
