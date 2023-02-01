@@ -1,9 +1,11 @@
-﻿namespace WMS.Data;
+﻿using WMS.Services.Abstract;
+
+namespace WMS.Data;
 
 /// <summary>
 /// A class which describes a warehouse.
 /// </summary>
-public sealed class Warehouse
+public sealed class Warehouse : IWarehouseQueryService
 {
     /// <summary>
     /// Palettes stored in warehouse
@@ -55,4 +57,16 @@ public sealed class Warehouse
         _palettes.Remove(palette);
         
     }
+
+    public List<Palette> SortByExpiryAndWeight() =>
+            new (Palettes
+            .Where(p => p.ExpiryDate.HasValue)
+            .OrderBy(p => p.ExpiryDate) 
+            .ThenBy(p => p.Weight));
+
+    public List<Palette> ChooseThreePalettesByExpiryAndVolume() =>
+        new (Palettes
+            .OrderByDescending(p => p.ExpiryDate)
+            .ThenBy(p => p.Volume)
+            .Take(3));
 }

@@ -1,5 +1,6 @@
 ﻿using WMS.Data;
 using WMS.Services.Concrete;
+
 using static System.Console;
 
 namespace WMS.ConsoleApp;
@@ -31,10 +32,7 @@ internal class Program
         
         //WriteLine(loadedWarehouse);
 
-        var sortedPalettes = new List<Palette>(loadedWarehouse.Palettes //TODO how to group?
-            .Where(p => p.ExpiryDate.HasValue)
-            .OrderBy(p => p.ExpiryDate)      //TODO why doesn't HasValue work? 
-            .ThenBy(p => p.Weight));
+        var sortedPalettes = warehouse.SortByExpiryAndWeight();
         
         WriteLine("\nSorted by ExpiryDate and Weight palettes:\n");
 
@@ -45,10 +43,7 @@ internal class Program
         
         WriteLine("\nThree palettes with max Expiry SortedBy Volume:\n");
 
-        var threePalettes = new List<Palette>(sortedPalettes
-            .OrderByDescending(p => p.ExpiryDate)
-            .ThenBy(p => p.Volume)
-            .Take(3));
+        var threePalettes = warehouse.ChooseThreePalettesByExpiryAndVolume();
 
         foreach (var palette in threePalettes)
         {
