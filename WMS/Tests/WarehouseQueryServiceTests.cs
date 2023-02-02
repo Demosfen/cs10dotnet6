@@ -11,7 +11,7 @@ public class WarehouseQueryServiceTests
 {
     private readonly WareHouseQueryService _sut = new();
     
-    [Theory,DisplayName("Group all pallets by expiration date, and sort them in ascending order of expiration date. Sort pallets by weight in each group.")]
+    [Theory(DisplayName = "Group all pallets by expiration date, and sort them in ascending order of expiration date. Sort pallets by weight in each group.")]
     [MemberData(nameof(SortTestData))]
     public void SortPalettes_ByExpiryAndWeight(Warehouse warehouse, IReadOnlyCollection<Palette> expectedData)
     {
@@ -25,7 +25,7 @@ public class WarehouseQueryServiceTests
         _sut.SortByExpiryAndWeight(warehouse).Should().BeEquivalentTo(expected);
     }
 
-    [Theory,DisplayName("Display the top 3 pallets that contain the boxes with the longest shelf life, sorted in ascending order of volume.")] 
+    [Theory(DisplayName = "Display the top 3 pallets that contain the boxes with the longest shelf life, sorted in ascending order of volume.")] 
     [MemberData(nameof(SortTestData))]
     public void GetThreePalettes_SortedByExpiryAndVolume(Warehouse warehouse, IReadOnlyCollection<Palette> expectedData)
     {
