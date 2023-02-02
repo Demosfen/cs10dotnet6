@@ -10,7 +10,7 @@ public class WarehouseQueryServiceTests
 {
     private readonly WareHouseQueryService _sut = new();
     
-    [Theory, MemberData(nameof(GetTestData))]
+    [Theory, MemberData(nameof(SortTestData))]
     public void Sort_ByExpiryAndWeight_ShouldReturnSortedPalettes(Warehouse warehouse, IReadOnlyCollection<Palette> expectedData)
     {
         var expected = expectedData
@@ -23,7 +23,7 @@ public class WarehouseQueryServiceTests
         _sut.SortByExpiryAndWeight(warehouse).Should().BeEquivalentTo(expected);
     }
 
-    [Theory, MemberData(nameof(GetTestData))]
+    [Theory, MemberData(nameof(SortTestData))]
     public void GetThreePalettes_ByExpiryAndVolume_ShouldReturnSortedPalettes(Warehouse warehouse, IReadOnlyCollection<Palette> expectedData)
     {
         var expected = expectedData

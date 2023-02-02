@@ -59,7 +59,7 @@ public static class TestDataHelper
         };
     }
 
-    public static IEnumerable<object[]> GetTestData()
+    public static IEnumerable<object[]> SortTestData()
     {
         SmallPalette.AddBox(SmallBox);
         BigPalette.AddBox(BigBox);
@@ -78,7 +78,7 @@ public static class TestDataHelper
             BigPalette
         };
 
-        return new List<object[]> { new object[] { warehouse, palettes } };
+        yield return new object[] { warehouse, palettes };
     }
 
 }
