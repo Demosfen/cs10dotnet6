@@ -24,10 +24,4 @@
         <ProjectReference Include="..\Services\Services.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Reference Include="System.Private.CoreLib">
-        <HintPath>C:\Program Files\dotnet\shared\Microsoft.NETCore.App\6.0.13\System.Private.CoreLib.dll</HintPath>
-      </Reference>
-    </ItemGroup>
-
 </Project>

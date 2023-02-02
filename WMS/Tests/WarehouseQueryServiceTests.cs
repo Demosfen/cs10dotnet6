@@ -25,14 +25,14 @@ public class WarehouseQueryServiceTests
         WareHouseQueryService sut = new();
         
         Warehouse warehouse = new();
-
-        Palette[] palettes =
+        
+        IReadOnlyCollection<Palette> palettes = new List<Palette>()
         {
             _smallPalette,
             _mediumPalette,
             _bigPalette
         };
-        
+
         // Act
         _smallPalette.AddBox(_smallBox);
         _bigPalette.AddBox(_bigBox);
@@ -44,15 +44,13 @@ public class WarehouseQueryServiceTests
         warehouse.AddPalette(_mediumPalette);
         warehouse.AddPalette(_bigPalette);
 
-        
-
-
-        var expected = 
+        var expected = palettes
+            .Where(p => p.ExpiryDate.HasValue)
+            .OrderBy(p => p.ExpiryDate)
+            .ThenBy(p => p.Weight)
+            .GroupBy(g => g.ExpiryDate).ToList();
 
         // Assert
-        sut.SortByExpiryAndWeight(warehouse).Should().BeSameAs(expected);
-
-
-
+        sut.SortByExpiryAndWeight(warehouse).Should().BeEquivalentTo(expected);
     }
 }
