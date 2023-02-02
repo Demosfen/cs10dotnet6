@@ -6,7 +6,7 @@ namespace WMS.Tests;
 public static class TestDataHelper
 {
     public const string JsonFileName = "TestWarehouse.json";
-    public static readonly DateTime DefaultProductionDate = new DateTime(2008, 1, 1);
+    public static readonly DateTime DefaultProductionDate = new (2008, 1, 1);
     
     private static readonly Palette SmallPalette = GetPalette(PaletteSample.Palette1X1X1);
     private static readonly Palette MediumPalette = GetPalette(PaletteSample.Palette10X10X10);
