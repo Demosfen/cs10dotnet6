@@ -8,49 +8,31 @@ namespace WMS.Tests;
 
 public class WarehouseQueryServiceTests
 {
-
-    private readonly Palette _smallPalette = GetPalette(PaletteSample.Palette1X1X1);
-    private readonly Palette _mediumPalette = GetPalette(PaletteSample.Palette10X10X10);
-    private readonly Palette _bigPalette = GetPalette(PaletteSample.Palette20X20X20);
-
-    private readonly Box _smallBox = GetBox(BoxSample.Box1X1X1, new DateTime(2009,1,1));
-    private readonly Box _mediumBox1 = GetBox(BoxSample.Box1X1X1, new DateTime(2010,1,1));
-    private readonly Box _mediumBox2 = GetBox(BoxSample.Box5X5X5, new DateTime(2008, 6, 6));
-    private readonly Box _bigBox = GetBox(BoxSample.Box10X10X10, new DateTime(2009, 1, 1));
+    private readonly WareHouseQueryService _sut = new();
     
-    [Fact]
-    public void Sort_ByExpiryAndWeight_ShouldReturnSortedPalettes()
+    [Theory, MemberData(nameof(GetTestData))]
+    public void Sort_ByExpiryAndWeight_ShouldReturnSortedPalettes(Warehouse warehouse, IReadOnlyCollection<Palette> expectedData)
     {
-        // Arrange
-        WareHouseQueryService sut = new();
-        
-        Warehouse warehouse = new();
-        
-        IReadOnlyCollection<Palette> palettes = new List<Palette>()
-        {
-            _smallPalette,
-            _mediumPalette,
-            _bigPalette
-        };
-
-        // Act
-        _smallPalette.AddBox(_smallBox);
-        _bigPalette.AddBox(_bigBox);
-        
-        _mediumPalette.AddBox(_mediumBox1);
-        _mediumPalette.AddBox(_mediumBox2);
-        
-        warehouse.AddPalette(_smallPalette);
-        warehouse.AddPalette(_mediumPalette);
-        warehouse.AddPalette(_bigPalette);
-
-        var expected = palettes
+        var expected = expectedData
             .Where(p => p.ExpiryDate.HasValue)
             .OrderBy(p => p.ExpiryDate)
             .ThenBy(p => p.Weight)
             .GroupBy(g => g.ExpiryDate).ToList();
 
         // Assert
-        sut.SortByExpiryAndWeight(warehouse).Should().BeEquivalentTo(expected);
+        _sut.SortByExpiryAndWeight(warehouse).Should().BeEquivalentTo(expected);
+    }
+
+    [Theory, MemberData(nameof(GetTestData))]
+    public void GetThreePalettes_ByExpiryAndVolume_ShouldReturnSortedPalettes(Warehouse warehouse, IReadOnlyCollection<Palette> expectedData)
+    {
+        var expected = expectedData
+            .OrderByDescending(p => p.ExpiryDate)
+            .ThenBy(p => p.Volume)
+            .Take(3).ToList();
+
+        // Assert
+        _sut.SortByExpiryAndWeight(warehouse).Should().BeEquivalentTo(expected);
+        
     }
 }

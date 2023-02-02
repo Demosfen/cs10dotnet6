@@ -7,6 +7,17 @@ public static class TestDataHelper
 {
     public const string JsonFileName = "TestWarehouse.json";
     public static readonly DateTime DefaultProductionDate = new DateTime(2008, 1, 1);
+    
+    private static readonly Palette SmallPalette = GetPalette(PaletteSample.Palette1X1X1);
+    private static readonly Palette MediumPalette = GetPalette(PaletteSample.Palette10X10X10);
+    private static readonly Palette BigPalette = GetPalette(PaletteSample.Palette20X20X20);
+
+    private static readonly Box SmallBox = GetBox(BoxSample.Box1X1X1, new DateTime(2009,1,1));
+    private static readonly Box MediumBox1 = GetBox(BoxSample.Box1X1X1, new DateTime(2010,1,1));
+    private static readonly Box MediumBox2 = GetBox(BoxSample.Box5X5X5, new DateTime(2008, 6, 6));
+    private static readonly Box BigBox = GetBox(BoxSample.Box10X10X10, new DateTime(2009, 1, 1));
+    
+    private static readonly Warehouse warehouse = new();
 
     public enum BoxSample
     {
@@ -47,4 +58,27 @@ public static class TestDataHelper
             _ => throw new ArgumentException("Incorrect palette sample!")
         };
     }
+
+    public static IEnumerable<object[]> GetTestData()
+    {
+        SmallPalette.AddBox(SmallBox);
+        BigPalette.AddBox(BigBox);
+
+        MediumPalette.AddBox(MediumBox1);
+        MediumPalette.AddBox(MediumBox2);
+
+        warehouse.AddPalette(SmallPalette);
+        warehouse.AddPalette(MediumPalette);
+        warehouse.AddPalette(BigPalette);
+
+        IReadOnlyCollection<Palette> palettes = new List<Palette>()
+        {
+            SmallPalette,
+            MediumPalette,
+            BigPalette
+        };
+
+        return new List<object[]> { new object[] { warehouse, palettes } };
+    }
+
 }
