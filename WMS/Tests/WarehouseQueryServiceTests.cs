@@ -1,9 +1,7 @@
-using System.ComponentModel;
 using FluentAssertions;
 using WMS.Data;
 using WMS.Services.Concrete;
 using Xunit;
-using static WMS.Tests.TestDataHelper;
 
 namespace WMS.Tests;
 
@@ -12,7 +10,7 @@ public class WarehouseQueryServiceTests
     private readonly WareHouseQueryService _sut = new();
     
     [Theory(DisplayName = "Group all pallets by expiration date, and sort them in ascending order of expiration date. Sort pallets by weight in each group.")]
-    [MemberData(nameof(SortTestData))]
+    [MemberData(nameof(TestDataHelper.SortTestData), MemberType = typeof(TestDataHelper))]
     public void SortPalettes_ByExpiryAndWeight(Warehouse warehouse, IReadOnlyCollection<Palette> expectedData)
     {
         var expected = expectedData
@@ -26,7 +24,7 @@ public class WarehouseQueryServiceTests
     }
 
     [Theory(DisplayName = "Display the top 3 pallets that contain the boxes with the longest shelf life, sorted in ascending order of volume.")] 
-    [MemberData(nameof(SortTestData))]
+    [MemberData(nameof(TestDataHelper.SortTestData), MemberType = typeof(TestDataHelper))]
     public void GetThreePalettes_SortedByExpiryAndVolume(Warehouse warehouse, IReadOnlyCollection<Palette> expectedData)
     {
         var expected = expectedData
@@ -35,7 +33,7 @@ public class WarehouseQueryServiceTests
             .Take(3).ToList();
 
         // Assert
-        _sut.SortByExpiryAndWeight(warehouse).Should().BeEquivalentTo(expected);
+        _sut.ChooseThreePalettesByExpiryAndVolume(warehouse).Should().BeEquivalentTo(expected);
         
     }
 }
