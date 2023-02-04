@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WMS.Data;
+﻿using WMS.Data;
 using WMS.Services.Concrete;
 using WMS.Store;
+using Microsoft.EntityFrameworkCore;
+
 using static System.Console;
 
 namespace WMS.ConsoleApp;
@@ -25,7 +26,7 @@ internal class Program
         smallPaletteOptional2.AddBox(new Box(0.2m,0.3m,0.4m,12, new DateTime(2011,1,1)));
         
         await using var context = new WarehouseContext();
-        //await context.Database.MigrateAsync();
+        await context.Database.MigrateAsync();
         
         /*context.Warehouses.Add(warehouse);
         context.SaveChanges();

@@ -14,7 +14,7 @@ public sealed class WarehouseContext : DbContext
 
     public DbSet<Box> Boxes => Set<Box>();
 
-    public WarehouseContext() => Database.EnsureCreated();
+    /*public WarehouseContext() => Database.EnsureCreated();*/
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlite($"Data Source=../{DbFileName}")
