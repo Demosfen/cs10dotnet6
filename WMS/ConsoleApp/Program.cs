@@ -1,6 +1,7 @@
-﻿using WMS.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using WMS.Data;
 using WMS.Services.Concrete;
-
+using WMS.Store;
 using static System.Console;
 
 namespace WMS.ConsoleApp;
@@ -22,8 +23,15 @@ internal class Program
         
         smallPaletteOptional1.AddBox(new Box(0.1m,0.1m,0.1m,10,new DateTime(2010,01,01)));
         smallPaletteOptional2.AddBox(new Box(0.2m,0.3m,0.4m,12, new DateTime(2011,1,1)));
+        
+        await using var context = new WarehouseContext();
+        //await context.Database.MigrateAsync();
+        
+        /*context.Warehouses.Add(warehouse);
+        context.SaveChanges();
+        Console.WriteLine("Объекты успешно сохранены");*/
 
-        // create warehouse repo, serializing/deserializing warehouse, save and load: ok!
+        /*// create warehouse repo, serializing/deserializing warehouse, save and load: ok!
         WarehouseRepository repository = new();
         
         await repository.Save(warehouse, "warehouse.json").ConfigureAwait(false);
@@ -50,6 +58,6 @@ internal class Program
         foreach (var palette in threePalettes)
         {
             WriteLine(palette);
-        }
+        }*/
     }
 }

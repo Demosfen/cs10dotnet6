@@ -1,4 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk" />
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.2" />
+  </ItemGroup>
+</Project>
     
 <!--    <ItemGroup>-->
 <!--        <ProjectReference Include="..\Services\Services.csproj" />-->
