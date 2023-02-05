@@ -28,9 +28,9 @@ internal class Program
         await using var context = new WarehouseContext();
         await context.Database.MigrateAsync();
         
-        /*context.Warehouses.Add(warehouse);
-        context.SaveChanges();
-        Console.WriteLine("Объекты успешно сохранены");*/
+        context.Warehouses.Add(warehouse);
+        await context.SaveChangesAsync();
+        WriteLine("Success!");
 
         /*// create warehouse repo, serializing/deserializing warehouse, save and load: ok!
         WarehouseRepository repository = new();
