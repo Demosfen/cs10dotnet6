@@ -14,15 +14,15 @@ public sealed class WarehouseContext : DbContext
 
     public DbSet<Box> Boxes => Set<Box>();
 
-    /*public WarehouseContext() => Database.EnsureCreated();*/
+    public WarehouseContext() => Database.EnsureCreated();
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlite($"Data Source=../{DbFileName}")
             .LogTo(Console.WriteLine, LogLevel.Information);
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    /*protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
-    }
+    }*/
 }
