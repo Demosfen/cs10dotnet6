@@ -1,6 +1,6 @@
 using AutoMapper;
 using System.Text.Json;
-using WMS.Data;
+using WMS.Store.Entities;
 using WMS.Services.Abstract;
 using WMS.Services.Models.Serialization;
 using WMS.Services.Infrastructure.Mapping.Profiles;
@@ -72,5 +72,31 @@ public class WarehouseRepository: IWarehouseRepository
             _options);
         
         await fileStream.DisposeAsync();
+    }
+    
+    public void AddPalette(Warehouse warehouse, Palette palette)
+    {
+        if (warehouse.Palettes.Contains(palette))
+        {
+            Console.WriteLine(
+                $"The palette {palette.Id} already added to the warehouse! Skipping...");
+                
+            return;
+        }
+
+        Console.WriteLine($"The palette {palette.Id} added to the warehouse.");
+
+        if (warehouse.Palettes != null) warehouse.Palettes.(palette);
+    }
+
+    public void DeletePalette(Warehouse warehouse, Guid paletteId)
+    {
+        var palette = warehouse.Palettes.SingleOrDefault(x => x.Id == paletteId)
+                      ?? throw new InvalidOperationException($"Palette with id = {paletteId} wasn't found");
+        
+        Console.WriteLine($"Palette with {palette.Id} was removed from the warehouse.");
+        
+        warehouse.Palettes.Remove(palette);
+        
     }
 }

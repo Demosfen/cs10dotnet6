@@ -20,5 +20,4 @@ public sealed record Warehouse
 
         return msg;
     }
-
 }
