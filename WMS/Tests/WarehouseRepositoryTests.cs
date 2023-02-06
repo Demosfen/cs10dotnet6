@@ -1,5 +1,5 @@
 using AutoFixture;
-using WMS.Data;
+using WMS.Store.Entities;
 using FluentAssertions;
 using WMS.Services.Concrete;
 using Xunit;
@@ -19,22 +19,24 @@ public class WarehouseRepositoryTests
         var largePalette = GetPalette(PaletteSample.Palette10X10X10);
         
         Warehouse warehouse = new ();
-        
+
+        PaletteRepository paletteRepository = new();
+
         WarehouseRepository sut = new();
         
         // Act
-        smallPalette.AddBox(GetBox(BoxSample.Box1X1X1));
+        paletteRepository.AddBox(GetPalette(PaletteSample.Palette1X1X1), GetBox(BoxSample.Box1X1X1));
         
-        mediumPalette.AddBox(GetBox(BoxSample.Box1X1X1));
-        mediumPalette.AddBox(GetBox(BoxSample.Box5X5X5));
+        paletteRepository.AddBox(mediumPalette, GetBox(BoxSample.Box1X1X1));
+        paletteRepository.AddBox(mediumPalette, GetBox(BoxSample.Box5X5X5));
         
-        largePalette.AddBox(GetBox(BoxSample.Box1X1X1));
-        largePalette.AddBox(GetBox(BoxSample.Box5X5X5));
-        largePalette.AddBox(GetBox(BoxSample.Box10X10X10));
+        paletteRepository.AddBox(largePalette, GetBox(BoxSample.Box1X1X1));
+        paletteRepository.AddBox(largePalette, GetBox(BoxSample.Box5X5X5));
+        paletteRepository.AddBox(largePalette, GetBox(BoxSample.Box10X10X10));
         
-        warehouse.AddPalette(smallPalette);
-        warehouse.AddPalette(mediumPalette);
-        warehouse.AddPalette(largePalette);
+        sut.AddPalette(warehouse, smallPalette);
+        sut.AddPalette(warehouse, mediumPalette);
+        sut.AddPalette(warehouse, largePalette);
 
         await sut.Save(warehouse, JsonFileName).ConfigureAwait(false);
 

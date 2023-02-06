@@ -3,7 +3,7 @@ namespace WMS.Store.Entities;
 public sealed record Box : StorageUnit
 {
     /// <inheritdoc />
-    public readonly decimal Weight;
+    public decimal Weight { get; set; }
 
     /// <summary>
     /// Unit production date/time

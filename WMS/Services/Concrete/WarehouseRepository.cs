@@ -7,7 +7,7 @@ using WMS.Services.Infrastructure.Mapping.Profiles;
 
 namespace WMS.Services.Concrete;
 
-public class WarehouseRepository: IWarehouseRepository
+public class WarehouseRepository : IWarehouseRepository
 {
     private static Lazy<IMapper> Mapper { get; } = new(CreateWarehouseMapper);
     
@@ -86,7 +86,7 @@ public class WarehouseRepository: IWarehouseRepository
 
         Console.WriteLine($"The palette {palette.Id} added to the warehouse.");
 
-        if (warehouse.Palettes != null) warehouse.Palettes.(palette);
+        warehouse.Palettes.Add(palette);
     }
 
     public void DeletePalette(Warehouse warehouse, Guid paletteId)

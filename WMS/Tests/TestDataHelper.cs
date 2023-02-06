@@ -1,5 +1,6 @@
 using System.ComponentModel;
-using WMS.Data;
+using WMS.Services.Concrete;
+using WMS.Store.Entities;
 
 namespace WMS.Tests;
 
@@ -18,6 +19,10 @@ public static class TestDataHelper
     private static readonly Box BigBox = GetBox(BoxSample.Box10X10X10, new DateTime(2009, 1, 1));
     
     private static readonly Warehouse warehouse = new();
+
+    private static PaletteRepository _paletteRepository = new();
+
+    private static WarehouseRepository _warehouseRepository = new();
 
     public enum BoxSample
     {
@@ -61,15 +66,15 @@ public static class TestDataHelper
 
     public static IEnumerable<object[]> SortTestData()
     {
-        SmallPalette.AddBox(SmallBox);
-        BigPalette.AddBox(BigBox);
+        _paletteRepository.AddBox(SmallPalette, SmallBox); 
+        _paletteRepository.AddBox(BigPalette, BigBox);
 
-        MediumPalette.AddBox(MediumBox1);
-        MediumPalette.AddBox(MediumBox2);
+        _paletteRepository.AddBox(MediumPalette, MediumBox1);
+        _paletteRepository.AddBox(MediumPalette, MediumBox2);
 
-        warehouse.AddPalette(SmallPalette);
-        warehouse.AddPalette(MediumPalette);
-        warehouse.AddPalette(BigPalette);
+        _warehouseRepository.AddPalette(warehouse, SmallPalette);
+        _warehouseRepository.AddPalette(warehouse, MediumPalette);
+        _warehouseRepository.AddPalette(warehouse, BigPalette);
 
         IReadOnlyCollection<Palette> palettes = new List<Palette>()
         {

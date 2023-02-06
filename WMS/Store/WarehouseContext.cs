@@ -1,4 +1,4 @@
-﻿using WMS.Data;
+﻿using WMS.Store.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -20,9 +20,9 @@ public sealed class WarehouseContext : DbContext
         => options.UseSqlite($"Data Source=../{DbFileName}")
             .LogTo(Console.WriteLine, LogLevel.Information);
 
-    /*protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
-    }*/
+    }
 }

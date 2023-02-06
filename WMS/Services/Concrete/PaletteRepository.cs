@@ -3,9 +3,9 @@ using WMS.Services.Abstract;
 
 namespace WMS.Services.Concrete;
 
-public interface PaletteRepository : IPaletteRepository
+public class PaletteRepository : IPaletteRepository
 {
-    public void AddBox(Box box, Palette palette)
+    public void AddBox(Palette palette, Box box)
     {
         
         if (box.Width > palette.Width & box.Height > palette.Height & box.Depth > palette.Depth)

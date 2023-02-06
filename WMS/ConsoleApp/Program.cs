@@ -1,8 +1,7 @@
 ﻿using WMS.Store;
 using WMS.Store.Entities;
-using WMS.Services.Concrete;
 using Microsoft.EntityFrameworkCore;
-
+using WMS.Services.Concrete;
 using static System.Console;
 
 namespace WMS.ConsoleApp;
@@ -13,24 +12,28 @@ internal class Program
     {
         // create a warehouse
         Warehouse warehouse = new();
+        
+        WarehouseRepository warehouseRepository = new();
+
+        PaletteRepository paletteRepository = new();
 
         var smallPaletteOptional1 = new Palette(2, 2, 2);
 
         var smallPaletteOptional2 = new Palette(2, 2, 2);
             
         
-        warehouse.AddPalette(smallPaletteOptional1);
-        warehouse.AddPalette(smallPaletteOptional2);
+        warehouseRepository.AddPalette(warehouse, smallPaletteOptional1);
+        warehouseRepository.AddPalette(warehouse, smallPaletteOptional2);
         
-        smallPaletteOptional1.AddBox(new Box(0.1m,0.1m,0.1m,10,new DateTime(2010,01,01)));
-        smallPaletteOptional2.AddBox(new Box(0.2m,0.3m,0.4m,12, new DateTime(2011,1,1)));
+        paletteRepository.AddBox(smallPaletteOptional1, new Box(0.1m,0.1m,0.1m,10,new DateTime(2010,01,01)));
+        paletteRepository.AddBox(smallPaletteOptional2, new Box(0.2m,0.3m,0.4m,12, new DateTime(2011,1,1)));
         
         await using var context = new WarehouseContext();
         await context.Database.MigrateAsync();
-        
-        context.Warehouses.Add(warehouse);
+
+        /*context.Warehouses.Add(warehouse);
         await context.SaveChangesAsync();
-        WriteLine("Success!");
+        WriteLine("Success!");*/
 
         /*// create warehouse repo, serializing/deserializing warehouse, save and load: ok!
         WarehouseRepository repository = new();
