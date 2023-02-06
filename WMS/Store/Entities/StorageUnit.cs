@@ -1,4 +1,4 @@
-﻿namespace WMS.Data;
+namespace WMS.Store.Entities;
 
 /// <summary>
 /// This is an abstract class, which contains common properties
@@ -14,38 +14,38 @@ public abstract class StorageUnit
     /// <summary>
     /// Unit ID
     /// </summary>
-    public Guid Id { get; private set; }
+    public Guid Id { get; set; }
     
     /// <summary>
     /// Object width
     /// </summary>
-    public decimal Width { get; }
+    public decimal Width { get; set;}
 
     /// <summary>
     /// Object height
     /// </summary>
-    public decimal Height { get; }
+    public decimal Height { get; set; }
 
     /// <summary>
     /// Object depth
     /// </summary>
-    public decimal Depth { get; }
+    public decimal Depth { get; set; }
 
     /// <summary>
     /// Unit volume
     /// </summary>
-    public virtual decimal Volume => Width * Height * Depth;
+    public virtual decimal Volume { get; set; }
 
     /// <summary>
     /// Object weight, which can be calculated or set
     /// during runtime
     /// </summary>
-    public abstract decimal Weight { get; }
+    public abstract decimal Weight { get; set; }
 
     /// <summary>
     /// Unit expiry date/time
     /// </summary>
-    public abstract DateTime? ExpiryDate { get; }
+    public abstract DateTime? ExpiryDate { get; set; }
 
     /// <summary>
     /// Constructor which strictly encourage developers to

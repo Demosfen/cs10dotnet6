@@ -15,6 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Abstract" />
       <Folder Include="Migrations" />
     </ItemGroup>
 
