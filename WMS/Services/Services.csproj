@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Data\Data.csproj" />
+      <ProjectReference Include="..\Store\Store.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -4,7 +4,7 @@ namespace WMS.Store.Entities;
 /// This is an abstract class, which contains common properties
 /// for rectangle objects of a warehouse.
 /// </summary>
-public abstract class StorageUnit
+public abstract record StorageUnit
 {
     /// <summary>
     /// Unit default expiry days
@@ -14,7 +14,7 @@ public abstract class StorageUnit
     /// <summary>
     /// Unit ID
     /// </summary>
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
     
     /// <summary>
     /// Object width
@@ -34,13 +34,7 @@ public abstract class StorageUnit
     /// <summary>
     /// Unit volume
     /// </summary>
-    public virtual decimal Volume { get; set; }
-
-    /// <summary>
-    /// Object weight, which can be calculated or set
-    /// during runtime
-    /// </summary>
-    public abstract decimal Weight { get; set; }
+    public decimal Volume;
 
     /// <summary>
     /// Unit expiry date/time
@@ -52,7 +46,7 @@ public abstract class StorageUnit
     /// initialize basic properties of storage unit.
     /// </summary>
     /// <param name="width">Unit width</param>
-    /// <param name="height">Unit height</param>
+    /// <param name="height">Unit height</param> 
     /// <param name="depth">Unit depth</param>
     public StorageUnit(
         decimal width,
@@ -68,5 +62,6 @@ public abstract class StorageUnit
         Width = width;
         Height = height;
         Depth = depth;
+        Volume = width * height * depth;
     }
 }

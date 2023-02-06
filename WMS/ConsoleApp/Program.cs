@@ -1,6 +1,6 @@
-﻿using WMS.Data;
+﻿using WMS.Store;
+using WMS.Store.Entities;
 using WMS.Services.Concrete;
-using WMS.Store;
 using Microsoft.EntityFrameworkCore;
 
 using static System.Console;
