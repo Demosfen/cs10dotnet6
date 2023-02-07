@@ -7,6 +7,6 @@ public sealed class WarehouseModel
         Palettes = palettes;
     }
 
-    public List <PaletteModel> Palettes { get; }
+    public List<PaletteModel> Palettes { get; }
 }
 

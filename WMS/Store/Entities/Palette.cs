@@ -18,7 +18,7 @@ public sealed record Palette : StorageUnit
     /// empty palette weight and
     /// sum of boxes weight
     /// </summary>
-    public readonly decimal Weight;
+    public decimal Weight;
 
     /// <summary>
     /// Palette expiry date computed as
@@ -37,7 +37,9 @@ public sealed record Palette : StorageUnit
         decimal height,
         decimal depth)
         : base(width, height, depth)
-    { }
+    {
+        Weight = DefaultWeight;
+    }
 
     /// <summary>
     /// Output of all information about
@@ -56,7 +58,7 @@ public sealed record Palette : StorageUnit
                   $"WxHxD: {Width}x{Height}x{Depth},\n" +
                   $"Volume: {Volume},\n" +
                   $"Weight: {Weight},\n" +
-                  $"Expiry Date: {ExpiryDate},\n"; //TODO does information about boxes needed (see below)?
+                  $"Expiry Date: {ExpiryDate},\n";
         return msg;
     }
 }

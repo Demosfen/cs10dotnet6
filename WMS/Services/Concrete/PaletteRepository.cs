@@ -1,5 +1,6 @@
 using WMS.Store.Entities;
 using WMS.Services.Abstract;
+using System.Linq;
 
 namespace WMS.Services.Concrete;
 
@@ -42,6 +43,10 @@ public class PaletteRepository : IPaletteRepository
         Console.WriteLine($"The box {box.Id} added to the palette {palette.Id}.");
         
         palette.Boxes.Add(box);
+
+        palette.Weight += box.Weight;
+        palette.Volume += box.Volume;
+        palette.ExpiryDate = palette.Boxes.Min(x => x.ExpiryDate);
     }
 
     public void DeleteBox(Box box, Palette palette)
@@ -50,6 +55,10 @@ public class PaletteRepository : IPaletteRepository
                     ?? throw new InvalidOperationException($"Box with id = {box.Id} wasn't found");
 
         Console.WriteLine($"Box with {box.Id} was removed from the warehouse.");
+        
+        palette.Weight -= box.Weight;
+        palette.Volume -= box.Volume;
+        palette.ExpiryDate = palette.Boxes.Min(x => x.ExpiryDate);
         
         palette.Boxes.Remove(box);
     }

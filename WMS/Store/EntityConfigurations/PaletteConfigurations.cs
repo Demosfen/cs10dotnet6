@@ -13,7 +13,7 @@ public sealed class PaletteConfigurations : IEntityTypeConfiguration<Palette>
         builder
             .Property(x => x.Id)
             .IsRequired();
-        
+
         builder
             .Property(x => x.Width)
             .IsRequired();
