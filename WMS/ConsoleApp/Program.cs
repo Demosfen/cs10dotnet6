@@ -2,7 +2,6 @@
 using WMS.Store.Entities;
 using Microsoft.EntityFrameworkCore;
 using WMS.Services.Concrete;
-using static System.Console;
 
 namespace WMS.ConsoleApp;
 
@@ -31,9 +30,9 @@ internal class Program
         await using var context = new WarehouseContext();
         await context.Database.MigrateAsync();
 
-        /*context.Warehouses.Add(warehouse);
+        context.Warehouses.Add(warehouse);
         await context.SaveChangesAsync();
-        WriteLine("Success!");*/
+        Console.WriteLine("Success!");
 
         /*// create warehouse repo, serializing/deserializing warehouse, save and load: ok!
         WarehouseRepository repository = new();

@@ -2,6 +2,7 @@ namespace WMS.Store.Entities;
 
 public sealed record Warehouse
 {
+    public Guid Id { get; set; }
     public List<Palette> Palettes { get; } = new();
     
     public override string ToString()

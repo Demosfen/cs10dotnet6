@@ -1,4 +1,4 @@
-using WMS.Data;
+using WMS.Store.Entities;
 using FluentAssertions;
 using Xunit;
 

@@ -1,6 +1,7 @@
 ﻿using WMS.Store.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using WMS.Store.EntityConfigurations;
 
 namespace WMS.Store;
 
@@ -14,7 +15,11 @@ public sealed class WarehouseContext : DbContext
 
     public DbSet<Box> Boxes => Set<Box>();
 
-    public WarehouseContext() => Database.EnsureCreated();
+        //public WarehouseContext() => Database.EnsureCreated();
+
+    public WarehouseContext()
+    {
+    }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlite($"Data Source=../{DbFileName}")
@@ -23,6 +28,9 @@ public sealed class WarehouseContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
+        /*modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);*/
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(BoxConfigurations).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(PaletteConfigurations).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(WarehouseConfigurations).Assembly);
     }
 }
