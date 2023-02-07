@@ -1,4 +1,4 @@
-using WMS.Data;
+using WMS.Store.Entities;
 using WMS.Services.Abstract;
 
 namespace WMS.Services.Concrete;

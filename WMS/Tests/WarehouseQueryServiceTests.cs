@@ -1,5 +1,5 @@
 using FluentAssertions;
-using WMS.Data;
+using WMS.Store.Entities;
 using WMS.Services.Concrete;
 using Xunit;
 

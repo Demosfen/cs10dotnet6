@@ -1,5 +1,6 @@
 using FluentAssertions;
 using WMS.Store.Entities;
+using WMS.Services.Concrete;
 using Xunit;
 
 using static WMS.Tests.TestDataHelper;
@@ -8,6 +9,8 @@ namespace WMS.Tests;
 
 public class PaletteTests
 {
+    PaletteRepository paletteRepository = new();
+    
    [Fact]
     public void AddBox_ShouldAddBoxToThePalette()
     {
@@ -33,9 +36,9 @@ public class PaletteTests
         var boxes = new List<Box>();
 
         // Act
-        sut.AddBox(GetBox(BoxSample.Box1X1X1));
-        sut.AddBox(GetBox(BoxSample.Box5X5X5));
-        sut.AddBox(GetBox(BoxSample.Box10X10X10));
+        paletteRepository.AddBox(sut, GetBox(BoxSample.Box1X1X1));
+        paletteRepository.AddBox(sut, GetBox(BoxSample.Box5X5X5));
+        paletteRepository.AddBox(sut, GetBox(BoxSample.Box10X10X10));
         
         boxes.Add(GetBox(BoxSample.Box1X1X1));
         boxes.Add(GetBox(BoxSample.Box5X5X5));
@@ -56,8 +59,8 @@ public class PaletteTests
         var expected = GetBox(BoxSample.Box1X1X1).Weight + GetBox(BoxSample.Box5X5X5).Weight + Palette.DefaultWeight;
 
         // Act
-        sut.AddBox(GetBox(BoxSample.Box1X1X1));
-        sut.AddBox(GetBox(BoxSample.Box5X5X5));
+        paletteRepository.AddBox(sut, GetBox(BoxSample.Box1X1X1));
+        paletteRepository.AddBox(sut, GetBox(BoxSample.Box5X5X5));
 
         // Assert
         sut.Weight.Should().Be(expected);
