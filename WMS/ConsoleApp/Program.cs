@@ -41,14 +41,14 @@ internal class Program
         await context.SaveChangesAsync();
         Console.WriteLine("Success!");
 
-        object threePalettes = await context.Palettes
-            .Where(p => p.ExpiryDate.HasValue)
-            .OrderBy(p => p.ExpiryDate)
-            .ThenBy(p => p.Weight)
-            .GroupBy(g => g.ExpiryDate)
-            .ToArrayAsync();
-
-        WriteLine(threePalettes);
+        // object threePalettes = await context.Palettes
+        //     .Where(p => p.ExpiryDate.HasValue)
+        //     .OrderBy(p => p.ExpiryDate)
+        //     .ThenBy(p => p.Weight)
+        //     .GroupBy(g => g.ExpiryDate)
+        //     .ToArrayAsync();
+        //
+        // WriteLine(threePalettes);
 
         /*// create warehouse repo, serializing/deserializing warehouse, save and load: ok!
         WarehouseRepository repository = new();
