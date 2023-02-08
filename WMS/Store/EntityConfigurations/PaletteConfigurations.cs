@@ -16,22 +16,31 @@ public sealed class PaletteConfigurations : IEntityTypeConfiguration<Palette>
 
         builder
             .Property(x => x.Width)
+            .HasConversion<double>()
             .IsRequired();
 
         builder
             .Property(x => x.Height)
+            .HasConversion<double>()
             .IsRequired();
         
         builder
             .Property(x => x.Depth)
+            .HasConversion<double>()
             .IsRequired();
         
         builder
             .Property(x => x.Volume)
+            .HasConversion<double>()
+            .IsRequired();
+
+        builder
+            .Property(x => x.Weight)
+            .HasConversion<double>()
             .IsRequired();
         
         builder
-            .Property(x => x.Weight)
-            .IsRequired();
+            .Property(x => x.ExpiryDate)
+            .HasConversion<DateTime>();
     }
 }

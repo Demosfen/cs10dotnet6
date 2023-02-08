@@ -28,12 +28,12 @@ namespace WMS.Store.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     ExpiryDate = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    Volume = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Volume = table.Column<double>(type: "REAL", nullable: false),
                     WarehouseId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    Weight = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Width = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Height = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Depth = table.Column<decimal>(type: "TEXT", nullable: false)
+                    Weight = table.Column<double>(type: "REAL", nullable: false),
+                    Width = table.Column<double>(type: "REAL", nullable: false),
+                    Height = table.Column<double>(type: "REAL", nullable: false),
+                    Depth = table.Column<double>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -50,14 +50,14 @@ namespace WMS.Store.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Weight = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Weight = table.Column<double>(type: "REAL", nullable: false),
                     ProductionDate = table.Column<DateTime>(type: "TEXT", nullable: true),
                     ExpiryDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     PaletteId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    Volume = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Width = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Height = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Depth = table.Column<decimal>(type: "TEXT", nullable: false)
+                    Volume = table.Column<double>(type: "REAL", nullable: false),
+                    Width = table.Column<double>(type: "REAL", nullable: false),
+                    Height = table.Column<double>(type: "REAL", nullable: false),
+                    Depth = table.Column<double>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {

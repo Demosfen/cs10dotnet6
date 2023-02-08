@@ -35,20 +35,31 @@ internal class Program
         paletteRepository.AddBox(Palette3, new Box(0.4m, 0.4m, 0.4m,20, new DateTime(2006,01,01)));
         
         await using var context = new WarehouseContext();
-        await context.Database.MigrateAsync();
+        
+        // var warehouseToDel = context.Warehouses.First();
+        // context.Remove(warehouseToDel);
+        // context.SaveChanges();
 
+        await context.Database.MigrateAsync();
+        
         context.Warehouses.Add(warehouse);
         await context.SaveChangesAsync();
-        Console.WriteLine("Success!");
+        WriteLine("Success!");
+        
+        List<IGrouping<DateTime?, Palette>> threePalettes = context.Palettes
+            .Where(p => p.ExpiryDate.HasValue)
+            .OrderBy(p => p.ExpiryDate)
+            .ThenBy(p => p.Weight)
+            .GroupBy(g => g.ExpiryDate)
+            .ToList();
 
-        // object threePalettes = await context.Palettes
-        //     .Where(p => p.ExpiryDate.HasValue)
-        //     .OrderBy(p => p.ExpiryDate)
-        //     .ThenBy(p => p.Weight)
-        //     .GroupBy(g => g.ExpiryDate)
-        //     .ToArrayAsync();
-        //
-        // WriteLine(threePalettes);
+        IEnumerable<Palette> palettes = threePalettes.SelectMany(p => p);
+        //List<Palette> palettesList = palettes.ToList();
+
+        foreach (var p in palettes)
+        {
+            WriteLine(p);
+        }
 
         /*// create warehouse repo, serializing/deserializing warehouse, save and load: ok!
         WarehouseRepository repository = new();

@@ -23,15 +23,15 @@ namespace WMS.Store.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("Depth")
-                        .HasColumnType("TEXT");
+                    b.Property<double>("Depth")
+                        .HasColumnType("REAL");
 
                     b.Property<DateTime?>("ExpiryDate")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("Height")
-                        .HasColumnType("TEXT");
+                    b.Property<double>("Height")
+                        .HasColumnType("REAL");
 
                     b.Property<Guid?>("PaletteId")
                         .HasColumnType("TEXT");
@@ -39,14 +39,14 @@ namespace WMS.Store.Migrations
                     b.Property<DateTime?>("ProductionDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("Volume")
-                        .HasColumnType("TEXT");
+                    b.Property<double>("Volume")
+                        .HasColumnType("REAL");
 
-                    b.Property<decimal>("Weight")
-                        .HasColumnType("TEXT");
+                    b.Property<double>("Weight")
+                        .HasColumnType("REAL");
 
-                    b.Property<decimal>("Width")
-                        .HasColumnType("TEXT");
+                    b.Property<double>("Width")
+                        .HasColumnType("REAL");
 
                     b.HasKey("Id");
 
@@ -61,26 +61,26 @@ namespace WMS.Store.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("Depth")
-                        .HasColumnType("TEXT");
+                    b.Property<double>("Depth")
+                        .HasColumnType("REAL");
 
                     b.Property<DateTime?>("ExpiryDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("Height")
-                        .HasColumnType("TEXT");
+                    b.Property<double>("Height")
+                        .HasColumnType("REAL");
 
-                    b.Property<decimal>("Volume")
-                        .HasColumnType("TEXT");
+                    b.Property<double>("Volume")
+                        .HasColumnType("REAL");
 
                     b.Property<Guid?>("WarehouseId")
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("Weight")
-                        .HasColumnType("TEXT");
+                    b.Property<double>("Weight")
+                        .HasColumnType("REAL");
 
-                    b.Property<decimal>("Width")
-                        .HasColumnType("TEXT");
+                    b.Property<double>("Width")
+                        .HasColumnType("REAL");
 
                     b.HasKey("Id");
 
