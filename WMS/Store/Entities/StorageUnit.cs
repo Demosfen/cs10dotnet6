@@ -34,7 +34,7 @@ public abstract record StorageUnit
     /// <summary>
     /// Unit volume
     /// </summary>
-    public decimal Volume;
+    public decimal Volume { get; set; }
 
     /// <summary>
     /// Unit expiry date/time

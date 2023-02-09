@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace WMS.Store.Entities;
 
 public sealed record Box : StorageUnit
