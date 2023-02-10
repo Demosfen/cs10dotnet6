@@ -1,14 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{2D931590-0886-411F-B5DB-328CD500B9DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseApp", "WarehouseApp\WarehouseApp.csproj", "{2D931590-0886-411F-B5DB-328CD500B9DD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{E3FA5F72-EE5D-45C2-901A-33F11AF29EEA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{BA22245F-4BA6-4980-A611-4C54C0034B20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store", "Store\Store.csproj", "{66D53CC9-6B80-4C74-BADE-A8ADFBD07988}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositories\Repositories.csproj", "{288FA806-9E82-4CC1-BFB6-10EBDEB02D99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseDbContext", "WarehouseDbContext\WarehouseDbContext.csproj", "{3B23E7A3-E62F-4A5B-875F-6CE4E8E42C02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,13 +28,13 @@ Global
 		{BA22245F-4BA6-4980-A611-4C54C0034B20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA22245F-4BA6-4980-A611-4C54C0034B20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA22245F-4BA6-4980-A611-4C54C0034B20}.Release|Any CPU.Build.0 = Release|Any CPU
-		{66D53CC9-6B80-4C74-BADE-A8ADFBD07988}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{66D53CC9-6B80-4C74-BADE-A8ADFBD07988}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{66D53CC9-6B80-4C74-BADE-A8ADFBD07988}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{66D53CC9-6B80-4C74-BADE-A8ADFBD07988}.Release|Any CPU.Build.0 = Release|Any CPU
 		{288FA806-9E82-4CC1-BFB6-10EBDEB02D99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{288FA806-9E82-4CC1-BFB6-10EBDEB02D99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{288FA806-9E82-4CC1-BFB6-10EBDEB02D99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{288FA806-9E82-4CC1-BFB6-10EBDEB02D99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B23E7A3-E62F-4A5B-875F-6CE4E8E42C02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B23E7A3-E62F-4A5B-875F-6CE4E8E42C02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B23E7A3-E62F-4A5B-875F-6CE4E8E42C02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B23E7A3-E62F-4A5B-875F-6CE4E8E42C02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

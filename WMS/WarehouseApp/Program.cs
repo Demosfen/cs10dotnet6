@@ -1,13 +1,10 @@
-﻿using WMS.Store;
-using WMS.Store.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using WMS.Repositories.Concrete;
 using WMS.Services.Concrete;
+using WMS.WarehouseDbContext.Entities;
 
-using static System.Console;
+namespace WMS.WarehouseApp;
 
-namespace WMS.ConsoleApp;
-
-internal class Program
+public static class Program
 {
     public static async Task Main(string[] args)
     {

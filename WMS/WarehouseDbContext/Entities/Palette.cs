@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using WMS.WarehouseDbContext.Entities;
+
 namespace WMS.Store.Entities;
 
 public sealed record Palette : StorageUnit

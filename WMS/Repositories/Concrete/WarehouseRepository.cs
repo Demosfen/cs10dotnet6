@@ -1,5 +1,6 @@
 using WMS.Repositories.Abstract;
 using WMS.Store.Entities;
+using WMS.WarehouseDbContext.Entities;
 
 namespace WMS.Repositories.Concrete;
 

@@ -1,19 +1,20 @@
-﻿using WMS.Store.Entities;
+﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using WMS.Store.Entities;
 
 namespace WMS.Store.EntityConfigurations;
 
-public sealed class BoxConfigurations : IEntityTypeConfiguration<Box>
+public sealed class PaletteConfigurations : IEntityTypeConfiguration<Palette>
 {
-    public void Configure(EntityTypeBuilder<Box> builder)
+    public void Configure(EntityTypeBuilder<Palette> builder)
     {
-        builder.ToTable("Boxes");
+        builder.ToTable("Palettes");
         
         builder
             .Property(x => x.Id)
             .IsRequired();
-        
+
         builder
             .Property(x => x.Width)
             .HasConversion<double>()
@@ -33,17 +34,12 @@ public sealed class BoxConfigurations : IEntityTypeConfiguration<Box>
             .Property(x => x.Volume)
             .HasConversion<double>()
             .IsRequired();
-        
+
         builder
             .Property(x => x.Weight)
             .HasConversion<double>()
             .IsRequired();
         
-        builder
-            .Property(x => x.ExpiryDate)
-            .HasConversion<double>()
-            .IsRequired();
-
         builder
             .Property(x => x.ExpiryDate)
             .HasConversion<DateTime>();

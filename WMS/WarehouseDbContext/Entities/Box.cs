@@ -1,8 +1,12 @@
-namespace WMS.Store.Entities;
+using System;
+
+namespace WMS.WarehouseDbContext.Entities;
 
 public sealed record Box : StorageUnit
 {
-    /// <inheritdoc />
+    /// <summary>
+    /// Box weight
+    /// </summary>
     public decimal Weight { get; set; }
 
     /// <summary>

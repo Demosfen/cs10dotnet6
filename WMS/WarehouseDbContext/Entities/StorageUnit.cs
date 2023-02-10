@@ -1,4 +1,6 @@
-namespace WMS.Store.Entities;
+using System;
+
+namespace WMS.WarehouseDbContext.Entities;
 
 /// <summary>
 /// This is an abstract class, which contains common properties
@@ -9,7 +11,7 @@ public abstract record StorageUnit
     /// <summary>
     /// Unit default expiry days
     /// </summary>
-    public const int ExpiryDays = 100;
+    protected const int ExpiryDays = 100;
     
     /// <summary>
     /// Unit ID
@@ -48,7 +50,7 @@ public abstract record StorageUnit
     /// <param name="width">Unit width</param>
     /// <param name="height">Unit height</param> 
     /// <param name="depth">Unit depth</param>
-    public StorageUnit(
+    protected StorageUnit(
         decimal width,
         decimal height,
         decimal depth)
