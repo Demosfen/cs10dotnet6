@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using WMS.Store.Entities;
 using WMS.Store.EntityConfigurations;
 using WMS.WarehouseDbContext.Entities;
 using WMS.WarehouseDbContext.EntityConfigurations;

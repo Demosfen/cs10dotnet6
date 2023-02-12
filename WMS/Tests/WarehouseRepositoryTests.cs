@@ -1,5 +1,4 @@
 using AutoFixture;
-using WMS.Store.Entities;
 using FluentAssertions;
 using WMS.Services.Concrete;
 using Xunit;

@@ -1,6 +1,6 @@
 using FluentAssertions;
-using WMS.Store.Entities;
 using WMS.Services.Concrete;
+using WMS.WarehouseDbContext.Entities;
 using Xunit;
 
 using static WMS.Tests.TestDataHelper;

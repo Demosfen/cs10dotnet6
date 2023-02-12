@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using WMS.Store.Entities;
 
 namespace WMS.WarehouseDbContext.Entities;
 

@@ -1,6 +1,6 @@
 using System.ComponentModel;
 using WMS.Services.Concrete;
-using WMS.Store.Entities;
+using WMS.WarehouseDbContext.Entities;
 
 namespace WMS.Tests;
 

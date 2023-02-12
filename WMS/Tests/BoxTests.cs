@@ -1,4 +1,3 @@
-using WMS.Store.Entities;
 using FluentAssertions;
 using Xunit;
 

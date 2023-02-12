@@ -1,5 +1,5 @@
-using WMS.Store.Entities;
 using WMS.Services.Abstract;
+using WMS.WarehouseDbContext.Entities;
 
 namespace WMS.Services.Concrete;
 

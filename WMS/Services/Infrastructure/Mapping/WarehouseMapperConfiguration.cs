@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using WMS.Store.Entities;
+using WMS.WarehouseDbContext.Entities;
 using WMS.Services.Models.Serialization;
 
 namespace WMS.Services.Infrastructure.Mapping.Profiles;
