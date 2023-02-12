@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using WMS.Repositories.Abstract;
 using WMS.WarehouseDbContext;
 using WMS.WarehouseDbContext.Entities;
+using WMS.WarehouseDbContext.Specifications;
 
 namespace WMS.Repositories.Concrete;
 
@@ -15,10 +16,10 @@ public sealed class WarehouseRepository : IWarehouseRepository
         _dbContext = dbContext;
     }
 
-    public async Task<Warehouse?> GetAsync(Guid id, CancellationToken ct = default) 
+    public async Task<Warehouse?> GetAsync(Guid id, CancellationToken ct = default)
         => await _dbContext.Warehouses
             .AsNoTracking()
-            .Where(x => x.Id == id)
+            .ById(id)
             .FirstOrDefaultAsync(cancellationToken: ct);
 
     public async Task CreateAsync(Warehouse warehouse, CancellationToken ct = default)
@@ -36,7 +37,8 @@ public sealed class WarehouseRepository : IWarehouseRepository
     public async Task DeleteAsync(Guid id, CancellationToken ct = default)
     {
         var entity = await _dbContext.Warehouses
-            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken: ct) 
+                         .ById(id)
+                         .FirstOrDefaultAsync(cancellationToken: ct)
                      ?? throw new Exception($"{nameof(Warehouse)} with {nameof(Warehouse.Id)}={id} doesn't exist");
 
         _dbContext.Warehouses.Remove(entity);

@@ -1,11 +1,10 @@
-using System;
-using System.Collections.Generic;
+using WMS.WarehouseDbContext.Interfaces;
 
 namespace WMS.WarehouseDbContext.Entities;
 
-public sealed record Warehouse
+public sealed record Warehouse: IEntityWithId
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
     public List<Palette> Palettes { get; } = new();
     
     public override string ToString()
