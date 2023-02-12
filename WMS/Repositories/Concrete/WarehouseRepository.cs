@@ -1,13 +1,12 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using WMS.Repositories.Abstract;
-using WMS.Store.Entities;
 using WMS.WarehouseDbContext;
 using WMS.WarehouseDbContext.Entities;
 
 namespace WMS.Repositories.Concrete;
 
-public sealed class WarehouseRepository : IWarehouseRepository, IWarehouseDbContext
+/// <inheritdoc />
+public sealed class WarehouseRepository : IWarehouseRepository
 {
     private readonly IWarehouseDbContext _dbContext;
 
@@ -16,28 +15,28 @@ public sealed class WarehouseRepository : IWarehouseRepository, IWarehouseDbCont
         _dbContext = dbContext;
     }
 
-    public async Task<Warehouse?> GetAsync(Guid id) 
+    public async Task<Warehouse?> GetAsync(Guid id, CancellationToken ct = default) 
         => await _dbContext.Warehouses
             .AsNoTracking()
             .Where(x => x.Id == id)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(cancellationToken: ct);
 
-    public async Task CreateAsync(Warehouse warehouse)
+    public async Task CreateAsync(Warehouse warehouse, CancellationToken ct = default)
     {
         _dbContext.Warehouses.Add(warehouse);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(ct);
     }
 
-    public async Task UpdateAsync(Warehouse warehouse)
+    public async Task UpdateAsync(Warehouse warehouse, CancellationToken ct = default)
     {
         _dbContext.Warehouses.Update(warehouse);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(ct);
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(Guid id, CancellationToken ct = default)
     {
         var entity = await _dbContext.Warehouses
-            .FirstOrDefaultAsync(x => x.Id == id) 
+            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken: ct) 
                      ?? throw new Exception($"{nameof(Warehouse)} with {nameof(Warehouse.Id)}={id} doesn't exist");
 
         _dbContext.Warehouses.Remove(entity);

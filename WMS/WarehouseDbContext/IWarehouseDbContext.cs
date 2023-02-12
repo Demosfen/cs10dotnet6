@@ -4,7 +4,6 @@ using WMS.WarehouseDbContext.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-
 namespace WMS.WarehouseDbContext;
 
 public interface IWarehouseDbContext

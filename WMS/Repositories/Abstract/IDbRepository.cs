@@ -1,4 +1,4 @@
-namespace WMS.Services.Abstract;
+namespace WMS.Repositories.Abstract;
 
 public interface IDbRepository
 {
