@@ -1,5 +1,5 @@
 ﻿using WMS.Repositories.Concrete;
-using WMS.Services.Concrete;
+using WMS.WarehouseDbContext;
 using WMS.WarehouseDbContext.Entities;
 
 namespace WMS.WarehouseApp;
@@ -8,10 +8,14 @@ public static class Program
 {
     public static async Task Main(string[] args)
     {
+        WarehouseDbContext warehouseDbContext = new();
         // create a warehouse
         Warehouse warehouse = new();
         
         WarehouseRepository warehouseRepository = new();
+        PaletteRepository paletteRepository = new();
+        WarehouseRepository warehouseRepository = new();
+
 
         PaletteRepository paletteRepository = new();
 

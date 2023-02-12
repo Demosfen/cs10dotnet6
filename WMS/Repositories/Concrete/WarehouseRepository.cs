@@ -40,6 +40,7 @@ public sealed class WarehouseRepository : IWarehouseRepository
                      ?? throw new Exception($"{nameof(Warehouse)} with {nameof(Warehouse.Id)}={id} doesn't exist");
 
         _dbContext.Warehouses.Remove(entity);
+        await _dbContext.SaveChangesAsync(ct);
     }
 }
 
