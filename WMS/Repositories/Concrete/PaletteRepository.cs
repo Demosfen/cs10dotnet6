@@ -17,6 +17,7 @@ public sealed class PaletteRepository : IPaletteRepository
 
     public async Task<Palette?> GetAsync(Guid id, CancellationToken ct = default)
         => await _dbContext.Palettes
+            .Include(b => b.Boxes)
             .AsNoTracking()
             .Where(x => x.Id == id)
             .FirstOrDefaultAsync(cancellationToken: ct);
