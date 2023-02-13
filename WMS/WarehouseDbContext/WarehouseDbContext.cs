@@ -6,7 +6,7 @@ using WMS.WarehouseDbContext.EntityConfigurations;
 
 namespace WMS.WarehouseDbContext;
 
-internal sealed class WarehouseDbContext : DbContext, IWarehouseDbContext
+public sealed class WarehouseDbContext : DbContext, IWarehouseDbContext
 {
     private const string DbFileName = "warehouse.db";
 
