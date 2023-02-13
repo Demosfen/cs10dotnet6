@@ -11,7 +11,7 @@ public abstract record StorageUnit: IEntityWithId
     /// <summary>
     /// Unit default expiry days
     /// </summary>
-    protected const int ExpiryDays = 100;
+    public const int ExpiryDays = 100;
     
     /// <summary>
     /// Unit ID

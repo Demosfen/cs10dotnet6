@@ -1,3 +1,4 @@
+using WMS.WarehouseDbContext.Entities;
 using FluentAssertions;
 using Xunit;
 

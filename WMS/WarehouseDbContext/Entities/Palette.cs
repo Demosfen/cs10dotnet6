@@ -18,7 +18,7 @@ public sealed record Palette : StorageUnit
     /// empty palette weight and
     /// sum of boxes weight
     /// </summary>
-    public decimal Weight;
+    public decimal Weight { get; set; }
 
     /// <summary>
     /// Palette expiry date computed as
@@ -38,7 +38,6 @@ public sealed record Palette : StorageUnit
         decimal depth)
         : base(width, height, depth)
     {
-        Weight = DefaultWeight;
     }
 
     /// <summary>
