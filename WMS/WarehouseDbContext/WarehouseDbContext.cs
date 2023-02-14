@@ -16,11 +16,13 @@ public sealed class WarehouseDbContext : DbContext, IWarehouseDbContext
 
     public DbSet<Box> Boxes => Set<Box>();
 
-/*
-    internal void WarehouseDbContext() => Database.EnsureCreated();
-*/
+    public WarehouseDbContext()
+    {
+        Database.EnsureDeleted();
+        Database.EnsureCreated();
+    }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
+    protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlite($"Data Source=../../../../{DbFileName}")
             .LogTo(Console.WriteLine, LogLevel.Information);
 

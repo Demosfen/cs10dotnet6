@@ -11,7 +11,6 @@ internal static class Program
     public static async Task Main(string[] args)
     {
         await using var context = new WarehouseDbContext.WarehouseDbContext();
-        await context.Database.EnsureDeletedAsync();
         await context.Database.MigrateAsync();
 
         var warehouseRepository = new WarehouseRepository(context);

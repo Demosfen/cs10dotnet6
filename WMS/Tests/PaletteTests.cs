@@ -1,6 +1,5 @@
 using FluentAssertions;
 using WMS.Repositories.Concrete;
-using WMS.Services.Concrete;
 using WMS.WarehouseDbContext.Entities;
 using Xunit;
 
@@ -10,7 +9,7 @@ namespace WMS.Tests;
 
 public class PaletteTests
 {
-    PaletteRepository paletteRepository = new();
+    readonly PaletteRepository paletteRepository = new();
     
    [Fact]
     public void AddBox_ShouldAddBoxToThePalette()
