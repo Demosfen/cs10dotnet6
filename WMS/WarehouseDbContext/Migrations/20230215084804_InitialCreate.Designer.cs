@@ -11,7 +11,7 @@ using WMS.WarehouseDbContext;
 namespace WMS.WarehouseDbContext.Migrations
 {
     [DbContext(typeof(WarehouseDbContext))]
-    [Migration("20230213124112_InitialCreate")]
+    [Migration("20230215084804_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

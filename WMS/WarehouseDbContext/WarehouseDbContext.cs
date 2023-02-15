@@ -18,8 +18,6 @@ public sealed class WarehouseDbContext : DbContext, IWarehouseDbContext
 
     public WarehouseDbContext()
     {
-        Database.EnsureDeleted();
-        Database.EnsureCreated();
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)

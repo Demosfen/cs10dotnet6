@@ -11,14 +11,15 @@ internal static class Program
     public static async Task Main(string[] args)
     {
         await using var context = new WarehouseDbContext.WarehouseDbContext();
+        //await context.Database.EnsureDeletedAsync();
+        //await context.Database.EnsureCreatedAsync();
         await context.Database.MigrateAsync();
 
         var warehouseRepository = new WarehouseRepository(context);
-
-        // await warehouseRepository.DeleteAllAsync(); TODO SaveAsync() exception --> SQLite Error 19: 'FOREIGN KEY constraint failed'
-        
         var paletteRepository = new PaletteRepository(context);
         var boxRepository = new BoxRepository(context);
+        // await warehouseRepository.DeleteAllAsync(); TODO SaveAsync() exception --> SQLite Error 19: 'FOREIGN KEY constraint failed'
+
         
         var warehouse = new Warehouse();
         var palette1 = new Palette(1, 1, 1);
