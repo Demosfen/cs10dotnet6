@@ -11,8 +11,8 @@ internal static class Program
     public static async Task Main(string[] args)
     {
         await using var context = new WarehouseDbContext.WarehouseDbContext();
-        //await context.Database.EnsureDeletedAsync();
-        //await context.Database.EnsureCreatedAsync();
+        //await context.Database.EnsureDeletedAsync(); // Removes DB file
+        //await context.Database.EnsureCreatedAsync(); // Creates DB file
         await context.Database.MigrateAsync();
 
         var warehouseRepository = new WarehouseRepository(context);
@@ -21,7 +21,7 @@ internal static class Program
         // await warehouseRepository.DeleteAllAsync(); TODO SaveAsync() exception --> SQLite Error 19: 'FOREIGN KEY constraint failed'
 
         
-        var warehouse = new Warehouse();
+        var warehouse = new Warehouse("Test warehouse");
         var palette1 = new Palette(1, 1, 1);
         var palette2 = new Palette(3, 3, 3);
         var palette3 = new Palette(10, 10, 10);

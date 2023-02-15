@@ -2,17 +2,18 @@ using WMS.WarehouseDbContext.Interfaces;
 
 namespace WMS.WarehouseDbContext.Entities;
 
-public sealed record Warehouse: IEntityWithId
+public sealed record Warehouse(string Name) : IEntityWithId
 {
     public Guid Id { get; init; }
 
     /// <summary>
     /// New property for Migrations which is
-    /// a simple palettes number stored into warehouse
+    /// a simple Warehouse name
     /// </summary>
-    public int PalettesCount { get; set; }
+    public string Name { get; } = Name;
+
     public List<Palette> Palettes { get; } = new();
-    
+
     public override string ToString()
     {
         if (Palettes.Count == 0)

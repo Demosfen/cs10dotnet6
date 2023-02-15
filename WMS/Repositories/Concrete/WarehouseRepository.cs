@@ -84,7 +84,6 @@ public sealed class WarehouseRepository : IWarehouseRepository
         Console.WriteLine($"Palette {palette.Id} added to the warehouse {warehouse.Id}.");
 
         warehouse.Palettes.Add(palette);
-        warehouse.PalettesCount += 1;
     }
     
     public void DeletePalette(Warehouse warehouse, Guid id)
@@ -95,7 +94,6 @@ public sealed class WarehouseRepository : IWarehouseRepository
         Console.WriteLine($"Palette with {id} was removed from the warehouse.");
 
         warehouse.Palettes.Remove(entity);
-        warehouse.PalettesCount -= 1;
     }
 }
 

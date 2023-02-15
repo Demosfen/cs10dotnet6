@@ -13,5 +13,9 @@ public sealed class WarehouseConfigurations : IEntityTypeConfiguration<Warehouse
         builder
             .Property(x => x.Id)
             .IsRequired();
+
+        builder
+            .Property(x => x.Name)
+            .IsRequired();
     }
 }
