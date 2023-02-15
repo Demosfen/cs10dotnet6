@@ -5,6 +5,12 @@ namespace WMS.WarehouseDbContext.Entities;
 public sealed record Warehouse: IEntityWithId
 {
     public Guid Id { get; init; }
+
+    /// <summary>
+    /// New property for Migrations which is
+    /// a simple palettes number stored into warehouse
+    /// </summary>
+    public int PalettesCount { get; set; }
     public List<Palette> Palettes { get; } = new();
     
     public override string ToString()
