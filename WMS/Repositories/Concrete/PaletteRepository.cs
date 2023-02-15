@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using WMS.Repositories.Abstract;
-using WMS.Services.Abstract;
 using WMS.WarehouseDbContext;
 using WMS.WarehouseDbContext.Entities;
 

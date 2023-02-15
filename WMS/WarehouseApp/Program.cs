@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WMS.Repositories.Concrete;
 using WMS.WarehouseDbContext.Entities;
-
+using WMS.Services.Concrete;
 using static System.Console;
 
 namespace WMS.WarehouseApp;
@@ -19,6 +19,8 @@ internal static class Program
         var paletteRepository = new PaletteRepository(context);
         var boxRepository = new BoxRepository(context);
         // await warehouseRepository.DeleteAllAsync(); TODO SaveAsync() exception --> SQLite Error 19: 'FOREIGN KEY constraint failed'
+
+        var queryService = new WarehouseQueryService();
 
         
         var warehouse = new Warehouse("Test warehouse");
@@ -57,32 +59,25 @@ internal static class Program
         await warehouseRepository.UpdateAsync(warehouse);
 
         // Grouped by Expiry date and ordered by Weight
-        var groupedPalettes = context.Palettes
-            .Where(p => p.ExpiryDate.HasValue)
-            .OrderBy(p => p.ExpiryDate)
-            .ThenBy(p => p.Weight)
-            .GroupBy(g => g.ExpiryDate).ToList();
+        var groupedPalettes = queryService.SortByExpiryAndWeight(context, warehouse.Id);
 
-        foreach (var paletteGroup in groupedPalettes)
-        {
-            WriteLine($"Palette {paletteGroup.Key}");
-            
-            foreach (var palette in paletteGroup)
+            foreach (var paletteGroup in groupedPalettes)
             {
-                WriteLine(palette);
-
-                foreach (var box in palette.Boxes)
+                WriteLine($"Palette {paletteGroup.Key}");
+            
+                foreach (var palette in paletteGroup)
                 {
-                    WriteLine(box);
+                    WriteLine(palette);
+
+                    foreach (var box in palette.Boxes)
+                    {
+                        WriteLine(box);
+                    }
                 }
             }
-        }
-        
-        // Select three palettes with Expiry and ordered by Volume
-        var threePalettes = context.Palettes
-            .OrderBy(p => p.ExpiryDate)
-            .ThenBy(p => p.Volume)
-            .Take(3).ToList();
+
+            // Select three palettes with Expiry and ordered by Volume
+            var threePalettes = queryService.ChooseThreePalettesByExpiryAndVolume(context, warehouse.Id);
 
         foreach (var palette in threePalettes)
         {

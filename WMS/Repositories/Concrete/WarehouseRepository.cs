@@ -28,8 +28,7 @@ public sealed class WarehouseRepository : IWarehouseRepository
         => await _dbContext.Warehouses
                .AsNoTracking()
                .ById(id)
-               .Include(u=>u.Palettes)
-               .FirstOrDefaultAsync(cancellationToken: ct)
+               .Include(u=>u.Palettes).FirstOrDefaultAsync(cancellationToken: ct)
            ?? throw new Exception($"No warehouse with {id} was found");
 
     public async Task CreateAsync(Warehouse warehouse, CancellationToken ct = default)
