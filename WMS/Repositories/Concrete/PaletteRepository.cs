@@ -14,11 +14,6 @@ public sealed class PaletteRepository : IPaletteRepository
         _dbContext = dbContext;
     }
 
-    public PaletteRepository()
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<Palette?> GetAsync(Guid id, CancellationToken ct = default)
         => await _dbContext.Palettes
             .Include(b => b.Boxes)
@@ -89,6 +84,7 @@ public sealed class PaletteRepository : IPaletteRepository
         palette.Weight += box.Weight;
         palette.Volume += box.Volume;
         palette.ExpiryDate = palette.Boxes.Min(x => x.ExpiryDate);
+        box.PaletteId = palette.Id;
     }
 
     public void DeleteBox(Palette palette, Box box)
@@ -103,5 +99,6 @@ public sealed class PaletteRepository : IPaletteRepository
         palette.ExpiryDate = palette.Boxes.Min(x => x.ExpiryDate);
         
         palette.Boxes.Remove(box);
+        box.PaletteId = null;
     }
 }

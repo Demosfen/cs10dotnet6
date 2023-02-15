@@ -5,7 +5,7 @@ namespace WMS.Services.Abstract;
 
 public interface IWarehouseQueryService
 {
-    IReadOnlyCollection<IGrouping<DateTime?, Palette>> SortByExpiryAndWeight(IWarehouseDbContext dbContext, Guid id);
+    IReadOnlyCollection<IGrouping<DateTime?, Palette>> SortByExpiryAndWeight(Guid id);
 
-    IReadOnlyCollection<Palette>? ChooseThreePalettesByExpiryAndVolume(IWarehouseDbContext dbContext, Guid id);
+    IReadOnlyCollection<Palette>? ChooseThreePalettesByExpiryAndVolume(Guid id);
 }

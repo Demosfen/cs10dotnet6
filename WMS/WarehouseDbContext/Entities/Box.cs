@@ -5,6 +5,11 @@ namespace WMS.WarehouseDbContext.Entities;
 public sealed record Box : StorageUnit
 {
     /// <summary>
+    /// ID of the palette where box is stored
+    /// </summary>
+    public Guid? PaletteId { get; set; }
+    
+    /// <summary>
     /// Box weight
     /// </summary>
     public decimal Weight { get; set; }

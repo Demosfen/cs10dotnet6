@@ -43,5 +43,10 @@ public sealed class PaletteConfigurations : IEntityTypeConfiguration<Palette>
         builder
             .Property(x => x.ExpiryDate)
             .HasConversion<DateTime>();
+
+        builder
+            .Property(x => x.WarehouseId)
+            .ValueGeneratedNever()
+            .HasDefaultValue(null);
     }
 }

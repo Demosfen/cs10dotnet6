@@ -11,16 +11,15 @@ internal static class Program
     public static async Task Main(string[] args)
     {
         await using var context = new WarehouseDbContext.WarehouseDbContext();
-        //await context.Database.EnsureDeletedAsync(); // Removes DB file
-        //await context.Database.EnsureCreatedAsync(); // Creates DB file
+        // await context.Database.EnsureDeletedAsync(); // Removes DB file
+        // await context.Database.EnsureCreatedAsync(); // Creates DB file
         await context.Database.MigrateAsync();
 
         var warehouseRepository = new WarehouseRepository(context);
         var paletteRepository = new PaletteRepository(context);
         var boxRepository = new BoxRepository(context);
-        // await warehouseRepository.DeleteAllAsync(); TODO SaveAsync() exception --> SQLite Error 19: 'FOREIGN KEY constraint failed'
 
-        var queryService = new WarehouseQueryService();
+        var queryService = new WarehouseQueryService(context);
 
         
         var warehouse = new Warehouse("Test warehouse");
@@ -35,19 +34,6 @@ internal static class Program
         var box6 = new Box(6, 6, 6, 1, new DateTime(2012, 1, 1));
         
         await warehouseRepository.CreateAsync(warehouse);
-        await paletteRepository.CreateAsync(palette1);
-        await paletteRepository.CreateAsync(palette2);
-        await paletteRepository.CreateAsync(palette3);
-        await boxRepository.CreateAsync(box1);
-        await boxRepository.CreateAsync(box2);
-        await boxRepository.CreateAsync(box3);
-        await boxRepository.CreateAsync(box4);
-        await boxRepository.CreateAsync(box5);
-        await boxRepository.CreateAsync(box6);
-
-        warehouseRepository.AddPalette(warehouse, palette1);
-        warehouseRepository.AddPalette(warehouse,palette2);
-        warehouseRepository.AddPalette(warehouse, palette3);
         
         paletteRepository.AddBox(palette1,box1);
         paletteRepository.AddBox(palette2,box2);
@@ -56,10 +42,25 @@ internal static class Program
         paletteRepository.AddBox(palette3,box5);
         paletteRepository.AddBox(palette3,box6);
         
+        warehouseRepository.AddPalette(warehouse, palette1);
+        warehouseRepository.AddPalette(warehouse,palette2);
+        warehouseRepository.AddPalette(warehouse, palette3);
+        
+        await paletteRepository.CreateAsync(palette1);
+        await paletteRepository.CreateAsync(palette2);
+        await paletteRepository.CreateAsync(palette3);
+        
+        await boxRepository.CreateAsync(box1);
+        await boxRepository.CreateAsync(box2);
+        await boxRepository.CreateAsync(box3);
+        await boxRepository.CreateAsync(box4);
+        await boxRepository.CreateAsync(box5);
+        await boxRepository.CreateAsync(box6);
+
         await warehouseRepository.UpdateAsync(warehouse);
 
         // Grouped by Expiry date and ordered by Weight
-        var groupedPalettes = queryService.SortByExpiryAndWeight(context, warehouse.Id);
+        var groupedPalettes = queryService.SortByExpiryAndWeightAlternative(warehouse.Id);
 
             foreach (var paletteGroup in groupedPalettes)
             {
@@ -77,7 +78,7 @@ internal static class Program
             }
 
             // Select three palettes with Expiry and ordered by Volume
-            var threePalettes = queryService.ChooseThreePalettesByExpiryAndVolume(context, warehouse.Id);
+            var threePalettes = queryService.ChooseThreePalettesByExpiryAndVolumeAlternative(warehouse.Id);
 
         foreach (var palette in threePalettes)
         {

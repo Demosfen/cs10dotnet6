@@ -3,6 +3,11 @@ namespace WMS.WarehouseDbContext.Entities;
 public sealed record Palette : StorageUnit
 {
     /// <summary>
+    /// ID of the warehouse where palette is stored
+    /// </summary>
+    public Guid? WarehouseId { get; set; }
+    
+    /// <summary>
     /// Empty palette weight
     /// </summary>
     public const decimal DefaultWeight = 30;

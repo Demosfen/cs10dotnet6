@@ -47,5 +47,10 @@ public sealed class BoxConfigurations : IEntityTypeConfiguration<Box>
         builder
             .Property(x => x.ExpiryDate)
             .HasConversion<DateTime>();
+
+        builder
+            .Property(x => x.PaletteId)
+            .ValueGeneratedNever()
+            .HasDefaultValue(null);
     }
 }

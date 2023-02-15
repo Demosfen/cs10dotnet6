@@ -83,16 +83,18 @@ public sealed class WarehouseRepository : IWarehouseRepository
         Console.WriteLine($"Palette {palette.Id} added to the warehouse {warehouse.Id}.");
 
         warehouse.Palettes.Add(palette);
+        palette.WarehouseId = warehouse.Id;
     }
     
     public void DeletePalette(Warehouse warehouse, Guid id)
     {
-        var entity = warehouse.Palettes.SingleOrDefault(x => x.Id == id)
+        var palette = warehouse.Palettes.SingleOrDefault(x => x.Id == id)
                     ?? throw new InvalidOperationException($"Palette with id = {id} wasn't found");
 
         Console.WriteLine($"Palette with {id} was removed from the warehouse.");
 
-        warehouse.Palettes.Remove(entity);
+        warehouse.Palettes.Remove(palette);
+        palette.WarehouseId = null;
     }
 }
 

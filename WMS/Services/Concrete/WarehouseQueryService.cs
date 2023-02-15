@@ -8,12 +8,12 @@ namespace WMS.Services.Concrete;
 
 public sealed class WarehouseQueryService : IWarehouseQueryService
 {
-    public IReadOnlyCollection<IGrouping<DateTime?, Palette>> SortByExpiryAndWeight(IWarehouseDbContext dbContext, Guid id)
+    private IWarehouseDbContext _dbContext { get; }
+
+    public WarehouseQueryService(IWarehouseDbContext dbContext) => _dbContext = dbContext;
+    public IReadOnlyCollection<IGrouping<DateTime?, Palette>> SortByExpiryAndWeight(Guid id)
     {
-        var wmsRepo = new WarehouseRepository(dbContext);
-        var wmTest = wmsRepo.GetAsync(id);
-        
-        var warehouse = dbContext.Warehouses
+        var warehouse = _dbContext.Warehouses
             .Where(w => w.Id == id)
             .Include(w => w.Palettes).SingleOrDefault();
         
@@ -24,12 +24,23 @@ public sealed class WarehouseQueryService : IWarehouseQueryService
             .GroupBy(g => g.ExpiryDate).ToList() 
                ?? throw new Exception("No warehouses found!");
     }
-
-    public IReadOnlyCollection<Palette> ChooseThreePalettesByExpiryAndVolume(IWarehouseDbContext dbContext, Guid id)
+    
+    public IReadOnlyCollection<IGrouping<DateTime?, Palette>> SortByExpiryAndWeightAlternative(Guid id)
     {
-        var wmsRepo = new WarehouseRepository(dbContext);
+        var palettes = _dbContext.Palettes
+            .Where(w => w.WarehouseId == id);
+        
+        return palettes?
+                   .Where(p => p.ExpiryDate.HasValue)
+                   .OrderBy(p => p.ExpiryDate)
+                   .ThenBy(p => p.Weight)
+                   .GroupBy(g => g.ExpiryDate).ToList() 
+               ?? throw new Exception("No warehouses found!");
+    }
 
-        var warehouse = dbContext.Warehouses
+    public IReadOnlyCollection<Palette> ChooseThreePalettesByExpiryAndVolume(Guid id)
+    {
+        var warehouse = _dbContext.Warehouses
             .Where(w => w.Id == id)
             .Include(w => w.Palettes).SingleOrDefault();
         
@@ -38,5 +49,17 @@ public sealed class WarehouseQueryService : IWarehouseQueryService
             .ThenBy(p => p.Volume)
             .Take(3).ToList()
             ?? throw new Exception("No palettes found");
+    }
+    
+    public IReadOnlyCollection<Palette> ChooseThreePalettesByExpiryAndVolumeAlternative(Guid id)
+    {
+        var palettes = _dbContext.Palettes
+            .Where(w => w.WarehouseId == id);
+        
+        return  palettes?
+                    .OrderByDescending(p => p.ExpiryDate)
+                    .ThenBy(p => p.Volume)
+                    .Take(3).ToList()
+                ?? throw new Exception("No palettes found");
     }
 }
