@@ -15,6 +15,11 @@ public sealed class PaletteRepository : IPaletteRepository
         _dbContext = dbContext;
     }
 
+    public PaletteRepository()
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<Palette?> GetAsync(Guid id, CancellationToken ct = default)
         => await _dbContext.Palettes
             .Include(b => b.Boxes)
