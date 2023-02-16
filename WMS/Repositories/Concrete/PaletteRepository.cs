@@ -40,7 +40,7 @@ public sealed class PaletteRepository : IPaletteRepository
                      ?? throw new Exception($"{nameof(Palette)} with {nameof(Palette.Id)}={id} doesn't exist");
 
         _dbContext.Palettes.Remove(entity);
-        await _dbContext.SaveChangesAsync(ct);
+        // await _dbContext.SaveChangesAsync(ct);
     }
 
     public void AddBox(Palette palette, Box box)
@@ -99,5 +99,9 @@ public sealed class PaletteRepository : IPaletteRepository
         palette.ExpiryDate = palette.Boxes.Min(x => x.ExpiryDate);
         
         palette.Boxes.Remove(box);
+    }
+
+    public void Dispose()
+    {
     }
 }

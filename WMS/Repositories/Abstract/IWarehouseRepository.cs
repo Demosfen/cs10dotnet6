@@ -13,8 +13,6 @@ public interface IWarehouseRepository : IDbRepository
 
     Task DeleteAsync(Guid id, CancellationToken ct = default);
 
-    Task DeleteAllAsync(CancellationToken ct = default);
-
     public void AddPalette(Warehouse warehouse, Palette palette);
 
     public void DeletePalette(Warehouse warehouse, Guid id);

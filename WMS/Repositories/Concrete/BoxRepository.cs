@@ -5,7 +5,7 @@ using WMS.WarehouseDbContext.Entities;
 
 namespace WMS.Repositories.Concrete;
 
-public class BoxRepository: IBoxRepository
+public sealed class BoxRepository: IBoxRepository
 {
     private readonly IWarehouseDbContext _dbContext;
 
@@ -29,7 +29,7 @@ public class BoxRepository: IBoxRepository
     public async Task UpdateAsync(Box box, CancellationToken ct = default)
     {
         _dbContext.Boxes.Update(box);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(ct);
     }
 
     public async Task DeleteAsync(Guid id, CancellationToken ct = default)
@@ -39,5 +39,9 @@ public class BoxRepository: IBoxRepository
                      ?? throw new Exception($"No box with id={id} exist");
 
         _dbContext.Boxes.Remove(entity);
+    }
+
+    public void Dispose()
+    {
     }
 }

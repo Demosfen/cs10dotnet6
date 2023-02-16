@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using WMS.WarehouseDbContext.Entities;
 
@@ -10,6 +9,7 @@ public sealed class BoxConfigurations : IEntityTypeConfiguration<Box>
     public void Configure(EntityTypeBuilder<Box> builder)
     {
         builder.HasKey(x => x.Id);
+        
         builder
             .Property(x => x.Id)
             .IsRequired();

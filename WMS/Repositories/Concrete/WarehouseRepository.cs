@@ -54,22 +54,6 @@ public sealed class WarehouseRepository : IWarehouseRepository
         await _dbContext.SaveChangesAsync(ct);
     }
 
-    public async Task DeleteAllAsync(CancellationToken ct = default)
-    {
-        var warehouse0 = _dbContext.Warehouses
-            .OrderBy(e=>e.Id)
-            .FirstOrDefault();
-        var warehouse1 = _dbContext.Warehouses
-            .OrderBy(e=>e.Id)
-            .LastOrDefault();
-
-       _dbContext.Warehouses.RemoveRange(
-            warehouse0 ?? throw new Exception("No warehouses"), 
-            warehouse1 ?? warehouse0);
-
-       await _dbContext.SaveChangesAsync(ct); // TODO why doesn't it work???
-    }
-
     public void AddPalette(Warehouse warehouse, Palette palette)
     {
         if (warehouse.Palettes.Contains(palette))
@@ -94,7 +78,10 @@ public sealed class WarehouseRepository : IWarehouseRepository
         Console.WriteLine($"Palette with {id} was removed from the warehouse.");
 
         warehouse.Palettes.Remove(palette);
-        palette.WarehouseId = null;
+    }
+
+    public void Dispose()
+    {
     }
 }
 

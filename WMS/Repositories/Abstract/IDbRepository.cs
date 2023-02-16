@@ -1,5 +1,5 @@
 namespace WMS.Repositories.Abstract;
 
-public interface IDbRepository
+public interface IDbRepository : IDisposable
 {
 }

@@ -3,9 +3,14 @@ namespace WMS.WarehouseDbContext.Entities;
 public sealed record Palette : StorageUnit
 {
     /// <summary>
+    /// Navigation property
+    /// </summary>
+    private Warehouse? _warehouse;
+    
+    /// <summary>
     /// ID of the warehouse where palette is stored
     /// </summary>
-    public Guid? WarehouseId { get; set; }
+    public Guid WarehouseId { get; set; }
     
     /// <summary>
     /// Empty palette weight
@@ -32,17 +37,27 @@ public sealed record Palette : StorageUnit
     public override DateTime? ExpiryDate { get; set; }
 
     /// <summary>
-    /// Default palette constructor
+    ///  Default palette constructor
     /// </summary>
+    /// <param name="warehouseId">Warehouse ID storing palette</param>
     /// <param name="width">Palette width</param>
     /// <param name="height">Palette height</param>
     /// <param name="depth">Palette depth</param>
     public Palette(
+        Guid warehouseId,
         decimal width,
         decimal height,
         decimal depth)
         : base(width, height, depth)
     {
+        WarehouseId = warehouseId;
+    }
+
+    public Warehouse Warehouse
+    {
+        set => _warehouse = value;
+        get => _warehouse
+               ?? throw new InvalidOperationException("Uninitialized property" + nameof(_warehouse));
     }
 
     /// <summary>

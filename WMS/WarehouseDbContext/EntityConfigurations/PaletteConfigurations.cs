@@ -45,8 +45,8 @@ public sealed class PaletteConfigurations : IEntityTypeConfiguration<Palette>
             .HasConversion<DateTime>();
 
         builder
-            .Property(x => x.WarehouseId)
-            .ValueGeneratedNever()
-            .HasDefaultValue(null);
+            .HasOne(x => x.Warehouse)
+            .WithMany(x => x.Palettes)
+            .HasForeignKey(x => x.WarehouseId);
     }
 }

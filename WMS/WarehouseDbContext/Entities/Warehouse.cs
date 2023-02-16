@@ -22,12 +22,8 @@ public sealed record Warehouse(string Name) : IEntityWithId
         }
 
         var msg = $"Warehouse contains {Palettes.Count} palettes:\n";
-        
-        foreach (var palette in Palettes)
-        {
-            msg += palette.ToString();
-        }
 
-        return msg;
+        return Palettes.Aggregate(
+            msg, (current, palette) => current + palette.ToString());
     }
 }
