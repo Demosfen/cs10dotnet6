@@ -4,10 +4,12 @@ namespace WMS.WarehouseDbContext.Entities;
 
 public sealed record Box : StorageUnit
 {
+    private Palette? _palette;
+    
     /// <summary>
     /// ID of the palette where box is stored
     /// </summary>
-    public Guid? PaletteId { get; set; }
+    public Guid PaletteId { get; set; }
     
     /// <summary>
     /// Box weight
@@ -21,8 +23,16 @@ public sealed record Box : StorageUnit
     
     /// <inheritdoc />
     public override DateTime? ExpiryDate { get; set; }
-    
+
+    public Palette Palette
+    {
+        set => _palette = value;
+        get => _palette
+               ?? throw new InvalidOperationException("Uninitialized property: " + nameof(Palette));
+    }
+
     public Box(
+        Guid paletteId,
         decimal width, 
         decimal height, 
         decimal depth, 
@@ -61,6 +71,8 @@ public sealed record Box : StorageUnit
             throw new ArgumentException(
                 "Expiry date cannot be lower than Production date!");
         }
+
+        PaletteId = paletteId;
     }
     
     public override string ToString()

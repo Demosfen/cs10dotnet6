@@ -99,6 +99,5 @@ public sealed class PaletteRepository : IPaletteRepository
         palette.ExpiryDate = palette.Boxes.Min(x => x.ExpiryDate);
         
         palette.Boxes.Remove(box);
-        box.PaletteId = null;
     }
 }

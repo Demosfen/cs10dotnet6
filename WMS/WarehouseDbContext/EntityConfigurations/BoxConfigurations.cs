@@ -49,8 +49,8 @@ public sealed class BoxConfigurations : IEntityTypeConfiguration<Box>
             .HasConversion<DateTime>();
 
         builder
-            .Property(x => x.PaletteId)
-            .ValueGeneratedNever()
-            .HasDefaultValue(null);
+            .HasOne(x => x.Palette)
+            .WithMany(x => x.Boxes)
+            .HasForeignKey(x => x.PaletteId);
     }
 }
