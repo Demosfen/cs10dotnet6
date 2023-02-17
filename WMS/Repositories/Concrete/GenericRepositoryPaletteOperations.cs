@@ -1,48 +1,15 @@
-using Microsoft.EntityFrameworkCore;
-using WMS.Repositories.Abstract;
-using WMS.WarehouseDbContext;
 using WMS.WarehouseDbContext.Entities;
 
 namespace WMS.Repositories.Concrete;
 
-public sealed class PaletteRepository : IPaletteRepository
+public sealed partial class GenericRepository<TEntity> where TEntity : class
 {
-    private readonly IWarehouseDbContext _dbContext;
-
-    public PaletteRepository(IWarehouseDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-
-    public async Task<Palette?> GetAsync(Guid id, CancellationToken ct = default)
-        => await _dbContext.Palettes
-            .Include(b => b.Boxes)
-            .AsNoTracking()
-            .Where(x => x.Id == id)
-            .FirstOrDefaultAsync(cancellationToken: ct);
-
-    public async Task CreateAsync(Palette palette, CancellationToken ct = default)
-    {
-        _dbContext.Palettes.Add(palette);
-        await _dbContext.SaveChangesAsync(ct);
-    }
-
-    public async Task UpdateAsync(Palette palette, CancellationToken ct)
-    {
-        _dbContext.Palettes.Update(palette);
-        await _dbContext.SaveChangesAsync(ct);
-    }
-
-    public async Task DeleteAsync(Guid id, CancellationToken ct = default)
-    {
-        var entity = await _dbContext.Palettes
-            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken: ct)
-                     ?? throw new Exception($"{nameof(Palette)} with {nameof(Palette.Id)}={id} doesn't exist");
-
-        _dbContext.Palettes.Remove(entity);
-        // await _dbContext.SaveChangesAsync(ct);
-    }
-
+    /// <summary>
+    /// Performs simple addition of the box to the palette
+    /// </summary>
+    /// <param name="palette">Where to put the box</param>
+    /// <param name="box">What box to put</param>
+    /// <exception cref="ArgumentException">Sizes inconsistency</exception>
     public void AddBox(Palette palette, Box box)
     {
         
@@ -87,6 +54,12 @@ public sealed class PaletteRepository : IPaletteRepository
         box.PaletteId = palette.Id;
     }
 
+    /// <summary>
+    /// Simple deletion of the box from the palette
+    /// </summary>
+    /// <param name="palette">Where to remove</param>
+    /// <param name="box">What to remove</param>
+    /// <exception cref="InvalidOperationException">Nothing to remove</exception>
     public void DeleteBox(Palette palette, Box box)
     {
         var boxId = palette.Boxes.SingleOrDefault(x => x.Id == box.Id)
@@ -99,9 +72,5 @@ public sealed class PaletteRepository : IPaletteRepository
         palette.ExpiryDate = palette.Boxes.Min(x => x.ExpiryDate);
         
         palette.Boxes.Remove(box);
-    }
-
-    public void Dispose()
-    {
     }
 }

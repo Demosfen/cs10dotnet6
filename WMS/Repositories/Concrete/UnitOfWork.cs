@@ -38,7 +38,23 @@ public sealed class UnitOfWork : IDisposable
         await _dbContext.SaveChangesAsync();
     }
 
+    private bool _disposed = false;
+
+    private void Dispose(bool disposing)
+    {
+        if (!this._disposed)
+        {
+            if (disposing)
+            {
+                _dbContext.Dispose();
+            }
+        }
+        this._disposed = true;
+    }
+
     public void Dispose()
     {
+        Dispose(true);
+        GC.SuppressFinalize(this);
     }
 }

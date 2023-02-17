@@ -2,8 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseApp", "WarehouseApp\WarehouseApp.csproj", "{2D931590-0886-411F-B5DB-328CD500B9DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{E3FA5F72-EE5D-45C2-901A-33F11AF29EEA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{BA22245F-4BA6-4980-A611-4C54C0034B20}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositories\Repositories.csproj", "{288FA806-9E82-4CC1-BFB6-10EBDEB02D99}"
@@ -20,10 +18,6 @@ Global
 		{2D931590-0886-411F-B5DB-328CD500B9DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D931590-0886-411F-B5DB-328CD500B9DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D931590-0886-411F-B5DB-328CD500B9DD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E3FA5F72-EE5D-45C2-901A-33F11AF29EEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E3FA5F72-EE5D-45C2-901A-33F11AF29EEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E3FA5F72-EE5D-45C2-901A-33F11AF29EEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E3FA5F72-EE5D-45C2-901A-33F11AF29EEA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BA22245F-4BA6-4980-A611-4C54C0034B20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BA22245F-4BA6-4980-A611-4C54C0034B20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA22245F-4BA6-4980-A611-4C54C0034B20}.Release|Any CPU.ActiveCfg = Release|Any CPU

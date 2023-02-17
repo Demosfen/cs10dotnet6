@@ -1,10 +1,9 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using WMS.WarehouseDbContext;
 
 namespace WMS.Repositories.Concrete;
 
-public sealed class GenericRepository<TEntity> where TEntity : class
+public sealed partial class GenericRepository<TEntity> where TEntity : class
 {
     internal WarehouseDbContext.WarehouseDbContext dbContext;
     internal DbSet<TEntity> dbSet;

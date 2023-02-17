@@ -48,5 +48,9 @@ public sealed class PaletteConfigurations : IEntityTypeConfiguration<Palette>
             .HasOne(x => x.Warehouse)
             .WithMany(x => x.Palettes)
             .HasForeignKey(x => x.WarehouseId);
+
+        builder
+            .HasMany<Box>(x => x.Boxes)
+            .WithOne(x => x.Palette);
     }
 }
