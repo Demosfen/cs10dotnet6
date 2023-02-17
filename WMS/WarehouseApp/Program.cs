@@ -18,7 +18,9 @@ internal static class Program
 
         var queryService = new WarehouseQueryService(context);
         
-        var warehouse = new Warehouse("Warehouse #1");
+        var warehouse = new Warehouse("Warehouse #2");
+        
+        unitOfWork.WarehouseRepository?.InsertAsync(warehouse);
 
         var palette1 = new Palette(warehouse.Id, 1, 1, 1);
         var palette2 = new Palette(warehouse.Id,3, 3, 3);
@@ -31,8 +33,6 @@ internal static class Program
         unitOfWork.WarehouseRepository?.AddPalette(warehouse, palette2);
         unitOfWork.WarehouseRepository?.AddPalette(warehouse, palette3);
         
-        unitOfWork.WarehouseRepository?.InsertAsync(warehouse);
-
         await unitOfWork.Save();
 
         // Grouped by Expiry date and ordered by Weight

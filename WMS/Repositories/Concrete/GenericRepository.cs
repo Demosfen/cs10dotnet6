@@ -5,13 +5,11 @@ namespace WMS.Repositories.Concrete;
 
 public sealed partial class GenericRepository<TEntity> where TEntity : class
 {
-    internal WarehouseDbContext.WarehouseDbContext dbContext;
-    internal DbSet<TEntity> dbSet;
+    private readonly DbSet<TEntity> _dbSet;
 
-    public GenericRepository(WarehouseDbContext.WarehouseDbContext dbContext)
+    public GenericRepository(DbContext dbContext)
     {
-        this.dbContext = dbContext;
-        dbSet = dbContext.Set<TEntity>();
+        _dbSet = dbContext.Set<TEntity>();
     }
 
     public async Task<IEnumerable<TEntity>> GetAllAsync(
@@ -19,7 +17,7 @@ public sealed partial class GenericRepository<TEntity> where TEntity : class
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
         string includeProperties = "")
     {
-        IQueryable<TEntity> query = dbSet;
+        IQueryable<TEntity> query = _dbSet;
 
         if (filter != null)
         {
@@ -36,15 +34,15 @@ public sealed partial class GenericRepository<TEntity> where TEntity : class
             : await query.ToListAsync();
     }
 
-    public async Task<TEntity?> GetByIdAsync(Guid id) => await dbSet.FindAsync(id);
+    public async Task<TEntity?> GetByIdAsync(Guid id) => await _dbSet.FindAsync(id);
 
-    public async Task InsertAsync(TEntity entity) => await dbSet.AddAsync(entity);
+    public async Task InsertAsync(TEntity entity) => await _dbSet.AddAsync(entity);
 
     public async Task DeleteAsync(Guid id)
     {
-        TEntity entity = await dbSet.FindAsync(id)
+        TEntity entity = await _dbSet.FindAsync(id)
                          ?? throw new InvalidOperationException($"No entity {nameof(entity)} exist");
 
-        dbSet.Remove(entity);
+        _dbSet.Remove(entity);
     }
 }
