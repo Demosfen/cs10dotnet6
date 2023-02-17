@@ -7,7 +7,7 @@ public sealed partial class GenericRepository<TEntity> where TEntity : class
 {
     private readonly DbSet<TEntity> _dbSet;
 
-    public GenericRepository(DbContext dbContext)
+    public GenericRepository(WarehouseDbContext.WarehouseDbContext dbContext)
     {
         _dbSet = dbContext.Set<TEntity>();
     }
