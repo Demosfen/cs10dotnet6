@@ -8,7 +8,7 @@ public static class EntitySpecifications
         where T : IEntityWithId
         => source.Where(x => x.Id == id);
 
-    public static IQueryable<T> NotSoftDeleted<T>(this IQueryable<T> source, bool isDeleted)
+    public static IQueryable<T> NotDeleted<T>(this IQueryable<T> source)
         where T : ISoftDeletable
         => source.Where(x => !x.IsDeleted);
 }

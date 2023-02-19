@@ -1,10 +1,13 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using WMS.WarehouseDbContext;
+using WMS.WarehouseDbContext.Entities;
+using WMS.WarehouseDbContext.Interfaces;
 using WMS.WarehouseDbContext.Specifications;
 
 namespace WMS.Repositories.Concrete;
 
-public sealed partial class GenericRepository<TEntity>
+public sealed partial class GenericRepository<TEntity> where TEntity : class, IEntityWithId, ISoftDeletable
 {
     private readonly DbSet<TEntity> _dbSet;
 
@@ -31,8 +34,8 @@ public sealed partial class GenericRepository<TEntity>
                 => current.Include(includeProperty));
 
         return orderBy != null 
-            ? await orderBy(query).ToListAsync() 
-            : await query.ToListAsync();
+            ? await orderBy(query).NotDeleted().ToListAsync()
+            : await query.NotDeleted().ToListAsync();
     }
 
     public async Task<TEntity?> GetByIdAsync(Guid id) => await _dbSet.FindAsync(id);

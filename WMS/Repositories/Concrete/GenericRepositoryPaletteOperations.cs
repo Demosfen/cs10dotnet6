@@ -1,8 +1,9 @@
 using WMS.WarehouseDbContext.Entities;
+using WMS.WarehouseDbContext.Interfaces;
 
 namespace WMS.Repositories.Concrete;
 
-public sealed partial class GenericRepository<TEntity> where TEntity : class
+public sealed partial class GenericRepository<TEntity> where TEntity : class, IEntityWithId, ISoftDeletable
 {
     /// <summary>
     /// Performs simple addition of the box to the palette

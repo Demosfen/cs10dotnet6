@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using WMS.Store.EntityConfigurations;
 using WMS.WarehouseDbContext.EntityConfigurations;
+using WMS.WarehouseDbContext.Interfaces;
 
 namespace WMS.WarehouseDbContext;
 
@@ -33,4 +34,39 @@ public sealed class WarehouseDbContext : DbContext, IWarehouseDbContext
         modelBuilder.Entity<Palette>().HasQueryFilter(m => !m.IsDeleted);
         modelBuilder.Entity<Box>().HasQueryFilter(m => !m.IsDeleted);
     }
+
+    public override int SaveChanges()
+    {
+        ChangeTracker.DetectChanges();
+
+        var markedAsDeleted = ChangeTracker.Entries()
+            .Where(x => x.State == EntityState.Deleted);
+
+        foreach (var item in markedAsDeleted)
+        {
+            if (item.Entity is not ISoftDeletable entity) continue;
+            // Set the entity to unchanged
+            // (if we mark the whole entity as Modified, every field gets sent to Db as an update)!
+            item.State = EntityState.Unchanged;
+            // Update only IsDeleted flag
+            entity.IsDeleted = true;
+        }
+        return base.SaveChanges();
+    }
+
+    public override async Task<int> SaveChangesAsync(CancellationToken ct = default)
+    {
+        var markedAsDeleted = ChangeTracker.Entries()
+            .Where(x => x.State == EntityState.Deleted);
+
+        foreach (var item in markedAsDeleted)
+        {
+            if (item.Entity is not ISoftDeletable entity) continue;
+
+            item.State = EntityState.Unchanged;
+
+            entity.IsDeleted = true;
+        }
+        return await base.SaveChangesAsync(ct);
+    } 
 }
