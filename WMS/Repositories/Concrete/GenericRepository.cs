@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using WMS.WarehouseDbContext;
 using WMS.WarehouseDbContext.Entities;
 using WMS.WarehouseDbContext.Interfaces;
+using WMS.WarehouseDbContext.Migrations;
 using WMS.WarehouseDbContext.Specifications;
 
 namespace WMS.Repositories.Concrete;
