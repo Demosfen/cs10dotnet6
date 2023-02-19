@@ -1,4 +1,5 @@
 using System;
+using WMS.WarehouseDbContext.Interfaces;
 
 namespace WMS.WarehouseDbContext.Entities;
 

@@ -2,7 +2,7 @@ using WMS.WarehouseDbContext.Interfaces;
 
 namespace WMS.WarehouseDbContext.Entities;
 
-public sealed record Warehouse(string Name) : IEntityWithId
+public sealed record Warehouse(string Name) : IEntityWithId, ISoftDeletable
 {
     public Guid Id { get; init; }
 
@@ -13,6 +13,8 @@ public sealed record Warehouse(string Name) : IEntityWithId
     public string Name { get; } = Name;
 
     public List<Palette> Palettes { get; } = new();
+
+    public bool IsDeleted { get; set; }
 
     public override string ToString()
     {

@@ -23,9 +23,14 @@ public sealed class WarehouseDbContext : DbContext, IWarehouseDbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        
         // modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(BoxConfigurations).Assembly);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(PaletteConfigurations).Assembly);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(WarehouseConfigurations).Assembly);
+
+        modelBuilder.Entity<Warehouse>().HasQueryFilter(m => !m.IsDeleted);
+        modelBuilder.Entity<Palette>().HasQueryFilter(m => !m.IsDeleted);
+        modelBuilder.Entity<Box>().HasQueryFilter(m => !m.IsDeleted);
     }
 }

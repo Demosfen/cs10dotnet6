@@ -1,3 +1,5 @@
+using WMS.WarehouseDbContext.Interfaces;
+
 namespace WMS.WarehouseDbContext.Entities;
 
 public sealed record Palette : StorageUnit

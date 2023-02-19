@@ -6,7 +6,7 @@ namespace WMS.WarehouseDbContext.Entities;
 /// This is an abstract class, which contains common properties
 /// for rectangle objects of a warehouse.
 /// </summary>
-public abstract record StorageUnit: IEntityWithId
+public abstract record StorageUnit: IEntityWithId, ISoftDeletable
 {
     /// <summary>
     /// Unit default expiry days
@@ -37,6 +37,8 @@ public abstract record StorageUnit: IEntityWithId
     /// Unit volume
     /// </summary>
     public decimal Volume { get; set; }
+
+    public bool IsDeleted { get; set; } = false;
 
     /// <summary>
     /// Unit expiry date/time

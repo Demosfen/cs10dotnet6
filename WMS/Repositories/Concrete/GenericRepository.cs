@@ -1,9 +1,10 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using WMS.WarehouseDbContext.Specifications;
 
 namespace WMS.Repositories.Concrete;
 
-public sealed partial class GenericRepository<TEntity> where TEntity : class
+public sealed partial class GenericRepository<TEntity>
 {
     private readonly DbSet<TEntity> _dbSet;
 
