@@ -61,9 +61,11 @@ internal static class Program
             WriteLine(palette);
         }
         
-        unitOfWork.WarehouseRepository?.DeleteAsync(new Guid("2B3E0CD8-9474-447D-B589-59467727F111"));
-        await unitOfWork.Save();
+        // unitOfWork.WarehouseRepository?.DeleteAsync(new Guid("2B3E0CD8-9474-447D-B589-59467727F111"));
+        // await unitOfWork.Save();
 
-        var warehouses = unitOfWork.WarehouseRepository?.GetAllAsync();
+        // var warehouses = unitOfWork.WarehouseRepository?.GetAllAsync(includeProperties: "Palettes");
+        //
+        // Console.WriteLine(warehouse);
     }
 }
