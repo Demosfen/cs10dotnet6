@@ -1,3 +1,4 @@
+using System.Xml.Linq;
 using WMS.WarehouseDbContext.Entities;
 
 namespace WMS.Repositories.Concrete;
@@ -11,31 +12,27 @@ public sealed class UnitOfWork : IDisposable
 
     public GenericRepository<Box>? BoxRepository
     {
-        get
-        {
-            return _boxRepository ??= new GenericRepository<Box>(_dbContext);
-        }
+        get => _boxRepository ??= new GenericRepository<Box>(_dbContext);
     }
 
     public GenericRepository<Palette>? PaletteRepository
     {
-        get
-        {
-            return _paletteRepository ??= new GenericRepository<Palette>(_dbContext);
-        }
+        get => _paletteRepository ??= new GenericRepository<Palette>(_dbContext);
     }
 
     public GenericRepository<Warehouse>? WarehouseRepository
     {
-        get
-        {
-            return _warehouseRepository ??= new GenericRepository<Warehouse>(_dbContext);
-        }
+        get => _warehouseRepository ??= new GenericRepository<Warehouse>(_dbContext);
     }
 
-    public async Task Save()
+    public async Task SaveAsync()
     {
         await _dbContext.SaveChangesAsync();
+    }
+
+    public void Save()
+    {
+        _dbContext.SaveChanges();
     }
 
     private bool _disposed = false;

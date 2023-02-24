@@ -1,39 +1,60 @@
 ﻿using AutoFixture;
-using Microsoft.EntityFrameworkCore;
 using WMS.Repositories.Concrete;
+using WMS.WarehouseDbContext.Entities;
 
 namespace WMS.Tests;
 
-public class TestDatabaseFixture
+public sealed class DatabaseFixture : IDisposable
 {
-    private const string DbFileName = "TestDatabase";
-    private const string ConnectionString = $"Data Source=../{DbFileName}";
-    
     private static readonly object _lock = new();
     private static bool _databaseInitialized;
 
-    public TestDatabaseFixture()
+    public DatabaseFixture()
     {
         lock (_lock)
         {
             if (!_databaseInitialized)
             {
-                using (var context = CreateContext())
+                var unitOfWork = new UnitOfWork();
+                var fixture = new Fixture().Customize(new UnitsCustomization());
+                
+                using (var context = new WarehouseDbContext.WarehouseDbContext())
                 {
                     context.Database.EnsureDeleted();
                     context.Database.EnsureCreated();
-                    
-                    var unitOfWork = new UnitOfWork()
-                }
 
+                    for (int i = 0; i < 5; i++)
+                    {
+                        var warehouse = fixture.Create<Warehouse>();
+
+                        var palette0 = fixture.Build<Palette>()
+                            .With(p => p.WarehouseId, warehouse.Id).Create();
+
+                        var boxes0 = fixture.Build<Box>()
+                            .With(x => x.PaletteId, palette0.Id).CreateMany(5);
+
+                        foreach (var box in boxes0)
+                        {
+                            unitOfWork.PaletteRepository?.AddBox(palette0, box);
+                        }
+
+                        unitOfWork.WarehouseRepository?.AddPalette(warehouse, palette0);
+
+                        unitOfWork.BoxRepository?.InsertMultipleAsync(boxes0).ConfigureAwait(false);
+
+                        unitOfWork.PaletteRepository?.InsertAsync(palette0).ConfigureAwait(false);
+
+                        unitOfWork.WarehouseRepository?.InsertAsync(warehouse).ConfigureAwait(false);
+                    }
+
+                    unitOfWork.Save();
+                }
                 _databaseInitialized = true;
             }
         }
     }
 
-    public WarehouseDbContext.WarehouseDbContext CreateContext()
-        => new WarehouseDbContext.WarehouseDbContext(
-            new DbContextOptionsBuilder<WarehouseDbContext.WarehouseDbContext>()
-                .UseSqlite(ConnectionString)
-                .Options);
+    public void Dispose()
+    {
+    }
 }

@@ -1,9 +1,14 @@
 namespace WMS.Tests;
 
-public class UnitTest1
+public class WarehouseDbTests: IClassFixture<DatabaseFixture>
 {
+    private DatabaseFixture _fixture;
+
+    public WarehouseDbTests(DatabaseFixture fixture) => _fixture = fixture;
+
     [Fact]
     public void Test1()
     {
+        
     }
 }

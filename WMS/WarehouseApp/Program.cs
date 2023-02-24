@@ -33,7 +33,7 @@ internal static class Program
         unitOfWork.WarehouseRepository?.AddPalette(warehouse, palette2);
         unitOfWork.WarehouseRepository?.AddPalette(warehouse, palette3);
         
-        await unitOfWork.Save();
+        await unitOfWork.SaveAsync();
 
         // Grouped by Expiry date and ordered by Weight
         var groupedPalettes = queryService.SortByExpiryAndWeight(warehouse.Id);

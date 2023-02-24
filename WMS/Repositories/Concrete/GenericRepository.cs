@@ -43,6 +43,14 @@ public sealed partial class GenericRepository<TEntity> where TEntity : class, IE
 
     public async Task InsertAsync(TEntity entity) => await _dbSet.AddAsync(entity);
 
+    public async Task InsertMultipleAsync(IEnumerable<TEntity> entities)
+    {
+        foreach (var entity in entities)
+        {
+            await _dbSet.AddAsync(entity);
+        }
+    }
+
     public async Task DeleteAsync(Guid id)
     {
         TEntity entity = await _dbSet.FindAsync(id)
