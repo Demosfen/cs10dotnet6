@@ -23,26 +23,26 @@ public sealed class DatabaseFixture : IDisposable
                     context.Database.EnsureDeleted();
                     context.Database.EnsureCreated();
 
-                    for (int i = 0; i < 5; i++)
+                    for (var i = 0; i < 5; i++)
                     {
                         var warehouse = fixture.Create<Warehouse>();
 
-                        var palette0 = fixture.Build<Palette>()
+                        var palette = fixture.Build<Palette>()
                             .With(p => p.WarehouseId, warehouse.Id).Create();
 
-                        var boxes0 = fixture.Build<Box>()
-                            .With(x => x.PaletteId, palette0.Id).CreateMany(5);
+                        var boxes = fixture.Build<Box>()
+                            .With(x => x.PaletteId, palette.Id).CreateMany(5);
 
-                        foreach (var box in boxes0)
+                        foreach (var box in boxes)
                         {
-                            unitOfWork.PaletteRepository?.AddBox(palette0, box);
+                            unitOfWork.PaletteRepository?.AddBox(palette, box);
                         }
 
-                        unitOfWork.WarehouseRepository?.AddPalette(warehouse, palette0);
+                        unitOfWork.WarehouseRepository?.AddPalette(warehouse, palette);
 
-                        unitOfWork.BoxRepository?.InsertMultipleAsync(boxes0).ConfigureAwait(false);
+                        unitOfWork.BoxRepository?.InsertMultipleAsync(boxes).ConfigureAwait(false);
 
-                        unitOfWork.PaletteRepository?.InsertAsync(palette0).ConfigureAwait(false);
+                        unitOfWork.PaletteRepository?.InsertAsync(palette).ConfigureAwait(false);
 
                         unitOfWork.WarehouseRepository?.InsertAsync(warehouse).ConfigureAwait(false);
                     }
