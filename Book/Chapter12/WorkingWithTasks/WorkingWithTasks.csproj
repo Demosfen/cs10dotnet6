@@ -7,9 +7,4 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Benchmarking\Benchmarking.csproj" />
-      <ProjectReference Include="..\MonitoringLib\MonitoringLib.csproj" />
-    </ItemGroup>
-
 </Project>

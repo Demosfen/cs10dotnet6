@@ -8,8 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Benchmarking\Benchmarking.csproj" />
-      <ProjectReference Include="..\MonitoringLib\MonitoringLib.csproj" />
+        <PackageReference Include="BenchmarkDotNet" Version="0.13.5" />
     </ItemGroup>
 
 </Project>
