@@ -1,16 +1,19 @@
 ﻿using AutoFixture;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using WMS.Repositories.Concrete;
+using WMS.WarehouseDbContext;
 using WMS.WarehouseDbContext.Entities;
 
 namespace WMS.Tests;
 
-public abstract class DatabaseFixture //: IDisposable
+public class TestDatabaseFixture : IDisposable
 {
     private static readonly object Lock = new();
     private static bool _databaseInitialized;
-    // private bool _disposed;
+    private bool _disposed;
 
-    protected DatabaseFixture()
+    protected TestDatabaseFixture()
     {
         lock (Lock)
         {
@@ -19,9 +22,8 @@ public abstract class DatabaseFixture //: IDisposable
                 var unitOfWork = new UnitOfWork();
                 var fixture = new Fixture().Customize(new UnitsCustomization());
                 
-                using (var context = new WarehouseDbContext.WarehouseDbContext())
+                using (var context = CreateContext())
                 {
-                    context.Database.EnsureDeleted();
                     context.Database.EnsureCreated();
                     var warehouse = fixture.Create<Warehouse>();
 
@@ -56,22 +58,22 @@ public abstract class DatabaseFixture //: IDisposable
         }
     }
 
-    // public void Dispose() => Dispose(true);
-    //
-    // protected virtual void Dispose(bool disposing)
-    // {
-    //     if (!_disposed)
-    //     {
-    //         if (disposing)
-    //         {
-    //         }
-    //         _disposed = true;
-    //     }
-    // }
-    //
-    // // Destructor
-    // ~DatabaseFixture()
-    // {
-    //     Dispose (false);
-    // }
+    private static WarehouseDbContext.WarehouseDbContext CreateContext() => new();
+    
+    public void Dispose() => Dispose(true);
+    
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!_disposed)
+        {
+            if (disposing)
+            {
+                
+            }
+            _disposed = true;
+        }
+    }
+    
+    // Destructor
+    ~TestDatabaseFixture() => Dispose (false);
 }

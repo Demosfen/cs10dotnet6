@@ -1,14 +1,17 @@
+using WMS.Services;
+using WMS.Services.Concrete;
+
 namespace WMS.Tests;
 
-public class WarehouseDbTests: IClassFixture<DatabaseFixture>
+public class WarehouseDbTests: IClassFixture<TestDatabaseFixture>
 {
-    private DatabaseFixture _fixture;
+    private TestDatabaseFixture _fixture;
 
-    public WarehouseDbTests(DatabaseFixture fixture) => _fixture = fixture;
+    public WarehouseDbTests(TestDatabaseFixture fixture) => this._fixture = fixture;
 
     [Fact]
     public void Test1()
     {
-        
+        var context = _fixture;
     }
 }

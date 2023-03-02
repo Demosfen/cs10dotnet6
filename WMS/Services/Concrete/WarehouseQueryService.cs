@@ -3,6 +3,7 @@ using WMS.Services.Abstract;
 using WMS.WarehouseDbContext;
 using WMS.WarehouseDbContext.Entities;
 using WMS.Repositories.Concrete;
+using WMS.WarehouseDbContext.Interfaces;
 
 namespace WMS.Services.Concrete;
 

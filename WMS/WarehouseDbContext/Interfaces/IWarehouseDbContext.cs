@@ -1,8 +1,8 @@
-using WMS.WarehouseDbContext.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using WMS.WarehouseDbContext.Entities;
 
-namespace WMS.WarehouseDbContext;
+namespace WMS.WarehouseDbContext.Interfaces;
 
 public interface IWarehouseDbContext
 {
