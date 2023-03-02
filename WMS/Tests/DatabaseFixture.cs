@@ -4,14 +4,15 @@ using WMS.WarehouseDbContext.Entities;
 
 namespace WMS.Tests;
 
-public sealed class DatabaseFixture : IDisposable
+public abstract class DatabaseFixture //: IDisposable
 {
-    private static readonly object _lock = new();
+    private static readonly object Lock = new();
     private static bool _databaseInitialized;
+    // private bool _disposed;
 
-    public DatabaseFixture()
+    protected DatabaseFixture()
     {
-        lock (_lock)
+        lock (Lock)
         {
             if (!_databaseInitialized)
             {
@@ -22,16 +23,17 @@ public sealed class DatabaseFixture : IDisposable
                 {
                     context.Database.EnsureDeleted();
                     context.Database.EnsureCreated();
+                    var warehouse = fixture.Create<Warehouse>();
 
                     for (var i = 0; i < 5; i++)
                     {
-                        var warehouse = fixture.Create<Warehouse>();
-
                         var palette = fixture.Build<Palette>()
-                            .With(p => p.WarehouseId, warehouse.Id).Create();
+                            .With(p => p.WarehouseId, warehouse.Id)
+                            .Create();
 
                         var boxes = fixture.Build<Box>()
-                            .With(x => x.PaletteId, palette.Id).CreateMany(5);
+                            .With(x => x.PaletteId, palette.Id)
+                            .CreateMany(5);
 
                         foreach (var box in boxes)
                         {
@@ -54,7 +56,22 @@ public sealed class DatabaseFixture : IDisposable
         }
     }
 
-    public void Dispose()
-    {
-    }
+    // public void Dispose() => Dispose(true);
+    //
+    // protected virtual void Dispose(bool disposing)
+    // {
+    //     if (!_disposed)
+    //     {
+    //         if (disposing)
+    //         {
+    //         }
+    //         _disposed = true;
+    //     }
+    // }
+    //
+    // // Destructor
+    // ~DatabaseFixture()
+    // {
+    //     Dispose (false);
+    // }
 }
