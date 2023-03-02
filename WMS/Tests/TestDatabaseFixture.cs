@@ -58,7 +58,7 @@ public class TestDatabaseFixture : IDisposable
         }
     }
 
-    private static WarehouseDbContext.WarehouseDbContext CreateContext() => new();
+    public WarehouseDbContext.WarehouseDbContext CreateContext() => new();
     
     public void Dispose() => Dispose(true);
     
