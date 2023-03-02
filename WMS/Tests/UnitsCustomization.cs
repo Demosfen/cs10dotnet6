@@ -24,7 +24,6 @@ public sealed class UnitsCustomization : ICustomization
             .With(p => p.IsDeleted, false));
 
         fixture.Customize<Warehouse>(composer => composer
-            .With(p => p.Name, "Test Warehouse")
             .With(p => p.IsDeleted, false));
     }
 }

@@ -7,14 +7,9 @@ public class WarehouseDbTests: IClassFixture<TestDatabaseFixture>
 {
     private TestDatabaseFixture _fixture;
 
-    public WarehouseDbTests(TestDatabaseFixture fixture)
-    {
-        this._fixture = fixture;
-        _queryService = new WarehouseQueryService(_fixture.CreateContext());
-    }
-
-    private WarehouseQueryService _queryService; 
+    public WarehouseDbTests(TestDatabaseFixture fixture) => this._fixture = fixture;
     
+
     [Fact]
     public void Test1()
     {
