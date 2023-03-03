@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using WMS.WarehouseDbContext.Entities;
 using WMS.Services.Models.Serialization;
+using WMS.WarehouseDbContext.Entities;
 
-namespace WMS.Services.Infrastructure.Mapping.Profiles;
+namespace WMS.Services.Infrastructure.Mapping;
 
 public class WarehouseMapperConfiguration : Profile
 {

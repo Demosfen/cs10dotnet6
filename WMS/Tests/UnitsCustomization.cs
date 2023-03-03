@@ -8,10 +8,10 @@ public sealed class UnitsCustomization : ICustomization
     public void Customize(IFixture fixture)
     {
         fixture.Customize<Box>(composer => composer
-            .With(p => p.ProductionDate,
-                () => DateTime.MinValue
-                    .AddDays(new Random().Next(1020)))
-            .With(p => p.ExpiryDate, DateTime.Today)
+            .With(p => p.ProductionDate, 
+                DateTime.MinValue.AddDays(new Random().Next(1020)))
+            .With(p => p.ExpiryDate, 
+                DateTime.Today.AddDays(new Random().Next(-1020, 1020)))
             .With(p => p.Width, () => new Random().Next(1, 10))
             .With(p => p.Height, () => new Random().Next(1, 10))
             .With(p => p.Depth, () => new Random().Next(1, 10))
@@ -21,7 +21,8 @@ public sealed class UnitsCustomization : ICustomization
             .With(p => p.Width, () => new Random().Next(10, 20))
             .With(p => p.Height, () => new Random().Next(10, 20))
             .With(p => p.Depth, () => new Random().Next(10, 20))
-            .With(p => p.IsDeleted, false));
+            .With(p => p.IsDeleted, false)
+            .OmitAutoProperties());
 
         fixture.Customize<Warehouse>(composer => composer
             .With(p => p.IsDeleted, false));

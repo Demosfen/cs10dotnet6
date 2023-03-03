@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace WMS.Tests;
+﻿namespace WMS.Tests;
 
 public class TestDatabaseFixture : IDisposable
 {
@@ -19,5 +17,5 @@ public class TestDatabaseFixture : IDisposable
         dbContext.Database.EnsureDeleted();
     }
     
-    public WarehouseDbContext.WarehouseDbContext CreateDbContext() => new WarehouseDbContext.WarehouseDbContext();
+    public WarehouseDbContext.WarehouseDbContext CreateDbContext() => new();
 }

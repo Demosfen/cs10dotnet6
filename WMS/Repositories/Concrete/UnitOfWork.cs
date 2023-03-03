@@ -5,10 +5,14 @@ namespace WMS.Repositories.Concrete;
 
 public sealed class UnitOfWork : IDisposable
 {
-    private readonly WarehouseDbContext.WarehouseDbContext _dbContext = new();
+    private WarehouseDbContext.WarehouseDbContext _dbContext = new();
     private GenericRepository<Box>? _boxRepository;
     private GenericRepository<Palette>? _paletteRepository;
     private GenericRepository<Warehouse>? _warehouseRepository;
+    
+    public UnitOfWork(){}
+
+    public UnitOfWork(WarehouseDbContext.WarehouseDbContext context) => _dbContext = context;
 
     public GenericRepository<Box>? BoxRepository
     {
