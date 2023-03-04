@@ -3,7 +3,7 @@ using WMS.WarehouseDbContext.Interfaces;
 
 namespace WMS.WarehouseDbContext.Entities;
 
-public sealed record Box : StorageUnit
+public sealed class Box : StorageUnit
 {
     private Palette? _palette;
     

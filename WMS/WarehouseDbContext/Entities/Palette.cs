@@ -2,7 +2,7 @@ using WMS.WarehouseDbContext.Interfaces;
 
 namespace WMS.WarehouseDbContext.Entities;
 
-public sealed record Palette : StorageUnit
+public sealed class Palette : StorageUnit
 {
     /// <summary>
     /// Navigation property
