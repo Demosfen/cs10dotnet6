@@ -46,9 +46,9 @@ public sealed class WarehouseQueryService : IWarehouseQueryService
             .Where(w => w.WarehouseId == id);
         
         return  palettes?
-                    .OrderByDescending(p => p.ExpiryDate)
-                    .ThenBy(p => p.Volume)
-                    .Take(3).ToList()
+                    .OrderByDescending(p => p.ExpiryDate).Take(3)
+                    .OrderByDescending(p => p.Volume)
+                    .ToList()
                 ?? throw new Exception("No palettes found");
     }
 }

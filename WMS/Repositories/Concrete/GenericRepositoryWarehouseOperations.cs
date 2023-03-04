@@ -26,6 +26,25 @@ public sealed partial class GenericRepository<TEntity> where TEntity : class, IE
         palette.WarehouseId = warehouse.Id;
     }
     
+    public void AddPalettes(Warehouse warehouse, List<Palette> palettes)
+    {
+        foreach (var palette in palettes)
+        {
+            if (warehouse.Palettes.Contains(palette))
+            {
+                Console.WriteLine(
+                    $"Palette {palette.Id} already added to the warehouse {warehouse.Id}! Skipping...");
+            
+                return;
+            }
+            
+            Console.WriteLine($"Palette {palette.Id} added to the warehouse {warehouse.Id}.");
+            
+            warehouse.Palettes.Add(palette);
+            palette.WarehouseId = warehouse.Id;
+        }
+    }
+    
     /// <summary>
     /// Delete palette from the warehouse
     /// </summary>
