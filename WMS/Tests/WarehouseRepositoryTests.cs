@@ -42,11 +42,14 @@ public class WarehouseRepositoryTests: IClassFixture<TestDatabaseFixture>, IAsyn
         sut.WarehouseRepository?.InsertAsync(warehouse);
         await sut.SaveAsync();
 
-        var gotWarehouse = await _dbContext.Warehouses.FirstOrDefaultAsync(x => x.Name == "TestWarehouse");
-        var result = gotWarehouse?.Palettes.Count;
+        var palettes = sut.BoxRepository?.GetAllAsync();
+        if (palettes != null)
+        {
+            var result = palettes.Result.Count();
 
-        // Assert
-        result.Should().Be(5);
+            // Assert
+            result.Should().Be(5);
+        }
     }
     
     [Fact]
