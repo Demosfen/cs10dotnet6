@@ -23,10 +23,10 @@ public class WarehouseRepositoryTests: IClassFixture<TestDatabaseFixture>, IAsyn
         // Arrange
         var sut = new UnitOfWork(_dbContext);
 
-        sut.WarehouseRepository?.InsertAsync(new Warehouse("TestWarehouse"));
+        sut.WarehouseRepository?.InsertAsync(new Warehouse("TestWarehouse1"));
         await sut.SaveAsync();
 
-        var result = await _dbContext.Warehouses.FirstOrDefaultAsync(x => x.Name == "TestWarehouse");
+        var result = await _dbContext.Warehouses.FirstOrDefaultAsync(x => x.Name == "TestWarehouse1");
 
         // Assert
         result.Should().NotBeNull();
@@ -37,7 +37,7 @@ public class WarehouseRepositoryTests: IClassFixture<TestDatabaseFixture>, IAsyn
     {
         // Arrange
         var sut = new UnitOfWork(_dbContext);
-        var warehouse = _dataHelper.CreateWarehouseWithPalettesAndBoxes("TestWarehouse", 5, 1);
+        var warehouse = _dataHelper.CreateWarehouseWithPalettesAndBoxes("TestWarehouse2", 5, 1);
 
         sut.WarehouseRepository?.InsertAsync(warehouse);
         await sut.SaveAsync();
@@ -57,7 +57,7 @@ public class WarehouseRepositoryTests: IClassFixture<TestDatabaseFixture>, IAsyn
     {
         // Arrange
         var sut = new UnitOfWork(_dbContext);
-        var warehouse = _dataHelper.CreateWarehouseWithPalettesAndBoxes("TestWarehouse", 5, 5);
+        var warehouse = _dataHelper.CreateWarehouseWithPalettesAndBoxes("TestWarehouse3", 5, 5);
 
         sut.WarehouseRepository?.InsertAsync(warehouse);
         await sut.SaveAsync();
