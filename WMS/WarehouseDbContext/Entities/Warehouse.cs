@@ -4,7 +4,7 @@ namespace WMS.WarehouseDbContext.Entities;
 
 public sealed record Warehouse(string Name) : IEntityWithId, ISoftDeletable
 {
-    public Guid Id { get; init; }
+    public Guid Id { get; init; } = new Guid();
 
     /// <summary>
     /// New property for Migrations which is
