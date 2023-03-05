@@ -10,9 +10,9 @@ using WMS.WarehouseDbContext;
 
 namespace WMS.WarehouseDbContext.Migrations
 {
-    [DbContext(typeof(WarehouseDbContext))]
-    [Migration("20230215180908_AddWarehouseAndPaletteId")]
-    partial class AddWarehouseAndPaletteId
+    [DbContext(typeof(Store.WarehouseDbContext))]
+    [Migration("20230215114624_AddedPalettesCountInWarehouse")]
+    partial class AddedPalettesCountInWarehouse
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,7 +20,7 @@ namespace WMS.WarehouseDbContext.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.2");
 
-            modelBuilder.Entity("WMS.WarehouseDbContext.Entities.Box", b =>
+            modelBuilder.Entity("WMS.Store.Entities.Box", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -37,7 +37,6 @@ namespace WMS.WarehouseDbContext.Migrations
                         .HasColumnType("REAL");
 
                     b.Property<Guid?>("PaletteId")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("ProductionDate")
@@ -59,7 +58,7 @@ namespace WMS.WarehouseDbContext.Migrations
                     b.ToTable("Boxes");
                 });
 
-            modelBuilder.Entity("WMS.WarehouseDbContext.Entities.Palette", b =>
+            modelBuilder.Entity("WMS.Store.Entities.Palette", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -78,7 +77,6 @@ namespace WMS.WarehouseDbContext.Migrations
                         .HasColumnType("REAL");
 
                     b.Property<Guid?>("WarehouseId")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<double>("Weight")
@@ -94,45 +92,40 @@ namespace WMS.WarehouseDbContext.Migrations
                     b.ToTable("Palettes", (string)null);
                 });
 
-            modelBuilder.Entity("WMS.WarehouseDbContext.Entities.Warehouse", b =>
+            modelBuilder.Entity("WMS.Store.Entities.Warehouse", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("PalettesCount")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.ToTable("Warehouses", (string)null);
                 });
 
-            modelBuilder.Entity("WMS.WarehouseDbContext.Entities.Box", b =>
+            modelBuilder.Entity("WMS.Store.Entities.Box", b =>
                 {
-                    b.HasOne("WMS.WarehouseDbContext.Entities.Palette", null)
+                    b.HasOne("WMS.Store.Entities.Palette", null)
                         .WithMany("Boxes")
-                        .HasForeignKey("PaletteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PaletteId");
                 });
 
-            modelBuilder.Entity("WMS.WarehouseDbContext.Entities.Palette", b =>
+            modelBuilder.Entity("WMS.Store.Entities.Palette", b =>
                 {
-                    b.HasOne("WMS.WarehouseDbContext.Entities.Warehouse", null)
+                    b.HasOne("WMS.Store.Entities.Warehouse", null)
                         .WithMany("Palettes")
-                        .HasForeignKey("WarehouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("WarehouseId");
                 });
 
-            modelBuilder.Entity("WMS.WarehouseDbContext.Entities.Palette", b =>
+            modelBuilder.Entity("WMS.Store.Entities.Palette", b =>
                 {
                     b.Navigation("Boxes");
                 });
 
-            modelBuilder.Entity("WMS.WarehouseDbContext.Entities.Warehouse", b =>
+            modelBuilder.Entity("WMS.Store.Entities.Warehouse", b =>
                 {
                     b.Navigation("Palettes");
                 });

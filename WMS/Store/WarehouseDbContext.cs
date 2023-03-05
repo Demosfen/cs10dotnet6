@@ -1,11 +1,11 @@
-﻿using WMS.WarehouseDbContext.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using WMS.Store.EntityConfigurations;
+using WMS.WarehouseDbContext.Entities;
 using WMS.WarehouseDbContext.EntityConfigurations;
 using WMS.WarehouseDbContext.Interfaces;
 
-namespace WMS.WarehouseDbContext;
+namespace WMS.Store;
 
 public sealed class WarehouseDbContext : DbContext, IWarehouseDbContext
 {

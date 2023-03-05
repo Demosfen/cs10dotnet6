@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Servic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositories\Repositories.csproj", "{288FA806-9E82-4CC1-BFB6-10EBDEB02D99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseDbContext", "WarehouseDbContext\WarehouseDbContext.csproj", "{3B23E7A3-E62F-4A5B-875F-6CE4E8E42C02}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store", "Store\Store.csproj", "{3B23E7A3-E62F-4A5B-875F-6CE4E8E42C02}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{5A4B3CAD-B443-4AC5-BE92-D52015EC6279}"
 EndProject

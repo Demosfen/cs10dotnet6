@@ -5,26 +5,26 @@ namespace WMS.Repositories.Concrete;
 
 public sealed class UnitOfWork : IDisposable
 {
-    private WarehouseDbContext.WarehouseDbContext _dbContext = new();
+    private Store.WarehouseDbContext _dbContext = new();
     private GenericRepository<Box>? _boxRepository;
     private GenericRepository<Palette>? _paletteRepository;
     private GenericRepository<Warehouse>? _warehouseRepository;
     
     public UnitOfWork(){}
 
-    public UnitOfWork(WarehouseDbContext.WarehouseDbContext context) => _dbContext = context;
+    public UnitOfWork(Store.WarehouseDbContext context) => _dbContext = context;
 
-    public GenericRepository<Box>? BoxRepository
+    public GenericRepository<Box> BoxRepository
     {
         get => _boxRepository ??= new GenericRepository<Box>(_dbContext);
     }
 
-    public GenericRepository<Palette>? PaletteRepository
+    public GenericRepository<Palette> PaletteRepository
     {
         get => _paletteRepository ??= new GenericRepository<Palette>(_dbContext);
     }
 
-    public GenericRepository<Warehouse>? WarehouseRepository
+    public GenericRepository<Warehouse> WarehouseRepository
     {
         get => _warehouseRepository ??= new GenericRepository<Warehouse>(_dbContext);
     }
@@ -39,7 +39,7 @@ public sealed class UnitOfWork : IDisposable
         _dbContext.SaveChanges();
     }
 
-    private bool _disposed = false;
+    private bool _disposed;
 
     private void Dispose(bool disposing)
     {

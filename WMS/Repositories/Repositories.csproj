@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\WarehouseDbContext\WarehouseDbContext.csproj" />
+      <ProjectReference Include="..\Store\Store.csproj" />
     </ItemGroup>
 
     <ItemGroup>

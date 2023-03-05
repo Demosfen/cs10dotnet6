@@ -1,74 +1,57 @@
 using FluentAssertions;
-using WMS.Repositories.Concrete;
 using WMS.Services.Concrete;
-
 
 namespace WMS.Tests;
 
 [Collection(DbTestCollection.Name)]
-public class WarehouseServiceTests: IClassFixture<TestDatabaseFixture>, IAsyncLifetime
+public class WarehouseServiceTests: WarehouseTestsBase
 {
-    private readonly WarehouseDbContext.WarehouseDbContext _dbContext;
-
-    private readonly TestDataHelper _dataHelper = new();
-    
-    public WarehouseServiceTests(TestDatabaseFixture fixture)
+    private WarehouseQueryService _sut;
+    public WarehouseServiceTests(TestDatabaseFixture fixture) : base(fixture)
     {
-        _dbContext = fixture.CreateDbContext();
+        _sut = new WarehouseQueryService(DbContext);
     }
-    
-    [Fact]
-    public async Task SortByExpiryAndWeight_ReturnsGroupOfPalettes()
+
+    [Fact(DisplayName = "Sort by expiry date and weight")]
+    public async Task<Task> SortByExpiryAndWeight_ReturnsGroupOfPalettes()
     {
         // Arrange
-        var sut = new WarehouseQueryService(_dbContext);
-        var unitOfWork = new UnitOfWork(_dbContext);
-        var warehouse = _dataHelper.CreateWarehouseWithPalettesAndBoxes(
+        var warehouse = await CreateWarehouseWithPalettesAndBoxes(
             "TestWarehouse", 5, 5);
 
-        unitOfWork.WarehouseRepository?.InsertAsync(warehouse);
-        await unitOfWork.SaveAsync();
-
-        var expected = warehouse.Palettes?
+        var expected = warehouse.Palettes
             .Where(p => p.ExpiryDate.HasValue)
             .OrderBy(p => p.ExpiryDate)
             .ThenBy(p => p.Weight)
             .GroupBy(g => g.ExpiryDate).ToList();
 
         // Act
-        var result = sut.SortByExpiryAndWeight(warehouse.Id);
+        var result = _sut.SortByExpiryAndWeight(warehouse.Id);
 
         // // Assert
         result.Should().NotBeNull().And
             .BeEquivalentTo(expected);
+        
+        return Task.CompletedTask;
     }
     
-    [Fact]
+    [Fact(DisplayName = "Choose three palettes with maximum expiry and sorted by volume")]
     public async Task ChooseThreePalettesByExpiryAndVolume()
     {
         // Arrange
-        var sut = new WarehouseQueryService(_dbContext);
-        var unitOfWork = new UnitOfWork(_dbContext);
-        var warehouse = _dataHelper.CreateWarehouseWithPalettesAndBoxes(
+        var warehouse = await CreateWarehouseWithPalettesAndBoxes(
             "TestWarehouse", 7, 5);
 
-        unitOfWork.WarehouseRepository?.InsertAsync(warehouse);
-        await unitOfWork.SaveAsync();
-
-        var expected = warehouse.Palettes?
+        var expected = warehouse.Palettes
             .OrderByDescending(p => p.ExpiryDate).Take(3)
             .OrderByDescending(p => p.Volume)
             .ToList();
 
         // Act
-        var result = sut.ChooseThreePalettesByExpiryAndVolume(warehouse.Id);
+        var result = _sut.ChooseThreePalettesByExpiryAndVolume(warehouse.Id);
 
         // // Assert
         result.Should().NotBeNull().And
             .BeEquivalentTo(expected);
     }
-
-    public Task InitializeAsync() => Task.CompletedTask;
-
-    public async Task DisposeAsync() => await _dbContext.DisposeAsync();
 }

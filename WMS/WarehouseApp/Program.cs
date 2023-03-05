@@ -10,7 +10,7 @@ internal static class Program
 {
     public static async Task Main()
     {
-        await using var context = new WarehouseDbContext.WarehouseDbContext();
+        await using var context = new Store.WarehouseDbContext();
 
         await context.Database.MigrateAsync();
 

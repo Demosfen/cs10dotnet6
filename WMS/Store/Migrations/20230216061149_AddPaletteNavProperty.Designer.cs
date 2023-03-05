@@ -10,17 +10,17 @@ using WMS.WarehouseDbContext;
 
 namespace WMS.WarehouseDbContext.Migrations
 {
-    [DbContext(typeof(WarehouseDbContext))]
-    [Migration("20230218184900_SoftDeletePropertyAdd")]
-    partial class SoftDeletePropertyAdd
+    [DbContext(typeof(Store.WarehouseDbContext))]
+    [Migration("20230216061149_AddPaletteNavProperty")]
+    partial class AddPaletteNavProperty
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.3");
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.2");
 
-            modelBuilder.Entity("WMS.WarehouseDbContext.Entities.Box", b =>
+            modelBuilder.Entity("WMS.Store.Entities.Box", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -58,7 +58,7 @@ namespace WMS.WarehouseDbContext.Migrations
                     b.ToTable("Boxes");
                 });
 
-            modelBuilder.Entity("WMS.WarehouseDbContext.Entities.Palette", b =>
+            modelBuilder.Entity("WMS.Store.Entities.Palette", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -76,7 +76,7 @@ namespace WMS.WarehouseDbContext.Migrations
                     b.Property<double>("Volume")
                         .HasColumnType("REAL");
 
-                    b.Property<Guid>("WarehouseId")
+                    b.Property<Guid?>("WarehouseId")
                         .HasColumnType("TEXT");
 
                     b.Property<double>("Weight")
@@ -92,7 +92,7 @@ namespace WMS.WarehouseDbContext.Migrations
                     b.ToTable("Palettes", (string)null);
                 });
 
-            modelBuilder.Entity("WMS.WarehouseDbContext.Entities.Warehouse", b =>
+            modelBuilder.Entity("WMS.Store.Entities.Warehouse", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -107,9 +107,9 @@ namespace WMS.WarehouseDbContext.Migrations
                     b.ToTable("Warehouses", (string)null);
                 });
 
-            modelBuilder.Entity("WMS.WarehouseDbContext.Entities.Box", b =>
+            modelBuilder.Entity("WMS.Store.Entities.Box", b =>
                 {
-                    b.HasOne("WMS.WarehouseDbContext.Entities.Palette", "Palette")
+                    b.HasOne("WMS.Store.Entities.Palette", "Palette")
                         .WithMany("Boxes")
                         .HasForeignKey("PaletteId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -118,23 +118,19 @@ namespace WMS.WarehouseDbContext.Migrations
                     b.Navigation("Palette");
                 });
 
-            modelBuilder.Entity("WMS.WarehouseDbContext.Entities.Palette", b =>
+            modelBuilder.Entity("WMS.Store.Entities.Palette", b =>
                 {
-                    b.HasOne("WMS.WarehouseDbContext.Entities.Warehouse", "Warehouse")
+                    b.HasOne("WMS.Store.Entities.Warehouse", null)
                         .WithMany("Palettes")
-                        .HasForeignKey("WarehouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Warehouse");
+                        .HasForeignKey("WarehouseId");
                 });
 
-            modelBuilder.Entity("WMS.WarehouseDbContext.Entities.Palette", b =>
+            modelBuilder.Entity("WMS.Store.Entities.Palette", b =>
                 {
                     b.Navigation("Boxes");
                 });
 
-            modelBuilder.Entity("WMS.WarehouseDbContext.Entities.Warehouse", b =>
+            modelBuilder.Entity("WMS.Store.Entities.Warehouse", b =>
                 {
                     b.Navigation("Palettes");
                 });

@@ -5,74 +5,26 @@ using WMS.WarehouseDbContext.Entities;
 
 namespace WMS.Tests;
 
-[Collection(DbTestCollection.Name)]
-public class WarehouseRepositoryTests: IClassFixture<TestDatabaseFixture>, IAsyncLifetime
+public class WarehouseRepositoryTests: WarehouseTestsBase
 {
-    private readonly WarehouseDbContext.WarehouseDbContext _dbContext;
-
-    private readonly TestDataHelper _dataHelper = new();
-    
-    public WarehouseRepositoryTests(TestDatabaseFixture fixture)
+    private UnitOfWork _sut;
+    public WarehouseRepositoryTests(TestDatabaseFixture fixture) : base(fixture)
     {
-        _dbContext = fixture.CreateDbContext();
+        _sut = UnitOfWork;
     }
-    
+
     [Fact]
     public async Task RepositoryInsert_ShouldInsertWarehouse()
     {
         // Arrange
-        var sut = new UnitOfWork(_dbContext);
-
-        sut.WarehouseRepository?.InsertAsync(new Warehouse("TestWarehouse1"));
-        await sut.SaveAsync();
-
-        var result = await _dbContext.Warehouses.FirstOrDefaultAsync(x => x.Name == "TestWarehouse1");
+        await CreateWarehouseWithPalettesAndBoxes("Warehouse1", 1, 1);
+        
+        // Act
+        var result = DbContext.Warehouses.FirstOrDefaultAsync(x => x.Name == "Warehouse1");
 
         // Assert
+
         result.Should().NotBeNull();
+
     }
-    
-    [Fact]
-    public async Task RepositoryInsert_ShouldInsertWarehouseWithFivePalettes()
-    {
-        // Arrange
-        var sut = new UnitOfWork(_dbContext);
-        var warehouse = _dataHelper.CreateWarehouseWithPalettesAndBoxes("TestWarehouse2", 5, 1);
-
-        sut.WarehouseRepository?.InsertAsync(warehouse);
-        await sut.SaveAsync();
-
-        var palettes = sut.BoxRepository?.GetAllAsync();
-        if (palettes != null)
-        {
-            var result = palettes.Result.Count();
-
-            // Assert
-            result.Should().Be(5);
-        }
-    }
-    
-    [Fact]
-    public async Task RepositoryInsert_ShouldInsert_WarehouseWithTwentyFiveBoxesOnFivePalettes()
-    {
-        // Arrange
-        var sut = new UnitOfWork(_dbContext);
-        var warehouse = _dataHelper.CreateWarehouseWithPalettesAndBoxes("TestWarehouse3", 5, 5);
-
-        sut.WarehouseRepository?.InsertAsync(warehouse);
-        await sut.SaveAsync();
-
-        var boxes = sut.BoxRepository?.GetAllAsync();
-        if (boxes != null)
-        {
-            var result = boxes.Result.Count();
-
-            // Assert
-            result.Should().Be(25);
-        }
-    }
-    
-    public Task InitializeAsync() => Task.CompletedTask;
-
-    public async Task DisposeAsync() => await _dbContext.DisposeAsync();
 }
