@@ -1,15 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using WMS.Store.EntityConfigurations;
+using WMS.Store.Interfaces;
 using WMS.WarehouseDbContext.Entities;
 using WMS.WarehouseDbContext.EntityConfigurations;
 using WMS.WarehouseDbContext.Interfaces;
 
 namespace WMS.Store;
 
-public sealed class WarehouseDbContext : DbContext, IWarehouseDbContext
+public sealed class WarehouseDbContext : DbContext, IWarehouseDbContext, IDbUnitOfWork
 {
-    private const string DbFileName = "warehouse.db";
+    private const string DefaultDbFileName = "warehouse.db";
+
+    private readonly string _dbFileName;
 
     public DbSet<Warehouse> Warehouses => Set<Warehouse>();
 
@@ -17,25 +20,29 @@ public sealed class WarehouseDbContext : DbContext, IWarehouseDbContext
 
     public DbSet<Box> Boxes => Set<Box>();
 
+    public WarehouseDbContext(string dbFileName = DefaultDbFileName)
+    {
+        _dbFileName = dbFileName;
+    }
+
     protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.UseSqlite($"Data Source=../{DbFileName}")
+        => options.UseSqlite($"Data Source=../{_dbFileName}")
             .LogTo(Console.WriteLine, LogLevel.Information);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
         
-        // modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(BoxConfigurations).Assembly);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(PaletteConfigurations).Assembly);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(WarehouseConfigurations).Assembly);
-
-        modelBuilder.Entity<Warehouse>().HasQueryFilter(m => !m.IsDeleted);
-        modelBuilder.Entity<Palette>().HasQueryFilter(m => !m.IsDeleted);
-        modelBuilder.Entity<Box>().HasQueryFilter(m => !m.IsDeleted);
     }
 
-    public override int SaveChanges()
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) 
+        => SaveChangesInternalAsync(cancellationToken);
+
+    Task IDbUnitOfWork.SaveChangesAsync(CancellationToken cancellationToken)
+        => SaveChangesAsync(cancellationToken);
+    
+    private async Task<int> SaveChangesInternalAsync(CancellationToken cancellationToken)
     {
         ChangeTracker.DetectChanges();
 
@@ -51,22 +58,7 @@ public sealed class WarehouseDbContext : DbContext, IWarehouseDbContext
             // Update only IsDeleted flag
             entity.IsDeleted = true;
         }
-        return base.SaveChanges();
+
+        return await base.SaveChangesAsync(cancellationToken);
     }
-
-    public override async Task<int> SaveChangesAsync(CancellationToken ct = default)
-    {
-        var markedAsDeleted = ChangeTracker.Entries()
-            .Where(x => x.State == EntityState.Deleted);
-
-        foreach (var item in markedAsDeleted)
-        {
-            if (item.Entity is not ISoftDeletable entity) continue;
-
-            item.State = EntityState.Unchanged;
-
-            entity.IsDeleted = true;
-        }
-        return await base.SaveChangesAsync(ct);
-    } 
 }

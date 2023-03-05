@@ -1,5 +1,6 @@
 using FluentAssertions;
 using WMS.Services.Concrete;
+using WMS.Tests.Infrastructure;
 
 namespace WMS.Tests;
 
@@ -7,7 +8,8 @@ namespace WMS.Tests;
 public class WarehouseServiceTests: WarehouseTestsBase
 {
     private readonly WarehouseQueryService _sut;
-    public WarehouseServiceTests(TestDatabaseFixture fixture) : base(fixture)
+    public WarehouseServiceTests(TestDatabaseFixture fixture) 
+        : base(fixture)
     {
         _sut = new WarehouseQueryService(DbContext);
     }
@@ -26,7 +28,7 @@ public class WarehouseServiceTests: WarehouseTestsBase
             .GroupBy(g => g.ExpiryDate).ToList();
 
         // Act
-        var result = _sut.SortByExpiryAndWeight(warehouse.Id);
+        var result = await _sut.SortByExpiryAndWeight(warehouse.Id);
 
         // // Assert
         result.Should().NotBeNull().And
@@ -48,7 +50,7 @@ public class WarehouseServiceTests: WarehouseTestsBase
             .ToList();
 
         // Act
-        var result = _sut.ChooseThreePalettesByExpiryAndVolume(warehouse.Id);
+        var result = await _sut.ChooseThreePalettesByExpiryAndVolume(warehouse.Id);
 
         // // Assert
         result.Should().NotBeNull().And

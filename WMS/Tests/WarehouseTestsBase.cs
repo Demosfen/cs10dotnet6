@@ -1,22 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore.Design;
-using WMS.Repositories.Concrete;
+﻿using WMS.Tests.Infrastructure;
 using WMS.WarehouseDbContext.Entities;
 
 namespace WMS.Tests;
 
 [Collection(DbTestCollection.Name)]
-public abstract class WarehouseTestsBase : IClassFixture<TestDatabaseFixture>, IAsyncLifetime
+public abstract class WarehouseTestsBase 
+    : IClassFixture<TestDatabaseFixture>, IAsyncLifetime
 {
     protected readonly Store.WarehouseDbContext DbContext;
-
-    protected readonly UnitOfWork UnitOfWork;
     
     private static readonly Random Random = new Random();
 
     protected WarehouseTestsBase(TestDatabaseFixture fixture)
     {
         DbContext = fixture.CreateDbContext();
-        UnitOfWork = new UnitOfWork(DbContext);
     }
 
     internal async Task<Box> CreateBoxAsync(Guid paletteId)
@@ -26,16 +23,10 @@ public abstract class WarehouseTestsBase : IClassFixture<TestDatabaseFixture>, I
             Random.Next(5, 30),
             DateTime.Today.AddDays(Random.Next(-100, -1)),
             DateTime.Today.AddDays(Random.Next(0, 100)));
-        
-        var palette = await UnitOfWork.PaletteRepository.GetByIdAsync(paletteId)
-                        ?? throw new OperationException("No palette fond");
+        DbContext.Boxes.Add(box);
 
-        UnitOfWork.PaletteRepository.AddBox(palette, box);
+        await DbContext.SaveChangesAsync();
 
-        await UnitOfWork.BoxRepository.InsertAsync(box);
-
-        await UnitOfWork.SaveAsync();
-        
         return box;
     }
 
@@ -47,8 +38,6 @@ public abstract class WarehouseTestsBase : IClassFixture<TestDatabaseFixture>, I
         {
             boxes.Add(await CreateBoxAsync(paletteId));
         }
-
-        await UnitOfWork.SaveAsync();
         
         return boxes;
     }
@@ -58,19 +47,11 @@ public abstract class WarehouseTestsBase : IClassFixture<TestDatabaseFixture>, I
         var palette = new Palette(warehouseId,
             Random.Next(20, 30), Random.Next(20, 30), Random.Next(20, 30));
 
-        var warehouse = await UnitOfWork.WarehouseRepository.GetByIdAsync(warehouseId)
-                        ?? throw new OperationException("No warehouse fond");
-
-        UnitOfWork.WarehouseRepository.AddPalette(warehouse, palette);
-
-        await UnitOfWork.PaletteRepository.InsertAsync(palette);
-
-        await UnitOfWork.SaveAsync();
-
+        DbContext.Palettes.Add(palette);
+        await DbContext.SaveChangesAsync();
         return palette;
     }
-        
-
+    
     internal async Task<List<Palette>> CreatePalettesAsync(Guid warehouseId, int n)
     {
         var palettes = new List<Palette>();
@@ -79,36 +60,25 @@ public abstract class WarehouseTestsBase : IClassFixture<TestDatabaseFixture>, I
         {
             palettes.Add(await CreatePaletteAsync(warehouseId));
         }
-
-        await UnitOfWork.SaveAsync();
+        
+        await DbContext.SaveChangesAsync();
         
         return palettes;
     }
-    
+
     internal async Task<Warehouse> CreateWarehouse(string warehouseName)
     {
-        var warehouse = new Warehouse(warehouseName);
-        
-        await UnitOfWork.WarehouseRepository.InsertAsync(warehouse);
+        var warehouse = DbContext.Warehouses.Add(new Warehouse(warehouseName));
 
-        await UnitOfWork.SaveAsync();
+        await DbContext.SaveChangesAsync();
 
-        return warehouse;
+        return warehouse.Entity;
     }
 
     internal async Task<Palette> CreatePaletteWithBoxesAsync(Guid warehouseId, int nBoxes)
     {
         var palette = await CreatePaletteAsync(warehouseId);
-        var boxes = await CreateBoxesAsync(palette.Id, nBoxes);
-
-        foreach (var box in boxes)
-        {
-            UnitOfWork.PaletteRepository.AddBox(palette, box);
-
-            await UnitOfWork.BoxRepository.InsertAsync(box);
-        }
-
-        await UnitOfWork.SaveAsync();
+        await CreateBoxesAsync(palette.Id, nBoxes);
 
         return palette;
     }
@@ -119,16 +89,9 @@ public abstract class WarehouseTestsBase : IClassFixture<TestDatabaseFixture>, I
 
         foreach (var palette in palettes)
         {
-            var boxes = await CreateBoxesAsync(palette.Id, nBoxes);
-            
-            foreach (var box in boxes)
-            {
-                UnitOfWork.PaletteRepository.AddBox(palette, box);
-            }
+            await CreateBoxesAsync(palette.Id, nBoxes);
         }
 
-        await UnitOfWork.SaveAsync();
-        
         return palettes;
     }
 
@@ -136,13 +99,7 @@ public abstract class WarehouseTestsBase : IClassFixture<TestDatabaseFixture>, I
     {
         var warehouse = await CreateWarehouse(warehouseName);
         
-        var palettes = await CreatePalettesWithBoxesAsync(warehouse.Id, nPalettes, nBoxes);
-
-        UnitOfWork.WarehouseRepository.AddPalettes(warehouse, palettes);
-
-        await UnitOfWork.WarehouseRepository.InsertAsync(warehouse);
-
-        await UnitOfWork.SaveAsync();
+        await CreatePalettesWithBoxesAsync(warehouse.Id, nPalettes, nBoxes);
 
         return warehouse;
     }

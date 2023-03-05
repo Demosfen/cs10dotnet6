@@ -4,7 +4,7 @@ using WMS.WarehouseDbContext.Entities;
 
 namespace WMS.Services.Infrastructure.Mapping;
 
-public class WarehouseMapperConfiguration : Profile
+public sealed class WarehouseMapperConfiguration : Profile
 {
     public WarehouseMapperConfiguration()
     {

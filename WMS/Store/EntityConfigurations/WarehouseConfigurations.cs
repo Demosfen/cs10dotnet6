@@ -17,8 +17,5 @@ public sealed class WarehouseConfigurations : IEntityTypeConfiguration<Warehouse
         builder
             .Property(x => x.Name)
             .IsRequired();
-
-        builder
-            .HasMany<Palette>(x => x.Palettes);
     }
 }

@@ -1,8 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WMS.Services.Abstract;
-using WMS.WarehouseDbContext;
 using WMS.WarehouseDbContext.Entities;
-using WMS.Repositories.Concrete;
 using WMS.WarehouseDbContext.Interfaces;
 
 namespace WMS.Services.Concrete;
@@ -19,17 +17,16 @@ public sealed class WarehouseQueryService : IWarehouseQueryService
     /// <param name="id">Warehouse ID</param>
     /// <returns>Group of palettes for chosen by ID warehouse</returns>
     /// <exception cref="Exception">No warehouse exist</exception>
-    public IReadOnlyCollection<IGrouping<DateTime?, Palette>> SortByExpiryAndWeight(Guid id)
+    public Task<List<IGrouping<DateTime?, Palette>>> SortByExpiryAndWeight(Guid id)
     {
-        var palettes = _dbContext.Palettes
-            .Where(w => w.WarehouseId == id);
-        
-        return palettes?
+        return _dbContext.Palettes
+                   .Where(w => w.WarehouseId == id)
                    .Where(p => p.ExpiryDate.HasValue)
                    .OrderBy(p => p.ExpiryDate)
                    .ThenBy(p => p.Weight)
                    .Include(x => x.Boxes)
-                   .GroupBy(g => g.ExpiryDate).ToList() 
+                   .GroupBy(g => g.ExpiryDate)
+                   .ToListAsync()
                ?? throw new Exception("No warehouses found!");
     }
 
@@ -40,15 +37,14 @@ public sealed class WarehouseQueryService : IWarehouseQueryService
     /// <param name="id">Warehouse id</param>
     /// <returns>Three palettes sorted by Expiry and Volume</returns>
     /// <exception cref="Exception">No palettes exist</exception>
-    public IReadOnlyCollection<Palette> ChooseThreePalettesByExpiryAndVolume(Guid id)
+    public Task<List<Palette>> ChooseThreePalettesByExpiryAndVolume(Guid id)
     {
-        var palettes = _dbContext.Palettes
-            .Where(w => w.WarehouseId == id);
-        
-        return  palettes?
-                    .OrderByDescending(p => p.ExpiryDate).Take(3)
-                    .OrderByDescending(p => p.Volume)
-                    .ToList()
-                ?? throw new Exception("No palettes found");
+        return _dbContext.Palettes
+                   .Where(w => w.WarehouseId == id)
+                   .OrderByDescending(p => p.ExpiryDate)
+                   .Take(3)
+                   .OrderByDescending(p => p.Volume)
+                   .ToListAsync()
+               ?? throw new Exception("No palettes found");
     }
 }

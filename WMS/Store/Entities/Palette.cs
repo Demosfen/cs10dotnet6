@@ -59,7 +59,7 @@ public sealed class Palette : StorageUnit
     {
         set => _warehouse = value;
         get => _warehouse
-               ?? throw new InvalidOperationException("Uninitialized property" + nameof(_warehouse));
+               ?? throw new InvalidOperationException("Uninitialized property" + nameof(Warehouse));
     }
 
     /// <summary>

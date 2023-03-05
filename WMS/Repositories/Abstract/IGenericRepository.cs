@@ -1,19 +1,22 @@
 using System.Linq.Expressions;
+using WMS.Store.Interfaces;
 
 namespace WMS.Repositories.Abstract;
 
-public interface IGenericRepository
-    <TEntity> where TEntity : class
+public interface IGenericRepository<TEntity> 
+    where TEntity : class
 {
+    public IDbUnitOfWork UnitOfWork { get; }
 
-    Task<IEnumerable<TEntity>> GetAllAsync(
+    public Task<IEnumerable<TEntity>> GetAllAsync(
         Expression<Func<TEntity, bool>>? filter = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
-        string includeProperties = "");
+        string includeProperties = "",
+        CancellationToken cancellationToken = default);
 
-    Task<TEntity?> GetByIdAsync(Guid id);
+    public Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
 
-    Task InsertAsync(TEntity entity);
+    public Task InsertAsync(TEntity entity, CancellationToken cancellationToken = default);
 
-    Task DeleteAsync(Guid id);
+    public Task DeleteAsync(Guid id, CancellationToken cancellationToken = default);
 }

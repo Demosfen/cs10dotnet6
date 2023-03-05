@@ -1,4 +1,4 @@
-namespace WMS.Tests;
+namespace WMS.Tests.Infrastructure;
 
 [CollectionDefinition(Name)]
 public class DbTestCollection : ICollectionFixture<TestDatabaseFixture>

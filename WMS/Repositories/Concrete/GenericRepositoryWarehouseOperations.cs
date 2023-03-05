@@ -3,7 +3,8 @@ using WMS.WarehouseDbContext.Interfaces;
 
 namespace WMS.Repositories.Concrete;
 
-public sealed partial class GenericRepository<TEntity> where TEntity : class, IEntityWithId, ISoftDeletable
+public partial class GenericRepository<TEntity> 
+    where TEntity : class, IEntityWithId, ISoftDeletable
 {
     /// <summary>
     /// Put palette to the warehouse
