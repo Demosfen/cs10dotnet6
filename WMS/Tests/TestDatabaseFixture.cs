@@ -10,8 +10,6 @@ public class TestDatabaseFixture : IDisposable
         // Данные какие-то можно засунуть.. но это должны быть общие для всех тестов вещи
         // (например, какие-то словарные таблицы, которые менять не планируется)
         using var dbContext = new Store.WarehouseDbContext();
-        var unitOfWork = new UnitOfWork(dbContext);
-        dbContext.Database.EnsureDeleted();
         dbContext.Database.EnsureCreated();        
     }
 

@@ -26,6 +26,11 @@ public abstract class WarehouseTestsBase : IClassFixture<TestDatabaseFixture>, I
             Random.Next(5, 30),
             DateTime.Today.AddDays(Random.Next(-100, -1)),
             DateTime.Today.AddDays(Random.Next(0, 100)));
+        
+        var palette = await UnitOfWork.PaletteRepository.GetByIdAsync(paletteId)
+                        ?? throw new OperationException("No palette fond");
+
+        UnitOfWork.PaletteRepository.AddBox(palette, box);
 
         await UnitOfWork.BoxRepository.InsertAsync(box);
 
@@ -41,8 +46,6 @@ public abstract class WarehouseTestsBase : IClassFixture<TestDatabaseFixture>, I
         for (int i = 0; i < n; i++)
         {
             boxes.Add(await CreateBoxAsync(paletteId));
-
-            await UnitOfWork.BoxRepository.InsertAsync(boxes[i]);
         }
 
         await UnitOfWork.SaveAsync();
@@ -54,6 +57,11 @@ public abstract class WarehouseTestsBase : IClassFixture<TestDatabaseFixture>, I
     {
         var palette = new Palette(warehouseId,
             Random.Next(20, 30), Random.Next(20, 30), Random.Next(20, 30));
+
+        var warehouse = await UnitOfWork.WarehouseRepository.GetByIdAsync(warehouseId)
+                        ?? throw new OperationException("No warehouse fond");
+
+        UnitOfWork.WarehouseRepository.AddPalette(warehouse, palette);
 
         await UnitOfWork.PaletteRepository.InsertAsync(palette);
 
@@ -70,13 +78,22 @@ public abstract class WarehouseTestsBase : IClassFixture<TestDatabaseFixture>, I
         for (int i = 0; i < n; i++)
         {
             palettes.Add(await CreatePaletteAsync(warehouseId));
-
-            await UnitOfWork.PaletteRepository.InsertAsync(palettes[i]);
         }
 
         await UnitOfWork.SaveAsync();
         
         return palettes;
+    }
+    
+    internal async Task<Warehouse> CreateWarehouse(string warehouseName)
+    {
+        var warehouse = new Warehouse(warehouseName);
+        
+        await UnitOfWork.WarehouseRepository.InsertAsync(warehouse);
+
+        await UnitOfWork.SaveAsync();
+
+        return warehouse;
     }
 
     internal async Task<Palette> CreatePaletteWithBoxesAsync(Guid warehouseId, int nBoxes)
@@ -107,11 +124,7 @@ public abstract class WarehouseTestsBase : IClassFixture<TestDatabaseFixture>, I
             foreach (var box in boxes)
             {
                 UnitOfWork.PaletteRepository.AddBox(palette, box);
-
-                await UnitOfWork.BoxRepository.InsertAsync(box);
             }
-
-            await UnitOfWork.PaletteRepository.InsertAsync(palette);
         }
 
         await UnitOfWork.SaveAsync();
@@ -121,7 +134,7 @@ public abstract class WarehouseTestsBase : IClassFixture<TestDatabaseFixture>, I
 
     internal async Task<Warehouse> CreateWarehouseWithPalettesAndBoxes(string warehouseName , int nPalettes, int nBoxes)
     {
-        var warehouse = new Warehouse(warehouseName);
+        var warehouse = await CreateWarehouse(warehouseName);
         
         var palettes = await CreatePalettesWithBoxesAsync(warehouse.Id, nPalettes, nBoxes);
 
