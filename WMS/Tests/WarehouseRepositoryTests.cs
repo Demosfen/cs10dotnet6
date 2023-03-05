@@ -18,7 +18,7 @@ public class WarehouseRepositoryTests: WarehouseTestsBase
         await CreateWarehouseWithPalettesAndBoxes("Warehouse1", 1, 1);
         
         // Act
-        var result = DbContext.Warehouses.FirstOrDefaultAsync(x => x.Name == "Warehouse1");
+        var result = await DbContext.Warehouses.FirstOrDefaultAsync(x => x.Name == "Warehouse1");
 
         // Assert
 
