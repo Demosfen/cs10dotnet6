@@ -2,10 +2,11 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using WMS.Repositories.Abstract;
 using WMS.Repositories.Concrete;
+using WMS.Tests.Abstract;
 using WMS.Tests.Infrastructure;
 using WMS.WarehouseDbContext.Entities;
 
-namespace WMS.Tests;
+namespace WMS.Tests.Repositories;
 
 public class WarehouseRepositoryTests: WarehouseTestsBase
 {

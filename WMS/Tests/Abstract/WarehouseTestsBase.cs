@@ -1,7 +1,7 @@
 ﻿using WMS.Tests.Infrastructure;
 using WMS.WarehouseDbContext.Entities;
 
-namespace WMS.Tests;
+namespace WMS.Tests.Abstract;
 
 [Collection(DbTestCollection.Name)]
 public abstract class WarehouseTestsBase 
