@@ -6,7 +6,7 @@ namespace WMS.Tests;
 [Collection(DbTestCollection.Name)]
 public class WarehouseServiceTests: WarehouseTestsBase
 {
-    private WarehouseQueryService _sut;
+    private readonly WarehouseQueryService _sut;
     public WarehouseServiceTests(TestDatabaseFixture fixture) : base(fixture)
     {
         _sut = new WarehouseQueryService(DbContext);
