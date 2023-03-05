@@ -7,10 +7,8 @@ namespace WMS.Tests;
 
 public class WarehouseRepositoryTests: WarehouseTestsBase
 {
-    private UnitOfWork _sut;
     public WarehouseRepositoryTests(TestDatabaseFixture fixture) : base(fixture)
     {
-        _sut = UnitOfWork;
     }
 
     [Fact(DisplayName = "Check if UnitOfWork successfully inserts and saves entities")]
