@@ -13,7 +13,7 @@ public class WarehouseRepositoryTests: WarehouseTestsBase
         _sut = UnitOfWork;
     }
 
-    [Fact]
+    [Fact(DisplayName = "Check if UnitOfWork successfully inserts and saves entities")]
     public async Task RepositoryInsert_ShouldInsertWarehouse()
     {
         // Arrange
