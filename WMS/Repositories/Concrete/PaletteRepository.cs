@@ -1,3 +1,4 @@
+using WMS.Common.Exceptions;
 using WMS.Repositories.Abstract;
 using WMS.WarehouseDbContext.Entities;
 
@@ -23,7 +24,7 @@ public class PaletteRepository : GenericRepository<Palette>, IPaletteRepository
         CancellationToken cancellationToken)
     {
         var palette = await GetByIdAsync(paletteId, cancellationToken)
-                      ?? throw new InvalidOperationException("");
+                      ?? throw new EntityNotFoundException(paletteId);
         
         if (box.Width > palette.Width & box.Height > palette.Height & box.Depth > palette.Depth)
         {
@@ -64,5 +65,29 @@ public class PaletteRepository : GenericRepository<Palette>, IPaletteRepository
         palette.Volume += box.Volume;
         palette.ExpiryDate = palette.Boxes.Min(x => x.ExpiryDate);
         box.PaletteId = palette.Id;
+    }
+
+    /// <summary>
+    /// Simple deletion of the box from the palette
+    /// </summary>
+    /// <param name="paletteId">Palette id</param>
+    /// <param name="box">Box</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <exception cref="InvalidOperationException">Nothing to remove</exception>
+    public async Task DeleteBox(Guid paletteId,
+        Box box,
+        CancellationToken cancellationToken)
+    {
+        var palette = await GetByIdAsync(paletteId, cancellationToken)
+                      ?? throw new EntityNotFoundException(paletteId);
+
+        Console.WriteLine($"Box with {box.Id} was removed from the warehouse.");
+        
+        palette.Weight -= box.Weight;
+        palette.Volume -= box.Volume;
+        
+        palette.Boxes.Remove(box);
+        
+        palette.ExpiryDate = palette.Boxes.Min(x => x.ExpiryDate);
     }
 }

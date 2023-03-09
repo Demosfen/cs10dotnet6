@@ -19,8 +19,12 @@ public interface IPaletteRepository :  IGenericRepository<Palette>
     /// <summary>
     /// Simple deletion of the box from the palette
     /// </summary>
-    /// <param name="palette">Where to remove</param>
-    /// <param name="box">What to remove</param>
+    /// <param name="paletteId">Palete Id</param>
+    /// <param name="box"></param>
+    /// <param name="cancellationToken">Cancellation token</param>
     /// <exception cref="InvalidOperationException">Nothing to remove</exception>
-    void DeleteBox(Palette palette, Box box);
+    Task DeleteBox(
+        Guid paletteId, 
+        Box box, 
+        CancellationToken cancellationToken);
 }

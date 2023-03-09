@@ -22,7 +22,7 @@ public class WarehouseRepositoryTests: WarehouseTestsBase
     public async Task RepositoryInsert_ShouldInsertWarehouse()
     {
         // Arrange, Act
-        await _sut.InsertAsync(new Warehouse("Warehouse1"));
+        await _sut.AddAsync(new Warehouse("Warehouse1"));
         await _sut.UnitOfWork.SaveChangesAsync();
 
         // Assert

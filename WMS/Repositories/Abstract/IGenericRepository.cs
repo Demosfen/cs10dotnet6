@@ -16,7 +16,7 @@ public interface IGenericRepository<TEntity>
 
     public Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
 
-    public Task InsertAsync(TEntity entity, CancellationToken cancellationToken = default);
+    public Task AddAsync(TEntity entity, CancellationToken cancellationToken = default);
 
     public Task DeleteAsync(Guid id, CancellationToken cancellationToken = default);
 }

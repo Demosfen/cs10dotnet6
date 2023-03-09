@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using WMS.Common.Exceptions;
 using WMS.Repositories.Abstract;
 using WMS.Store.Interfaces;
 using WMS.WarehouseDbContext.Interfaces;
@@ -11,6 +12,8 @@ public partial class GenericRepository<TEntity> : IGenericRepository<TEntity>
     where TEntity : class, IEntityWithId, ISoftDeletable
 {
     private readonly DbSet<TEntity> _dbSet;
+    
+    public IDbUnitOfWork UnitOfWork { get; }
 
     public GenericRepository(Store.WarehouseDbContext dbContext)
     {
@@ -18,8 +21,6 @@ public partial class GenericRepository<TEntity> : IGenericRepository<TEntity>
 
         UnitOfWork = dbContext;
     }
-
-    public IDbUnitOfWork UnitOfWork { get; }
 
     public async Task<IEnumerable<TEntity>> GetAllAsync(
         Expression<Func<TEntity, bool>>? filter,
@@ -47,16 +48,16 @@ public partial class GenericRepository<TEntity> : IGenericRepository<TEntity>
     public async Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken) 
         => await _dbSet.FindAsync(id);
 
-    public async Task InsertAsync(TEntity entity, CancellationToken cancellationToken) 
+    public async Task AddAsync(TEntity entity, CancellationToken cancellationToken) 
         => await _dbSet.AddAsync(entity, cancellationToken);
 
-    public async Task InsertMultipleAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken) 
+    public async Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken) 
         => await _dbSet.AddRangeAsync(entities, cancellationToken);
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
         TEntity entity = await _dbSet.FindAsync(id)
-                         ?? throw new InvalidOperationException($"No entity {nameof(TEntity)} with ID = {id} exist");
+                         ?? throw new EntityNotFoundException(id);
 
         _dbSet.Remove(entity);
     }
