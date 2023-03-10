@@ -1,4 +1,4 @@
-using WMS.WarehouseDbContext.Entities;
+using WMS.Common.Exceptions;
 
 namespace WMS.Store.Entities;
 
@@ -7,13 +7,12 @@ public sealed class Box : StorageUnit
     private Palette? _palette;
     
     /// <summary>
+    /// Navigation property
     /// ID of the palette where box is stored
     /// </summary>
     public Guid PaletteId { get; set; }
-    
-    /// <summary>
-    /// Box weight
-    /// </summary>
+
+    /// <inheritdoc cref="StorageUnit" />
     public decimal Weight { get; set; }
 
     /// <summary>
@@ -28,9 +27,13 @@ public sealed class Box : StorageUnit
     {
         set => _palette = value;
         get => _palette
-               ?? throw new InvalidOperationException("Uninitialized property: " + nameof(Palette));
+               ?? throw new UninitializedPropertyException(nameof(Box));
     }
 
+    /// <summary>
+    /// Box constructor
+    /// </summary>
+    /// <exception cref="ArgumentException"></exception>
     public Box(
         Guid paletteId,
         decimal width, 

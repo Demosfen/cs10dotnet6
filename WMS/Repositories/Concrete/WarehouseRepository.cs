@@ -1,11 +1,11 @@
 ﻿using System.Text;
 using WMS.Common.Exceptions;
 using WMS.Repositories.Abstract;
-using WMS.WarehouseDbContext.Entities;
+using WMS.Store.Entities;
 
 namespace WMS.Repositories.Concrete;
 
-public class WarehouseRepository : GenericRepository<Warehouse>, IWarehouseRepository
+public sealed class WarehouseRepository : GenericRepository<Warehouse>, IWarehouseRepository
 {
     public WarehouseRepository(Store.WarehouseDbContext dbContext)
         : base(dbContext)

@@ -1,11 +1,10 @@
 using WMS.Common.Exceptions;
 using WMS.Repositories.Abstract;
 using WMS.Store.Entities;
-using WMS.WarehouseDbContext.Entities;
 
 namespace WMS.Repositories.Concrete;
 
-public class PaletteRepository : GenericRepository<Palette>, IPaletteRepository
+public sealed class PaletteRepository : GenericRepository<Palette>, IPaletteRepository
 {
     public PaletteRepository(Store.WarehouseDbContext dbContext) 
         : base(dbContext)

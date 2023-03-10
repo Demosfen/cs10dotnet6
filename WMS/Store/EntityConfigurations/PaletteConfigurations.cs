@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using WMS.Store.Entities;
-using WMS.WarehouseDbContext.Entities;
 
 namespace WMS.Store.EntityConfigurations;
 
@@ -11,10 +10,6 @@ public sealed class PaletteConfigurations : IEntityTypeConfiguration<Palette>
     public void Configure(EntityTypeBuilder<Palette> builder)
     {
         builder.ToTable("Palettes");
-        
-        builder
-            .Property(x => x.Id)
-            .IsRequired();
 
         builder
             .Property(x => x.Width)

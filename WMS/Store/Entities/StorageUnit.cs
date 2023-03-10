@@ -1,6 +1,6 @@
-using WMS.WarehouseDbContext.Interfaces;
+using WMS.Store.Interfaces;
 
-namespace WMS.WarehouseDbContext.Entities;
+namespace WMS.Store.Entities;
 
 /// <summary>
 /// This is an abstract class, which contains common properties
@@ -19,17 +19,17 @@ public abstract class StorageUnit: IEntityWithId, ISoftDeletable
     public Guid Id { get; init; }
     
     /// <summary>
-    /// Object width
+    /// Unit width
     /// </summary>
     public decimal Width { get; set;}
 
     /// <summary>
-    /// Object height
+    /// Unit height
     /// </summary>
     public decimal Height { get; set; }
 
     /// <summary>
-    /// Object depth
+    /// Unit depth
     /// </summary>
     public decimal Depth { get; set; }
 

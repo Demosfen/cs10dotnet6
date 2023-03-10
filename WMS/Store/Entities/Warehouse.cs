@@ -1,6 +1,6 @@
-using WMS.WarehouseDbContext.Interfaces;
+using WMS.Store.Interfaces;
 
-namespace WMS.WarehouseDbContext.Entities;
+namespace WMS.Store.Entities;
 
 public sealed class Warehouse : IEntityWithId, ISoftDeletable
 {
@@ -12,10 +12,17 @@ public sealed class Warehouse : IEntityWithId, ISoftDeletable
     /// </summary>
     public string Name { get; }
 
+    /// <summary>
+    /// Palettes list
+    /// </summary>
     public List<Palette> Palettes { get; } = new();
 
     public bool IsDeleted { get; set; }
 
+    /// <summary>
+    /// Warehouse constructor
+    /// </summary>
+    /// <param name="name"></param>
     public Warehouse(string name)
     {
         Id = Guid.NewGuid();

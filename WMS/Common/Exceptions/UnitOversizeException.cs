@@ -5,7 +5,7 @@ public class UnitOversizeException : DomainException
     public Guid Id { get; }
 
     public UnitOversizeException(Guid id)
-        : base($"The box with id={id} does not match the dimensions of the pallet")
+        : base($"The unit with id={id} does not match the dimensions of the pallet")
     {
         Id = id;
     }

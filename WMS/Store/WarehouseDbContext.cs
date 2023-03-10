@@ -1,11 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using WMS.Store.Entities;
-using WMS.Store.EntityConfigurations;
 using WMS.Store.Interfaces;
-using WMS.WarehouseDbContext.Entities;
 using WMS.WarehouseDbContext.EntityConfigurations;
-using WMS.WarehouseDbContext.Interfaces;
 
 namespace WMS.Store;
 
@@ -34,7 +31,7 @@ public sealed class WarehouseDbContext : DbContext, IWarehouseDbContext, IDbUnit
     {
         base.OnModelCreating(modelBuilder);
         
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(BoxConfigurations).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) 

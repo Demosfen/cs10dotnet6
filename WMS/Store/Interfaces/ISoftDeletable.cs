@@ -1,4 +1,4 @@
-﻿namespace WMS.WarehouseDbContext.Interfaces;
+﻿namespace WMS.Store.Interfaces;
 
 public interface ISoftDeletable
 {

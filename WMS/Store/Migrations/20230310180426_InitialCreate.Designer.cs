@@ -4,21 +4,21 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WMS.WarehouseDbContext;
+using WMS.Store;
 
 #nullable disable
 
-namespace WMS.WarehouseDbContext.Migrations
+namespace WMS.Store.Migrations
 {
-    [DbContext(typeof(Store.WarehouseDbContext))]
-    [Migration("20230215114624_AddedPalettesCountInWarehouse")]
-    partial class AddedPalettesCountInWarehouse
+    [DbContext(typeof(WarehouseDbContext))]
+    [Migration("20230310180426_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.2");
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.3");
 
             modelBuilder.Entity("WMS.Store.Entities.Box", b =>
                 {
@@ -36,7 +36,10 @@ namespace WMS.WarehouseDbContext.Migrations
                     b.Property<double>("Height")
                         .HasColumnType("REAL");
 
-                    b.Property<Guid?>("PaletteId")
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("PaletteId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("ProductionDate")
@@ -73,10 +76,13 @@ namespace WMS.WarehouseDbContext.Migrations
                     b.Property<double>("Height")
                         .HasColumnType("REAL");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
                     b.Property<double>("Volume")
                         .HasColumnType("REAL");
 
-                    b.Property<Guid?>("WarehouseId")
+                    b.Property<Guid>("WarehouseId")
                         .HasColumnType("TEXT");
 
                     b.Property<double>("Weight")
@@ -98,8 +104,12 @@ namespace WMS.WarehouseDbContext.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("PalettesCount")
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -108,16 +118,24 @@ namespace WMS.WarehouseDbContext.Migrations
 
             modelBuilder.Entity("WMS.Store.Entities.Box", b =>
                 {
-                    b.HasOne("WMS.Store.Entities.Palette", null)
+                    b.HasOne("WMS.Store.Entities.Palette", "Palette")
                         .WithMany("Boxes")
-                        .HasForeignKey("PaletteId");
+                        .HasForeignKey("PaletteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Palette");
                 });
 
             modelBuilder.Entity("WMS.Store.Entities.Palette", b =>
                 {
-                    b.HasOne("WMS.Store.Entities.Warehouse", null)
+                    b.HasOne("WMS.Store.Entities.Warehouse", "Warehouse")
                         .WithMany("Palettes")
-                        .HasForeignKey("WarehouseId");
+                        .HasForeignKey("WarehouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Warehouse");
                 });
 
             modelBuilder.Entity("WMS.Store.Entities.Palette", b =>

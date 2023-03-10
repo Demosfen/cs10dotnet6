@@ -3,13 +3,13 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WMS.WarehouseDbContext;
+using WMS.Store;
 
 #nullable disable
 
-namespace WMS.WarehouseDbContext.Migrations
+namespace WMS.Store.Migrations
 {
-    [DbContext(typeof(Store.WarehouseDbContext))]
+    [DbContext(typeof(WarehouseDbContext))]
     partial class WarehouseDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

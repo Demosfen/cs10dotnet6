@@ -1,6 +1,5 @@
 ﻿using WMS.Store.Entities;
 using WMS.Tests.Infrastructure;
-using WMS.WarehouseDbContext.Entities;
 
 namespace WMS.Tests.Abstract;
 
@@ -24,6 +23,7 @@ public abstract class WarehouseTestsBase
             Random.Next(5, 30),
             DateTime.Today.AddDays(Random.Next(-100, -1)),
             DateTime.Today.AddDays(Random.Next(0, 100)));
+        
         DbContext.Boxes.Add(box);
 
         await DbContext.SaveChangesAsync();
@@ -61,8 +61,6 @@ public abstract class WarehouseTestsBase
         {
             palettes.Add(await CreatePaletteAsync(warehouseId));
         }
-        
-        await DbContext.SaveChangesAsync();
         
         return palettes;
     }

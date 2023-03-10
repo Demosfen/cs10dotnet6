@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using WMS.Common.Exceptions;
 using WMS.Services.Abstract;
-using WMS.WarehouseDbContext.Entities;
-using WMS.WarehouseDbContext.Interfaces;
+using WMS.Store.Entities;
+using WMS.Store.Interfaces;
 
 namespace WMS.Services.Concrete;
 
@@ -16,7 +17,7 @@ public sealed class WarehouseQueryService : IWarehouseQueryService
     /// </summary>
     /// <param name="id">Warehouse ID</param>
     /// <returns>Group of palettes for chosen by ID warehouse</returns>
-    /// <exception cref="Exception">No warehouse exist</exception>
+    /// <exception cref="EntityNotFoundException">No warehouse exist</exception>
     public Task<List<IGrouping<DateTime?, Palette>>> SortByExpiryAndWeight(Guid id)
     {
         return _dbContext.Palettes
@@ -27,7 +28,7 @@ public sealed class WarehouseQueryService : IWarehouseQueryService
                    .Include(x => x.Boxes)
                    .GroupBy(g => g.ExpiryDate)
                    .ToListAsync()
-               ?? throw new Exception("No warehouses found!");
+               ?? throw new EntityNotFoundException(id);
     }
 
     /// <summary>
@@ -36,7 +37,7 @@ public sealed class WarehouseQueryService : IWarehouseQueryService
     /// </summary>
     /// <param name="id">Warehouse id</param>
     /// <returns>Three palettes sorted by Expiry and Volume</returns>
-    /// <exception cref="Exception">No palettes exist</exception>
+    /// <exception cref="EntityNotFoundException">No palettes exist</exception>
     public Task<List<Palette>> ChooseThreePalettesByExpiryAndVolume(Guid id)
     {
         return _dbContext.Palettes
@@ -45,6 +46,6 @@ public sealed class WarehouseQueryService : IWarehouseQueryService
                    .Take(3)
                    .OrderByDescending(p => p.Volume)
                    .ToListAsync()
-               ?? throw new Exception("No palettes found");
+               ?? throw new EntityNotFoundException(id);
     }
 }

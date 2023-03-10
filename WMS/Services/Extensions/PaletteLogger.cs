@@ -1,4 +1,4 @@
-using WMS.WarehouseDbContext.Entities;
+using WMS.Store.Entities;
 
 namespace WMS.Services.Extensions;
 

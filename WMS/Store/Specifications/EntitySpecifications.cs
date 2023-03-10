@@ -1,6 +1,6 @@
-using WMS.WarehouseDbContext.Interfaces;
+using WMS.Store.Interfaces;
 
-namespace WMS.WarehouseDbContext.Specifications;
+namespace WMS.Store.Specifications;
 
 public static class EntitySpecifications
 {

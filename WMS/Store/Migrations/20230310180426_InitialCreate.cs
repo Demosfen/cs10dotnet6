@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace WMS.WarehouseDbContext.Migrations
+namespace WMS.Store.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
@@ -15,7 +15,9 @@ namespace WMS.WarehouseDbContext.Migrations
                 name: "Warehouses",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,13 +29,14 @@ namespace WMS.WarehouseDbContext.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    WarehouseId = table.Column<Guid>(type: "TEXT", nullable: false),
                     Weight = table.Column<double>(type: "REAL", nullable: false),
                     ExpiryDate = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    WarehouseId = table.Column<Guid>(type: "TEXT", nullable: true),
                     Width = table.Column<double>(type: "REAL", nullable: false),
                     Height = table.Column<double>(type: "REAL", nullable: false),
                     Depth = table.Column<double>(type: "REAL", nullable: false),
-                    Volume = table.Column<double>(type: "REAL", nullable: false)
+                    Volume = table.Column<double>(type: "REAL", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,7 +45,8 @@ namespace WMS.WarehouseDbContext.Migrations
                         name: "FK_Palettes_Warehouses_WarehouseId",
                         column: x => x.WarehouseId,
                         principalTable: "Warehouses",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -50,14 +54,15 @@ namespace WMS.WarehouseDbContext.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    PaletteId = table.Column<Guid>(type: "TEXT", nullable: false),
                     Weight = table.Column<double>(type: "REAL", nullable: false),
                     ProductionDate = table.Column<DateTime>(type: "TEXT", nullable: true),
                     ExpiryDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    PaletteId = table.Column<Guid>(type: "TEXT", nullable: true),
                     Width = table.Column<double>(type: "REAL", nullable: false),
                     Height = table.Column<double>(type: "REAL", nullable: false),
                     Depth = table.Column<double>(type: "REAL", nullable: false),
-                    Volume = table.Column<double>(type: "REAL", nullable: false)
+                    Volume = table.Column<double>(type: "REAL", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -66,7 +71,8 @@ namespace WMS.WarehouseDbContext.Migrations
                         name: "FK_Boxes_Palettes_PaletteId",
                         column: x => x.PaletteId,
                         principalTable: "Palettes",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

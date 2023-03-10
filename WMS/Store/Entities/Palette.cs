@@ -1,7 +1,6 @@
-using WMS.Store.Entities;
-using WMS.WarehouseDbContext.Interfaces;
+using WMS.Common.Exceptions;
 
-namespace WMS.WarehouseDbContext.Entities;
+namespace WMS.Store.Entities;
 
 public sealed class Palette : StorageUnit
 {
@@ -23,7 +22,6 @@ public sealed class Palette : StorageUnit
     /// <summary>
     /// Boxes on the palette
     /// </summary>
-    
     public List<Box> Boxes { get; } = new();
     
     /// <summary>
@@ -34,7 +32,7 @@ public sealed class Palette : StorageUnit
     public decimal Weight { get; set; }
 
     /// <summary>
-    /// Palette expiry date computed as
+    /// Palette expiry date is computed as
     /// the minimal box exp. date.
     /// </summary>
     public override DateTime? ExpiryDate { get; set; }
@@ -42,10 +40,6 @@ public sealed class Palette : StorageUnit
     /// <summary>
     ///  Default palette constructor
     /// </summary>
-    /// <param name="warehouseId">Warehouse ID storing palette</param>
-    /// <param name="width">Palette width</param>
-    /// <param name="height">Palette height</param>
-    /// <param name="depth">Palette depth</param>
     public Palette(
         Guid warehouseId,
         decimal width,
@@ -56,18 +50,17 @@ public sealed class Palette : StorageUnit
         WarehouseId = warehouseId;
     }
 
+    /// <summary>
+    /// Navigation property
+    /// </summary>
+    /// <exception cref="UninitializedPropertyException">Property uninitialized</exception>
     public Warehouse Warehouse
     {
         set => _warehouse = value;
         get => _warehouse
-               ?? throw new InvalidOperationException("Uninitialized property" + nameof(Warehouse));
+               ?? throw new UninitializedPropertyException(nameof(Warehouse));
     }
 
-    /// <summary>
-    /// Output of all information about
-    /// boxes on the palette
-    /// </summary>
-    /// <returns>Palette info</returns>
     public override string ToString()
     {
         if (Boxes.Count == 0)

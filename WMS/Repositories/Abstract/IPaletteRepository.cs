@@ -1,6 +1,5 @@
 using WMS.Common.Exceptions;
 using WMS.Store.Entities;
-using WMS.WarehouseDbContext.Entities;
 
 namespace WMS.Repositories.Abstract;
 

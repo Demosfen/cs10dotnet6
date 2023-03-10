@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using WMS.Store.Entities;
-using WMS.WarehouseDbContext.Entities;
 
 namespace WMS.WarehouseDbContext.EntityConfigurations;
 
@@ -10,11 +9,7 @@ public sealed class BoxConfigurations : IEntityTypeConfiguration<Box>
     public void Configure(EntityTypeBuilder<Box> builder)
     {
         builder.HasKey(x => x.Id);
-        
-        builder
-            .Property(x => x.Id)
-            .IsRequired();
-        
+
         builder
             .Property(x => x.Width)
             .HasConversion<double>()
@@ -42,12 +37,9 @@ public sealed class BoxConfigurations : IEntityTypeConfiguration<Box>
         
         builder
             .Property(x => x.ExpiryDate)
-            .HasConversion<double>()
+            //.HasConversion<double>()
+            .HasConversion<DateTime>()
             .IsRequired();
-
-        builder
-            .Property(x => x.ExpiryDate)
-            .HasConversion<DateTime>();
 
         builder
             .HasOne(x => x.Palette)

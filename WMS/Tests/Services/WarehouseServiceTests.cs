@@ -2,7 +2,6 @@ using FluentAssertions;
 using WMS.Services.Concrete;
 using WMS.Tests.Abstract;
 using WMS.Tests.Infrastructure;
-
 namespace WMS.Tests.Services;
 
 [Collection(DbTestCollection.Name)]
@@ -21,6 +20,8 @@ public class WarehouseServiceTests: WarehouseTestsBase
         // Arrange
         var warehouse = await CreateWarehouseWithPalettesAndBoxes(
             "TestWarehouse", 5, 5);
+
+        var test = CreatePaletteWithBoxesAsync(warehouse.Id, 5);
 
         var expected = warehouse.Palettes
             .Where(p => p.ExpiryDate.HasValue)

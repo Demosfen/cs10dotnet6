@@ -3,12 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using WMS.Common.Exceptions;
 using WMS.Repositories.Abstract;
 using WMS.Store.Interfaces;
-using WMS.WarehouseDbContext.Interfaces;
-using WMS.WarehouseDbContext.Specifications;
+using WMS.Store.Specifications;
 
 namespace WMS.Repositories.Concrete;
 
-public partial class GenericRepository<TEntity> : IGenericRepository<TEntity>
+public class GenericRepository<TEntity> : IGenericRepository<TEntity>
     where TEntity : class, IEntityWithId, ISoftDeletable
 {
     private readonly DbSet<TEntity> _dbSet;
