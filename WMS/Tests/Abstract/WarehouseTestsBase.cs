@@ -1,4 +1,5 @@
-﻿using WMS.Tests.Infrastructure;
+﻿using WMS.Store.Entities;
+using WMS.Tests.Infrastructure;
 using WMS.WarehouseDbContext.Entities;
 
 namespace WMS.Tests.Abstract;

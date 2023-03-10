@@ -1,3 +1,4 @@
+using WMS.Store.Entities;
 using WMS.WarehouseDbContext.Interfaces;
 
 namespace WMS.WarehouseDbContext.Entities;

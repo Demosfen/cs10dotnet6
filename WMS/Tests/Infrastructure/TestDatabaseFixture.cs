@@ -7,9 +7,6 @@ public class TestDatabaseFixture : IDisposable
     public TestDatabaseFixture()
     {
         _dbFileName = $"{Guid.NewGuid().ToString()}.db";
-        // Здесь нам достаточно только проинициализировать сам контекст
-        // Данные какие-то можно засунуть.. но это должны быть общие для всех тестов вещи
-        // (например, какие-то словарные таблицы, которые менять не планируется)
         using var dbContext = new Store.WarehouseDbContext(_dbFileName);
         dbContext.Database.EnsureCreated();
     }

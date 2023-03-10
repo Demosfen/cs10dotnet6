@@ -1,5 +1,6 @@
 using WMS.Common.Exceptions;
 using WMS.Repositories.Abstract;
+using WMS.Store.Entities;
 using WMS.WarehouseDbContext.Entities;
 
 namespace WMS.Repositories.Concrete;
@@ -11,13 +12,7 @@ public class PaletteRepository : GenericRepository<Palette>, IPaletteRepository
     {
     }
 
-    /// <summary>
-    /// Performs simple addition of the box to the palette
-    /// </summary>
-    /// <param name="paletteId">Where to put the box</param>
-    /// <param name="box">What box to put</param>
-    /// <param name="cancellationToken">Cancellation token</param>
-    /// <exception cref="ArgumentException">Sizes inconsistency</exception>
+    /// <inheritdoc cref="IPaletteRepository"/>
     public async Task AddBox(
         Guid paletteId, 
         Box box, 
@@ -26,38 +21,20 @@ public class PaletteRepository : GenericRepository<Palette>, IPaletteRepository
         var palette = await GetByIdAsync(paletteId, cancellationToken)
                       ?? throw new EntityNotFoundException(paletteId);
         
-        if (box.Width > palette.Width & box.Height > palette.Height & box.Depth > palette.Depth)
+        if (box.Width > palette.Width | box.Height > palette.Height | box.Depth > palette.Depth)
         {
-            throw new ArgumentException(
-                "Box size (HxWxD) greater than palette!");
-        }
-        
-        if (box.Width > palette.Width)
-        {
-            throw new ArgumentException(
-                "Width of the box shouldn't be greater than palette.");
-        }
-
-        if (box.Depth > palette.Depth)
-        {
-            throw new ArgumentException(
-                "Depth of the box shouldn't be greater than palette.");
-        }
-
-        if (box.Height > palette.Height)
-        {
-            throw new ArgumentException("Height of the box shouldn't be greater than palette.");
+            throw new UnitOversizeException(box.Id);
         }
 
         if (palette.Boxes.Contains(box))
         {
             Console.WriteLine(
-                $"The box {box.Id} already added to the palette{palette.Id}! Skipping...");
+                $"The box id={box.Id} already added to the palette id={palette.Id}! Skipping...");
             
             return;
         }
 
-        Console.WriteLine($"The box {box.Id} added to the palette {palette.Id}.");
+        Console.WriteLine($"The box id={box.Id} added to the palette id={palette.Id}.");
         
         palette.Boxes.Add(box);
 
@@ -67,13 +44,16 @@ public class PaletteRepository : GenericRepository<Palette>, IPaletteRepository
         box.PaletteId = palette.Id;
     }
 
-    /// <summary>
-    /// Simple deletion of the box from the palette
-    /// </summary>
-    /// <param name="paletteId">Palette id</param>
-    /// <param name="box">Box</param>
-    /// <param name="cancellationToken">Cancellation token</param>
-    /// <exception cref="InvalidOperationException">Nothing to remove</exception>
+    /// <inheritdoc cref="IPaletteRepository"/>
+    public async Task AddBoxes(Guid paletteId, IEnumerable<Box> boxes, CancellationToken cancellationToken)
+    {
+        foreach (var box in boxes)
+        {
+            await AddBox(paletteId, box, cancellationToken);
+        }
+    }
+
+    /// <inheritdoc cref="IPaletteRepository"/>
     public async Task DeleteBox(Guid paletteId,
         Box box,
         CancellationToken cancellationToken)

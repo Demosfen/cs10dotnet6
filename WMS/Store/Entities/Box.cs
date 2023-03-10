@@ -1,7 +1,6 @@
-using System;
-using WMS.WarehouseDbContext.Interfaces;
+using WMS.WarehouseDbContext.Entities;
 
-namespace WMS.WarehouseDbContext.Entities;
+namespace WMS.Store.Entities;
 
 public sealed class Box : StorageUnit
 {

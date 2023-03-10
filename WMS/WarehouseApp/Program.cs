@@ -2,6 +2,7 @@
 using WMS.Repositories.Concrete;
 using WMS.WarehouseDbContext.Entities;
 using WMS.Services.Concrete;
+using WMS.Store.Entities;
 using static System.Console;
 
 namespace WMS.WarehouseApp;

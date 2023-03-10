@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using WMS.Store.Entities;
 using WMS.WarehouseDbContext.Entities;
 
 namespace WMS.WarehouseDbContext.EntityConfigurations;
