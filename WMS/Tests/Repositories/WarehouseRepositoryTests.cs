@@ -7,6 +7,7 @@ using WMS.Tests.Infrastructure;
 
 namespace WMS.Tests.Repositories;
 
+[Collection(DbTestCollection.Name)]
 public class WarehouseRepositoryTests: WarehouseTestsBase
 {
     private readonly WarehouseRepository _sut;
