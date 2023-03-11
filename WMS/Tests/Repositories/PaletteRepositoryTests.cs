@@ -9,13 +9,13 @@ using WMS.Tests.Infrastructure;
 
 namespace WMS.Tests.Repositories;
 
+[Collection(DbTestCollection.Name)]
 public class PaletteRepositoryTests : WarehouseTestsBase
 {
     private readonly PaletteRepository _sut;
     
     private string WarehouseName => "Warehouse_" + Guid.NewGuid();
-
-
+    
     public PaletteRepositoryTests(TestDatabaseFixture fixture)
         : base(fixture)
     {
@@ -93,6 +93,25 @@ public class PaletteRepositoryTests : WarehouseTestsBase
             .Result?.Palettes[4].Boxes.Count;
         
         result.Should().Be(4);
+    }
+    
+    [Fact(DisplayName = "Check if repository successfully removes box from the existing palette")]
+    public async Task RemoveBoxes_ShouldRemoveBoxesFromPalette()
+    {
+        // Arrange
+        var warehouse = await CreateWarehouseWithPalettesAndBoxes(WarehouseName, 1, 3);
+
+        // Act
+        await _sut.DeleteBox(warehouse.Palettes[0].Id,
+            warehouse.Palettes[0].Boxes[0],
+            default);
+
+        // Assert
+        var result = DbContext.Warehouses
+            .FirstOrDefaultAsync(x => x.Name == warehouse.Name)
+            .Result?.Palettes[0].Boxes.Count;
+        
+        result.Should().Be(2);
     }
 
     [Fact(DisplayName = "Check OversizeException")]
