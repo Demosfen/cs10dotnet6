@@ -20,6 +20,21 @@ public class BoxTests : WarehouseTestsBase
     {
     }
 
+    [Fact(DisplayName = "Box size cannot be negative")]
+    public async Task BoxSize_ShouldNotBe_Negative()
+    {
+        // Arrange
+        var warehouse = await CreateWarehouseWithPalettesAndBoxes(WarehouseName, 1, 0);
+
+        // Act
+        Action box = () => new Box(warehouse.Palettes[0].Id, 
+            -1, -1, -1, 10, 
+            new DateTime(2008, 1, 1));
+
+        // Assert
+        box.Should().Throw<ArgumentException>();
+    }
+    
     [Fact(DisplayName = "Box with negative weight should throw ArgumenException")]
     public async Task BoxWeight_ShouldNotBe_Negative()
     {
