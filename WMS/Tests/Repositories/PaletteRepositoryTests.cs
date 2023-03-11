@@ -1,7 +1,9 @@
 ﻿using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using WMS.Common.Exceptions;
 using WMS.Repositories.Concrete;
 using WMS.Store.Entities;
+using WMS.Store.Specifications;
 using WMS.Tests.Abstract;
 using WMS.Tests.Infrastructure;
 
@@ -53,23 +55,22 @@ public class PaletteRepositoryTests : WarehouseTestsBase
         result.Should().Be(true);
     }
     
-    [Fact(DisplayName = "Check if IsDeleted palettes is filtered")]
+    [Fact(DisplayName = "Check if IsDeleted palettes is filtered with NotDeleted filter")]
     public async Task SoftlyDeletedPalettes_ShouldNotBeInQueryResults()
     {
         // Arrange
-        var warehouse = await CreateWarehouseWithPalettesAndBoxes("Warehouse#2", 3, 1);
+        var warehouse = await CreateWarehouseWithPalettesAndBoxes("Warehouse#2", 10, 1);
         
         // Act
         await _sut.DeleteAsync(warehouse.Palettes[0].Id, default);
         await _sut.UnitOfWork.SaveChangesAsync();
         
         // Assert
-        var warehouseTest = await DbContext.Warehouses
-            .FirstOrDefaultAsync(x => x.Name == "Warehouse#2");
+        var result = await DbContext.Palettes
+            .Where(x => x.WarehouseId == warehouse.Id)
+            .NotDeleted().CountAsync();
 
-        var result = warehouseTest?.Palettes.Count; 
-        
-        result.Should().Be(2);
+            result.Should().Be(9);
     }
     
     [Fact(DisplayName = "Check if repository successfully adds box to the existing palette")]
@@ -96,7 +97,17 @@ public class PaletteRepositoryTests : WarehouseTestsBase
     {
         // Arrange
         var warehouse = await CreateWarehouseWithPalettesAndBoxes("Warehouse#5", 5, 5);
+        var oversizeBox = new Box(
+            warehouse.Palettes[0].Id, 50, 50, 50, 50, 
+            new DateTime(2008,1,1));
         
-        
+        // Act
+        Action putOversizeBoxAtThePalette = () => 
+            _sut.AddBox(warehouse.Palettes[0].Id, oversizeBox, default).Should();
+
+        // Assert
+        putOversizeBoxAtThePalette.Should()
+            .Throw<UnitOversizeException>()
+            .WithMessage($"The unit with id={oversizeBox.Id} does not match the dimensions of the pallet");
     }
 }
