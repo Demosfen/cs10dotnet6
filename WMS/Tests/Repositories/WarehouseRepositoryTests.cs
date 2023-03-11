@@ -11,6 +11,8 @@ public class WarehouseRepositoryTests: WarehouseTestsBase
 {
     private readonly WarehouseRepository _sut;
 
+    private string WarehouseName => "Warehouse_" + Guid.NewGuid();
+
     public WarehouseRepositoryTests(TestDatabaseFixture fixture) 
         : base(fixture)
     {
@@ -21,12 +23,13 @@ public class WarehouseRepositoryTests: WarehouseTestsBase
     public async Task RepositoryInsert_ShouldInsertWarehouse()
     {
         // Arrange, Act
-        await _sut.AddAsync(new Warehouse("Warehouse#1"), default);
+        var warehouse = new Warehouse(WarehouseName);
+        await _sut.AddAsync(warehouse, default);
         await _sut.UnitOfWork.SaveChangesAsync();
 
         // Assert
         var result = await DbContext.Warehouses
-            .FirstOrDefaultAsync(x => x.Name == "Warehouse#1");
+            .FirstOrDefaultAsync(x => x.Name == warehouse.Name);
         
         result.Should().NotBeNull();
     }
@@ -35,7 +38,7 @@ public class WarehouseRepositoryTests: WarehouseTestsBase
     public async Task RepositoryDelete_ShouldSoftDeleteWarehouse()
     {
         // Arrange
-        var warehouse = new Warehouse("Warehouse2");
+        var warehouse = new Warehouse(WarehouseName);
         
         // Act
         await DbContext.AddAsync(warehouse);
@@ -54,7 +57,7 @@ public class WarehouseRepositoryTests: WarehouseTestsBase
     public async Task AddPalettes_ShouldStorePalettesToWarehouse()
     {
         // Arrange
-        var warehouse = await CreateWarehouse("Warehouse#3");
+        var warehouse = await CreateWarehouse(WarehouseName);
         
         // Act
         await _sut.AddPalette(warehouse.Id, new Palette(warehouse.Id, 10, 10, 10), default);

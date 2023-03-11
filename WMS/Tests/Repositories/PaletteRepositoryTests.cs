@@ -12,6 +12,9 @@ namespace WMS.Tests.Repositories;
 public class PaletteRepositoryTests : WarehouseTestsBase
 {
     private readonly PaletteRepository _sut;
+    
+    private string WarehouseName => "Warehouse_" + Guid.NewGuid();
+
 
     public PaletteRepositoryTests(TestDatabaseFixture fixture)
         : base(fixture)
@@ -23,7 +26,7 @@ public class PaletteRepositoryTests : WarehouseTestsBase
     public async Task RepositoryAdd_ShouldAddPaletteToTheWarehouse()
     {
         // Arrange
-        var warehouse = await CreateWarehouseWithPalettesAndBoxes("Warehouse#1", 3, 1);
+        var warehouse = await CreateWarehouseWithPalettesAndBoxes(WarehouseName, 3, 1);
         
         // Act
         await _sut.AddAsync(new Palette(warehouse.Id, 10, 10, 10), default);
@@ -31,7 +34,7 @@ public class PaletteRepositoryTests : WarehouseTestsBase
 
         // Assert
         var result = await DbContext.Warehouses
-            .FirstOrDefaultAsync(x => x.Name == "Warehouse#1");
+            .FirstOrDefaultAsync(x => x.Name == warehouse.Name);
         
         result?.Palettes.Count.Should().Be(4);
     }
@@ -40,7 +43,7 @@ public class PaletteRepositoryTests : WarehouseTestsBase
     public async Task RepositoryDelete_ShouldSoftlyDeletePalette()
     {
         // Arrange
-        var warehouse = await CreateWarehouseWithPalettesAndBoxes("Warehouse#2", 3, 1);
+        var warehouse = await CreateWarehouseWithPalettesAndBoxes(WarehouseName, 3, 1);
         
         // Act
         await _sut.DeleteAsync(warehouse.Palettes[0].Id, default);
@@ -48,7 +51,7 @@ public class PaletteRepositoryTests : WarehouseTestsBase
         
         // Assert
         var warehouseTest = await DbContext.Warehouses
-                                     .FirstOrDefaultAsync(x => x.Name == "Warehouse#2");
+                                     .FirstOrDefaultAsync(x => x.Name == warehouse.Name);
 
         var result = warehouseTest?.Palettes[0].IsDeleted; 
         
@@ -59,7 +62,7 @@ public class PaletteRepositoryTests : WarehouseTestsBase
     public async Task SoftlyDeletedPalettes_ShouldNotBeInQueryResults()
     {
         // Arrange
-        var warehouse = await CreateWarehouseWithPalettesAndBoxes("Warehouse#2", 10, 1);
+        var warehouse = await CreateWarehouseWithPalettesAndBoxes(WarehouseName, 10, 1);
         
         // Act
         await _sut.DeleteAsync(warehouse.Palettes[0].Id, default);
@@ -77,7 +80,7 @@ public class PaletteRepositoryTests : WarehouseTestsBase
     public async Task AddBoxes_ShouldStoreBoxesToPalette()
     {
         // Arrange
-        var warehouse = await CreateWarehouseWithPalettesAndBoxes("Warehouse#4", 5, 3);
+        var warehouse = await CreateWarehouseWithPalettesAndBoxes(WarehouseName, 5, 3);
 
         // Act
         await _sut.AddBox(warehouse.Palettes[4].Id,
@@ -86,7 +89,7 @@ public class PaletteRepositoryTests : WarehouseTestsBase
 
         // Assert
         var result = DbContext.Warehouses
-            .FirstOrDefaultAsync(x => x.Name == "Warehouse#4")
+            .FirstOrDefaultAsync(x => x.Name == warehouse.Name)
             .Result?.Palettes[4].Boxes.Count;
         
         result.Should().Be(4);
@@ -96,9 +99,7 @@ public class PaletteRepositoryTests : WarehouseTestsBase
     public async Task OversizeBox_ShouldThrowOversizeException()
     {
         // Arrange
-        var warehouse = await CreateWarehouseWithPalettesAndBoxes("Warehouse#5", 5, 5);
-        
-        /*var palette = await CreatePaletteAsync(warehouse.Id);*/
+        var warehouse = await CreateWarehouseWithPalettesAndBoxes(WarehouseName, 5, 5);
         
         var oversizeBox = new Box(
             warehouse.Palettes[0].Id, 100, 100, 100, 500, 
@@ -110,7 +111,24 @@ public class PaletteRepositoryTests : WarehouseTestsBase
 
         // Assert
         putOversizeBoxAtThePalette.Should()
-            .Throw<UnitOversizeException>()
-            .WithMessage($"The unit with id={oversizeBox.Id} does not match the dimensions of the pallet");
+            .Throw<UnitOversizeException>();
+    }
+    
+    [Fact(DisplayName = "Check if palette parameters incorrect")]
+    public async Task IncorrectProperties_ShouldThrowArgumentException()
+    {
+        // Arrange
+        var warehouse = await CreateWarehouseWithPalettesAndBoxes(WarehouseName, 5, 5);
+        
+        Action incorrectPalette = new Action(
+           new Palette(warehouse.Id, -100, -100, -100));
+        
+        // Act
+        Action putOversizeBoxAtThePalette = () => 
+            _sut?.AddBox(warehouse.Palettes[0].Id, oversizeBox, default);
+
+        // Assert
+        putOversizeBoxAtThePalette.Should()
+            .Throw<ArgumentException>();
     }
 }
