@@ -2,6 +2,7 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using WMS.Common.Exceptions;
 using WMS.Repositories.Abstract;
+using WMS.Store.Entities;
 using WMS.Store.Interfaces;
 using WMS.Store.Specifications;
 
