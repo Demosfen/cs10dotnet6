@@ -114,21 +114,34 @@ public class PaletteRepositoryTests : WarehouseTestsBase
             .Throw<UnitOversizeException>();
     }
     
-    [Fact(DisplayName = "Check if palette parameters incorrect")]
+    [Fact(DisplayName = "Check if palette parameters incorrect (e.g. negative size WxHxD)")]
     public async Task IncorrectProperties_ShouldThrowArgumentException()
     {
         // Arrange
-        var warehouse = await CreateWarehouseWithPalettesAndBoxes(WarehouseName, 5, 5);
-        
-        Action incorrectPalette = new Action(
-           new Palette(warehouse.Id, -100, -100, -100));
+        var warehouse = await CreateWarehouse(WarehouseName);
         
         // Act
-        Action putOversizeBoxAtThePalette = () => 
-            _sut?.AddBox(warehouse.Palettes[0].Id, oversizeBox, default);
-
+        Action incorrectPalette = () => new Palette(warehouse.Id, -100, -100, -100);
+        
         // Assert
-        putOversizeBoxAtThePalette.Should()
+        incorrectPalette.Should()
+            .Throw<ArgumentException>();
+    }
+    
+    [Fact(DisplayName = "Check if repository throws exception when ExpiryData lower than Production date")]
+    public async Task IncorrectExpiryAndProduction_ShouldThrowInvalidOperationException()
+    {
+        // Arrange
+        var warehouse = await CreateWarehouseWithPalettesAndBoxes(WarehouseName, 1, 0);
+        
+        // Act
+        Action incorrectPalette = () => new Box(warehouse.Palettes[0].Id, 
+            10, 10, 10, 10,
+            new DateTime(2008,1,1),
+            new DateTime(2007,1,1));
+        
+        // Assert
+        incorrectPalette.Should()
             .Throw<ArgumentException>();
     }
 }
