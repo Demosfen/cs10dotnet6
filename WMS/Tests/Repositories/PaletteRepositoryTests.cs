@@ -110,7 +110,7 @@ public class PaletteRepositoryTests : WarehouseTestsBase
 
         // Assert
         putOversizeBoxAtThePalette.Should()
-            .Throw<UnitOversizeException>();
-            /*.WithMessage($"The unit with id={oversizeBox.Id} does not match the dimensions of the pallet");*/
+            .Throw<UnitOversizeException>()
+            .WithMessage($"The unit with id={oversizeBox.Id} does not match the dimensions of the pallet");
     }
 }
