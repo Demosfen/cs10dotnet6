@@ -106,12 +106,12 @@ public class PaletteRepositoryTests : WarehouseTestsBase
             new DateTime(2008,1,1));
         
         // Act
-        Action putOversizeBoxAtThePalette = () => 
-           _sut?.AddBox(warehouse.Palettes[0].Id, oversizeBox, default);
+        Func<Task> act = async () => 
+           await _sut.AddBox(warehouse.Palettes[0].Id, oversizeBox, default);
 
         // Assert
-        putOversizeBoxAtThePalette.Should()
-            .Throw<UnitOversizeException>();
+        await act.Should()
+            .ThrowAsync<UnitOversizeException>();
     }
     
     [Fact(DisplayName = "Check if palette parameters incorrect (e.g. negative size WxHxD)")]
