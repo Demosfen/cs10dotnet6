@@ -13,7 +13,7 @@ public sealed class WarehouseRepository : GenericRepository<Warehouse>, IWarehou
     }
 
     /// <inheritdoc cref="IWarehouseRepository"/>
-    public async Task AddPalette(
+    public async Task AddPaletteAsync(
         Guid warehouseId, 
         Palette palette, 
         CancellationToken cancellationToken)
@@ -36,19 +36,19 @@ public sealed class WarehouseRepository : GenericRepository<Warehouse>, IWarehou
     }
     
     /// <inheritdoc cref="IWarehouseRepository"/>
-    public async  Task AddPalettes(
+    public async  Task AddPalettesAsync(
         Guid warehouseId, 
         IEnumerable<Palette> palettes, 
         CancellationToken cancellationToken)
     {
         foreach (var palette in palettes)
         {
-            await AddPalette(warehouseId, palette, cancellationToken);
+            await AddPaletteAsync(warehouseId, palette, cancellationToken);
         }
     }
 
     /// <inheritdoc cref="IWarehouseRepository"/>
-    public async Task DeletePalette(
+    public async Task DeletePaletteAsync(
         Guid warehouseId,
         Palette palette,
         CancellationToken cancellationToken)

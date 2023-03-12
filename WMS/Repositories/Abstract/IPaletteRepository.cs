@@ -12,7 +12,7 @@ public interface IPaletteRepository :  IGenericRepository<Palette>
     /// <param name="box">What box to put</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <exception cref="UnitOversizeException">Box oversize</exception>
-    Task AddBox(
+    Task AddBoxAsync(
         Guid paletteId, 
         Box box, 
         CancellationToken cancellationToken);
@@ -24,7 +24,7 @@ public interface IPaletteRepository :  IGenericRepository<Palette>
     /// <param name="boxes">List boxes</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <exception cref="UnitOversizeException">Box oversize</exception>
-    Task AddBoxes(
+    Task AddBoxesAsync(
         Guid paletteId, 
         IEnumerable<Box> boxes, 
         CancellationToken cancellationToken);
@@ -36,7 +36,7 @@ public interface IPaletteRepository :  IGenericRepository<Palette>
     /// <param name="box">Box</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <exception cref="EntityNotFoundException">Nothing to remove</exception>
-    Task DeleteBox(
+    Task DeleteBoxAsync(
         Guid paletteId, 
         Box box, 
         CancellationToken cancellationToken);

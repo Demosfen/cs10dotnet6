@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging;
 using WMS.Store.Entities;
 using WMS.Store.Interfaces;
-using WMS.WarehouseDbContext.EntityConfigurations;
 
 namespace WMS.Store;
 

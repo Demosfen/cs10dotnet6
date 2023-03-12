@@ -83,7 +83,7 @@ public class PaletteRepositoryTests : WarehouseTestsBase
         var warehouse = await CreateWarehouseWithPalettesAndBoxes(WarehouseName, 5, 3);
 
         // Act
-        await _sut.AddBox(warehouse.Palettes[4].Id,
+        await _sut.AddBoxAsync(warehouse.Palettes[4].Id,
             await CreateBoxAsync(warehouse.Palettes[4].Id),
             default);
 
@@ -102,7 +102,7 @@ public class PaletteRepositoryTests : WarehouseTestsBase
         var warehouse = await CreateWarehouseWithPalettesAndBoxes(WarehouseName, 1, 3);
 
         // Act
-        await _sut.DeleteBox(warehouse.Palettes[0].Id,
+        await _sut.DeleteBoxAsync(warehouse.Palettes[0].Id,
             warehouse.Palettes[0].Boxes[0],
             default);
 
@@ -126,7 +126,7 @@ public class PaletteRepositoryTests : WarehouseTestsBase
         
         // Act
         Func<Task> act = async () => 
-           await _sut.AddBox(warehouse.Palettes[0].Id, oversizeBox, default);
+           await _sut.AddBoxAsync(warehouse.Palettes[0].Id, oversizeBox, default);
 
         // Assert
         await act.Should()

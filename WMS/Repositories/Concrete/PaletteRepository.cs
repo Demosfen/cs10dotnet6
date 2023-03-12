@@ -12,7 +12,7 @@ public sealed class PaletteRepository : GenericRepository<Palette>, IPaletteRepo
     }
 
     /// <inheritdoc cref="IPaletteRepository"/>
-    public async Task AddBox(
+    public async Task AddBoxAsync(
         Guid paletteId, 
         Box box, 
         CancellationToken cancellationToken)
@@ -44,16 +44,16 @@ public sealed class PaletteRepository : GenericRepository<Palette>, IPaletteRepo
     }
 
     /// <inheritdoc cref="IPaletteRepository"/>
-    public async Task AddBoxes(Guid paletteId, IEnumerable<Box> boxes, CancellationToken cancellationToken)
+    public async Task AddBoxesAsync(Guid paletteId, IEnumerable<Box> boxes, CancellationToken cancellationToken)
     {
         foreach (var box in boxes)
         {
-            await AddBox(paletteId, box, cancellationToken);
+            await AddBoxAsync(paletteId, box, cancellationToken);
         }
     }
 
     /// <inheritdoc cref="IPaletteRepository"/>
-    public async Task DeleteBox(Guid paletteId,
+    public async Task DeleteBoxAsync(Guid paletteId,
         Box box,
         CancellationToken cancellationToken)
     {

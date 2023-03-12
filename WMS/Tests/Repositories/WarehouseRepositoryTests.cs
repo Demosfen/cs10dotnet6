@@ -61,7 +61,7 @@ public class WarehouseRepositoryTests: WarehouseTestsBase
         var warehouse = await CreateWarehouse(WarehouseName);
         
         // Act
-        await _sut.AddPalette(warehouse.Id, new Palette(warehouse.Id, 10, 10, 10), default);
+        await _sut.AddPaletteAsync(warehouse.Id, new Palette(warehouse.Id, 10, 10, 10), default);
 
         // Assert
         var result = warehouse.Palettes.Count;

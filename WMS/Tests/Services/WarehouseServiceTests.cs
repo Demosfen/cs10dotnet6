@@ -30,7 +30,7 @@ public class WarehouseServiceTests: WarehouseTestsBase
             .GroupBy(g => g.ExpiryDate).ToList();
 
         // Act
-        var result = await _sut.SortByExpiryAndWeight(warehouse.Id);
+        var result = await _sut.SortByExpiryAndWeightAsync(warehouse.Id, default);
 
         // // Assert
         result.Should().NotBeNull().And
@@ -52,7 +52,7 @@ public class WarehouseServiceTests: WarehouseTestsBase
             .ToList();
 
         // Act
-        var result = await _sut.ChooseThreePalettesByExpiryAndVolume(warehouse.Id);
+        var result = await _sut.ChooseThreePalettesByExpiryAndVolumeAsync(warehouse.Id, default);
 
         // // Assert
         result.Should().NotBeNull().And

@@ -16,9 +16,10 @@ public sealed class WarehouseQueryService : IWarehouseQueryService
     /// Group palettes by Expiry and then by Weight
     /// </summary>
     /// <param name="id">Warehouse ID</param>
+    /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>Group of palettes for chosen by ID warehouse</returns>
     /// <exception cref="EntityNotFoundException">No warehouse exist</exception>
-    public Task<List<IGrouping<DateTime?, Palette>>> SortByExpiryAndWeight(Guid id)
+    public Task<List<IGrouping<DateTime?, Palette>>> SortByExpiryAndWeightAsync(Guid id, CancellationToken cancellationToken)
     {
         return _dbContext.Palettes
                    .Where(w => w.WarehouseId == id)
@@ -27,7 +28,7 @@ public sealed class WarehouseQueryService : IWarehouseQueryService
                    .ThenBy(p => p.Weight)
                    .Include(x => x.Boxes)
                    .GroupBy(g => g.ExpiryDate)
-                   .ToListAsync()
+                   .ToListAsync(cancellationToken: cancellationToken)
                ?? throw new EntityNotFoundException(id);
     }
 
@@ -36,16 +37,17 @@ public sealed class WarehouseQueryService : IWarehouseQueryService
     /// Expiry and then by Volume
     /// </summary>
     /// <param name="id">Warehouse id</param>
+    /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>Three palettes sorted by Expiry and Volume</returns>
     /// <exception cref="EntityNotFoundException">No palettes exist</exception>
-    public Task<List<Palette>> ChooseThreePalettesByExpiryAndVolume(Guid id)
+    public Task<List<Palette>> ChooseThreePalettesByExpiryAndVolumeAsync(Guid id, CancellationToken cancellationToken)
     {
         return _dbContext.Palettes
                    .Where(w => w.WarehouseId == id)
                    .OrderByDescending(p => p.ExpiryDate)
                    .Take(3)
                    .OrderByDescending(p => p.Volume)
-                   .ToListAsync()
+                   .ToListAsync(cancellationToken: cancellationToken)
                ?? throw new EntityNotFoundException(id);
     }
 }

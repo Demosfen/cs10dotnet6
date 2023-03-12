@@ -12,7 +12,7 @@ public interface IWarehouseRepository : IGenericRepository<Warehouse>
     /// <param name="palette">What palette to put</param>
     /// <param name="cancellationToken"></param>
     /// <exception cref="EntityNotFoundException">Nothing to remove</exception>
-    Task AddPalette(
+    Task AddPaletteAsync(
         Guid warehouseId,
         Palette palette,
         CancellationToken cancellationToken);
@@ -24,7 +24,7 @@ public interface IWarehouseRepository : IGenericRepository<Warehouse>
     /// <param name="palettes"></param>
     /// <param name="cancellationToken"></param>
     /// <exception cref="EntityNotFoundException">Nothing to remove</exception>
-    Task AddPalettes(
+    Task AddPalettesAsync(
         Guid warehouseId,
         IEnumerable<Palette> palettes,
         CancellationToken cancellationToken);
@@ -36,7 +36,7 @@ public interface IWarehouseRepository : IGenericRepository<Warehouse>
     /// <param name="palette">Palette</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <exception cref="EntityNotFoundException">Nothing to remove</exception>
-    Task DeletePalette(
+    Task DeletePaletteAsync(
         Guid warehouseId,
         Palette palette,
         CancellationToken cancellationToken);

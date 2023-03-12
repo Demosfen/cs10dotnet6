@@ -1,11 +1,11 @@
 using WMS.Store.Entities;
-using WMS.WarehouseDbContext;
+using WMS.Store;
 
 namespace WMS.Services.Abstract;
 
 public interface IWarehouseQueryService
 {
-    Task<List<IGrouping<DateTime?, Palette>>> SortByExpiryAndWeight(Guid id);
+    Task<List<IGrouping<DateTime?, Palette>>> SortByExpiryAndWeightAsync(Guid id, CancellationToken cancellationToken = default);
 
-    Task<List<Palette>> ChooseThreePalettesByExpiryAndVolume(Guid id);
+    Task<List<Palette>> ChooseThreePalettesByExpiryAndVolumeAsync(Guid id, CancellationToken cancellationToken = default);
 }

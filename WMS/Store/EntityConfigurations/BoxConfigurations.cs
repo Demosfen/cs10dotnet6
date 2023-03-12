@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using WMS.Store.Entities;
 
-namespace WMS.WarehouseDbContext.EntityConfigurations;
+namespace WMS.Store.EntityConfigurations;
 
 public sealed class BoxConfigurations : IEntityTypeConfiguration<Box>
 {
