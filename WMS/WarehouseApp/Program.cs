@@ -22,6 +22,7 @@ internal static class Program
         var palette2 = new Palette(warehouse.Id,3, 3, 3);
         var palette3 = new Palette(warehouse.Id,10, 10, 10);
         var box1 = new Box(palette1.Id, 1, 1, 1, 6, new DateTime(2007, 1, 1));
+        
 
         /*// Grouped by Expiry date and ordered by Weight
         var groupedPalettes = queryService.SortByExpiryAndWeight(warehouse.Id);
