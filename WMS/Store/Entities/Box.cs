@@ -5,7 +5,7 @@ namespace WMS.Store.Entities;
 public sealed class Box : StorageUnit
 {
     private Palette? _palette;
-    
+   
     /// <summary>
     /// Navigation property
     /// ID of the palette where box is stored

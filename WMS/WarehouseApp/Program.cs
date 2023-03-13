@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WMS.Repositories.Concrete;
 using WMS.Services.Concrete;
+using WMS.Services.Helpers;
 using WMS.Store.Entities;
 using static System.Console;
 
 namespace WMS.WarehouseApp;
 
-internal static class Program
+public static class Program
 {
     public static async Task Main()
     {
@@ -15,17 +16,13 @@ internal static class Program
         await context.Database.MigrateAsync();
 
         var queryService = new WarehouseQueryService(context);
-        
-        var warehouse = new Warehouse("Warehouse #2");
-        
-        var palette1 = new Palette(warehouse.Id, 1, 1, 1);
-        var palette2 = new Palette(warehouse.Id,3, 3, 3);
-        var palette3 = new Palette(warehouse.Id,10, 10, 10);
-        var box1 = new Box(palette1.Id, 1, 1, 1, 6, new DateTime(2007, 1, 1));
-        
 
-        /*// Grouped by Expiry date and ordered by Weight
-        var groupedPalettes = queryService.SortByExpiryAndWeight(warehouse.Id);
+        var dataGenerator = new WarehouseDataGenerator(context); //TODO: Почему я не могу сделать WarehouseDataGeтerator internal и он не виден здесь?
+
+        var warehouse = await dataGenerator.CreateWarehouseWithPalettesAndBoxes("Production warehouse", 5, 7);
+
+        // Grouped by Expiry date and ordered by Weight
+        var groupedPalettes = await queryService.SortByExpiryAndWeightAsync(warehouse.Id, default);
 
             foreach (var paletteGroup in groupedPalettes)
             {
@@ -43,18 +40,11 @@ internal static class Program
             }
 
         // Select three palettes with Expiry and ordered by Volume
-        var threePalettes = queryService.ChooseThreePalettesByExpiryAndVolume(warehouse.Id);
+        var threePalettes = await queryService.ChooseThreePalettesByExpiryAndVolumeAsync(warehouse.Id, default);
 
         foreach (var palette in threePalettes)
         {
             WriteLine(palette);
-        }*/
-        
-        // unitOfWork.WarehouseRepository?.DeleteAsync(new Guid("2B3E0CD8-9474-447D-B589-59467727F111"));
-        // await unitOfWork.Save();
-
-        // var warehouses = unitOfWork.WarehouseRepository?.GetAllAsync(includeProperties: "Palettes");
-        //
-        // Console.WriteLine(warehouse);
+        }
     }
 }
