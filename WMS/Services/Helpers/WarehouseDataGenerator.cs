@@ -40,6 +40,8 @@ public sealed class WarehouseDataGenerator : IWarehouseDataGenerator
 
         await _boxRepository.AddAsync(box, default);
 
+        var palette = await _paletteRepository.GetByIdAsync(paletteId, default);
+
         await DbContext.SaveChangesAsync();
 
         return box;

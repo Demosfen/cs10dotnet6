@@ -2,7 +2,6 @@
 using WMS.Repositories.Concrete;
 using WMS.Services.Concrete;
 using WMS.Services.Helpers;
-using WMS.Store.Entities;
 using static System.Console;
 
 namespace WMS.WarehouseApp;
@@ -11,13 +10,13 @@ public static class Program
 {
     public static async Task Main()
     {
-        await using var context = new Store.WarehouseDbContext();
+        await using var dbContext = new Store.WarehouseDbContext();
 
-        await context.Database.MigrateAsync();
+        await dbContext.Database.MigrateAsync();
 
-        var queryService = new WarehouseQueryService(context);
+        var queryService = new WarehouseQueryService(dbContext);
 
-        var dataGenerator = new WarehouseDataGenerator(context); //TODO: Почему я не могу сделать WarehouseDataGeтerator internal и он не виден здесь?
+        var dataGenerator = new WarehouseDataGenerator(dbContext); //TODO: Почему я не могу сделать WarehouseDataGeтerator internal и он не виден здесь?
 
         var warehouse = await dataGenerator.CreateWarehouseWithPalettesAndBoxes("Production warehouse", 5, 7);
 
