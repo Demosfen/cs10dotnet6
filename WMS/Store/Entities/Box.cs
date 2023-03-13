@@ -1,4 +1,5 @@
 using WMS.Common.Exceptions;
+using WMS.Store.Abstract;
 
 namespace WMS.Store.Entities;
 
