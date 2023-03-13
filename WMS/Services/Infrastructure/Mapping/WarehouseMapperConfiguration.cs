@@ -1,20 +1,17 @@
 ﻿using AutoMapper;
-using WMS.Data;
 using WMS.Services.Models.Serialization;
+using WMS.Store.Entities;
 
-namespace WMS.Services.Infrastructure.Mapping.Profiles;
+namespace WMS.Services.Infrastructure.Mapping;
 
-public class WarehouseMapperConfiguration : Profile
+public sealed class WarehouseMapperConfiguration : Profile
 {
     public WarehouseMapperConfiguration()
     {
-        CreateMap<WarehouseModel, Warehouse>();
-        CreateMap<Warehouse, WarehouseModel>();
+        CreateMap<WarehouseModel, Warehouse>().ReverseMap();
         
-        CreateMap<PaletteModel, Palette>();
-        CreateMap<Palette, PaletteModel>();
+        CreateMap<PaletteModel, Palette>().ReverseMap();
         
-        CreateMap<BoxModel, Box>();
-        CreateMap<Box, BoxModel>();
+        CreateMap<BoxModel, Box>().ReverseMap();
     }
 }
