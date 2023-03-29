@@ -1,0 +1,38 @@
+﻿<Project>
+
+    <PropertyGroup>
+        <CommonPrefix>Wms.Web</CommonPrefix>
+        <Authors>Alexander Nikolaev</Authors>
+        <AssemblyName>$(CommonPrefix).$(MSBuildProjectName)</AssemblyName>
+        <RootNamespace>$(CommonPrefix).$(MSBuildProjectName)</RootNamespace>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <LangVersion>default</LangVersion>
+        <EmbedAllSources>true</EmbedAllSources>
+        <DebugType>embedded</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    </PropertyGroup>
+
+    <!--Add analyzers-->
+    <ItemGroup>
+        <PackageReference Include="JetBrains.Annotations" Version="2022.3.1">
+            <PrivateAssets>All</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.CodeAnalysis" Version="4.4.0-4.final">
+            <PrivateAssets>All</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3">
+            <PrivateAssets>All</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
+    
+</Project>
