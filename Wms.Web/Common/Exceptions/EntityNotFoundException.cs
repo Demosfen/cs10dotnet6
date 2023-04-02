@@ -1,8 +1,15 @@
-namespace WMS.ASP.Common.Exceptions;
+using System;
+
+namespace Wms.Web.Common.Exceptions;
 
 public class EntityNotFoundException : DomainException
 {
     public Guid Id { get; }
+
+    public EntityNotFoundException() : base("Entities were not found!")
+    {
+        
+    }
 
     public EntityNotFoundException(Guid id)
         : base($"The entity with id={id} was not found")

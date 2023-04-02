@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using WMS.ASP.Store.Entities;
+using Wms.Web.Store.Entities;
 
-namespace WMS.ASP.Store.EntityConfigurations;
+namespace Wms.Web.Store.EntityConfigurations;
 
 public sealed class WarehouseConfigurations : IEntityTypeConfiguration<Warehouse>
 {

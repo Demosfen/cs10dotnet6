@@ -1,4 +1,4 @@
-﻿namespace WMS.ASP.Store.Interfaces;
+﻿namespace Wms.Web.Store.Interfaces;
 
 public interface ISoftDeletable
 {

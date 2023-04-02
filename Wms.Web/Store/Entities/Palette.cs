@@ -1,6 +1,6 @@
-using WMS.ASP.Common.Exceptions;
+using Wms.Web.Common.Exceptions;
 
-namespace WMS.ASP.Store.Entities;
+namespace Wms.Web.Store.Entities;
 
 public sealed class Palette : StorageUnit
 {

@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using WMS.ASP.Common.Exceptions;
-using WMS.ASP.Services.Abstract;
-using WMS.ASP.Store.Entities;
-using WMS.ASP.Store.Interfaces;
+using Wms.Web.Common.Exceptions;
+using Wms.Web.Services.Abstract;
+using Wms.Web.Store.Entities;
+using Wms.Web.Store.Interfaces;
 
-namespace WMS.ASP.Services.Concrete;
+namespace Wms.Web.Services.Concrete;
 
 public sealed class WarehouseQueryService : IWarehouseQueryService
 {

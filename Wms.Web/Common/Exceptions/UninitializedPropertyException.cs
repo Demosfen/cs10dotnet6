@@ -1,13 +1,13 @@
-﻿namespace WMS.ASP.Common.Exceptions;
+﻿namespace Wms.Web.Common.Exceptions;
 
 public class UninitializedPropertyException : DomainException
 {
-    public string typeName { get; }
+    public string TypeName { get; }
 
-    public UninitializedPropertyException(string TypeName)
-        : base($"The "+TypeName+" was not initialized")
+    public UninitializedPropertyException(string typeName)
+        : base($"The "+typeName+" was not initialized")
     {
-        typeName = TypeName;
+        TypeName = typeName;
     }
     
     /// <inheritdoc />

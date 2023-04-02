@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
-using WMS.ASP.Store.Interfaces;
+using Wms.Web.Store.Interfaces;
 
-namespace WMS.ASP.Repositories.Abstract;
+namespace Wms.Web.Repositories.Abstract;
 
 public interface IGenericRepository<TEntity> 
     where TEntity : class

@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using WMS.ASP.Store.Entities;
+using Wms.Web.Store.Entities;
 
-namespace WMS.ASP.Store.Interfaces;
+namespace Wms.Web.Store.Interfaces;
 
 public interface IWarehouseDbContext
 {

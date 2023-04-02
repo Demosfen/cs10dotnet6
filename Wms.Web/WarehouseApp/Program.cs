@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WMS.ASP.Services.Concrete;
-using WMS.ASP.Services.Helpers;
+using Wms.Web.Services.Concrete;
+using Wms.Web.Services.Helpers;
 using static System.Console;
 
-namespace WMS.ASP.WarehouseApp;
+namespace Wms.Web.WarehouseApp;
 
 public static class Program
 {

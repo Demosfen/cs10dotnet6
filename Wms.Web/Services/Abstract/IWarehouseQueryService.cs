@@ -1,6 +1,6 @@
-using WMS.ASP.Store.Entities;
+using Wms.Web.Store.Entities;
 
-namespace WMS.ASP.Services.Abstract;
+namespace Wms.Web.Services.Abstract;
 
 public interface IWarehouseQueryService
 {

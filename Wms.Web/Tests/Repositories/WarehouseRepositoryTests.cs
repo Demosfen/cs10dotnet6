@@ -1,11 +1,11 @@
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using WMS.ASP.Repositories.Concrete;
-using WMS.ASP.Store.Entities;
-using WMS.ASP.Tests.Abstract;
-using WMS.ASP.Tests.Infrastructure;
+using Wms.Web.Repositories.Concrete;
+using Wms.Web.Store.Entities;
+using Wms.Web.Tests.Abstract;
+using Wms.Web.Tests.Infrastructure;
 
-namespace WMS.ASP.Tests.Repositories;
+namespace Wms.Web.Tests.Repositories;
 
 [Collection(DbTestCollection.Name)]
 public class WarehouseRepositoryTests: WarehouseTestsBase

@@ -1,13 +1,13 @@
 ﻿using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using WMS.ASP.Common.Exceptions;
-using WMS.ASP.Repositories.Concrete;
-using WMS.ASP.Store.Entities;
-using WMS.ASP.Store.Specifications;
-using WMS.ASP.Tests.Abstract;
-using WMS.ASP.Tests.Infrastructure;
+using Wms.Web.Store.Specifications;
+using Wms.Web.Common.Exceptions;
+using Wms.Web.Repositories.Concrete;
+using Wms.Web.Store.Entities;
+using Wms.Web.Tests.Abstract;
+using Wms.Web.Tests.Infrastructure;
 
-namespace WMS.ASP.Tests.Repositories;
+namespace Wms.Web.Tests.Repositories;
 
 [Collection(DbTestCollection.Name)]
 public class PaletteRepositoryTests : WarehouseTestsBase

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using WMS.ASP.Services.Models.Serialization;
-using WMS.ASP.Store.Entities;
+using Wms.Web.Services.Models.Serialization;
+using Wms.Web.Store.Entities;
 
-namespace WMS.ASP.Services.Infrastructure.Mapping;
+namespace Wms.Web.Services.Infrastructure.Mapping;
 
 public sealed class WarehouseMapperConfiguration : Profile
 {

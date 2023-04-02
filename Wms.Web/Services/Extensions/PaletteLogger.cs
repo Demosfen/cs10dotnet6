@@ -1,6 +1,6 @@
-using WMS.ASP.Store.Entities;
+using Wms.Web.Store.Entities;
 
-namespace WMS.ASP.Services.Extensions;
+namespace Wms.Web.Services.Extensions;
 
 public static class PaletteExtensions
 {

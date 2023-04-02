@@ -1,8 +1,8 @@
-﻿using WMS.ASP.Store;
-using WMS.ASP.Store.Entities;
-using WMS.ASP.Tests.Infrastructure;
+﻿using Wms.Web.Store;
+using Wms.Web.Store.Entities;
+using Wms.Web.Tests.Infrastructure;
 
-namespace WMS.ASP.Tests.Abstract;
+namespace Wms.Web.Tests.Abstract;
 
 [Collection(DbTestCollection.Name)]
 public abstract class WarehouseTestsBase 

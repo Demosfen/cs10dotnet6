@@ -1,6 +1,6 @@
-﻿using WMS.ASP.Store;
+﻿using Wms.Web.Store;
 
-namespace WMS.ASP.Tests.Infrastructure;
+namespace Wms.Web.Tests.Infrastructure;
 
 public class TestDatabaseFixture : IDisposable
 {

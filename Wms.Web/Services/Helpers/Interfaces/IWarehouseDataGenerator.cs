@@ -1,6 +1,6 @@
-﻿using WMS.ASP.Store.Entities;
+﻿using Wms.Web.Store.Entities;
 
-namespace WMS.ASP.Services.Helpers.Interfaces;
+namespace Wms.Web.Services.Helpers.Interfaces;
 
 public interface IWarehouseDataGenerator
 {

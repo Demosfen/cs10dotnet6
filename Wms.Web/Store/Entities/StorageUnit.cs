@@ -1,6 +1,6 @@
-using WMS.ASP.Store.Interfaces;
+using Wms.Web.Store.Interfaces;
 
-namespace WMS.ASP.Store.Entities;
+namespace Wms.Web.Store.Entities;
 
 /// <summary>
 /// This is an abstract class, which contains common properties

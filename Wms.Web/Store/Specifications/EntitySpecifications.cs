@@ -1,6 +1,6 @@
-using WMS.ASP.Store.Interfaces;
+using Wms.Web.Store.Interfaces;
 
-namespace WMS.ASP.Store.Specifications;
+namespace Wms.Web.Store.Specifications;
 
 public static class EntitySpecifications
 {

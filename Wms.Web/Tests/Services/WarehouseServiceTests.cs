@@ -1,9 +1,9 @@
 using FluentAssertions;
-using WMS.ASP.Services.Concrete;
-using WMS.ASP.Tests.Abstract;
-using WMS.ASP.Tests.Infrastructure;
+using Wms.Web.Services.Concrete;
+using Wms.Web.Tests.Abstract;
+using Wms.Web.Tests.Infrastructure;
 
-namespace WMS.ASP.Tests.Services;
+namespace Wms.Web.Tests.Services;
 
 [Collection(DbTestCollection.Name)]
 public class WarehouseServiceTests: WarehouseTestsBase

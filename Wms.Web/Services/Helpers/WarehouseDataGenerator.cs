@@ -1,9 +1,9 @@
-﻿using WMS.ASP.Repositories.Concrete;
-using WMS.ASP.Services.Helpers.Interfaces;
-using WMS.ASP.Store;
-using WMS.ASP.Store.Entities;
+﻿using Wms.Web.Repositories.Concrete;
+using Wms.Web.Services.Helpers.Interfaces;
+using Wms.Web.Store;
+using Wms.Web.Store.Entities;
 
-namespace WMS.ASP.Services.Helpers;
+namespace Wms.Web.Services.Helpers;
 
 public sealed class WarehouseDataGenerator : IWarehouseDataGenerator
 {

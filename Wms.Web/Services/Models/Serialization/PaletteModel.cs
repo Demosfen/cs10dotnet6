@@ -1,4 +1,4 @@
-namespace WMS.ASP.Services.Models.Serialization;
+namespace Wms.Web.Services.Models.Serialization;
 
 public class PaletteModel
 {

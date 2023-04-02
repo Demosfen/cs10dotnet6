@@ -1,8 +1,21 @@
-var builder = WebApplication.CreateBuilder(args);
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using AutoMapper;
 
-// Add services to the container.
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+{
+    Args = args,
+    ContentRootPath = Directory.GetCurrentDirectory()
+});
+
+builder.Configuration.AddEnvironmentVariables();
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+
+var config = builder.Configuration;
+config.AddEnvironmentVariables("WarehouseApi_");
 
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

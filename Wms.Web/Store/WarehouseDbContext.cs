@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using WMS.ASP.Store.Entities;
-using WMS.ASP.Store.Interfaces;
+using Wms.Web.Store.Entities;
+using Wms.Web.Store.Interfaces;
 
-namespace WMS.ASP.Store;
+namespace Wms.Web.Store;
 
 public sealed class WarehouseDbContext : DbContext, IWarehouseDbContext, IDbUnitOfWork
 {

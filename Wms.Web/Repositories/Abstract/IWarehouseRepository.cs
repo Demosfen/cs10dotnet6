@@ -1,7 +1,7 @@
-﻿using WMS.ASP.Common.Exceptions;
-using WMS.ASP.Store.Entities;
+﻿using Wms.Web.Common.Exceptions;
+using Wms.Web.Store.Entities;
 
-namespace WMS.ASP.Repositories.Abstract;
+namespace Wms.Web.Repositories.Abstract;
 
 public interface IWarehouseRepository : IGenericRepository<Warehouse>
 {

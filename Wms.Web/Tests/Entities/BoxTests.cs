@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
-using WMS.ASP.Store.Entities;
-using WMS.ASP.Tests.Abstract;
-using WMS.ASP.Tests.Infrastructure;
+using Wms.Web.Store.Entities;
+using Wms.Web.Tests.Abstract;
+using Wms.Web.Tests.Infrastructure;
 
-namespace WMS.ASP.Tests.Entities;
+namespace Wms.Web.Tests.Entities;
 
 [Collection(DbTestCollection.Name)]
 public class BoxTests : WarehouseTestsBase

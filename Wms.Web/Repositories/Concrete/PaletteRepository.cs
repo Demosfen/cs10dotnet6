@@ -1,9 +1,9 @@
-using WMS.ASP.Common.Exceptions;
-using WMS.ASP.Repositories.Abstract;
-using WMS.ASP.Store;
-using WMS.ASP.Store.Entities;
+using Wms.Web.Common.Exceptions;
+using Wms.Web.Repositories.Abstract;
+using Wms.Web.Store;
+using Wms.Web.Store.Entities;
 
-namespace WMS.ASP.Repositories.Concrete;
+namespace Wms.Web.Repositories.Concrete;
 
 public sealed class PaletteRepository : GenericRepository<Palette>, IPaletteRepository
 {

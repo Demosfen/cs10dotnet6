@@ -1,6 +1,6 @@
-﻿using WMS.ASP.Store.Entities;
+﻿using Wms.Web.Store.Entities;
 
-namespace WMS.ASP.Repositories.Abstract;
+namespace Wms.Web.Repositories.Abstract;
 
 public interface IBoxRepository : IGenericRepository<Box>
 {
