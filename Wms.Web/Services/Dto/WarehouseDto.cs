@@ -4,16 +4,15 @@ namespace Wms.Web.Services.Dto;
 
 public sealed class WarehouseDto
 {
-    public Guid Id { get; set; }
-    
+    public Guid Id { get; init; }
+
     public string Name { get; set; }
 
-    public List<PaletteDto> Palettes { get; set; } = new();
-  
-    public WarehouseDto(Guid id, string name, List<PaletteDto> palettes)
+    public List<PaletteDto>? Palettes { set; get; } = new();
+
+    public WarehouseDto(Guid id, string name)
     {
         Id = id;
         Name = name;
-        Palettes = palettes;
     }
 }

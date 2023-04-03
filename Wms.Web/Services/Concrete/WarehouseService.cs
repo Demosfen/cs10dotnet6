@@ -20,6 +20,11 @@ internal sealed class WarehouseService : IWarehouseService
         _mapper = mapper;
     }
 
+    public Task CreateAsync(WarehouseDto warehouseDto, CancellationToken ct = default)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<IReadOnlyCollection<WarehouseDto>?> GetAllAsync(CancellationToken ct)
     {
         var entities = await _warehouseRepository.GetAllAsync(cancellationToken: ct);
@@ -31,5 +36,15 @@ internal sealed class WarehouseService : IWarehouseService
         var entity = await _warehouseRepository.GetByIdAsync(id, ct);
 
         return _mapper.Map<WarehouseDto>(entity);
+    }
+
+    public Task UpdateAsync(WarehouseDto warehouseDto, CancellationToken ct = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task DeleteAsync(Guid id, CancellationToken ct = default)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -1,12 +1,12 @@
-namespace Wms.Web.Services.Dto;
+namespace Wms.Web.Api.Contracts.Responses;
 
-public sealed class BoxDto
+public sealed class BoxResponse
 {
     public Guid Id { get; init; }
     
     public Guid PaletteId { get; set; }
     
-    public PaletteDto Palette { get; set; }
+    public PaletteResponse Palette { get; set; }
     
     public decimal Width { get; set; }
     
@@ -22,10 +22,10 @@ public sealed class BoxDto
     
     public DateTime? ExpiryDate { get; set; }
 
-    public BoxDto(
+    public BoxResponse(
         Guid id,
         Guid paletteId,
-        PaletteDto palette,
+        PaletteResponse palette,
         decimal width,
         decimal height,
         decimal depth,

@@ -42,17 +42,16 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
 
         return orderBy != null 
             ? await orderBy(query).NotDeleted().ToListAsync(cancellationToken)
-            : await query.NotDeleted().ToListAsync(cancellationToken);
+            : await query.NotDeleted()
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
     }
 
     public async Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken) 
         => await _dbSet.FindAsync(id);
 
-    public async Task AddAsync(TEntity entity, CancellationToken cancellationToken) 
+    public async Task CreateAsync(TEntity entity, CancellationToken cancellationToken) 
         => await _dbSet.AddAsync(entity, cancellationToken);
-
-    public async Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken) 
-        => await _dbSet.AddRangeAsync(entities, cancellationToken);
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {

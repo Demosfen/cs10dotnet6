@@ -1,14 +1,16 @@
 using AutoMapper;
-using Wms.Web.Store.Entities;
+using JetBrains.Annotations;
+using Wms.Web.Api.Contracts.Responses;
 using Wms.Web.Services.Dto;
 
-namespace Wms.Web.Services.Infrastructure.Mapping;
+namespace Wms.Web.Api.Infrastructure.Mapping;
 
-public sealed class DtoEntitiesMappingProfile : Profile
+[UsedImplicitly]
+public sealed class ApiContractToDtoMappingProfile : Profile
 {
-    public DtoEntitiesMappingProfile()
+    public ApiContractToDtoMappingProfile()
     {
-        CreateMap<Box, BoxDto>()
+        CreateMap<BoxResponse, BoxDto>()
             .ForCtorParam("id", opt => opt.MapFrom(src => src.Id))
             .ForCtorParam("paletteId", opt => opt.MapFrom(src => src.PaletteId))
             .ForCtorParam("width", opt => opt.MapFrom(src => src.Width))
@@ -19,13 +21,13 @@ public sealed class DtoEntitiesMappingProfile : Profile
                 opt => opt.MapFrom(src => src.Palette))
             .ReverseMap();
 
-        CreateMap<Palette, PaletteDto>()
+        CreateMap<PaletteResponse, PaletteDto>()
             .ForCtorParam("id", opt => opt.MapFrom(src => src.Id))
             .ForCtorParam("warehouseId", opt => opt.MapFrom(src => src.WarehouseId))
             .ForCtorParam("width", opt => opt.MapFrom(src => src.Width))
             .ForCtorParam("height", opt => opt.MapFrom(src => src.Height))
             .ForCtorParam("depth", opt => opt.MapFrom(src => src.Depth))
-            .ForMember(dest => dest.Warehouse,
+            .ForMember(dest => dest.Warehouse, 
                 opt => opt.MapFrom(src => src.Warehouse))
             .ForMember(dest => dest.Weight,
                 opt => opt.MapFrom(src => src.Weight))
@@ -34,11 +36,11 @@ public sealed class DtoEntitiesMappingProfile : Profile
             .ForMember(dest => dest.Boxes,
                 opt => opt.MapFrom(src => src.Boxes))
             .ReverseMap();
-
-        CreateMap<Warehouse, WarehouseDto>()
+        
+        CreateMap<WarehouseResponse, WarehouseDto>()
             .ForCtorParam("id", o => o.MapFrom(src => src.Id))
             .ForCtorParam("name", o => o.MapFrom(src => src.Name))
-            .ForMember(dest => dest.Palettes,
+            .ForMember(dest => dest.Palettes, 
                 opt => opt.MapFrom(src => src.Palettes))
             .ReverseMap();
     }

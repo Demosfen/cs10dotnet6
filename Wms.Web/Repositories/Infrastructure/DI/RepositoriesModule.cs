@@ -9,6 +9,7 @@ public sealed class RepositoriesModule : Module
     {
         builder
             .RegisterAssemblyTypes(ThisAssembly)
+            .AssignableTo<IRepository>()
             .AsImplementedInterfaces()
             .InstancePerDependency();
     }

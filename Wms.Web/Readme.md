@@ -13,7 +13,7 @@ dotnet tool install --global dotnet-ef
 
 ### Add new migrations
 ```
-dotnet ef migrations add InitialCreate --startup-project ..\WarehouseApp\WarehouseApp.csproj --project .\Store.csproj --context WarehouseDbContext
+dotnet ef migrations add InitialCreate --startup-project Api/Api.csproj --project Store/Store.csproj --context WarehouseDbContext
 ```
 
 ### Update database

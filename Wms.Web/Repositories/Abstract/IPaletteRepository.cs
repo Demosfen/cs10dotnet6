@@ -3,7 +3,7 @@ using Wms.Web.Store.Entities;
 
 namespace Wms.Web.Repositories.Abstract;
 
-public interface IPaletteRepository :  IGenericRepository<Palette>
+public interface IPaletteRepository : IGenericRepository<Palette>
 {
     /// <summary>
     /// Performs simple addition of the box to the palette

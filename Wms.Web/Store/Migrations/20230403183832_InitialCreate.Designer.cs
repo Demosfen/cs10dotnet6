@@ -4,15 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WMS.ASP.Store;
-using WMS.Store;
+using Wms.Web.Store;
 
 #nullable disable
 
-namespace WMS.Store.Migrations
+namespace Wms.Web.Store.Migrations
 {
     [DbContext(typeof(WarehouseDbContext))]
-    [Migration("20230310180426_InitialCreate")]
+    [Migration("20230403183832_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -21,7 +20,7 @@ namespace WMS.Store.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.3");
 
-            modelBuilder.Entity("WMS.Store.Entities.Box", b =>
+            modelBuilder.Entity("Wms.Web.Store.Entities.Box", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -62,7 +61,7 @@ namespace WMS.Store.Migrations
                     b.ToTable("Boxes");
                 });
 
-            modelBuilder.Entity("WMS.Store.Entities.Palette", b =>
+            modelBuilder.Entity("Wms.Web.Store.Entities.Palette", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -99,7 +98,7 @@ namespace WMS.Store.Migrations
                     b.ToTable("Palettes", (string)null);
                 });
 
-            modelBuilder.Entity("WMS.Store.Entities.Warehouse", b =>
+            modelBuilder.Entity("Wms.Web.Store.Entities.Warehouse", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -117,9 +116,9 @@ namespace WMS.Store.Migrations
                     b.ToTable("Warehouses", (string)null);
                 });
 
-            modelBuilder.Entity("WMS.Store.Entities.Box", b =>
+            modelBuilder.Entity("Wms.Web.Store.Entities.Box", b =>
                 {
-                    b.HasOne("WMS.Store.Entities.Palette", "Palette")
+                    b.HasOne("Wms.Web.Store.Entities.Palette", "Palette")
                         .WithMany("Boxes")
                         .HasForeignKey("PaletteId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -128,9 +127,9 @@ namespace WMS.Store.Migrations
                     b.Navigation("Palette");
                 });
 
-            modelBuilder.Entity("WMS.Store.Entities.Palette", b =>
+            modelBuilder.Entity("Wms.Web.Store.Entities.Palette", b =>
                 {
-                    b.HasOne("WMS.Store.Entities.Warehouse", "Warehouse")
+                    b.HasOne("Wms.Web.Store.Entities.Warehouse", "Warehouse")
                         .WithMany("Palettes")
                         .HasForeignKey("WarehouseId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -139,12 +138,12 @@ namespace WMS.Store.Migrations
                     b.Navigation("Warehouse");
                 });
 
-            modelBuilder.Entity("WMS.Store.Entities.Palette", b =>
+            modelBuilder.Entity("Wms.Web.Store.Entities.Palette", b =>
                 {
                     b.Navigation("Boxes");
                 });
 
-            modelBuilder.Entity("WMS.Store.Entities.Warehouse", b =>
+            modelBuilder.Entity("Wms.Web.Store.Entities.Warehouse", b =>
                 {
                     b.Navigation("Palettes");
                 });

@@ -1,9 +1,9 @@
 using Wms.Web.Common.Exceptions;
 using Wms.Web.Store.Entities;
 
-namespace Wms.Web.Services.Dto;
+namespace Wms.Web.Api.Contracts.Responses;
 
-public sealed class PaletteDto
+public sealed class PaletteResponse
 {
     public const decimal DefaultWeight = 30;
     
@@ -11,7 +11,7 @@ public sealed class PaletteDto
 
     public Guid WarehouseId { get; set; }
 
-    public WarehouseDto? Warehouse { get; set; }
+    public WarehouseResponse? Warehouse { get; set; }
 
     public decimal Width { get; set; }
     
@@ -23,11 +23,11 @@ public sealed class PaletteDto
     
     public decimal Volume { get; set; }
 
-    public List<BoxDto>? Boxes { get; set; } = new();
+    public List<BoxResponse>? Boxes { get; set; } = new();
 
     public DateTime? ExpiryDate { get; set; }
 
-    public PaletteDto(
+    public PaletteResponse(
         Guid id,
         Guid warehouseId,
         decimal width, 

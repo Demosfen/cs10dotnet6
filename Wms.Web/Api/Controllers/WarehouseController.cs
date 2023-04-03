@@ -9,10 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace Wms.Web.Api.Controllers;
 
 [ApiController]
-[Route("warehouses/")]
+[Route("api/v1/")]
 public sealed class WarehouseController : ControllerBase
 {
-    private IWarehouseService _warehouseService;
+    private readonly IWarehouseService _warehouseService;
     private readonly ILogger<WarehouseController> _logger;
     private readonly IMapper _mapper;
 
@@ -25,12 +25,13 @@ public sealed class WarehouseController : ControllerBase
         _warehouseService = warehouseService;
         _mapper = mapper;
     }
-    //
-    // [HttpGet]
-    // public async Task<IActionResult> GetAll()
-    // {
-    //     var warehouses = await _warehouseService.GetAllAsync();
-    //
-    //     return 
-    // }
+    
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var warehouses = await _warehouseService.GetAllAsync();
+        var warehouseResponse = _mapper.Map<IReadOnlyCollection<WarehouseResponse>>(warehouses);
+
+        return Ok(warehouseResponse);
+    }
 }

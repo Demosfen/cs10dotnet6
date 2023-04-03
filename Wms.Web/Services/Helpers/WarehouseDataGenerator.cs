@@ -38,7 +38,7 @@ public sealed class WarehouseDataGenerator : IWarehouseDataGenerator
         
         await _paletteRepository.AddBoxAsync(paletteId, box, default);
 
-        await _boxRepository.AddAsync(box, default);
+        await _boxRepository.CreateAsync(box, default);
 
         var palette = await _paletteRepository.GetByIdAsync(paletteId, default);
 
@@ -66,7 +66,7 @@ public sealed class WarehouseDataGenerator : IWarehouseDataGenerator
         
         await _warehouseRepository.AddPaletteAsync(warehouseId, palette, default);
 
-        await _paletteRepository.AddAsync(palette, default);
+        await _paletteRepository.CreateAsync(palette, default);
         
         await DbContext.SaveChangesAsync();
         
@@ -89,7 +89,7 @@ public sealed class WarehouseDataGenerator : IWarehouseDataGenerator
     {
         var warehouse = new Warehouse(warehouseName);
 
-        await _warehouseRepository.AddAsync(warehouse, default);
+        await _warehouseRepository.CreateAsync(warehouse, default);
 
         await DbContext.SaveChangesAsync();
 
