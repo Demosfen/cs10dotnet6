@@ -1,5 +1,6 @@
-using Api;
+using Wms.Web.Api;
 using Microsoft.AspNetCore.Mvc;
+using Wms.Web.Store.Entities;
 
 namespace Wms.Web.Api.Controllers;
 
@@ -14,15 +15,10 @@ public sealed class PaletteController : ControllerBase
         _logger = logger;
     }
     
-    [HttpGet(Name = "GetAllPalettes")]
-    public IEnumerable<Warehouse> Get()
-    {
-        
-        return Enumerable.Range(1, 5).Select(index => new Warehouse
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-            })
-            .ToArray();
-    }
+    // [HttpGet(Name = "GetAllPalettes")]
+    // public IEnumerable<Warehouse> Get()
+    // {
+    //
+    //     return Enumerable.Range(1, 5);
+    // }
 }

@@ -25,11 +25,12 @@ public sealed class WarehouseController : ControllerBase
         _warehouseService = warehouseService;
         _mapper = mapper;
     }
-
-    [HttpGet]
-    public async Task<IActionResult> GetAll()
-    {
-        var warehouses = await _warehouseService.GetAllAsync();
-        
-    }
+    //
+    // [HttpGet]
+    // public async Task<IActionResult> GetAll()
+    // {
+    //     var warehouses = await _warehouseService.GetAllAsync();
+    //
+    //     return 
+    // }
 }
