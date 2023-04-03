@@ -1,4 +1,4 @@
-using Api;
+using Wms.Web;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Wms.Web.Api.Controllers;
