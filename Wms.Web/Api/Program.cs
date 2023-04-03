@@ -26,9 +26,6 @@ builder.Services
     .AddControllersAsServices();
     // .AddMvcOptions();
 
-builder.Services.AddControllers();
-//builder.RegisterModule<RepositoriesModule>();
-
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -42,8 +39,8 @@ builder.Services.AddAutoMapper(typeof(ApiContractToDtoMappingProfile));
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {
     containerBuilder.RegisterModule<WarehouseDbContextModule>();
-    containerBuilder.RegisterModule<ServiceModule>();
     containerBuilder.RegisterModule<RepositoriesModule>();
+    containerBuilder.RegisterModule<ServiceModule>();
 });
 
 var app = builder.Build();

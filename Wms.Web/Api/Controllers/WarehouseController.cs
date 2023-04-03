@@ -26,7 +26,7 @@ public sealed class WarehouseController : ControllerBase
         _mapper = mapper;
     }
     
-    [HttpGet]
+    [HttpGet("warehouses/")]
     public async Task<IActionResult> GetAll()
     {
         var warehouses = await _warehouseService.GetAllAsync();

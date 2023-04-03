@@ -26,7 +26,7 @@ public sealed class WarehouseDbContextModule : Module
 
         containerBuilder
             .Register(context => context.Resolve<WarehouseDbContext>())
-            .AsImplementedInterfaces()
+            .AsSelf()
             .InstancePerLifetimeScope();
     }
 }
