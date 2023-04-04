@@ -1,8 +1,6 @@
 using Autofac;
-using Autofac.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Wms.Web.Store.Infrastructure.DI;
 
@@ -14,8 +12,11 @@ public sealed class WarehouseDbContextModule : Module
     {
         containerBuilder.Register(c =>
             {
+                var config = c.Resolve<IConfiguration>();
+                var connectionString = config.GetConnectionString(ConnectionStringName);
+                
                 var options = new DbContextOptionsBuilder<WarehouseDbContext>()
-                    .UseSqlite(ConnectionStringName)
+                    .UseSqlite(connectionString)
                     .Options;
                 return new WarehouseDbContext(options);
             })
