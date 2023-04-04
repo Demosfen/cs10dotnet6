@@ -7,24 +7,18 @@ namespace Wms.Web.Store;
 
 public sealed class WarehouseDbContext : DbContext, IWarehouseDbContext, IDbUnitOfWork
 {
-    private const string DefaultDbFileName = "warehouse.db";
-
-    private readonly string _dbFileName;
-
     public DbSet<Warehouse> Warehouses => Set<Warehouse>();
 
     public DbSet<Palette> Palettes => Set<Palette>();
 
     public DbSet<Box> Boxes => Set<Box>();
 
-    public WarehouseDbContext(string dbFileName = DefaultDbFileName)
+    public WarehouseDbContext(DbContextOptions opts) : base(opts)
     {
-        _dbFileName = dbFileName;
     }
-
+    
     protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.UseSqlite($"Data Source=../{_dbFileName}")
-            .LogTo(Console.WriteLine, LogLevel.Information);
+        => options.LogTo(Console.WriteLine, LogLevel.Information);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
