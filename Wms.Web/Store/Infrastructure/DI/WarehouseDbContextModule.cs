@@ -10,11 +10,13 @@ public sealed class WarehouseDbContextModule : Module
     protected override void Load(ContainerBuilder containerBuilder)
     {
         containerBuilder.Register(c =>
-        {
-            var options = new DbContextOptionsBuilder<WarehouseDbContext>()
-                .UseSqlite(ConnectionString)
-                .Options;
-            return new WarehouseDbContext(options);
-        }).InstancePerLifetimeScope();
+            {
+                var options = new DbContextOptionsBuilder<WarehouseDbContext>()
+                    .UseSqlite(ConnectionString)
+                    .Options;
+                return new WarehouseDbContext(options);
+            })
+            .AsImplementedInterfaces()
+            .InstancePerLifetimeScope();
     }
 }
