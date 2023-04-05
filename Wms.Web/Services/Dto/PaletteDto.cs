@@ -7,37 +7,23 @@ public sealed class PaletteDto
 {
     public const decimal DefaultWeight = 30;
     
-    public Guid Id { get; set; }
+    public required Guid Id { get; init; }
 
-    public Guid WarehouseId { get; set; }
+    public required Guid WarehouseId { get; init; }
 
     public WarehouseDto? Warehouse { get; set; }
 
-    public decimal Width { get; set; }
+    public required decimal Width { get; init; }
     
-    public decimal Height { get; set; }
+    public required decimal Height { get; init; }
 
-    public decimal Depth { get; set; }
-    
-    public decimal Weight { get; set; }
+    public required decimal Depth { get; init; }
+
+    public decimal Weight { get; set; } = DefaultWeight;
     
     public decimal Volume { get; set; }
 
     public List<BoxDto>? Boxes { get; set; } = new();
 
     public DateTime? ExpiryDate { get; set; }
-
-    public PaletteDto(
-        Guid id,
-        Guid warehouseId,
-        decimal width, 
-        decimal height, 
-        decimal depth)
-    {
-        Id = id;
-        WarehouseId = warehouseId;
-        Width = width;
-        Height = height;
-        Depth = depth;
-    }
 }

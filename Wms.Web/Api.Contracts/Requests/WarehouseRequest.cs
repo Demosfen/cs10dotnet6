@@ -4,9 +4,9 @@ namespace Wms.Web.Api.Contracts.Requests;
 
 public sealed class WarehouseRequest
 {
-    public Guid Id { get; init; }
+    public required Guid Id { get; init; }
 
-    public string Name { get; set; }
+    public required string Name { get; set; }
 
     public List<PaletteRequest>? Palettes { set; get; } = new();
 
