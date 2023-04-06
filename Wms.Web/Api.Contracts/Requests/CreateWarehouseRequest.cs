@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Wms.Web.Api.Contracts.Requests;
 
 public sealed class CreateWarehouseRequest
 {
-    [FromRoute(Name = "id")]
-    public required Guid Id { get; init; }
+    public required Guid Id { get; init; } = Guid.NewGuid();
+    
+    [FromRoute(Name = "name")]
+    public required string Name { get; init; }
 
     [FromBody] public WarehouseRequest Warehouse { get; set; } = default!;
 }

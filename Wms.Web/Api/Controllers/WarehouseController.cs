@@ -26,8 +26,8 @@ public sealed class WarehouseController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpPost("warehouses/{}")]
-    public async Task<IActionResult> Create([FromQuery] CreateWarehouseRequest request)
+    [HttpPost("warehouses/create/{name}")]
+    public async Task<IActionResult> Create([FromBody] CreateWarehouseRequest request)
     {
         var warehouseDto = _mapper.Map<WarehouseDto>(request);
 
@@ -35,7 +35,8 @@ public sealed class WarehouseController : ControllerBase
 
         var response = _mapper.Map<WarehouseResponse>(warehouseDto);
 
-        return CreatedAtAction("Get", new { response.Id }, response);
+        // return CreatedAtAction("Get", new { response.Id }, response);
+        return Ok(warehouseDto);
     }
     
     [HttpGet("warehouses/{warehouseId}", Name = "GetWarehouseById")]
