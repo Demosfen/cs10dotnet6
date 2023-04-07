@@ -5,6 +5,7 @@ namespace Wms.Web.Api.Contracts.Requests;
 
 public sealed class CreateWarehouseRequest
 {
+    [FromBody]
     public required Guid Id { get; init; } = Guid.NewGuid();
     
     [FromRoute(Name = "name")]

@@ -10,9 +10,9 @@ public sealed class WarehouseRequest
 
     public List<PaletteRequest>? Palettes { set; get; } = new();
 
-    // public WarehouseRequest(Guid id, string name)
-    // {
-    //     Id = id;
-    //     Name = name;
-    // }
+    public WarehouseRequest(Guid id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
 }
