@@ -23,6 +23,7 @@ public sealed class WarehouseDbContextModule : Module
                 
                 return new WarehouseDbContext(options);
             })
+            .AsSelf()
             .AsImplementedInterfaces()
             .InstancePerLifetimeScope();
     }
