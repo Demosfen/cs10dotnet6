@@ -26,7 +26,7 @@ public sealed class WarehouseController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpPost("warehouses/create/{name}")]
+    [HttpPost("warehouses/create/{id:guid}/{name}")]
     public async Task<IActionResult> Create([FromBody] CreateWarehouseRequest request)
     {
         var warehouseDto = _mapper.Map<WarehouseDto>(request);
