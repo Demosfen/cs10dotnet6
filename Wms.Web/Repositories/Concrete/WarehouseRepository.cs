@@ -8,10 +8,9 @@ namespace Wms.Web.Repositories.Concrete;
 
 public sealed class WarehouseRepository : GenericRepository<Warehouse>, IWarehouseRepository
 {
-    private WarehouseDbContext _dbContext { get; set; }
+    private IWarehouseDbContext _dbContext { get; set; }
     
-    public WarehouseRepository(WarehouseDbContext dbContext)
-        : base(dbContext)
+    public WarehouseRepository(WarehouseDbContext dbContext) : base(dbContext)
     {
         _dbContext = dbContext;
     }

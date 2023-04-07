@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Wms.Web.Api.Infrastructure.Mapping;
 using Wms.Web.Repositories.Infrastructure.DI;
 using Wms.Web.Services.Infrastructure.DI;
+using Wms.Web.Store;
 using Wms.Web.Store.Infrastructure.DI;
 using Wms.Web.Store.Interfaces;
 
@@ -38,6 +39,7 @@ builder.Services.AddAutoMapper(typeof(ApiContractToDtoMappingProfile));
 
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {
+    
     containerBuilder.RegisterModule<WarehouseDbContextModule>();
     containerBuilder.RegisterModule<ServiceModule>();
     containerBuilder.RegisterModule<RepositoriesModule>();

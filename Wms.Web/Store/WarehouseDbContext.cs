@@ -5,7 +5,7 @@ using Wms.Web.Store.Interfaces;
 
 namespace Wms.Web.Store;
 
-public sealed class WarehouseDbContext : DbContext, IWarehouseDbContext, IDbUnitOfWork
+public sealed class WarehouseDbContext : DbContext, IWarehouseDbContext
 {
     public DbSet<Warehouse> Warehouses => Set<Warehouse>();
 

@@ -4,7 +4,7 @@ using Wms.Web.Store.Entities;
 
 namespace Wms.Web.Store.Interfaces;
 
-public interface IWarehouseDbContext
+public interface IWarehouseDbContext : IDbUnitOfWork
 {
     /// <summary>
     /// All the warehouses
@@ -14,11 +14,11 @@ public interface IWarehouseDbContext
     DbSet<Palette> Palettes { get; }
     
     DbSet<Box> Boxes { get; }
-
-    /// <summary>
-    /// Saves all the changes in this context to the database
-    /// </summary>
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    //
+    // /// <summary>
+    // /// Saves all the changes in this context to the database
+    // /// </summary>
+    // Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
      
     DatabaseFacade Database { get; }
 }
