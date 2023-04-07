@@ -39,8 +39,8 @@ builder.Services.AddAutoMapper(typeof(ApiContractToDtoMappingProfile));
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {
     containerBuilder.RegisterModule<WarehouseDbContextModule>();
-    containerBuilder.RegisterModule<RepositoriesModule>();
     containerBuilder.RegisterModule<ServiceModule>();
+    containerBuilder.RegisterModule<RepositoriesModule>();
 });
 
 var app = builder.Build();
