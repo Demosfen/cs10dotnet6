@@ -35,11 +35,16 @@ builder.Services.AddSwaggerGen(c =>
         { Title = "My Warehouse Service API", Version = "v1" });
 });
 
+builder.Host.UseDefaultServiceProvider((x, opt) =>
+{
+    opt.ValidateOnBuild = x.HostingEnvironment.IsDevelopment();
+    opt.ValidateScopes = x.HostingEnvironment.IsDevelopment();
+});
+
 builder.Services.AddAutoMapper(typeof(ApiContractToDtoMappingProfile));
 
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {
-    
     containerBuilder.RegisterModule<WarehouseDbContextModule>();
     containerBuilder.RegisterModule<ServiceModule>();
     containerBuilder.RegisterModule<RepositoriesModule>();
