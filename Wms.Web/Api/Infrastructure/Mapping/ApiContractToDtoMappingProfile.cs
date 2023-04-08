@@ -22,5 +22,9 @@ public sealed class ApiContractToDtoMappingProfile : Profile
 
         CreateMap<WarehouseRequest, WarehouseDto>()
             .ReverseMap();
+
+        CreateMap<CreateWarehouseRequest, WarehouseDto>()
+            .ForMember(x => x.Palettes, 
+                opt => opt.Ignore());
     }
 }

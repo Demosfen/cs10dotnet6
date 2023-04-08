@@ -33,26 +33,20 @@ public sealed class WarehouseController : ControllerBase
         return Ok(warehouseResponse);
     }
 
-    [HttpPost("warehouses/{name}/create", Name = "Create warehouse")]
+    [HttpPost("warehouses/{id:guid}", Name = "CreateWarehouse")]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(WarehouseDto))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(WarehouseDto))]
     // public async Task<IActionResult> Create([FromBody] CreateWarehouseRequest request)  //TODO: create own attributes: https://nabeelvalley.co.za/blog/2020/17-12/csharp-webapi-custom-attributes/
     // public async Task<IActionResult> Create([FromBody] WarehouseRequest request)         //TODO: Parameters from route doesn't work. Default model only
-    public async Task<IActionResult> Create([FromRoute] string name)
+    public async Task<IActionResult> Create([FromRoute] Guid id, [FromBody] CreateWarehouseRequest request)
     {
-        var request = new WarehouseRequest
-        {
-            Id = Guid.NewGuid(),
-            Name = name
-        };
-
         var warehouseDto = _mapper.Map<WarehouseDto>(request);
 
-        if (warehouseDto.Name.Equals(name))
-        {
-            return Conflict("Warehouse with the same name already exist.");
-        }
+        // if (warehouseDto.Name.Equals(name))
+        // {
+        //     return Conflict("Warehouse with the same name already exist.");
+        // }
 
         await _warehouseService.CreateAsync(warehouseDto);
 
