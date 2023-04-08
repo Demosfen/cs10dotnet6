@@ -1,12 +1,15 @@
-using Wms.Web.Api.Contracts.Requests;
+using Microsoft.AspNetCore.Mvc;
+using Wms.Web.Api.Contracts.Responses;
 
 namespace Wms.Web.Api.Contracts.Requests;
 
 public sealed class WarehouseRequest
 {
-    public required Guid Id { get; init; }
-
+    [FromRoute(Name = "id")]
+    public required Guid Id { get; init; } //= Guid.NewGuid();
+    
+    [FromRoute(Name = "name")]
     public required string Name { get; set; }
-
-    public List<PaletteRequest>? Palettes { set; get; } = new();
+    
+    public List<PaletteResponse>? Palettes { set; get; }
 }

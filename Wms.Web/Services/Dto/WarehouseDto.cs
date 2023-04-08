@@ -1,5 +1,3 @@
-using Wms.Web.Store.Interfaces;
-
 namespace Wms.Web.Services.Dto;
 
 public sealed class WarehouseDto
@@ -8,5 +6,5 @@ public sealed class WarehouseDto
 
     public required string Name { get; init; }
 
-    public List<PaletteDto>? Palettes { set; get; } = new();
+    public List<PaletteDto>? Palettes { set; get; }
 }

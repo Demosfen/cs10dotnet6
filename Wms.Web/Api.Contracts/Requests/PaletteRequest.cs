@@ -6,13 +6,13 @@ public sealed class PaletteRequest
 {
     public const decimal DefaultWeight = 30;
     
-    public Guid Id { get; set; }
+    public required Guid Id { get; set; }
 
-    public Guid WarehouseId { get; set; }
+    public required Guid WarehouseId { get; set; }
 
     public WarehouseRequest? Warehouse { get; set; }
 
-    public decimal Width { get; set; }
+    public required decimal Width { get; set; }
     
     public decimal Height { get; set; }
 

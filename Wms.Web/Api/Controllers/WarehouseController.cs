@@ -13,22 +13,33 @@ namespace Wms.Web.Api.Controllers;
 public sealed class WarehouseController : ControllerBase
 {
     private readonly IWarehouseService _warehouseService;
-    private readonly ILogger<WarehouseController> _logger;
+    // private readonly ILogger<WarehouseController> _logger;
     private readonly IMapper _mapper;
 
     public WarehouseController(
-        ILogger<WarehouseController> logger, 
+        // ILogger<WarehouseController> logger, 
         IWarehouseService warehouseService, 
         IMapper mapper)
     {
-        _logger = logger;
+        // _logger = logger;
         _warehouseService = warehouseService;
         _mapper = mapper;
     }
 
-    [HttpPost("warehouses/create/{id:guid}/{name}")]
-    public async Task<IActionResult> Create([FromBody] CreateWarehouseRequest request)
+    [HttpPost("warehouses/{id:guid}/{name}/create")]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(WarehouseDto))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    // public async Task<IActionResult> Create([FromBody] CreateWarehouseRequest request)  //TODO: create own attributes: https://nabeelvalley.co.za/blog/2020/17-12/csharp-webapi-custom-attributes/
+    // public async Task<IActionResult> Create([FromBody] WarehouseRequest request)         //TODO: Parameters from route doesn't work. Default model only
+    public async Task<IActionResult> Create([FromRoute] Guid id, [FromRoute] string name)
     {
+        var request = new WarehouseRequest
+        {
+            Id = id,
+            Name = name
+        };
+        
         var warehouseDto = _mapper.Map<WarehouseDto>(request);
 
         await _warehouseService.CreateAsync(warehouseDto);
@@ -36,7 +47,7 @@ public sealed class WarehouseController : ControllerBase
         var response = _mapper.Map<WarehouseResponse>(warehouseDto);
 
         // return CreatedAtAction("Get", new { response.Id }, response);
-        return Ok(warehouseDto);
+        return Created("Warehouse created:", warehouseDto);
     }
     
     [HttpGet("warehouses/{warehouseId}", Name = "GetWarehouseById")]
