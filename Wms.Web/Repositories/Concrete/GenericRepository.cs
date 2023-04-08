@@ -50,8 +50,12 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
     public async Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken) 
         => await _dbSet.FindAsync(id);
 
-    public async Task CreateAsync(TEntity entity, CancellationToken cancellationToken) 
-        => await _dbSet.AddAsync(entity, cancellationToken);
+    public async Task CreateAsync(TEntity entity, CancellationToken cancellationToken)
+    {
+        await _dbSet.AddAsync(entity, cancellationToken);
+
+        await UnitOfWork.SaveChangesAsync(cancellationToken);
+    }
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
@@ -59,5 +63,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
                          ?? throw new EntityNotFoundException(id);
 
         _dbSet.Remove(entity);
+
+        await UnitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

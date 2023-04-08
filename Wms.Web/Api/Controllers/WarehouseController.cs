@@ -26,17 +26,17 @@ public sealed class WarehouseController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpPost("warehouses/{id:guid}/{name}/create")]
+    [HttpPost("warehouses/{name}/create")]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(WarehouseDto))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     // public async Task<IActionResult> Create([FromBody] CreateWarehouseRequest request)  //TODO: create own attributes: https://nabeelvalley.co.za/blog/2020/17-12/csharp-webapi-custom-attributes/
     // public async Task<IActionResult> Create([FromBody] WarehouseRequest request)         //TODO: Parameters from route doesn't work. Default model only
-    public async Task<IActionResult> Create([FromRoute] Guid id, [FromRoute] string name)
+    public async Task<IActionResult> Create([FromRoute] string name)
     {
         var request = new WarehouseRequest
         {
-            Id = id,
+            Id = Guid.NewGuid(),
             Name = name
         };
         
