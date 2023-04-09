@@ -2,10 +2,7 @@
 
 public sealed class CreateWarehouseRequest
 {
+    public required Guid Id { get; set; }
+    
     public required string Name { get; init; }
-
-    internal CreateWarehouseRequest(string name)
-    {
-        Name = name;
-    }
 }

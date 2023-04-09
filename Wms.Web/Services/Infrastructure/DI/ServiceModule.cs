@@ -12,7 +12,7 @@ public sealed class ServiceModule : Module
     protected override void Load(ContainerBuilder builder)
     {
         var serviceCollection = new ServiceCollection();
-        serviceCollection.AddAutoMapper(typeof(DtoEntitiesMappingProfile));
+        // serviceCollection.AddAutoMapper(typeof(DtoEntitiesMappingProfile));
         builder.Populate(serviceCollection);
         
         builder

@@ -36,6 +36,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddAutoMapper(typeof(ApiContractToDtoMappingProfile));
+builder.Services.AddAutoMapper(typeof(DtoToApiContractMappingProfile));
 
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {

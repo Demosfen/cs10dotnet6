@@ -11,9 +11,6 @@ public sealed class RepositoriesModule : Module
     {
         builder
             .RegisterAssemblyTypes(ThisAssembly)
-            // .IfNotRegistered(typeof(WarehouseRepository)).As<IWarehouseRepository>()
-            // .IfNotRegistered(typeof(PaletteRepository)).As<IPaletteRepository>()
-            // .IfNotRegistered(typeof(BoxRepository)).As<IBoxRepository>()
             .AssignableTo<IRepository>()
             .AsImplementedInterfaces()
             .InstancePerDependency();

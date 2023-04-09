@@ -11,20 +11,13 @@ public sealed class ApiContractToDtoMappingProfile : Profile
 {
     public ApiContractToDtoMappingProfile()
     {
-        CreateMap<BoxResponse, BoxDto>()
-            .ReverseMap();
-
-        CreateMap<PaletteResponse, PaletteDto>()
-            .ReverseMap();
-        
-        CreateMap<WarehouseResponse, WarehouseDto>()
-            .ReverseMap();
-
         CreateMap<WarehouseRequest, WarehouseDto>()
             .ReverseMap();
 
         CreateMap<CreateWarehouseRequest, WarehouseDto>()
-            .ForMember(x => x.Palettes, 
+            .ForMember(x => x.Palettes,
+                opt => opt.Ignore())
+            .ForMember(x => x.Id,
                 opt => opt.Ignore());
     }
 }

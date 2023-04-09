@@ -6,7 +6,7 @@ namespace Wms.Web.Api.Contracts.Requests;
 public sealed class WarehouseRequest
 {
     [FromRoute(Name = "id")]
-    public required Guid Id { get; init; } //= Guid.NewGuid();
+    public required Guid Id { get; init; }
     
     [FromRoute(Name = "name")]
     public required string Name { get; set; }
