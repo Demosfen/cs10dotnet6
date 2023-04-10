@@ -10,12 +10,12 @@ public sealed class Warehouse : IEntityWithId, ISoftDeletable
     /// New property for Migrations which is
     /// a simple Warehouse name
     /// </summary>
-    public string Name { get; }
+    public string Name { get; set; }
 
     /// <summary>
     /// Palettes list
     /// </summary>
-    public List<Palette> Palettes { get; } = new();
+    public List<Palette> Palettes { get; set; } = new();
 
     public bool IsDeleted { get; set; }
 

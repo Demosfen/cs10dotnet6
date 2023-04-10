@@ -32,27 +32,6 @@ public sealed class WarehouseController : ControllerBase
 
         return Ok(warehouseResponse);
     }
-
-    [HttpPost("warehouses/{id:guid}", Name = "CreateWarehouse")]
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(WarehouseDto))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(WarehouseDto))]
-    public async Task<IActionResult> Create([FromRoute] Guid id, [FromBody] CreateWarehouseRequest request)
-    {
-        var warehouseDto = _mapper.Map<WarehouseDto>(request);
-
-        if (warehouseDto.Name.Equals(request.Name))
-        {
-            return Conflict("Warehouse with the same name already exist.");
-        }
-
-        await _warehouseService.CreateAsync(warehouseDto);
-
-        var response = _mapper.Map<WarehouseResponse>(warehouseDto);
-
-        // return CreatedAtAction("Get", new { response.Id }, response);
-        return Created("Warehouse created:", warehouseDto);
-    }
     
     [HttpGet("warehouses/{warehouseId}", Name = "GetWarehouseById")]
     public async Task<IActionResult> Get([FromRoute] Guid warehouseId)
@@ -67,6 +46,42 @@ public sealed class WarehouseController : ControllerBase
         var warehouseResponse = _mapper.Map<WarehouseResponse>(warehouseDto);
         return Ok(warehouseResponse);
     }
+
+    [HttpPost("warehouses/{id:guid}", Name = "CreateWarehouse")]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(WarehouseDto))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(WarehouseDto))]
+    public async Task<IActionResult> CreateAsync([FromRoute] Guid id, [FromBody] CreateWarehouseRequest request)
+    {
+        if (await _warehouseService.GetByIdAsync(id) != null)
+        {
+            return Conflict("Warehouse with the same id already exist.");
+        }
+        
+        var warehouseDto = _mapper.Map<WarehouseDto>(request);
+
+        warehouseDto.Id = id;
+
+        await _warehouseService.CreateAsync(warehouseDto);
+
+        var response = _mapper.Map<WarehouseResponse>(warehouseDto);
+        
+        return Created("Warehouse created:", warehouseDto);
+    }
     
-    
+    [HttpPut("warehouses/{id:guid}", Name = "UpdateWarehouse")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WarehouseDto))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(UpdateWarehouseRequest))]
+    public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, [FromBody] CreateWarehouseRequest request)
+    {
+        var warehouseDto = _mapper.Map<WarehouseDto>(request);
+
+        warehouseDto.Id = id;
+
+        await _warehouseService.UpdateAsync(warehouseDto);
+
+        var response = _mapper.Map<WarehouseResponse>(warehouseDto);
+        return Ok(response);
+    }
 }

@@ -10,8 +10,6 @@ public sealed class PaletteRequest
 
     public required Guid WarehouseId { get; set; }
 
-    public WarehouseRequest? Warehouse { get; set; }
-
     public required decimal Width { get; set; }
     
     public decimal Height { get; set; }

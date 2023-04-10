@@ -57,6 +57,13 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
         await UnitOfWork.SaveChangesAsync(cancellationToken);
     }
 
+    public async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
+    {
+        _dbSet.Update(entity);
+        
+        await UnitOfWork.SaveChangesAsync(cancellationToken);
+    }
+
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
         TEntity entity = await _dbSet.FindAsync(id)

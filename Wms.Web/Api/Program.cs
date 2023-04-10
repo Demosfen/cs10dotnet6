@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Wms.Web.Api.Infrastructure.Mapping;
 using Wms.Web.Repositories.Infrastructure.DI;
 using Wms.Web.Services.Infrastructure.DI;
+using Wms.Web.Services.Infrastructure.Mapping;
 using Wms.Web.Store;
 using Wms.Web.Store.Infrastructure.DI;
 using Wms.Web.Store.Interfaces;
@@ -36,7 +37,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddAutoMapper(typeof(ApiContractToDtoMappingProfile));
-builder.Services.AddAutoMapper(typeof(DtoToApiContractMappingProfile));
+builder.Services.AddAutoMapper(typeof(DtoEntitiesMappingProfile));
 
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {

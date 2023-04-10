@@ -15,5 +15,7 @@ public interface IGenericRepository<TEntity> : IRepository
 
     public Task CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
 
+    public Task UpdateAsync(TEntity entity, CancellationToken cancellationToken = default);
+
     public Task DeleteAsync(Guid id, CancellationToken cancellationToken = default);
 }

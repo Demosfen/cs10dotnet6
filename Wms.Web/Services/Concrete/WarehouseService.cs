@@ -1,4 +1,5 @@
 using AutoMapper;
+using Wms.Web.Common.Exceptions;
 using Wms.Web.Repositories.Abstract;
 using Wms.Web.Services.Abstract;
 using Wms.Web.Store.Entities;
@@ -45,9 +46,14 @@ internal sealed class WarehouseService : IWarehouseService
         return _mapper.Map<WarehouseDto>(entity);
     }
 
-    public Task UpdateAsync(WarehouseDto warehouseDto, CancellationToken ct = default)
+    public async Task UpdateAsync(WarehouseDto warehouseDto, CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        var entity = await _warehouseRepository.GetByIdAsync(warehouseDto.Id, ct)
+                     ?? throw new EntityNotFoundException(warehouseDto.Id);
+        
+        _mapper.Map(warehouseDto, entity);
+
+        await _warehouseRepository.UpdateAsync(entity, ct);
     }
 
     public Task DeleteAsync(Guid id, CancellationToken ct = default)
