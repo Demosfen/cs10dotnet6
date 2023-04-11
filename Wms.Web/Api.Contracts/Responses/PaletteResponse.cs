@@ -1,12 +1,7 @@
-using Wms.Web.Common.Exceptions;
-using Wms.Web.Store.Entities;
-
 namespace Wms.Web.Api.Contracts.Responses;
 
 public sealed class PaletteResponse
 {
-    public const decimal DefaultWeight = 30;
-    
     public required Guid Id { get; init; }
 
     public required Guid WarehouseId { get; init; }
@@ -19,7 +14,7 @@ public sealed class PaletteResponse
 
     public required decimal Depth { get; init; }
 
-    public decimal Weight { get; set; } = DefaultWeight;
+    public decimal Weight { get; set; }
     
     public decimal Volume { get; set; }
 

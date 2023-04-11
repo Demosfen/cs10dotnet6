@@ -24,7 +24,7 @@ public sealed class WarehouseController : ControllerBase
     }
     
     [HttpGet("warehouses/")]
-    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(WarehouseResponse))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(WarehouseDto))]
     public async Task<IActionResult> GetAll()
     {
         var warehouses = await _warehouseService.GetAllAsync();
