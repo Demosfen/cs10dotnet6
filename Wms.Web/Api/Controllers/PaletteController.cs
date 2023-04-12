@@ -47,7 +47,7 @@ public sealed class PaletteController : ControllerBase
         return Ok(warehouseResponse);
     }
 
-    [HttpPost("{id:guid}", Name = "CreateWarehouse")]
+    [HttpPost("{id:guid}", Name = "CreatePalette")]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(WarehouseDto))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(WarehouseDto))]

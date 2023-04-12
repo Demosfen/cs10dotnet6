@@ -18,9 +18,18 @@ public class PaletteService : IPaletteService
         _mapper = mapper;
     }
 
-    public Task CreateAsync(PaletteDto paletteDto, CancellationToken ct = default)
+    public async Task CreateAsync(PaletteDto paletteDto, CancellationToken ct = default)
     {
-        var entity = _paletteRepository
+        var entity = await _paletteRepository.GetByIdAsync(paletteDto.Id, ct);
+
+        if (entity is not null)
+        {
+            throw new ArgumentException();
+        }
+
+        entity = _mapper.Map<Palette>(paletteDto);
+
+        await _paletteRepository.CreateAsync(entity, ct);
     }
 
     public Task<IReadOnlyCollection<PaletteDto>?> GetAllAsync(CancellationToken ct = default)
