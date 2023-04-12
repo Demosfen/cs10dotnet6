@@ -8,18 +8,18 @@ using Microsoft.AspNetCore.Mvc;
 namespace Wms.Web.Api.Controllers;
 
 [ApiController]
-[Route("api/v1/warehouses/")]
+[Route("api/v1/palettes/")]
 [ProducesResponseType(StatusCodes.Status400BadRequest)]
-public sealed class WarehouseController : ControllerBase
+public sealed class PaletteController : ControllerBase
 {
-    private readonly IWarehouseService _warehouseService;
+    private readonly IPaletteService _paletteService;
     private readonly IMapper _mapper;
 
-    public WarehouseController(
-        IWarehouseService warehouseService, 
+    public PaletteController(
+        IPaletteService paletteService, 
         IMapper mapper)
     {
-        _warehouseService = warehouseService;
+        _paletteService = paletteService;
         _mapper = mapper;
     }
     
@@ -27,16 +27,16 @@ public sealed class WarehouseController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(WarehouseDto))]
     public async Task<IActionResult> GetAll()
     {
-        var warehouses = await _warehouseService.GetAllAsync();
-        var warehouseResponse = _mapper.Map<IReadOnlyCollection<WarehouseResponse>>(warehouses);
+        var palettes = await _paletteService.GetAllAsync();
+        var paletteResponse = _mapper.Map<IReadOnlyCollection<WarehouseResponse>>(palettes);
 
-        return Ok(warehouseResponse);
+        return Ok(paletteResponse);
     }
     
     [HttpGet("{warehouseId}", Name = "GetWarehouseById")]
     public async Task<IActionResult> Get([FromRoute] Guid warehouseId)
     {
-        var warehouseDto = await _warehouseService.GetByIdAsync(warehouseId);
+        var warehouseDto = await _paletteService.GetByIdAsync(warehouseId);
 
         if (warehouseDto is null)
         {
@@ -53,7 +53,7 @@ public sealed class WarehouseController : ControllerBase
     [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(WarehouseDto))]
     public async Task<IActionResult> CreateAsync([FromRoute] Guid id, [FromBody] CreateWarehouseRequest request)
     {
-        if (await _warehouseService.GetByIdAsync(id) != null)
+        if (await _paletteService.GetByIdAsync(id) != null)
         {
             return Conflict("Warehouse with the same id already exist.");
         }
@@ -62,7 +62,7 @@ public sealed class WarehouseController : ControllerBase
 
         warehouseDto.Id = id;
 
-        await _warehouseService.CreateAsync(warehouseDto);
+        await _paletteService.CreateAsync(palDto);
 
         var response = _mapper.Map<WarehouseResponse>(warehouseDto);
         
@@ -79,7 +79,7 @@ public sealed class WarehouseController : ControllerBase
 
         warehouseDto.Id = id;
 
-        await _warehouseService.UpdateAsync(warehouseDto);
+        await _paletteService.UpdateAsync(warehouseDto);
 
         var response = _mapper.Map<WarehouseResponse>(warehouseDto);
         return Ok(response);
@@ -90,7 +90,7 @@ public sealed class WarehouseController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeleteAsync(Guid id)
     {
-        await _warehouseService.DeleteAsync(id);
+        await _paletteService.DeleteAsync(id);
 
         return Ok();
     }

@@ -4,7 +4,7 @@ namespace Wms.Web.Services.Abstract;
 
 public interface IPaletteService : IBusinessService
 {
-    Task CreateAsync(WarehouseDto warehouseDto, CancellationToken ct = default);
+    Task CreateAsync(PaletteDto paletteDto, CancellationToken ct = default);
     
     Task<IReadOnlyCollection<PaletteDto>?> GetAllAsync(CancellationToken ct = default);
 

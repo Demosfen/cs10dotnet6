@@ -56,8 +56,8 @@ internal sealed class WarehouseService : IWarehouseService
         await _warehouseRepository.UpdateAsync(entity, ct);
     }
 
-    public Task DeleteAsync(Guid id, CancellationToken ct = default)
+    public async Task DeleteAsync(Guid id, CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        await _warehouseRepository.DeleteAsync(id, ct);
     }
 }
