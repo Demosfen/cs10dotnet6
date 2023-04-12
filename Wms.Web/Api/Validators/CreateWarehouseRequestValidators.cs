@@ -12,7 +12,7 @@ public sealed class CreateWarehouseRequestValidator : AbstractValidator<CreateWa
             .WithMessage("Name of the warehouse should not be null or empty.");
 
         RuleFor(x => x.Name.Length)
-            .LessThanOrEqualTo(10)
-            .WithMessage("Name of the warehouse should not be greater than 10 characters.");
+            .LessThanOrEqualTo(15)
+            .WithMessage("Name of the warehouse should not be greater than 15 characters.");
     }
 }
