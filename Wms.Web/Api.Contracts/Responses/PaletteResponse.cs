@@ -4,9 +4,7 @@ public sealed class PaletteResponse
 {
     public required Guid Id { get; init; }
 
-    public required Guid WarehouseId { get; init; }
-
-    public WarehouseResponse? Warehouse { get; set; }
+    public required Guid WarehouseId { get; set; }
 
     public required decimal Width { get; init; }
     

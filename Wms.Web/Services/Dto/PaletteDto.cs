@@ -5,13 +5,10 @@ namespace Wms.Web.Services.Dto;
 
 public sealed class PaletteDto
 {
-    public const decimal DefaultWeight = 30;
-    
-    public required Guid Id { get; init; }
+    private const int DefaultWeight = 30;
+    public required Guid Id { get; set; }
 
     public required Guid WarehouseId { get; init; }
-
-    public WarehouseDto? Warehouse { get; set; }
 
     public required decimal Width { get; init; }
     
