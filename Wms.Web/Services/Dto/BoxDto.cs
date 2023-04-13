@@ -5,9 +5,7 @@ public sealed class BoxDto
     public required Guid Id { get; init; }
     
     public required Guid PaletteId { get; init; }
-    
-    public PaletteDto? Palette { get; init; }
-    
+
     public required decimal Width { get; init; }
     
     public required decimal Height { get; init; }

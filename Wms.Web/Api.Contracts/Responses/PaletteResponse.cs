@@ -12,9 +12,9 @@ public sealed class PaletteResponse
 
     public required decimal Depth { get; init; }
 
-    public decimal Weight { get; set; }
+    public required decimal Weight { get; set; }
     
-    public decimal Volume { get; set; }
+    public required decimal Volume { get; set; }
 
     public List<BoxResponse>? Boxes { get; set; } = new();
 

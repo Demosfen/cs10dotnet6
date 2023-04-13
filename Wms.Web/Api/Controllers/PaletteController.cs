@@ -27,8 +27,8 @@ public sealed class PaletteController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IReadOnlyCollection<PaletteResponse>>> GetAll()
     {
-        var palettes = await _paletteService.GetAllAsync();
-        var paletteResponse = _mapper.Map<IReadOnlyCollection<PaletteResponse>>(palettes);
+        var palettesDto = await _paletteService.GetAllAsync();
+        var paletteResponse = _mapper.Map<IReadOnlyCollection<PaletteResponse>>(palettesDto);
 
         return Ok(paletteResponse);
     }

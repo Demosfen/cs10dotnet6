@@ -6,8 +6,6 @@ public sealed class BoxResponse
     
     public required Guid PaletteId { get; set; }
     
-    public PaletteResponse? Palette { get; set; }
-    
     public required decimal Width { get; init; }
     
     public required decimal Height { get; init; }

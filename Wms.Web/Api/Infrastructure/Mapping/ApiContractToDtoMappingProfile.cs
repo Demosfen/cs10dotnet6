@@ -18,13 +18,29 @@ public sealed class ApiContractToDtoMappingProfile : Profile
                 opt => opt.Ignore())
             .ForMember(x => x.Palettes,
                 opt => opt.Ignore());
-        
+
         CreateMap<UpdateWarehouseRequest, WarehouseDto>()
             .ForMember(x => x.Id,
                 opt => opt.Ignore())
             .ForMember(x => x.IsDeleted,
-                opt => opt.Ignore())
-            .ForMember(x => x.Palettes,
                 opt => opt.Ignore());
+
+        CreateMap<PaletteRequest, PaletteDto>()
+            .ReverseMap();
+
+        CreateMap<CreatePaletteRequest, PaletteDto>()
+            .ForMember(x => x.Id,
+                opt => opt.Ignore())
+            .ForMember(x => x.Weight,
+                opt => opt.Ignore())
+            .ForMember(x => x.Volume,
+                opt => opt.Ignore())
+            .ForMember(x => x.ExpiryDate,
+                opt => opt.Ignore())
+            .ForMember(x => x.Boxes,
+                opt => opt.Ignore());
+
+        CreateMap<BoxRequest, BoxDto>()
+            .ReverseMap();
     }
 }

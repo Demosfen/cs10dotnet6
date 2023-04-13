@@ -1,6 +1,6 @@
-namespace Wms.Web.Services.Dto;
+namespace Wms.Web.Api.Contracts.Requests;
 
-public sealed class PaletteDto
+public sealed class PaletteRequest
 {
     public required Guid Id { get; set; }
 
@@ -18,5 +18,5 @@ public sealed class PaletteDto
 
     public DateTime? ExpiryDate { get; set; }
     
-    public List<BoxDto>? Boxes { get; set; } = new();
+    public List<BoxRequest>? Boxes { get; set; } = new();
 }

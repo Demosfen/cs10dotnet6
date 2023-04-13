@@ -26,7 +26,7 @@ internal sealed class WarehouseService : IWarehouseService
 
         if (entity is not null)
         {
-            throw new ArgumentException();
+            throw new EntityAlreadyExistException(entity.Id);
         }
 
         entity = _mapper.Map<Warehouse>(warehouseDto);

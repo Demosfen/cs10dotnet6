@@ -30,13 +30,19 @@ public sealed class WarehouseDataGenerator : IWarehouseDataGenerator
 
     public async Task<Box> CreateBoxAsync(Guid paletteId)
     {
-        var box = new Box(paletteId,
-            Random.Next(1, 10), Random.Next(1, 10), Random.Next(1, 10),
-            Random.Next(5, 30),
-            DateTime.Today.AddDays(Random.Next(-100, -1)),
-            DateTime.Today.AddDays(Random.Next(0, 100)));
-        
-        await _paletteRepository.AddBoxAsync(paletteId, box, default);
+        var box = new Box
+        {
+            PaletteId = paletteId,
+            Weight = Random.Next(1, 10),
+            Id = Guid.NewGuid(),
+            Width = Random.Next(1, 10),
+            Height = Random.Next(1, 10),
+            Depth = Random.Next(1, 10),
+            ProductionDate = DateTime.Today.AddDays(Random.Next(-100, -1)),
+            ExpiryDate = DateTime.Today.AddDays(Random.Next(0, 100))
+        };
+
+        // await _paletteRepository.AddBoxAsync(paletteId, box, default);
 
         await _boxRepository.CreateAsync(box, default);
 
@@ -61,10 +67,16 @@ public sealed class WarehouseDataGenerator : IWarehouseDataGenerator
 
     public async Task<Palette> CreatePaletteAsync(Guid warehouseId)
     {
-        var palette = new Palette(warehouseId,
-            Random.Next(20, 30), Random.Next(20, 30), Random.Next(20, 30));
+        var palette = new Palette
+        {
+            WarehouseId = warehouseId,
+            Id = Guid.NewGuid(),
+            Width = Random.Next(20, 30),
+            Height = Random.Next(20, 30),
+            Depth = Random.Next(20, 30)
+        };
         
-        await _warehouseRepository.AddPaletteAsync(warehouseId, palette, default);
+        // await _warehouseRepository.AddPaletteAsync(warehouseId, palette, default);
 
         await _paletteRepository.CreateAsync(palette, default);
         
@@ -87,7 +99,11 @@ public sealed class WarehouseDataGenerator : IWarehouseDataGenerator
 
     public async Task<Warehouse> CreateWarehouse(string warehouseName)
     {
-        var warehouse = new Warehouse(warehouseName);
+        var warehouse = new Warehouse
+        {
+            Id = Guid.NewGuid(),
+            Name = warehouseName
+        };
 
         await _warehouseRepository.CreateAsync(warehouse, default);
 
