@@ -19,16 +19,6 @@ public sealed class Warehouse : IEntityWithId, ISoftDeletable
 
     public bool IsDeleted { get; set; }
 
-    // /// <summary>
-    // /// Warehouse constructor
-    // /// </summary>
-    // /// <param name="name"></param>
-    // public Warehouse(string name)
-    // {
-    //     Id = Guid.NewGuid();
-    //     Name = name;
-    // }
-
     public override string ToString()
     {
         if (Palettes is { Count: 0 })

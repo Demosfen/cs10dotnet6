@@ -11,13 +11,13 @@ internal sealed class PaletteService : IPaletteService
 {
     private const int DefaultWeight = 30;
     
-    private readonly IWarehouseService _warehouseService;
+    private readonly IGenericRepository<Warehouse> _warehouseService;
     private readonly IGenericRepository<Palette> _paletteRepository;
     private readonly IMapper _mapper;
 
     public PaletteService(
-        IWarehouseService warehouseService,
-        IPaletteRepository paletteRepository, 
+        IGenericRepository<Warehouse> warehouseService,
+        IGenericRepository<Palette> paletteRepository, 
         IMapper mapper)
     {
         _warehouseService = warehouseService;

@@ -8,5 +8,5 @@ public sealed class WarehouseDto
 
     public bool IsDeleted { get; set; }
 
-    public List<PaletteDto>? Palettes { set; get; } = new();
+    public List<PaletteDto>? Palettes { set; get; } = new ();
 }
