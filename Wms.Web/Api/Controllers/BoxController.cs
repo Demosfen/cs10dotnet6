@@ -8,18 +8,19 @@ using Microsoft.AspNetCore.Mvc;
 namespace Wms.Web.Api.Controllers;
 
 [ApiController]
-[Route("api/v1/warehouses/palettes/")]
+[Route("api/v1/warehouses/palettes/boxes/")]
 [ProducesResponseType(StatusCodes.Status400BadRequest)]
-public sealed class PaletteController : ControllerBase
+public sealed class BoxController : ControllerBase
 {
     private readonly IPaletteService _paletteService;
+    private readonly IBoxService _boxService;
     private readonly IMapper _mapper;
 
-    public PaletteController(
-        IPaletteService paletteService, 
-        IMapper mapper)
+
+    public BoxController(IPaletteService paletteService, IBoxService boxService, IMapper mapper)
     {
         _paletteService = paletteService;
+        _boxService = boxService;
         _mapper = mapper;
     }
     

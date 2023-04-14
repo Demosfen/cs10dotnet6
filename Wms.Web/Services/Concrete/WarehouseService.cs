@@ -13,7 +13,7 @@ internal sealed class WarehouseService : IWarehouseService
     private readonly IMapper _mapper;
 
     public WarehouseService(
-        IWarehouseRepository warehouseRepository, 
+        IGenericRepository<Warehouse> warehouseRepository, 
         IMapper mapper)
     {
         _warehouseRepository = warehouseRepository;
@@ -35,13 +35,14 @@ internal sealed class WarehouseService : IWarehouseService
 
     public async Task<IReadOnlyCollection<WarehouseDto>?> GetAllAsync(CancellationToken ct)
     {
-        var entities = await _warehouseRepository.GetAllAsync(cancellationToken: ct);
+        var entities = await _warehouseRepository
+            .GetAllAsync(includeProperties: nameof(Warehouse.Palettes), cancellationToken: ct);
         return _mapper.Map<IReadOnlyCollection<WarehouseDto>>(entities);
     }
 
     public async Task<WarehouseDto?> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
-        var entity = await _warehouseRepository.GetByIdAsync(id, ct);
+        var entity = await _warehouseRepository.GetByIdAsync(id, nameof(Warehouse.Palettes), ct);
 
         return _mapper.Map<WarehouseDto>(entity);
     }

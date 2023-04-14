@@ -11,22 +11,24 @@ internal sealed class PaletteService : IPaletteService
 {
     private const int DefaultWeight = 30;
     
-    private readonly IGenericRepository<Warehouse> _warehouseService;
     private readonly IGenericRepository<Palette> _paletteRepository;
     private readonly IMapper _mapper;
 
     public PaletteService(
-        IGenericRepository<Warehouse> warehouseService,
         IGenericRepository<Palette> paletteRepository, 
         IMapper mapper)
     {
-        _warehouseService = warehouseService;
         _paletteRepository = paletteRepository;
         _mapper = mapper;
     }
 
     public async Task CreateAsync(PaletteDto paletteDto, CancellationToken ct = default)
     {
+        if (await _paletteRepository.GetByIdAsync(paletteDto.Id, ct) != null)
+        {
+            throw new EntityAlreadyExistException(paletteDto.Id);
+        }
+        
         paletteDto.Weight = DefaultWeight;
         paletteDto.Volume = paletteDto.Width * paletteDto.Height * paletteDto.Depth;
         
@@ -44,9 +46,9 @@ internal sealed class PaletteService : IPaletteService
 
     public async Task<PaletteDto?> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
-        var entities = await _paletteRepository.GetByIdAsync(id, ct);
+        var entity = await _paletteRepository.GetByIdAsync(id, nameof(Palette.Boxes), ct);
 
-        return _mapper.Map<PaletteDto?>(entities);
+        return _mapper.Map<PaletteDto?>(entity);
     }
 
     public Task UpdateAsync(PaletteDto paletteDto, CancellationToken ct = default)
@@ -54,8 +56,8 @@ internal sealed class PaletteService : IPaletteService
         throw new NotImplementedException();
     }
 
-    public Task DeleteAsync(Guid id, CancellationToken ct = default)
+    public async Task DeleteAsync(Guid id, CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        await _paletteRepository.DeleteAsync(id, ct);
     }
 }

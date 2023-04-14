@@ -48,7 +48,16 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
     }
 
     public async Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken) 
-        => await _dbSet.FindAsync(id);
+        => await _dbSet.SingleOrDefaultAsync(x => x.Id == id,
+            cancellationToken: cancellationToken);
+    
+    public async Task<TEntity?> GetByIdAsync(Guid id, string includeProperties, CancellationToken cancellationToken)
+    {
+        var entities =
+            await GetAllAsync(null, null, includeProperties, cancellationToken);
+
+        return entities.FirstOrDefault(x => x.Id == id);
+    }
 
     public async Task CreateAsync(TEntity entity, CancellationToken cancellationToken)
     {

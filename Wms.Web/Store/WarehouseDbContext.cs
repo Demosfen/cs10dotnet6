@@ -25,6 +25,10 @@ public sealed class WarehouseDbContext : DbContext, IWarehouseDbContext
         base.OnModelCreating(modelBuilder);
         
         modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
+
+        modelBuilder.Entity<Palette>().HasQueryFilter(p => !p.IsDeleted);
+        
+        modelBuilder.Entity<Box>().HasQueryFilter(p => !p.IsDeleted);
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) 

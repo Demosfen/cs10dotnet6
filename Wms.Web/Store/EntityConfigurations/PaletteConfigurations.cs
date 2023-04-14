@@ -38,12 +38,7 @@ public sealed class PaletteConfigurations : IEntityTypeConfiguration<Palette>
         builder
             .Property(x => x.ExpiryDate)
             .HasConversion<DateTime>();
-
-        // builder
-        //     .HasOne(x => x.Warehouse)
-        //     .WithMany(x => x.Palettes)
-        //     .HasForeignKey(x => x.WarehouseId);
-
+        
         builder
             .HasMany<Box>(x => x.Boxes)
             .WithOne()
