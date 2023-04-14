@@ -28,55 +28,55 @@ public sealed class BoxController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IReadOnlyCollection<PaletteResponse>>> GetAll()
     {
-        var palettesDto = await _paletteService.GetAllAsync();
-        var paletteResponse = _mapper.Map<IReadOnlyCollection<PaletteResponse>>(palettesDto);
+        var boxDto = await _paletteService.GetAllAsync();
+        var boxResponse = _mapper.Map<IReadOnlyCollection<PaletteResponse>>(boxDto);
 
-        return Ok(paletteResponse);
+        return Ok(boxResponse);
     }
     
-    [HttpGet("{paletteId}", Name = "GetPaletteById")]
-    public async Task<IActionResult> Get([FromRoute] Guid paletteId)
+    [HttpGet("{boxId}", Name = "GetBoxById")]
+    public async Task<IActionResult> Get([FromRoute] Guid boxId)
     {
-        var paletteDto = await _paletteService.GetByIdAsync(paletteId);
+        var boxDto = await _boxService.GetByIdAsync(boxId);
 
-        if (paletteDto is null)
+        if (boxDto is null)
         {
             return NotFound();
         }
 
-        var paletteResponse = _mapper.Map<PaletteResponse>(paletteDto);
-        return Ok(paletteResponse);
+        var boxResponse = _mapper.Map<BoxResponse>(boxDto);
+        return Ok(boxResponse);
     }
 
-    [HttpPost("{id:guid}", Name = "CreatePalette")]
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(PaletteDto))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(PaletteDto))]
-    public async Task<IActionResult> CreateAsync([FromRoute] Guid id, [FromBody] CreatePaletteRequest request)
-    {
-        if (await _paletteService.GetByIdAsync(id) != null)
-        {
-            return Conflict("Palette with the same id already exist.");
-        }
-        
-        var paletteDto = _mapper.Map<PaletteDto>(request);
-
-        paletteDto.Id = id;
-
-        await _paletteService.CreateAsync(paletteDto);
-
-        var response = _mapper.Map<PaletteResponse>(paletteDto);
-        
-        return Created("Palette created:", paletteDto);
-    }
-    
-    [HttpDelete("{id:guid}", Name = "DeletePalette")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> DeleteAsync(Guid id)
-    {
-        await _paletteService.DeleteAsync(id);
-    
-        return Ok();
-    }
+    // [HttpPost("{id:guid}", Name = "CreatePalette")]
+    // [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(PaletteDto))]
+    // [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    // [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(PaletteDto))]
+    // public async Task<IActionResult> CreateAsync([FromRoute] Guid id, [FromBody] CreatePaletteRequest request)
+    // {
+    //     if (await _paletteService.GetByIdAsync(id) != null)
+    //     {
+    //         return Conflict("Palette with the same id already exist.");
+    //     }
+    //     
+    //     var paletteDto = _mapper.Map<PaletteDto>(request);
+    //
+    //     paletteDto.Id = id;
+    //
+    //     await _paletteService.CreateAsync(paletteDto);
+    //
+    //     var response = _mapper.Map<PaletteResponse>(paletteDto);
+    //     
+    //     return Created("Palette created:", paletteDto);
+    // }
+    //
+    // [HttpDelete("{id:guid}", Name = "DeletePalette")]
+    // [ProducesResponseType(StatusCodes.Status200OK)]
+    // [ProducesResponseType(StatusCodes.Status404NotFound)]
+    // public async Task<ActionResult> DeleteAsync(Guid id)
+    // {
+    //     await _paletteService.DeleteAsync(id);
+    //
+    //     return Ok();
+    // }
 }

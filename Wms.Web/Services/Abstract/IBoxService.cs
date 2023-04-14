@@ -10,7 +10,7 @@ public interface IBoxService : IBusinessService
 
     Task<BoxDto?> GetByIdAsync(Guid id, CancellationToken ct = default);
     
-    Task UpdateAsync(BoxDto warehouseDto, CancellationToken ct = default);
+    Task UpdateAsync(BoxDto boxDto, CancellationToken ct = default);
     
     Task DeleteAsync(Guid id, CancellationToken ct = default);
 }
