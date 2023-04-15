@@ -4,12 +4,7 @@ namespace Wms.Web.Store.Entities;
 
 public sealed class Palette : StorageUnit
 {
-    // /// <summary>
-    // /// Navigation property
-    // /// </summary>
-    // private Warehouse? _warehouse;
-    
-    /// <summary>
+   /// <summary>
     /// ID of the warehouse where palette is stored
     /// </summary>
     public required Guid WarehouseId { get; set; }
@@ -22,7 +17,7 @@ public sealed class Palette : StorageUnit
     /// <summary>
     /// Boxes on the palette
     /// </summary>
-    public List<Box>? Boxes { get; } = new();
+    public List<Box>? Boxes { get; set; } = new();
     
     /// <summary>
     /// Palette weight computed as
@@ -36,30 +31,6 @@ public sealed class Palette : StorageUnit
     /// the minimal box exp. date.
     /// </summary>
     public override DateTime? ExpiryDate { get; set; }
-
-    // /// <summary>
-    // ///  Default palette constructor
-    // /// </summary>
-    // public Palette(
-    //     Guid warehouseId,
-    //     decimal width,
-    //     decimal height,
-    //     decimal depth)
-    //     : base(width, height, depth)
-    // {
-    //     WarehouseId = warehouseId;
-    // }
-
-    // /// <summary>
-    // /// Navigation property
-    // /// </summary>
-    // /// <exception cref="UninitializedPropertyException">Property uninitialized</exception>
-    // public Warehouse Warehouse
-    // {
-    //     set => _warehouse = value;
-    //     get => _warehouse
-    //            ?? throw new UninitializedPropertyException(nameof(Warehouse));
-    // }
 
     public override string ToString()
     {

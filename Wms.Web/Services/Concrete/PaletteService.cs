@@ -39,14 +39,16 @@ internal sealed class PaletteService : IPaletteService
 
     public async Task<IReadOnlyCollection<PaletteDto>> GetAllAsync(CancellationToken ct = default)
     {
-        var entities = await _paletteRepository.GetAllAsync(cancellationToken: ct);
+        var entities = await _paletteRepository
+            .GetAllAsync(includeProperties: nameof(Palette.Boxes), cancellationToken: ct);
         
         return _mapper.Map<IReadOnlyCollection<PaletteDto>>(entities);
     }
 
     public async Task<PaletteDto?> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
-        var entity = await _paletteRepository.GetByIdAsync(id, nameof(Palette.Boxes), ct);
+        var entity = await _paletteRepository
+            .GetByIdAsync(id, nameof(Palette.Boxes), ct);
 
         return _mapper.Map<PaletteDto?>(entity);
     }

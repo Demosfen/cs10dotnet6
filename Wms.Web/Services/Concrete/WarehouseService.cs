@@ -37,6 +37,7 @@ internal sealed class WarehouseService : IWarehouseService
     {
         var entities = await _warehouseRepository
             .GetAllAsync(includeProperties: nameof(Warehouse.Palettes), cancellationToken: ct);
+        
         return _mapper.Map<IReadOnlyCollection<WarehouseDto>>(entities);
     }
 

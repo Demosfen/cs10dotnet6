@@ -40,6 +40,12 @@ public sealed class ApiContractToDtoMappingProfile : Profile
             .ForMember(x => x.Boxes,
                 opt => opt.Ignore());
 
+        CreateMap<CreateBoxRequest, BoxDto>()
+            .ForMember(x => x.Id, 
+                opt => opt.Ignore())
+            .ForMember(x => x.Volume, 
+                opt => opt.Ignore());
+        
         CreateMap<BoxRequest, BoxDto>()
             .ReverseMap();
     }
