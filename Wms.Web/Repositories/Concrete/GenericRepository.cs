@@ -56,7 +56,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
         var entities =
             await GetAllAsync(null, null, includeProperties, cancellationToken);
 
-        return entities.FirstOrDefault(x => x.Id == id);
+        return entities.SingleOrDefault(x => x.Id == id);
     }
 
     public async Task CreateAsync(TEntity entity, CancellationToken cancellationToken)

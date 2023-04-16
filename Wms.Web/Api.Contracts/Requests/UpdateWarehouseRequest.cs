@@ -4,5 +4,5 @@ public class UpdateWarehouseRequest
 {
     public required string Name { get; set; }
     
-    public List<PaletteRequest>? Palettes { get; set; }
+    public List<UpdatePaletteRequest>? Palettes { get; set; }
 }

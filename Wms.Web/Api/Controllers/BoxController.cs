@@ -24,9 +24,9 @@ public sealed class BoxController : ControllerBase
         _mapper = mapper;
     }
     
-    [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<BoxDto>))]
-    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(IReadOnlyCollection<BoxDto>))]
+    [HttpGet(Name = "GetAllBoxesFromDb")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IReadOnlyCollection<BoxResponse>>> GetAllAsync()
     {
         var boxesDto = await _boxService.GetAllAsync();
@@ -42,8 +42,9 @@ public sealed class BoxController : ControllerBase
     }
     
     [HttpGet("{boxId}", Name = "GetBoxById")]
-    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(BoxDto))]
-    public async Task<IActionResult> GetAsync([FromRoute] Guid boxId)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<BoxResponse>> GetAsync([FromRoute] Guid boxId)
     {
         var boxDto = await _boxService.GetByIdAsync(boxId);
 
@@ -58,8 +59,8 @@ public sealed class BoxController : ControllerBase
 
     [HttpPost("{id:guid}", Name = "CreateBox")]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(BoxDto))]
-    public async Task<IActionResult> CreateAsync([FromRoute] Guid id, [FromBody] CreateBoxRequest request)
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    public async Task<ActionResult<BoxResponse>> CreateAsync([FromRoute] Guid id, [FromBody] CreateBoxRequest request)
     {
         if (await _boxService.GetByIdAsync(id) != null)
         {
@@ -79,13 +80,13 @@ public sealed class BoxController : ControllerBase
     
         var response = _mapper.Map<BoxResponse>(boxDto);
         
-        return Created("Palette created:", boxDto);
+        return Created("Box created", response);
     }
     
     [HttpDelete("{id:guid}", Name = "DeleteBox")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> DeleteAsync(Guid id)
+    public async Task<IActionResult> DeleteAsync([FromRoute] Guid id)
     {
         await _boxService.DeleteAsync(id);
     

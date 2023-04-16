@@ -37,13 +37,7 @@ public sealed class BoxConfigurations : IEntityTypeConfiguration<Box>
         
         builder
             .Property(x => x.ExpiryDate)
-            //.HasConversion<double>()
             .HasConversion<DateTime>()
             .IsRequired();
-
-        // builder
-        //     .HasOne(x => x.Palette)
-        //     .WithMany(x => x.Boxes)
-        //     .HasForeignKey(x => x.PaletteId);
     }
 }

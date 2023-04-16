@@ -6,7 +6,7 @@ namespace Wms.Web.Repositories.Concrete;
 
 public class BoxRepository : GenericRepository<Box>, IBoxRepository
 {
-    public BoxRepository(WarehouseDbContext dbContext) : base(dbContext)
+    public BoxRepository(WarehouseDbContext dbContext) : base(dbContext) //TODO problems with Autofac registration if deleted
     {
     }
 }

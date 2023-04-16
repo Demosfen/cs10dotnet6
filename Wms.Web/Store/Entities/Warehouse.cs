@@ -7,8 +7,7 @@ public sealed class Warehouse : IEntityWithId, ISoftDeletable
     public required Guid Id { get; init; } 
 
     /// <summary>
-    /// New property for Migrations which is
-    /// a simple Warehouse name
+    /// A Warehouse name
     /// </summary>
     public required string Name { get; set; }
 
@@ -17,6 +16,9 @@ public sealed class Warehouse : IEntityWithId, ISoftDeletable
     /// </summary>
     public List<Palette>? Palettes { get; set; } = new();
 
+    /// <summary>
+    /// Soft delete flag
+    /// </summary>
     public bool IsDeleted { get; set; }
 
     public override string ToString()

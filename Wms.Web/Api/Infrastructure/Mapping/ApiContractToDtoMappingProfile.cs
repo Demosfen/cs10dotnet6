@@ -25,7 +25,7 @@ public sealed class ApiContractToDtoMappingProfile : Profile
             .ForMember(x => x.IsDeleted,
                 opt => opt.Ignore());
 
-        CreateMap<PaletteRequest, PaletteDto>()
+        CreateMap<UpdatePaletteRequest, PaletteDto>()
             .ReverseMap();
 
         CreateMap<CreatePaletteRequest, PaletteDto>()
@@ -46,7 +46,7 @@ public sealed class ApiContractToDtoMappingProfile : Profile
             .ForMember(x => x.Volume, 
                 opt => opt.Ignore());
         
-        CreateMap<BoxRequest, BoxDto>()
+        CreateMap<UpdateBoxRequest, BoxDto>()
             .ReverseMap();
     }
 }

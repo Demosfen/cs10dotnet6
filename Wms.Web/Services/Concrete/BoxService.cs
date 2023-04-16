@@ -25,9 +25,11 @@ public class BoxService : IBoxService
         _mapper = mapper;
     }
 
+    /// <inheritdoc />
     public async Task CreateAsync(BoxDto boxDto, CancellationToken ct = default)
     {
-        var paletteDto = await _paletteRepository.GetByIdAsync(boxDto.PaletteId, ct)
+        var paletteDto = await _paletteRepository
+                             .GetByIdAsync(boxDto.PaletteId, nameof(Palette.Boxes), ct)
                          ?? throw new EntityNotFoundException(boxDto.PaletteId);
         
         if (boxDto.Width > paletteDto.Width 
@@ -61,9 +63,9 @@ public class BoxService : IBoxService
 
         await _boxRepository.CreateAsync(box, ct);
         
+        paletteDto.Boxes?.Add(box);  //TODO does not update palette parameters...why?
         paletteDto.Weight += boxDto.Weight;
         paletteDto.Volume += boxDto.Volume;
-        paletteDto.Boxes?.Add(box);
         paletteDto.ExpiryDate = paletteDto.Boxes?.Min(x => x.ExpiryDate);
 
         var palette = _mapper.Map<Palette>(paletteDto);
@@ -71,6 +73,7 @@ public class BoxService : IBoxService
         await _paletteRepository.UpdateAsync(palette, ct);
     }
 
+    /// <inheritdoc />
     public async Task<IReadOnlyCollection<BoxDto>?> GetAllAsync(CancellationToken ct = default)
     {
         var boxes = await _boxRepository.GetAllAsync(cancellationToken: ct);
@@ -78,6 +81,7 @@ public class BoxService : IBoxService
         return _mapper.Map<IReadOnlyCollection<BoxDto>>(boxes);
     }
 
+    /// <inheritdoc />
     public async Task<BoxDto?> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
         var box = await _boxRepository.GetByIdAsync(id, ct);
@@ -87,6 +91,7 @@ public class BoxService : IBoxService
         return boxDto;
     }
 
+    /// <inheritdoc />
     public async Task UpdateAsync(BoxDto boxDto, CancellationToken ct = default)
     {
         var box = _mapper.Map<Box>(boxDto);
@@ -94,13 +99,15 @@ public class BoxService : IBoxService
         await _boxRepository.UpdateAsync(box, ct);
     }
 
+    /// <inheritdoc />
     public async Task DeleteAsync(Guid id, CancellationToken ct = default)
     {
         var boxDto = await _boxRepository.GetByIdAsync(id, ct);
 
         if (boxDto != null)
         {
-            var paletteDto = await _paletteRepository.GetByIdAsync(boxDto.PaletteId, ct)
+            var paletteDto = await _paletteRepository
+                                 .GetByIdAsync(boxDto.PaletteId, nameof(Palette.Boxes) ,ct)
                              ?? throw new EntityNotFoundException(boxDto.PaletteId);
         
             await _boxRepository.DeleteAsync(id, ct);

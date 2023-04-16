@@ -2,5 +2,5 @@
 
 public sealed class CreateWarehouseRequest
 {
-    public required string Name { get; init; }
+    public required string Name { get; set; }
 }

@@ -7,7 +7,7 @@ public sealed class Palette : StorageUnit
    /// <summary>
     /// ID of the warehouse where palette is stored
     /// </summary>
-    public required Guid WarehouseId { get; set; }
+    public required Guid WarehouseId { get; init; }
     
     /// <summary>
     /// Empty palette weight
@@ -28,7 +28,7 @@ public sealed class Palette : StorageUnit
 
     /// <summary>
     /// Palette expiry date is computed as
-    /// the minimal box exp. date.
+    /// the minimal box expiry date.
     /// </summary>
     public override DateTime? ExpiryDate { get; set; }
 

@@ -5,7 +5,7 @@ using AutoMapper;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
-using Wms.Web.Api.Contracts.Requests;
+using Wms.Web.Api.Infrastructure.Filters;
 using Wms.Web.Api.Infrastructure.Mapping;
 using Wms.Web.Api.Validators;
 using Wms.Web.Repositories.Infrastructure.DI;
@@ -28,14 +28,16 @@ config.AddEnvironmentVariables("WarehouseApi_");
 
 builder.Services
     .AddControllers()
-    .AddControllersAsServices();
-    // .AddMvcOptions();
+    .AddControllersAsServices()
+    .AddMvcOptions(opt =>
+    {
+        opt.Filters.Add<DefaultExceptionFilter>();
+    });
 
 builder.Services.AddFluentValidationAutoValidation(cfg =>
     cfg.DisableDataAnnotationsValidation = true);
 builder.Services.AddValidatorsFromAssemblyContaining<CreateWarehouseRequestValidator>();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {

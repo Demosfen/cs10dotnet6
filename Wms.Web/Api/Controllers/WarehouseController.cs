@@ -23,18 +23,20 @@ public sealed class WarehouseController : ControllerBase
         _mapper = mapper;
     }
     
-    [HttpGet]
-    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(WarehouseDto))]
-    public async Task<IActionResult> GetAll()
+    [HttpGet(Name = "GetAllWarehouses")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<IReadOnlyCollection<WarehouseResponse>>> GetAll()
     {
-        var warehouses = await _warehouseService.GetAllAsync();
-        var warehouseResponse = _mapper.Map<IReadOnlyCollection<WarehouseResponse>>(warehouses);
+        var warehousesDto = await _warehouseService.GetAllAsync();
+        var warehouseResponse = _mapper.Map<IReadOnlyCollection<WarehouseResponse>>(warehousesDto);
 
         return Ok(warehouseResponse);
     }
     
     [HttpGet("{warehouseId}", Name = "GetWarehouseById")]
-    public async Task<IActionResult> Get([FromRoute] Guid warehouseId)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<WarehouseResponse>> Get([FromRoute] Guid warehouseId)
     {
         var warehouseDto = await _warehouseService.GetByIdAsync(warehouseId);
 
@@ -48,10 +50,9 @@ public sealed class WarehouseController : ControllerBase
     }
 
     [HttpPost("{id:guid}", Name = "CreateWarehouse")]
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(WarehouseDto))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(WarehouseDto))]
-    public async Task<IActionResult> CreateAsync([FromRoute] Guid id, [FromBody] CreateWarehouseRequest request)
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    public async Task<ActionResult<WarehouseResponse>> CreateAsync([FromRoute] Guid id, [FromBody] CreateWarehouseRequest request)
     {
         if (await _warehouseService.GetByIdAsync(id) != null)
         {
@@ -64,16 +65,15 @@ public sealed class WarehouseController : ControllerBase
 
         await _warehouseService.CreateAsync(warehouseDto);
 
-        var response = _mapper.Map<WarehouseResponse>(warehouseDto);
+        var warehouseResponse = _mapper.Map<WarehouseResponse>(warehouseDto);
         
-        return Created("Warehouse created:", warehouseDto);
+        return Created("Warehouse created:", warehouseResponse);
     }
     
     [HttpPut("{id:guid}", Name = "UpdateWarehouse")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WarehouseDto))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(UpdateWarehouseRequest))]
-    public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, [FromBody] CreateWarehouseRequest request)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<WarehouseResponse>> UpdateAsync([FromRoute] Guid id, [FromBody] UpdateWarehouseRequest request)
     {
         var warehouseDto = _mapper.Map<WarehouseDto>(request);
 
@@ -81,8 +81,8 @@ public sealed class WarehouseController : ControllerBase
 
         await _warehouseService.UpdateAsync(warehouseDto);
 
-        var response = _mapper.Map<WarehouseResponse>(warehouseDto);
-        return Ok(response);
+        var warehouseResponse = _mapper.Map<WarehouseResponse>(warehouseDto);
+        return Ok(warehouseResponse);
     }
 
     [HttpDelete("{id:guid}", Name = "DeleteWarehouse")]

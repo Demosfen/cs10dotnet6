@@ -23,7 +23,8 @@ public sealed class PaletteController : ControllerBase
         _mapper = mapper;
     }
     
-    [HttpGet]
+    [HttpGet(Name = "GetAllPalettesFromDb")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IReadOnlyCollection<PaletteResponse>>> GetAll()
     {
@@ -34,7 +35,9 @@ public sealed class PaletteController : ControllerBase
     }
     
     [HttpGet("{paletteId}", Name = "GetPaletteById")]
-    public async Task<IActionResult> Get([FromRoute] Guid paletteId)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<PaletteResponse>> Get([FromRoute] Guid paletteId)
     {
         var paletteDto = await _paletteService.GetByIdAsync(paletteId);
 
@@ -48,10 +51,9 @@ public sealed class PaletteController : ControllerBase
     }
 
     [HttpPost("{id:guid}", Name = "CreatePalette")]
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(PaletteDto))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(PaletteDto))]
-    public async Task<IActionResult> CreateAsync([FromRoute] Guid id, [FromBody] CreatePaletteRequest request)
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    public async Task<ActionResult<PaletteResponse>> CreateAsync([FromRoute] Guid id, [FromBody] CreatePaletteRequest request)
     {
         if (await _paletteService.GetByIdAsync(id) != null)
         {
@@ -66,13 +68,13 @@ public sealed class PaletteController : ControllerBase
 
         var response = _mapper.Map<PaletteResponse>(paletteDto);
         
-        return Created("Palette created:", paletteDto);
+        return Created("Palette created:", response);
     }
     
     [HttpDelete("{id:guid}", Name = "DeletePalette")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> DeleteAsync(Guid id)
+    public async Task<IActionResult> DeleteAsync(Guid id)
     {
         await _paletteService.DeleteAsync(id);
     
