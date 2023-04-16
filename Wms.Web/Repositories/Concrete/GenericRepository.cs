@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Wms.Web.Store.Specifications;
 using Wms.Web.Common.Exceptions;
 using Wms.Web.Repositories.Abstract;
-using Wms.Web.Store;
 using Wms.Web.Store.Interfaces;
 
 namespace Wms.Web.Repositories.Concrete;
@@ -15,7 +14,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
     
     public IDbUnitOfWork UnitOfWork { get; }
 
-    public GenericRepository(WarehouseDbContext dbContext)
+    public GenericRepository(IWarehouseDbContext dbContext)
     {
         _dbSet = dbContext.Set<TEntity>();
 

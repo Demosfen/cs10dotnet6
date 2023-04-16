@@ -22,7 +22,7 @@ public sealed class WarehouseConfigurations : IEntityTypeConfiguration<Warehouse
             .HasMany<Palette>(x => x.Palettes)
             .WithOne()
             .HasForeignKey(x => x.WarehouseId)
-            .OnDelete(DeleteBehavior.Cascade)
+            .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
     }
 }

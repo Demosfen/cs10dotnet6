@@ -1,8 +1,6 @@
 using Autofac;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Wms.Web.Store.Interfaces;
 
 namespace Wms.Web.Store.Infrastructure.DI;
 
@@ -23,7 +21,6 @@ public sealed class WarehouseDbContextModule : Module
                 
                 return new WarehouseDbContext(options);
             })
-            .AsSelf()
             .AsImplementedInterfaces()
             .InstancePerLifetimeScope();
     }

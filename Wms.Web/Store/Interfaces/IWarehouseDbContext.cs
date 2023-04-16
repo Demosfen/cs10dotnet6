@@ -14,11 +14,9 @@ public interface IWarehouseDbContext : IDbUnitOfWork
     DbSet<Palette> Palettes { get; }
     
     DbSet<Box> Boxes { get; }
-    //
-    // /// <summary>
-    // /// Saves all the changes in this context to the database
-    // /// </summary>
-    // Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
-     
+    
     DatabaseFacade Database { get; }
+
+    DbSet<TEntity> Set<TEntity>()
+        where TEntity : class;
 }
