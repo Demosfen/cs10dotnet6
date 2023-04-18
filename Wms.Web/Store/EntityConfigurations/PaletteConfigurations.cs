@@ -9,6 +9,9 @@ public sealed class PaletteConfigurations : IEntityTypeConfiguration<Palette>
     public void Configure(EntityTypeBuilder<Palette> builder)
     {
         builder.ToTable("Palettes");
+        builder
+            .Property(x => x.CreatedAt)
+            .IsRequired();
 
         builder
             .Property(x => x.Width)

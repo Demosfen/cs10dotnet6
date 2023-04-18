@@ -26,9 +26,9 @@ public sealed class WarehouseDbContext : DbContext, IWarehouseDbContext
         
         modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
 
-        modelBuilder.Entity<Palette>().HasQueryFilter(p => !p.IsDeleted);
+        modelBuilder.Entity<Palette>().HasQueryFilter(p => p.DeletedAt == null);
         
-        modelBuilder.Entity<Box>().HasQueryFilter(p => !p.IsDeleted);
+        modelBuilder.Entity<Box>().HasQueryFilter(p => p.DeletedAt == null);
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) 
@@ -41,17 +41,32 @@ public sealed class WarehouseDbContext : DbContext, IWarehouseDbContext
     {
         ChangeTracker.DetectChanges();
 
+        var markedAsCreated = ChangeTracker.Entries()
+            .Where(x => x.State == EntityState.Added);
+
+        var markedAsModified = ChangeTracker.Entries()
+            .Where(x => x.State == EntityState.Modified);
+
         var markedAsDeleted = ChangeTracker.Entries()
             .Where(x => x.State == EntityState.Deleted);
+        
+        foreach (var item in markedAsCreated)
+        {
+            if (item.Entity is not IAuditableEntity entity) continue;
+            entity.CreatedAt = DateTime.UtcNow;
+        }
+        
+        foreach (var item in markedAsModified)
+        {
+            if (item.Entity is not IAuditableEntity entity) continue;
+            entity.UpdatedAt = DateTime.UtcNow;
+        }
 
         foreach (var item in markedAsDeleted)
         {
-            if (item.Entity is not ISoftDeletable entity) continue;
-            // Set the entity to unchanged
-            // (if we mark the whole entity as Modified, every field gets sent to Db as an update)!
+            if (item.Entity is not IAuditableEntity entity) continue;
             item.State = EntityState.Unchanged;
-            // Update only IsDeleted flag
-            entity.IsDeleted = true;
+            entity.DeletedAt = DateTime.UtcNow;
         }
 
         return await base.SaveChangesAsync(cancellationToken);

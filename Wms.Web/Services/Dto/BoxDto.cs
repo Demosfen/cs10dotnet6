@@ -19,4 +19,5 @@ public sealed class BoxDto
     public DateTime? ProductionDate { get; set; }
     
     public DateTime? ExpiryDate { get; set; }
+    
 }

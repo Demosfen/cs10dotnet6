@@ -9,6 +9,6 @@ public static class EntitySpecifications
         => source.Where(x => x.Id == id);
 
     public static IQueryable<T> NotDeleted<T>(this IQueryable<T> source)
-        where T : ISoftDeletable
-        => source.Where(x => !x.IsDeleted);
+        where T : IAuditableEntity
+        => source.Where(x => x.DeletedAt == null);
 }

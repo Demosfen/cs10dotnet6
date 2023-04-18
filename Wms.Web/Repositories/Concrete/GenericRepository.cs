@@ -8,7 +8,7 @@ using Wms.Web.Store.Interfaces;
 namespace Wms.Web.Repositories.Concrete;
 
 public class GenericRepository<TEntity> : IGenericRepository<TEntity>
-    where TEntity : class, IEntityWithId, ISoftDeletable
+    where TEntity : class, IEntityWithId, IAuditableEntity
 {
     private readonly DbSet<TEntity> _dbSet;
     

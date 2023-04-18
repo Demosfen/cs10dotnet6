@@ -18,7 +18,7 @@ public sealed class WarehouseConfigurations : IEntityTypeConfiguration<Warehouse
             .Property(x => x.Name)
             .IsRequired();
 
-        builder  //TODO OnDelete Cascade does not work. Why?
+        builder 
             .HasMany<Palette>(x => x.Palettes)
             .WithOne()
             .HasForeignKey(x => x.WarehouseId)

@@ -14,15 +14,11 @@ public sealed class ApiContractToDtoMappingProfile : Profile
         CreateMap<CreateWarehouseRequest, WarehouseDto>()
             .ForMember(x => x.Id,
                 opt => opt.Ignore())
-            .ForMember(x => x.IsDeleted,
-                opt => opt.Ignore())
             .ForMember(x => x.Palettes,
                 opt => opt.Ignore());
 
         CreateMap<UpdateWarehouseRequest, WarehouseDto>()
             .ForMember(x => x.Id,
-                opt => opt.Ignore())
-            .ForMember(x => x.IsDeleted,
                 opt => opt.Ignore());
 
         CreateMap<UpdatePaletteRequest, PaletteDto>()

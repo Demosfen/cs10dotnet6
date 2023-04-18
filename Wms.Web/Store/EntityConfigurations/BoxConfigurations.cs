@@ -9,6 +9,10 @@ public sealed class BoxConfigurations : IEntityTypeConfiguration<Box>
     public void Configure(EntityTypeBuilder<Box> builder)
     {
         builder.HasKey(x => x.Id);
+        
+        builder
+            .Property(x => x.CreatedAt)
+            .IsRequired();
 
         builder
             .Property(x => x.Width)

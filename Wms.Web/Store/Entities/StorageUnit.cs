@@ -6,16 +6,13 @@ namespace Wms.Web.Store.Entities;
 /// This is an abstract class, which contains common properties
 /// for rectangle objects of a warehouse.
 /// </summary>
-public abstract class StorageUnit: IEntityWithId, ISoftDeletable
+public abstract class StorageUnit: IEntityWithId, IAuditableEntity
 {
     /// <summary>
     /// Unit default expiry days
     /// </summary>
     protected const int ExpiryDays = 100;
-    
-    /// <summary>
-    /// Unit ID
-    /// </summary>
+
     public required Guid Id { get; init; }
     
     /// <summary>
@@ -47,4 +44,10 @@ public abstract class StorageUnit: IEntityWithId, ISoftDeletable
     /// Unit expiry date/time
     /// </summary>
     public abstract DateTime? ExpiryDate { get; set; }
+
+    public DateTime CreatedAt { get; set; }
+    
+    public DateTime? UpdatedAt { get; set; }
+    
+    public DateTime? DeletedAt { get; set; }
 }

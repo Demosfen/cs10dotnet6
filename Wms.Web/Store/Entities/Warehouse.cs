@@ -2,7 +2,7 @@ using Wms.Web.Store.Interfaces;
 
 namespace Wms.Web.Store.Entities;
 
-public sealed class Warehouse : IEntityWithId, ISoftDeletable
+public sealed class Warehouse : IEntityWithId, IAuditableEntity
 {
     public required Guid Id { get; init; } 
 
@@ -16,10 +16,12 @@ public sealed class Warehouse : IEntityWithId, ISoftDeletable
     /// </summary>
     public List<Palette>? Palettes { get; set; } = new();
 
-    /// <summary>
-    /// Soft delete flag
-    /// </summary>
-    public bool IsDeleted { get; set; }
+
+    public DateTime CreatedAt { get; set; }
+    
+    public DateTime? UpdatedAt { get; set; }
+    
+    public DateTime? DeletedAt { get; set; }
 
     public override string ToString()
     {
