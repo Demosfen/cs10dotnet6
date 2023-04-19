@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Wms.Web.Api.Contracts.Responses;
 using Wms.Web.Services.Abstract;
 using Wms.Web.Api.Contracts.Requests;
@@ -98,6 +99,18 @@ public sealed class WarehouseController : ControllerBase
         var warehouseResponse = _mapper.Map<WarehouseResponse>(warehouseDto);
         return Ok(warehouseResponse);
     }
+    
+    // [HttpPut("{id:guid}", Name = "RestoreWarehouse")]
+    // [ProducesResponseType(StatusCodes.Status200OK)]
+    // [ProducesResponseType(StatusCodes.Status404NotFound)]
+    // public async Task<ActionResult<WarehouseResponse>> RestoreAsync([FromRoute] Guid id)
+    // {
+    //     var warehouseDto = await _warehouseService.GetByIdAsync(id);
+    //
+    //     await .UpdateAsync(warehouseDto, default);
+    //
+    //     return Ok();
+    // }
 
     [HttpDelete("{id:guid}", Name = "DeleteWarehouse")]
     [ProducesResponseType(StatusCodes.Status200OK)]
