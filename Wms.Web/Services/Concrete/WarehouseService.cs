@@ -4,6 +4,7 @@ using Wms.Web.Repositories.Abstract;
 using Wms.Web.Services.Abstract;
 using Wms.Web.Store.Entities;
 using Wms.Web.Services.Dto;
+using Wms.Web.Store.Specifications;
 
 namespace Wms.Web.Services.Concrete;
 
@@ -33,11 +34,27 @@ internal sealed class WarehouseService : IWarehouseService
         await _warehouseRepository.CreateAsync(entity, ct);
     }
 
-    public async Task<IReadOnlyCollection<WarehouseDto>?> GetAllAsync(CancellationToken ct)
+    public async Task<IReadOnlyCollection<WarehouseDto>?> GetAllAsync(int offset, int size, bool deleted, CancellationToken ct)
     {
-        var entities = await _warehouseRepository
-            .GetAllAsync(includeProperties: nameof(Warehouse.Palettes), cancellationToken: ct);
-        
+        IEnumerable<Warehouse?> entities;
+
+        switch (deleted)
+        {
+            case true:
+                entities = await _warehouseRepository
+                    .GetAllAsync(null,
+                        q => q.Skip(offset).Deleted().Take(size).OrderBy(x => x.CreatedAt),
+                        includeProperties: nameof(Warehouse.Palettes), cancellationToken: ct);
+                break;
+            
+            case false: 
+                entities = await _warehouseRepository
+                    .GetAllAsync(null,
+                        q => q.Skip(offset).NotDeleted().Take(size).OrderBy(x => x.CreatedAt),
+                        includeProperties: nameof(Warehouse.Palettes), cancellationToken: ct);
+                break;
+        }
+
         return _mapper.Map<IReadOnlyCollection<WarehouseDto>>(entities);
     }
 

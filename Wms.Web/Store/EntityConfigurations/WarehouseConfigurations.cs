@@ -24,5 +24,17 @@ public sealed class WarehouseConfigurations : IEntityTypeConfiguration<Warehouse
             .HasForeignKey(x => x.WarehouseId)
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
+
+        builder
+            .Property(x => x.CreatedAt)
+            .IsRequired();
+        
+        builder
+            .Property(x => x.UpdatedAt)
+            .HasDefaultValue(null);
+        
+        builder
+            .Property(x => x.DeletedAt)
+            .HasDefaultValue(null);
     }
 }

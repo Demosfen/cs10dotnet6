@@ -8,12 +8,8 @@ public sealed class BoxConfigurations : IEntityTypeConfiguration<Box>
 {
     public void Configure(EntityTypeBuilder<Box> builder)
     {
-        builder.HasKey(x => x.Id);
+        // builder.HasKey(x => x.Id);
         
-        builder
-            .Property(x => x.CreatedAt)
-            .IsRequired();
-
         builder
             .Property(x => x.Width)
             .HasConversion<double>()
@@ -43,5 +39,17 @@ public sealed class BoxConfigurations : IEntityTypeConfiguration<Box>
             .Property(x => x.ExpiryDate)
             .HasConversion<DateTime>()
             .IsRequired();
+        
+        builder
+            .Property(x => x.CreatedAt)
+            .IsRequired();
+        
+        builder
+            .Property(x => x.UpdatedAt)
+            .HasDefaultValue(null);
+        
+        builder
+            .Property(x => x.DeletedAt)
+            .HasDefaultValue(null);
     }
 }

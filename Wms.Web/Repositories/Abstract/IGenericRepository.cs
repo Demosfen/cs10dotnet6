@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using Microsoft.Extensions.Primitives;
 
 namespace Wms.Web.Repositories.Abstract;
 
@@ -13,7 +14,7 @@ public interface IGenericRepository<TEntity> : IRepository
     
     public Task<TEntity?> GetByIdAsync(Guid warehouseDtoId, CancellationToken cancellationToken = default);
 
-    public Task<TEntity?> GetByIdAsync(Guid id, string includeProperties, CancellationToken cancellationToken = default);
+    public Task<TEntity?> GetByIdAsync(Guid id, string includeProperties = "", CancellationToken cancellationToken = default);
 
     public Task CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
 

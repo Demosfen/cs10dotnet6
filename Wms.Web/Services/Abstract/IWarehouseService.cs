@@ -6,7 +6,7 @@ public interface IWarehouseService : IBusinessService
 {
     Task CreateAsync(WarehouseDto warehouseDto, CancellationToken ct = default);
     
-    Task<IReadOnlyCollection<WarehouseDto>?> GetAllAsync(CancellationToken ct = default);
+    Task<IReadOnlyCollection<WarehouseDto>?> GetAllAsync(int offset, int size, bool deleted  = false, CancellationToken ct = default);
 
     Task<WarehouseDto?> GetByIdAsync(Guid id, CancellationToken ct = default);
     

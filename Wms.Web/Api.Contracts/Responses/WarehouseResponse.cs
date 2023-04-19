@@ -7,4 +7,6 @@ public sealed class WarehouseResponse
     public required string Name { get; set; }
 
     public List<PaletteResponse>? Palettes { set; get; } = new();
+    
+    
 }

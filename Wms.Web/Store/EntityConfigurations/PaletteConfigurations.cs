@@ -9,10 +9,7 @@ public sealed class PaletteConfigurations : IEntityTypeConfiguration<Palette>
     public void Configure(EntityTypeBuilder<Palette> builder)
     {
         builder.ToTable("Palettes");
-        builder
-            .Property(x => x.CreatedAt)
-            .IsRequired();
-
+        
         builder
             .Property(x => x.Width)
             .HasConversion<double>()
@@ -46,6 +43,18 @@ public sealed class PaletteConfigurations : IEntityTypeConfiguration<Palette>
             .HasMany<Box>(x => x.Boxes)
             .WithOne()
             .HasForeignKey(x => x.PaletteId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        builder
+            .Property(x => x.CreatedAt)
+            .IsRequired();
+        
+        builder
+            .Property(x => x.UpdatedAt)
+            .HasDefaultValue(null);
+        
+        builder
+            .Property(x => x.DeletedAt)
+            .HasDefaultValue(null);
     }
 }

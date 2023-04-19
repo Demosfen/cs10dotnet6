@@ -25,10 +25,6 @@ public sealed class WarehouseDbContext : DbContext, IWarehouseDbContext
         base.OnModelCreating(modelBuilder);
         
         modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
-
-        modelBuilder.Entity<Palette>().HasQueryFilter(p => p.DeletedAt == null);
-        
-        modelBuilder.Entity<Box>().HasQueryFilter(p => p.DeletedAt == null);
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) 
@@ -53,20 +49,20 @@ public sealed class WarehouseDbContext : DbContext, IWarehouseDbContext
         foreach (var item in markedAsCreated)
         {
             if (item.Entity is not IAuditableEntity entity) continue;
-            entity.CreatedAt = DateTime.UtcNow;
+            entity.CreatedAt = DateTime.Now.ToUniversalTime();
         }
         
         foreach (var item in markedAsModified)
         {
             if (item.Entity is not IAuditableEntity entity) continue;
-            entity.UpdatedAt = DateTime.UtcNow;
+            entity.UpdatedAt = DateTime.Now.ToUniversalTime();
         }
 
         foreach (var item in markedAsDeleted)
         {
             if (item.Entity is not IAuditableEntity entity) continue;
             item.State = EntityState.Unchanged;
-            entity.DeletedAt = DateTime.UtcNow;
+            entity.DeletedAt = DateTime.Now.ToUniversalTime();
         }
 
         return await base.SaveChangesAsync(cancellationToken);

@@ -23,11 +23,25 @@ public sealed class WarehouseController : ControllerBase
         _mapper = mapper;
     }
     
-    [HttpGet(Name = "GetAllWarehouses")]
+    [HttpGet(Name = "GetNotDeletedWarehouses")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<IReadOnlyCollection<WarehouseResponse>>> GetAll()
+    public async Task<ActionResult<IReadOnlyCollection<WarehouseResponse>>> GetNotDeleted(int offset = 0, int limit = 100)
     {
-        var warehousesDto = await _warehouseService.GetAllAsync();
+        var warehousesDto = await _warehouseService
+            .GetAllAsync(offset, limit);
+        
+        var warehouseResponse = _mapper.Map<IReadOnlyCollection<WarehouseResponse>>(warehousesDto);
+
+        return Ok(warehouseResponse);
+    }
+    
+    [HttpGet("archive/",Name = "GetDeletedWarehouses")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<IReadOnlyCollection<WarehouseResponse>>> GetDeleted(int offset = 0, int limit = 100)
+    {
+        var warehousesDto = await _warehouseService
+            .GetAllAsync(offset, limit, true);
+        
         var warehouseResponse = _mapper.Map<IReadOnlyCollection<WarehouseResponse>>(warehousesDto);
 
         return Ok(warehouseResponse);
@@ -90,6 +104,13 @@ public sealed class WarehouseController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeleteAsync(Guid id)
     {
+        var warehouseDto = await _warehouseService.GetByIdAsync(id);
+
+        if (warehouseDto?.Palettes?.Count != 0)
+        {
+            return BadRequest("Warehouse is not empty! Remove palettes first. Return.");
+        } 
+        
         await _warehouseService.DeleteAsync(id);
 
         return Ok();

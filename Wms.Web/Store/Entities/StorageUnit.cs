@@ -36,11 +36,6 @@ public abstract class StorageUnit: IEntityWithId, IAuditableEntity
     public decimal Volume { get; set; }
 
     /// <summary>
-    /// Soft delete flag
-    /// </summary>
-    public bool IsDeleted { get; set; } = false;
-
-    /// <summary>
     /// Unit expiry date/time
     /// </summary>
     public abstract DateTime? ExpiryDate { get; set; }

@@ -21,11 +21,10 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
         UnitOfWork = dbContext;
     }
 
-    public async Task<IEnumerable<TEntity>> GetAllAsync(
-        Expression<Func<TEntity, bool>>? filter,
-        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy,
-        string includeProperties,
-        CancellationToken cancellationToken)
+    public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? filter,
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+        string includeProperties = "",
+        CancellationToken cancellationToken = default)
     {
         IQueryable<TEntity> query = _dbSet;
 
@@ -40,8 +39,8 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
                 => current.Include(includeProperty));
 
         return orderBy != null 
-            ? await orderBy(query).NotDeleted().ToListAsync(cancellationToken)
-            : await query.NotDeleted()
+            ? await orderBy(query).ToListAsync(cancellationToken)
+            : await query
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
     }
@@ -53,7 +52,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
     public async Task<TEntity?> GetByIdAsync(Guid id, string includeProperties, CancellationToken cancellationToken)
     {
         var entities =
-            await GetAllAsync(null, null, includeProperties, cancellationToken);
+            await GetAllAsync(null, null, includeProperties, cancellationToken: cancellationToken);
 
         return entities.SingleOrDefault(x => x.Id == id);
     }
