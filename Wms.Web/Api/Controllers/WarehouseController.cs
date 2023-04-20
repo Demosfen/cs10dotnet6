@@ -48,7 +48,7 @@ public sealed class WarehouseController : ControllerBase
         return Ok(warehouseResponse);
     }
     
-    [HttpGet("{warehouseId}", Name = "GetWarehouseById")]
+    [HttpGet("{warehouseId:guid}", Name = "GetWarehouseById")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WarehouseResponse>> Get([FromRoute] Guid warehouseId)
@@ -64,7 +64,7 @@ public sealed class WarehouseController : ControllerBase
         return Ok(warehouseResponse);
     }
 
-    [HttpPost("{id:guid}", Name = "CreateWarehouse")]
+    [HttpPost("{warehouseId:guid}", Name = "CreateWarehouse")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<ActionResult<WarehouseResponse>> CreateAsync([FromRoute] Guid id, [FromBody] CreateWarehouseRequest request)
@@ -85,7 +85,7 @@ public sealed class WarehouseController : ControllerBase
         return Created("Warehouse created:", warehouseResponse);
     }
     
-    [HttpPut("{id:guid}", Name = "UpdateWarehouse")]
+    [HttpPut("{warehouseId:guid}", Name = "UpdateWarehouse")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WarehouseResponse>> UpdateAsync([FromRoute] Guid id, [FromBody] UpdateWarehouseRequest request)
@@ -112,7 +112,7 @@ public sealed class WarehouseController : ControllerBase
     //     return Ok();
     // }
 
-    [HttpDelete("{id:guid}", Name = "DeleteWarehouse")]
+    [HttpDelete("{warehouseId:guid}", Name = "DeleteWarehouse")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeleteAsync(Guid id)

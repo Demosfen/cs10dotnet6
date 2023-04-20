@@ -12,7 +12,6 @@ namespace Wms.Web.Api.Controllers;
 [ProducesResponseType(StatusCodes.Status400BadRequest)]
 public sealed class PaletteController : ControllerBase
 {
-    // private readonly IWarehouseService _warehouseService;
     private readonly IPaletteService _paletteService;
     private readonly IMapper _mapper;
 
@@ -21,7 +20,6 @@ public sealed class PaletteController : ControllerBase
         IPaletteService paletteService, 
         IMapper mapper)
     {
-        //_warehouseService = warehouseService;
         _paletteService = paletteService;
         _mapper = mapper;
     }
@@ -93,6 +91,22 @@ public sealed class PaletteController : ControllerBase
         var response = _mapper.Map<PaletteResponse>(paletteDto);
         
         return Created("Palette created:", response);
+    }
+    
+    [HttpPut("palettes/{paletteId:guid}", Name = "UpdatePalette")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<WarehouseResponse>> UpdateAsync(
+        [FromRoute] Guid paletteId, [FromBody] UpdatePaletteRequest request)
+    {
+        var paletteDto = _mapper.Map<PaletteDto>(request);
+
+        paletteDto.Id = paletteId;
+
+        await _paletteService.UpdateAsync(paletteDto);
+
+        var paletteResponse = _mapper.Map<PaletteResponse>(paletteDto);
+        return Ok(paletteResponse);
     }
     
     [HttpDelete("palettes/{paletteId}", Name = "DeletePalette")]
