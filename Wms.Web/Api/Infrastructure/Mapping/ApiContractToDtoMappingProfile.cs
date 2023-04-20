@@ -28,6 +28,8 @@ public sealed class ApiContractToDtoMappingProfile : Profile
         CreateMap<CreatePaletteRequest, PaletteDto>()
             .ForMember(x => x.Id,
                 opt => opt.Ignore())
+            .ForMember(x => x.WarehouseId,
+                opt => opt.Ignore())
             .ForMember(x => x.Weight,
                 opt => opt.Ignore())
             .ForMember(x => x.Volume,

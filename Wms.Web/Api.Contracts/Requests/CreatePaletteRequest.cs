@@ -2,8 +2,6 @@ namespace Wms.Web.Api.Contracts.Requests;
 
 public sealed class CreatePaletteRequest
 {
-    public required Guid WarehouseId { get; init; }
-
     public required decimal Width { get; set; }
     
     public required decimal Height { get; set; }

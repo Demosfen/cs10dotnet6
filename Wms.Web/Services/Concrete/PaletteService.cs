@@ -4,6 +4,7 @@ using Wms.Web.Repositories.Abstract;
 using Wms.Web.Services.Abstract;
 using Wms.Web.Store.Entities;
 using Wms.Web.Services.Dto;
+using Wms.Web.Store.Specifications;
 
 namespace Wms.Web.Services.Concrete;
 
@@ -37,10 +38,32 @@ internal sealed class PaletteService : IPaletteService
         await _paletteRepository.CreateAsync(entity, ct);
     }
 
-    public async Task<IReadOnlyCollection<PaletteDto>> GetAllAsync(CancellationToken ct = default)
+    public async Task<IReadOnlyCollection<PaletteDto>> GetAllAsync(
+        Guid id, 
+        int offset, int size,
+        bool deleted,
+        CancellationToken ct = default)
     {
-        var entities = await _paletteRepository
-            .GetAllAsync(includeProperties: nameof(Palette.Boxes), cancellationToken: ct);
+        IEnumerable<Palette?> entities;
+
+        switch (deleted)
+        {
+            case false:
+                entities = await _paletteRepository
+                    .GetAllAsync(
+                        x => x.WarehouseId == id,
+                        q => q.NotDeleted().Skip(offset).Take(size).OrderBy(p => p.CreatedAt),
+                        cancellationToken: ct);
+                break;
+            
+            case true:
+                entities = await _paletteRepository
+                    .GetAllAsync(
+                        x => x.WarehouseId == id,
+                        q => q.Deleted().Skip(offset).Take(size).OrderBy(p => p.CreatedAt),
+                        cancellationToken: ct);
+                break;
+        }
         
         return _mapper.Map<IReadOnlyCollection<PaletteDto>>(entities);
     }

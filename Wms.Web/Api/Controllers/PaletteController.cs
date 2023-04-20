@@ -8,33 +8,53 @@ using Microsoft.AspNetCore.Mvc;
 namespace Wms.Web.Api.Controllers;
 
 [ApiController]
-[Route("api/v1/warehouses/palettes/")]
+[Route("api/v1/warehouses/")]
 [ProducesResponseType(StatusCodes.Status400BadRequest)]
 public sealed class PaletteController : ControllerBase
 {
+    // private readonly IWarehouseService _warehouseService;
     private readonly IPaletteService _paletteService;
     private readonly IMapper _mapper;
 
     public PaletteController(
+        IWarehouseService warehouseService,
         IPaletteService paletteService, 
         IMapper mapper)
     {
+        //_warehouseService = warehouseService;
         _paletteService = paletteService;
         _mapper = mapper;
     }
     
-    [HttpGet(Name = "GetAllPalettesFromDb")]
+    [HttpGet("{warehouseId:guid}/palettes/", Name = "GetNotDeletedPalettesFromDb")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<IReadOnlyCollection<PaletteResponse>>> GetAll()
+    public async Task<ActionResult<IReadOnlyCollection<PaletteResponse>>> GetAllNotDeleted(
+        [FromRoute] Guid warehouseId, int offset = 0, int limit = 100)
     {
-        var palettesDto = await _paletteService.GetAllAsync();
+        var palettesDto = await _paletteService
+            .GetAllAsync(warehouseId, offset, limit);
+        
         var paletteResponse = _mapper.Map<IReadOnlyCollection<PaletteResponse>>(palettesDto);
 
         return Ok(paletteResponse);
     }
     
-    [HttpGet("{paletteId}", Name = "GetPaletteById")]
+    [HttpGet("{warehouseId:guid}/palettes/archive/", Name = "GetDeletedPalettesFromDb")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<IReadOnlyCollection<PaletteResponse>>> GetAllDeleted(
+        [FromRoute] Guid warehouseId, int offset = 0, int limit = 100)
+    {
+        var palettesDto = await _paletteService
+            .GetAllAsync(warehouseId, offset, limit, true);
+        
+        var paletteResponse = _mapper.Map<IReadOnlyCollection<PaletteResponse>>(palettesDto);
+
+        return Ok(paletteResponse);
+    }
+    
+    [HttpGet("palettes/{paletteId}", Name = "GetPaletteById")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<PaletteResponse>> Get([FromRoute] Guid paletteId)
@@ -50,19 +70,23 @@ public sealed class PaletteController : ControllerBase
         return Ok(paletteResponse);
     }
 
-    [HttpPost("{id:guid}", Name = "CreatePalette")]
+    [HttpPost("{warehouseId:guid}/palettes/{paletteId:guid}", Name = "CreatePalette")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public async Task<ActionResult<PaletteResponse>> CreateAsync([FromRoute] Guid id, [FromBody] CreatePaletteRequest request)
+    public async Task<ActionResult<PaletteResponse>> CreateAsync(
+        [FromRoute] Guid paletteId, 
+        [FromRoute] Guid warehouseId, 
+        [FromBody] CreatePaletteRequest request)
     {
-        if (await _paletteService.GetByIdAsync(id) != null)
+        if (await _paletteService.GetByIdAsync(paletteId) != null)
         {
             return Conflict("Palette with the same id already exist.");
         }
         
         var paletteDto = _mapper.Map<PaletteDto>(request);
 
-        paletteDto.Id = id;
+        paletteDto.Id = paletteId;
+        paletteDto.WarehouseId = warehouseId;
 
         await _paletteService.CreateAsync(paletteDto);
 
@@ -71,7 +95,7 @@ public sealed class PaletteController : ControllerBase
         return Created("Palette created:", response);
     }
     
-    [HttpDelete("{id:guid}", Name = "DeletePalette")]
+    [HttpDelete("palettes/{paletteId}", Name = "DeletePalette")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteAsync(Guid id)

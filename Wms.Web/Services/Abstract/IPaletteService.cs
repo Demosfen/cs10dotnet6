@@ -7,7 +7,11 @@ public interface IPaletteService : IBusinessService
 {
     Task CreateAsync(PaletteDto paletteDto, CancellationToken ct = default);
     
-    Task<IReadOnlyCollection<PaletteDto>> GetAllAsync(CancellationToken ct = default);
+    Task<IReadOnlyCollection<PaletteDto>> GetAllAsync(
+        Guid id, 
+        int offset, int size,
+        bool deleted = false,
+        CancellationToken ct = default);
 
     Task<PaletteDto?> GetByIdAsync(Guid id, CancellationToken ct = default);
     

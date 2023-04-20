@@ -4,7 +4,7 @@ public sealed class PaletteDto
 {
     public required Guid Id { get; set; }
 
-    public required Guid WarehouseId { get; init; }
+    public required Guid WarehouseId { get; set; }
 
     public required decimal Width { get; init; }
     
