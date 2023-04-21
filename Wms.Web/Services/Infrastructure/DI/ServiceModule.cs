@@ -15,7 +15,6 @@ public sealed class ServiceModule : Module
         builder
             .RegisterAssemblyTypes(ThisAssembly)
             .AssignableTo<IBusinessService>()
-            .AsSelf()
             .AsImplementedInterfaces()
             .InstancePerDependency();
     }

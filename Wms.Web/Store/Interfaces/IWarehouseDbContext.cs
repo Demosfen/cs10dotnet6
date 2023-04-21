@@ -6,9 +6,6 @@ namespace Wms.Web.Store.Interfaces;
 
 public interface IWarehouseDbContext : IDbUnitOfWork
 {
-    /// <summary>
-    /// All the warehouses
-    /// </summary>
     DbSet<Warehouse> Warehouses { get; }
     
     DbSet<Palette> Palettes { get; }

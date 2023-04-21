@@ -24,7 +24,7 @@ public sealed class PaletteController : ControllerBase
         _mapper = mapper;
     }
     
-    [HttpGet("{warehouseId:guid}/palettes/", Name = "GetNotDeletedPalettesFromDb")]
+    [HttpGet("{warehouseId:guid}/palettes/", Name = "GetNotDeletedPalettes")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IReadOnlyCollection<PaletteResponse>>> GetAllNotDeleted(
@@ -38,7 +38,7 @@ public sealed class PaletteController : ControllerBase
         return Ok(paletteResponse);
     }
     
-    [HttpGet("{warehouseId:guid}/palettes/archive/", Name = "GetDeletedPalettesFromDb")]
+    [HttpGet("{warehouseId:guid}/palettes/archive/", Name = "GetDeletedPalettes")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IReadOnlyCollection<PaletteResponse>>> GetAllDeleted(

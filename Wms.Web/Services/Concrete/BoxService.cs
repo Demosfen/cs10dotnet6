@@ -7,7 +7,7 @@ using Wms.Web.Store.Entities;
 
 namespace Wms.Web.Services.Concrete;
 
-public class BoxService : IBoxService
+internal sealed class BoxService : IBoxService
 {
     private const int ExpiryDays = 100;
     
@@ -26,7 +26,7 @@ public class BoxService : IBoxService
     }
 
     /// <inheritdoc />
-    public async Task CreateAsync(BoxDto boxDto, CancellationToken ct = default)
+    public async Task CreateAsync(BoxDto boxDto, CancellationToken ct)
     {
         var paletteDto = await _paletteRepository
                              .GetByIdAsync(boxDto.PaletteId, nameof(Palette.Boxes), ct)
@@ -74,7 +74,7 @@ public class BoxService : IBoxService
     }
 
     /// <inheritdoc />
-    public async Task<IReadOnlyCollection<BoxDto>?> GetAllAsync(CancellationToken ct = default)
+    public async Task<IReadOnlyCollection<BoxDto>?> GetAllAsync(CancellationToken ct)
     {
         var boxes = await _boxRepository.GetAllAsync(cancellationToken: ct);
 
@@ -82,7 +82,7 @@ public class BoxService : IBoxService
     }
 
     /// <inheritdoc />
-    public async Task<BoxDto?> GetByIdAsync(Guid id, CancellationToken ct = default)
+    public async Task<BoxDto?> GetByIdAsync(Guid id, CancellationToken ct)
     {
         var box = await _boxRepository.GetByIdAsync(id, ct);
 
@@ -92,7 +92,7 @@ public class BoxService : IBoxService
     }
 
     /// <inheritdoc />
-    public async Task UpdateAsync(BoxDto boxDto, CancellationToken ct = default)
+    public async Task UpdateAsync(BoxDto boxDto, CancellationToken ct)
     {
         var box = _mapper.Map<Box>(boxDto);
         
@@ -100,7 +100,7 @@ public class BoxService : IBoxService
     }
 
     /// <inheritdoc />
-    public async Task DeleteAsync(Guid id, CancellationToken ct = default)
+    public async Task DeleteAsync(Guid id, CancellationToken ct)
     {
         var boxDto = await _boxRepository.GetByIdAsync(id, ct);
 

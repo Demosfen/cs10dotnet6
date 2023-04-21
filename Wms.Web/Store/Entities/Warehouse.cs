@@ -14,7 +14,7 @@ public sealed class Warehouse : IEntityWithId, IAuditableEntity
     /// <summary>
     /// Palettes list
     /// </summary>
-    public List<Palette>? Palettes { get; set; } = new();
+    public List<Palette> Palettes { get; set; } = new();
 
 
     public DateTime CreatedAt { get; set; }

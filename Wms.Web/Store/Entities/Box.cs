@@ -1,5 +1,3 @@
-using Wms.Web.Common.Exceptions;
-
 namespace Wms.Web.Store.Entities;
 
 public sealed class Box : StorageUnit

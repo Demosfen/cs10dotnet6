@@ -16,7 +16,7 @@ public sealed class PaletteResponse
     
     public required decimal Volume { get; set; }
 
-    public List<BoxResponse>? Boxes { get; set; } = new();
+    public IReadOnlyCollection<BoxResponse>? Boxes { get; set; }
 
     public DateTime? ExpiryDate { get; set; }
 }

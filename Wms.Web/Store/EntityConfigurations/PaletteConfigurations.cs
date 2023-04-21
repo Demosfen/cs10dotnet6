@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Wms.Web.Store.Entities;
+using Wms.Web.Store.EntityExtensions;
 
 namespace Wms.Web.Store.EntityConfigurations;
 
@@ -9,6 +10,10 @@ public sealed class PaletteConfigurations : IEntityTypeConfiguration<Palette>
     public void Configure(EntityTypeBuilder<Palette> builder)
     {
         builder.ToTable("Palettes");
+
+        builder.HasKey(x => x.Id);
+        
+        // builder.ConfigureEntity();
         
         builder
             .Property(x => x.Width)
@@ -44,17 +49,17 @@ public sealed class PaletteConfigurations : IEntityTypeConfiguration<Palette>
             .WithOne()
             .HasForeignKey(x => x.PaletteId)
             .OnDelete(DeleteBehavior.Restrict);
-        
-        builder
-            .Property(x => x.CreatedAt)
-            .IsRequired();
-        
-        builder
-            .Property(x => x.UpdatedAt)
-            .HasDefaultValue(null);
-        
-        builder
-            .Property(x => x.DeletedAt)
-            .HasDefaultValue(null);
+
+        // builder
+        //     .Property(x => x.CreatedAt)
+        //     .IsRequired();
+        //
+        // builder
+        //     .Property(x => x.UpdatedAt)
+        //     .HasDefaultValue(null);
+        //
+        // builder
+        //     .Property(x => x.DeletedAt)
+        //     .HasDefaultValue(null);
     }
 }

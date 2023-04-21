@@ -23,7 +23,7 @@ internal sealed class PaletteService : IPaletteService
         _mapper = mapper;
     }
 
-    public async Task CreateAsync(PaletteDto paletteDto, CancellationToken ct = default)
+    public async Task CreateAsync(PaletteDto paletteDto, CancellationToken ct)
     {
         if (await _paletteRepository.GetByIdAsync(paletteDto.Id, ct) != null)
         {
@@ -42,7 +42,7 @@ internal sealed class PaletteService : IPaletteService
         Guid id, 
         int offset, int size,
         bool deleted,
-        CancellationToken ct = default)
+        CancellationToken ct)
     {
         IEnumerable<Palette?> entities;
 
@@ -68,7 +68,7 @@ internal sealed class PaletteService : IPaletteService
         return _mapper.Map<IReadOnlyCollection<PaletteDto>>(entities);
     }
 
-    public async Task<PaletteDto?> GetByIdAsync(Guid id, CancellationToken ct = default)
+    public async Task<PaletteDto?> GetByIdAsync(Guid id, CancellationToken ct)
     {
         var entity = await _paletteRepository
             .GetByIdAsync(id, nameof(Palette.Boxes), ct);
@@ -76,12 +76,12 @@ internal sealed class PaletteService : IPaletteService
         return _mapper.Map<PaletteDto?>(entity);
     }
 
-    public Task UpdateAsync(PaletteDto paletteDto, CancellationToken ct = default)
+    public Task UpdateAsync(PaletteDto paletteDto, CancellationToken ct)
     {
         throw new NotImplementedException();
     }
 
-    public async Task DeleteAsync(Guid id, CancellationToken ct = default)
+    public async Task DeleteAsync(Guid id, CancellationToken ct)
     {
         await _paletteRepository.DeleteAsync(id, ct);
     }

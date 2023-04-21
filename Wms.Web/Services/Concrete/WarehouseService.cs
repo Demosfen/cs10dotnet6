@@ -21,7 +21,7 @@ internal sealed class WarehouseService : IWarehouseService
         _mapper = mapper;
     }
 
-    public async Task CreateAsync(WarehouseDto warehouseDto, CancellationToken ct = default)
+    public async Task CreateAsync(WarehouseDto warehouseDto, CancellationToken ct)
     {
         var entity = await _warehouseRepository.GetByIdAsync(warehouseDto.Id, ct);
 
@@ -58,14 +58,14 @@ internal sealed class WarehouseService : IWarehouseService
         return _mapper.Map<IReadOnlyCollection<WarehouseDto>>(entities);
     }
 
-    public async Task<WarehouseDto?> GetByIdAsync(Guid id, CancellationToken ct = default)
+    public async Task<WarehouseDto?> GetByIdAsync(Guid id, CancellationToken ct)
     {
         var entity = await _warehouseRepository.GetByIdAsync(id, nameof(Warehouse.Palettes), ct);
 
         return _mapper.Map<WarehouseDto>(entity);
     }
 
-    public async Task UpdateAsync(WarehouseDto warehouseDto, CancellationToken ct = default)
+    public async Task UpdateAsync(WarehouseDto warehouseDto, CancellationToken ct)
     {
         var entity = await _warehouseRepository.GetByIdAsync(warehouseDto.Id, ct)
                      ?? throw new EntityNotFoundException(warehouseDto.Id);
@@ -75,7 +75,7 @@ internal sealed class WarehouseService : IWarehouseService
         await _warehouseRepository.UpdateAsync(entity, ct);
     }
 
-    public async Task DeleteAsync(Guid id, CancellationToken ct = default)
+    public async Task DeleteAsync(Guid id, CancellationToken ct)
     {
         await _warehouseRepository.DeleteAsync(id, ct);
     }

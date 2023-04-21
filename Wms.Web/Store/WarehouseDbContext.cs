@@ -13,7 +13,7 @@ public sealed class WarehouseDbContext : DbContext, IWarehouseDbContext
 
     public DbSet<Box> Boxes => Set<Box>();
 
-    public WarehouseDbContext(DbContextOptions opts) : base(opts)
+    public WarehouseDbContext(DbContextOptions options) : base(options)
     {
     }
     

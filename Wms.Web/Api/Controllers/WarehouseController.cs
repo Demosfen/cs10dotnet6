@@ -67,16 +67,16 @@ public sealed class WarehouseController : ControllerBase
     [HttpPost("{warehouseId:guid}", Name = "CreateWarehouse")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public async Task<ActionResult<WarehouseResponse>> CreateAsync([FromRoute] Guid id, [FromBody] CreateWarehouseRequest request)
+    public async Task<ActionResult<WarehouseResponse>> CreateAsync([FromRoute] Guid warehouseId, [FromBody] CreateWarehouseRequest request)
     {
-        if (await _warehouseService.GetByIdAsync(id) != null)
+        if (await _warehouseService.GetByIdAsync(warehouseId) != null)
         {
             return Conflict("Warehouse with the same id already exist.");
         }
         
         var warehouseDto = _mapper.Map<WarehouseDto>(request);
 
-        warehouseDto.Id = id;
+        warehouseDto.Id = warehouseId;
 
         await _warehouseService.CreateAsync(warehouseDto);
 
@@ -88,11 +88,11 @@ public sealed class WarehouseController : ControllerBase
     [HttpPut("{warehouseId:guid}", Name = "UpdateWarehouse")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<WarehouseResponse>> UpdateAsync([FromRoute] Guid id, [FromBody] UpdateWarehouseRequest request)
+    public async Task<ActionResult<WarehouseResponse>> UpdateAsync([FromRoute] Guid warehouseId, [FromBody] UpdateWarehouseRequest request)
     {
         var warehouseDto = _mapper.Map<WarehouseDto>(request);
 
-        warehouseDto.Id = id;
+        warehouseDto.Id = warehouseId;
 
         await _warehouseService.UpdateAsync(warehouseDto);
 

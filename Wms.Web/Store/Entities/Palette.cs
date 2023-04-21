@@ -1,5 +1,3 @@
-using Wms.Web.Common.Exceptions;
-
 namespace Wms.Web.Store.Entities;
 
 public sealed class Palette : StorageUnit
@@ -17,7 +15,7 @@ public sealed class Palette : StorageUnit
     /// <summary>
     /// Boxes on the palette
     /// </summary>
-    public List<Box>? Boxes { get; set; } = new();
+    public List<Box> Boxes { get; set; } = new();
     
     /// <summary>
     /// Palette weight computed as

@@ -6,5 +6,5 @@ public sealed class WarehouseDto
 
     public required string Name { get; set; }
 
-    public List<PaletteDto>? Palettes { set; get; } = new ();
+    public List<PaletteDto> Palettes { set; get; } = new();
 }

@@ -22,9 +22,9 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
     }
 
     public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? filter,
-        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
-        string includeProperties = "",
-        CancellationToken cancellationToken = default)
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy,
+        string includeProperties,
+        CancellationToken cancellationToken)
     {
         IQueryable<TEntity> query = _dbSet;
 
@@ -52,7 +52,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
     public async Task<TEntity?> GetByIdAsync(Guid id, string includeProperties, CancellationToken cancellationToken)
     {
         var entities =
-            await GetAllAsync(null, null, includeProperties, cancellationToken: cancellationToken);
+            await GetAllAsync(null, null, includeProperties: includeProperties, cancellationToken: cancellationToken);
 
         return entities.SingleOrDefault(x => x.Id == id);
     }
@@ -64,7 +64,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
         await UnitOfWork.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
+    public async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken)
     {
         _dbSet.Update(entity);
         
