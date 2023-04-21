@@ -24,7 +24,7 @@ public sealed class WarehouseConfigurations : IEntityTypeConfiguration<Warehouse
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
 
-        // builder.ConfigureEntity();
+        builder.ConfigureEntity();
         
         // builder
         //     .Property(x => x.CreatedAt)
