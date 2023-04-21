@@ -26,10 +26,12 @@ public sealed class WarehouseController : ControllerBase
     
     [HttpGet(Name = "GetNotDeletedWarehouses")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<IReadOnlyCollection<WarehouseResponse>>> GetNotDeleted(int offset = 0, int limit = 100)
+    public async Task<ActionResult<IReadOnlyCollection<WarehouseResponse>>> GetNotDeleted(
+        int offset = 0, 
+        int size = 100)
     {
         var warehousesDto = await _warehouseService
-            .GetAllAsync(offset, limit);
+            .GetAllAsync(offset, size);
         
         var warehouseResponse = _mapper.Map<IReadOnlyCollection<WarehouseResponse>>(warehousesDto);
 

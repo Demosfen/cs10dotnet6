@@ -1,6 +1,5 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using Wms.Web.Store.Specifications;
 using Wms.Web.Common.Exceptions;
 using Wms.Web.Repositories.Abstract;
 using Wms.Web.Store.Interfaces;

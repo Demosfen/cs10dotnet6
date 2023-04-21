@@ -4,6 +4,7 @@ using Wms.Web.Repositories.Abstract;
 using Wms.Web.Services.Abstract;
 using Wms.Web.Services.Dto;
 using Wms.Web.Store.Entities;
+using Wms.Web.Store.Specifications;
 
 namespace Wms.Web.Services.Concrete;
 
@@ -23,6 +24,38 @@ internal sealed class BoxService : IBoxService
         _boxRepository = boxRepository;
         _paletteRepository = paletteRepository;
         _mapper = mapper;
+    }
+    
+    /// <inheritdoc />
+    public async Task<IReadOnlyCollection<BoxDto>> GetAllAsync(
+        Guid id,
+        int offset,
+        int size,
+        bool deleted,
+        CancellationToken ct)
+    {
+        IEnumerable<Box?> entities;
+
+        switch (deleted)
+        {
+            case false:
+                entities = await _boxRepository
+                    .GetAllAsync(
+                        x => x.PaletteId == id,
+                        q => q.NotDeleted().Skip(offset).Take(size).OrderBy(p => p.CreatedAt),
+                        cancellationToken: ct);
+                break;
+            
+            case true:
+                entities = await _boxRepository
+                    .GetAllAsync(
+                        x => x.PaletteId == id,
+                        q => q.Deleted().Skip(offset).Take(size).OrderBy(p => p.CreatedAt),
+                        cancellationToken: ct);
+                break;
+        }
+        
+        return _mapper.Map<IReadOnlyCollection<BoxDto>>(entities);
     }
 
     /// <inheritdoc />
@@ -71,14 +104,6 @@ internal sealed class BoxService : IBoxService
         var palette = _mapper.Map<Palette>(paletteDto);
 
         await _paletteRepository.UpdateAsync(palette, ct);
-    }
-
-    /// <inheritdoc />
-    public async Task<IReadOnlyCollection<BoxDto>?> GetAllAsync(CancellationToken ct)
-    {
-        var boxes = await _boxRepository.GetAllAsync(cancellationToken: ct);
-
-        return _mapper.Map<IReadOnlyCollection<BoxDto>>(boxes);
     }
 
     /// <inheritdoc />

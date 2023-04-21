@@ -16,13 +16,22 @@ public interface IBoxService : IBusinessService
     /// <exception cref="ArgumentException"></exception>
     /// <returns></returns>
     Task CreateAsync(BoxDto boxDto, CancellationToken ct = default);
-    
+
     /// <summary>
     /// Gets all boxes from Database
     /// </summary>
+    /// <param name="size"></param>
+    /// <param name="deleted"></param>
     /// <param name="ct">Cancellation Token</param>
+    /// <param name="id"></param>
+    /// <param name="offset"></param>
     /// <returns>Box list</returns>
-    Task<IReadOnlyCollection<BoxDto>?> GetAllAsync(CancellationToken ct = default);
+    Task<IReadOnlyCollection<BoxDto>> GetAllAsync(
+        Guid id, 
+        int offset, 
+        int size, 
+        bool deleted = false,
+        CancellationToken ct = default);
 
     /// <summary>
     /// Gets box by its Id

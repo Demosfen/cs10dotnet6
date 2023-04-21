@@ -3,9 +3,9 @@ using Wms.Web.Api.Contracts.Requests;
 
 namespace Wms.Web.Api.Validators;
 
-public class CreateBoxRequestValidator : AbstractValidator<CreateBoxRequest>
+public class BoxRequestValidator : AbstractValidator<BoxRequest>
 {
-    public CreateBoxRequestValidator()
+    public BoxRequestValidator()
     {
         RuleFor(x => x.Width)
             .NotEmpty().NotNull()

@@ -26,14 +26,17 @@ public sealed class BoxController : ControllerBase
         _mapper = mapper;
     }
     
-    [HttpGet(Name = "GetAllBoxesFromDb")]
+    [HttpGet("{paletteId}/boxes", Name = "GetAllBoxes")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<IReadOnlyCollection<BoxResponse>>> GetAllAsync()
+    public async Task<ActionResult<IReadOnlyCollection<BoxResponse>>> GetNotDeletedAsync(
+        [FromRoute] Guid paletteId,
+        int offset = 0, 
+        int size = 10)
     {
-        var boxesDto = await _boxService.GetAllAsync();
+        var boxesDto = await _boxService.GetAllAsync(paletteId, offset, size);
 
-        if (boxesDto is null)
+        if (boxesDto.Count == 0)
         {
             return NotFound();
         }
@@ -59,24 +62,33 @@ public sealed class BoxController : ControllerBase
         return Ok(boxResponse);
     }
 
-    [HttpPost("{id:guid}", Name = "CreateBox")]
+    [HttpPost("{paletteId:guid}/boxes/{boxId:guid}", Name = "CreateBox")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public async Task<ActionResult<BoxResponse>> CreateAsync([FromRoute] Guid id, [FromBody] CreateBoxRequest request)
+    public async Task<ActionResult<BoxResponse>> CreateAsync(
+        [FromRoute] Guid boxId,
+        [FromRoute] Guid paletteId,
+        [FromBody] BoxRequest request)
     {
-        if (await _boxService.GetByIdAsync(id) != null)
+        if (await _boxService.GetByIdAsync(boxId) != null)
         {
             return Conflict("Box with the same id already exist.");
         }
-
-        var boxDto = _mapper.Map<BoxDto>(request);
-    
-        boxDto.Id = id;
         
-        if (await _paletteService.GetByIdAsync(boxDto.PaletteId) is null)
+        if (await _paletteService.GetByIdAsync(paletteId) is null)
         {
-            return NotFound($"Palette with id={boxDto.PaletteId} does not exist");
+            return NotFound($"Palette with id={paletteId} does not exist");
         }
+
+        var createBox = new CreateBoxRequest
+        {
+            Id = boxId,
+            PaletteId = paletteId,
+            BoxRequest = request
+        };
+        
+
+        var boxDto = _mapper.Map<BoxDto>(createBox);
     
         await _boxService.CreateAsync(boxDto);
     
