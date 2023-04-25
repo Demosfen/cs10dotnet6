@@ -24,18 +24,18 @@ public sealed class WarehouseConfigurations : IEntityTypeConfiguration<Warehouse
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
 
-        builder.ConfigureEntity();
+        // builder.ConfigureEntity();
         
-        // builder
-        //     .Property(x => x.CreatedAt)
-        //     .IsRequired();
-        //
-        // builder
-        //     .Property(x => x.UpdatedAt)
-        //     .HasDefaultValue(null);
-        //
-        // builder
-        //     .Property(x => x.DeletedAt)
-        //     .HasDefaultValue(null);
+        builder
+            .Property(x => x.CreatedAt)
+            .IsRequired();
+        
+        builder
+            .Property(x => x.UpdatedAt)
+            .HasDefaultValue(null);
+        
+        builder
+            .Property(x => x.DeletedAt)
+            .HasDefaultValue(null);
     }
 }

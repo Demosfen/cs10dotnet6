@@ -45,16 +45,16 @@ public sealed class BoxConfigurations : IEntityTypeConfiguration<Box>
             .HasConversion<DateTime>()
             .IsRequired();
         
-        // builder
-        //     .Property(x => x.CreatedAt)
-        //     .IsRequired();
-        //
-        // builder
-        //     .Property(x => x.UpdatedAt)
-        //     .HasDefaultValue(null);
-        //
-        // builder
-        //     .Property(x => x.DeletedAt)
-        //     .HasDefaultValue(null);
+        builder
+            .Property(x => x.CreatedAt)
+            .IsRequired();
+        
+        builder
+            .Property(x => x.UpdatedAt)
+            .HasDefaultValue(null);
+        
+        builder
+            .Property(x => x.DeletedAt)
+            .HasDefaultValue(null);
     }
 }

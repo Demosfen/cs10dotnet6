@@ -50,16 +50,16 @@ public sealed class PaletteConfigurations : IEntityTypeConfiguration<Palette>
             .HasForeignKey(x => x.PaletteId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // builder
-        //     .Property(x => x.CreatedAt)
-        //     .IsRequired();
-        //
-        // builder
-        //     .Property(x => x.UpdatedAt)
-        //     .HasDefaultValue(null);
-        //
-        // builder
-        //     .Property(x => x.DeletedAt)
-        //     .HasDefaultValue(null);
+        builder
+            .Property(x => x.CreatedAt)
+            .IsRequired();
+        
+        builder
+            .Property(x => x.UpdatedAt)
+            .HasDefaultValue(null);
+        
+        builder
+            .Property(x => x.DeletedAt)
+            .HasDefaultValue(null);
     }
 }
