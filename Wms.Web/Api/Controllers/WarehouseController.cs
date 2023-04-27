@@ -1,5 +1,4 @@
 using AutoMapper;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Wms.Web.Api.Contracts.Responses;
 using Wms.Web.Services.Abstract;
 using Wms.Web.Api.Contracts.Requests;
@@ -26,9 +25,8 @@ public sealed class WarehouseController : ControllerBase
     
     [HttpGet(Name = "GetNotDeletedWarehouses")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<IReadOnlyCollection<WarehouseResponse>>> GetNotDeleted(
-        int offset = 0, 
-        int size = 100)
+    public async Task<ActionResult<IReadOnlyCollection<WarehouseResponse>>> 
+        GetNotDeletedAsync(int offset = 0, int size = 10)
     {
         var warehousesDto = await _warehouseService
             .GetAllAsync(offset, size);
@@ -40,7 +38,8 @@ public sealed class WarehouseController : ControllerBase
     
     [HttpGet("archive/",Name = "GetDeletedWarehouses")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<IReadOnlyCollection<WarehouseResponse>>> GetDeleted(int offset = 0, int limit = 100)
+    public async Task<ActionResult<IReadOnlyCollection<WarehouseResponse>>> 
+        GetDeletedAsync(int offset = 0, int limit = 10)
     {
         var warehousesDto = await _warehouseService
             .GetAllAsync(offset, limit, true);
@@ -50,12 +49,15 @@ public sealed class WarehouseController : ControllerBase
         return Ok(warehouseResponse);
     }
     
-    [HttpGet("{warehouseId:guid}", Name = "GetWarehouseById")]
+    [HttpGet("{warehouseId:guid}", Name = "GetWarehouseByIdWithPalettes")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<WarehouseResponse>> Get([FromRoute] Guid warehouseId)
+    public async Task<ActionResult<WarehouseResponse>> GetByIdAsync(
+        [FromRoute] Guid warehouseId,
+        int offset = 0,
+        int size = 10)
     {
-        var warehouseDto = await _warehouseService.GetByIdAsync(warehouseId);
+        var warehouseDto = await _warehouseService.GetByIdAsync(warehouseId, offset, size);
 
         if (warehouseDto is null)
         {
@@ -90,7 +92,9 @@ public sealed class WarehouseController : ControllerBase
     [HttpPut("{warehouseId:guid}", Name = "UpdateWarehouse")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<WarehouseResponse>> UpdateAsync([FromRoute] Guid warehouseId, [FromBody] UpdateWarehouseRequest request)
+    public async Task<ActionResult<WarehouseResponse>> UpdateAsync(
+        [FromRoute] Guid warehouseId, 
+        [FromBody] UpdateWarehouseRequest request)
     {
         var warehouseDto = _mapper.Map<WarehouseDto>(request);
 
@@ -101,32 +105,20 @@ public sealed class WarehouseController : ControllerBase
         var warehouseResponse = _mapper.Map<WarehouseResponse>(warehouseDto);
         return Ok(warehouseResponse);
     }
-    
-    // [HttpPut("{id:guid}", Name = "RestoreWarehouse")]
-    // [ProducesResponseType(StatusCodes.Status200OK)]
-    // [ProducesResponseType(StatusCodes.Status404NotFound)]
-    // public async Task<ActionResult<WarehouseResponse>> RestoreAsync([FromRoute] Guid id)
-    // {
-    //     var warehouseDto = await _warehouseService.GetByIdAsync(id);
-    //
-    //     await .UpdateAsync(warehouseDto, default);
-    //
-    //     return Ok();
-    // }
 
     [HttpDelete("{warehouseId:guid}", Name = "DeleteWarehouse")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> DeleteAsync(Guid id)
+    public async Task<ActionResult> DeleteAsync(Guid warehouseId)
     {
-        var warehouseDto = await _warehouseService.GetByIdAsync(id);
+        var warehouseDto = await _warehouseService.GetByIdAsync(warehouseId);
 
         if (warehouseDto?.Palettes?.Count != 0)
         {
             return BadRequest("Warehouse is not empty! Remove palettes first. Return.");
         } 
         
-        await _warehouseService.DeleteAsync(id);
+        await _warehouseService.DeleteAsync(warehouseId);
 
         return Ok();
     }

@@ -13,7 +13,7 @@ public interface IPaletteService : IBusinessService
         bool deleted = false,
         CancellationToken ct = default);
 
-    Task<PaletteDto?> GetByIdAsync(Guid id, CancellationToken ct = default);
+    Task<PaletteDto?> GetByIdAsync(Guid id, int offset = 0, int size = 10, CancellationToken ct = default);
     
     Task UpdateAsync(PaletteDto paletteDto, CancellationToken ct = default);
     

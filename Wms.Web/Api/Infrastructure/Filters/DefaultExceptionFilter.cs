@@ -49,6 +49,10 @@ internal sealed class DefaultExceptionFilter : IExceptionFilter
         {
             EntityAlreadyExistException => StatusCodes.Status409Conflict,
             EntityNotFoundException => StatusCodes.Status404NotFound,
+            EntityWasDeletedException => StatusCodes.Status405MethodNotAllowed,
+            EntityNotEmptyException => StatusCodes.Status422UnprocessableEntity,
+            UninitializedPropertyException => StatusCodes.Status422UnprocessableEntity,
+            UnitOversizeException => StatusCodes.Status400BadRequest,
             _ => StatusCodes.Status422UnprocessableEntity
         };
 

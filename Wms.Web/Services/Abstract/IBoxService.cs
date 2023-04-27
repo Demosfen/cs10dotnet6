@@ -28,16 +28,16 @@ public interface IBoxService : IBusinessService
         Guid id, 
         int offset, 
         int size, 
-        bool deleted = false,
-        CancellationToken ct = default);
+        bool deleted,
+        CancellationToken ct);
 
     /// <summary>
     /// Gets box by its Id
     /// </summary>
     /// <param name="id">Box Id</param>
-    /// <param name="ct">Cancellation token</param>
+    /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>Box</returns>
-    Task<BoxDto?> GetByIdAsync(Guid id, CancellationToken ct = default);
+    Task<BoxDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
     
     /// <summary>
     /// Updates box entity in Database

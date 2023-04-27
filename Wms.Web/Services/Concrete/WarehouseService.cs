@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.CodeAnalysis.Tags;
 using Wms.Web.Common.Exceptions;
 using Wms.Web.Repositories.Abstract;
 using Wms.Web.Services.Abstract;
@@ -34,7 +35,10 @@ internal sealed class WarehouseService : IWarehouseService
         await _warehouseRepository.CreateAsync(entity, ct);
     }
 
-    public async Task<IReadOnlyCollection<WarehouseDto>?> GetAllAsync(int offset, int size, bool deleted, CancellationToken ct)
+    public async Task<IReadOnlyCollection<WarehouseDto>?> GetAllAsync(
+        int offset, int size, 
+        bool deleted, 
+        CancellationToken ct)
     {
         IEnumerable<Warehouse?> entities;
 
@@ -58,9 +62,10 @@ internal sealed class WarehouseService : IWarehouseService
         return _mapper.Map<IReadOnlyCollection<WarehouseDto>>(entities);
     }
 
-    public async Task<WarehouseDto?> GetByIdAsync(Guid id, CancellationToken ct)
+    public async Task<WarehouseDto?> GetByIdAsync(Guid id, int offset, int size, CancellationToken ct)
     {
-        var entity = await _warehouseRepository.GetByIdAsync(id, nameof(Warehouse.Palettes), ct);
+        var entity = await _warehouseRepository
+            .GetByIdAsync(id, offset, size, nameof(Warehouse.Palettes), ct);
 
         return _mapper.Map<WarehouseDto>(entity);
     }
@@ -69,6 +74,11 @@ internal sealed class WarehouseService : IWarehouseService
     {
         var entity = await _warehouseRepository.GetByIdAsync(warehouseDto.Id, ct)
                      ?? throw new EntityNotFoundException(warehouseDto.Id);
+
+        if (entity.DeletedAt is not null)
+        {
+            throw new EntityWasDeletedException(entity.Id);
+        }
         
         _mapper.Map(warehouseDto, entity);
 

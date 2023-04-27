@@ -10,8 +10,6 @@ public class BoxRequest
     
     public required decimal Weight { get; set; }
 
-    public decimal Volume { get; set; }
-
     public DateTime? ProductionDate { get; set; }
     
     public DateTime? ExpiryDate { get; set; }

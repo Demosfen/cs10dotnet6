@@ -1,9 +1,13 @@
+using System.Text;
 using AutoMapper;
 using Wms.Web.Api.Contracts.Responses;
 using Wms.Web.Services.Abstract;
 using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Services.Dto;
 using Microsoft.AspNetCore.Mvc;
+using Wms.Web.Common.Exceptions;
+using Wms.Web.Repositories.Abstract;
+using Wms.Web.Store.Entities;
 
 namespace Wms.Web.Api.Controllers;
 
@@ -16,7 +20,6 @@ public sealed class PaletteController : ControllerBase
     private readonly IMapper _mapper;
 
     public PaletteController(
-        IWarehouseService warehouseService,
         IPaletteService paletteService, 
         IMapper mapper)
     {
@@ -28,7 +31,7 @@ public sealed class PaletteController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IReadOnlyCollection<PaletteResponse>>> GetAllNotDeleted(
-        [FromRoute] Guid warehouseId, int offset = 0, int limit = 100)
+        [FromRoute] Guid warehouseId, int offset = 0, int limit = 10)
     {
         var palettesDto = await _paletteService
             .GetAllAsync(warehouseId, offset, limit);
@@ -42,7 +45,7 @@ public sealed class PaletteController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IReadOnlyCollection<PaletteResponse>>> GetAllDeleted(
-        [FromRoute] Guid warehouseId, int offset = 0, int limit = 100)
+        [FromRoute] Guid warehouseId, int offset = 0, int limit = 10)
     {
         var palettesDto = await _paletteService
             .GetAllAsync(warehouseId, offset, limit, true);
@@ -55,15 +58,17 @@ public sealed class PaletteController : ControllerBase
     [HttpGet("palettes/{paletteId}", Name = "GetPaletteById")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<PaletteResponse>> Get([FromRoute] Guid paletteId)
+    public async Task<ActionResult<PaletteResponse>> GetByIdAsync(
+        [FromRoute] Guid paletteId, int boxListoffset = 0, int boxListSize = 10)
     {
-        var paletteDto = await _paletteService.GetByIdAsync(paletteId);
-
+        var paletteDto = await _paletteService.GetByIdAsync(
+            paletteId, boxListoffset, boxListSize);
+    
         if (paletteDto is null)
         {
             return NotFound();
         }
-
+    
         var paletteResponse = _mapper.Map<PaletteResponse>(paletteDto);
         return Ok(paletteResponse);
     }
@@ -112,10 +117,17 @@ public sealed class PaletteController : ControllerBase
     [HttpDelete("palettes/{paletteId}", Name = "DeletePalette")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteAsync(Guid id)
+    public async Task<IActionResult> DeleteAsync(Guid paletteId)
     {
-        await _paletteService.DeleteAsync(id);
-    
-        return Ok();
+        var paletteDto = await _paletteService.GetByIdAsync(paletteId);
+
+        if (paletteDto?.Boxes?.Count != 0)
+        {
+            return BadRequest("Warehouse is not empty! Remove palettes first. Return.");
+        } 
+        
+        await _paletteService.DeleteAsync(paletteId);
+
+        return Ok("Palette deleted");
     }
 }

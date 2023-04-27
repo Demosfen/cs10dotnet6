@@ -59,10 +59,10 @@ internal sealed class BoxService : IBoxService
     }
 
     /// <inheritdoc />
-    public async Task CreateAsync(BoxDto boxDto, CancellationToken ct)
+    public async Task CreateAsync(BoxDto boxDto, CancellationToken cancellationToken)
     {
         var paletteDto = await _paletteRepository
-                             .GetByIdAsync(boxDto.PaletteId, nameof(Palette.Boxes), ct)
+                             .GetByIdAsync(boxDto.PaletteId, cancellationToken)
                          ?? throw new EntityNotFoundException(boxDto.PaletteId);
         
         if (boxDto.Width > paletteDto.Width 
@@ -94,26 +94,15 @@ internal sealed class BoxService : IBoxService
 
         var box = _mapper.Map<Box>(boxDto);
 
-        await _boxRepository.CreateAsync(box, ct);
-        
-        paletteDto.Boxes?.Add(box);  //TODO does not update palette parameters...why?
-        paletteDto.Weight += boxDto.Weight;
-        paletteDto.Volume += boxDto.Volume;
-        paletteDto.ExpiryDate = paletteDto.Boxes?.Min(x => x.ExpiryDate);
-
-        var palette = _mapper.Map<Palette>(paletteDto);
-
-        await _paletteRepository.UpdateAsync(palette, ct);
+        await _boxRepository.CreateAsync(box, cancellationToken);
     }
 
     /// <inheritdoc />
-    public async Task<BoxDto?> GetByIdAsync(Guid id, CancellationToken ct)
+    public async Task<BoxDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        var box = await _boxRepository.GetByIdAsync(id, ct);
+        var box = await _boxRepository.GetByIdAsync(id, cancellationToken);
 
-        var boxDto = _mapper.Map<BoxDto>(box);
-
-        return boxDto;
+        return _mapper.Map<BoxDto>(box);
     }
 
     /// <inheritdoc />
@@ -132,7 +121,7 @@ internal sealed class BoxService : IBoxService
         if (boxDto != null)
         {
             var paletteDto = await _paletteRepository
-                                 .GetByIdAsync(boxDto.PaletteId, nameof(Palette.Boxes) ,ct)
+                                 .GetByIdAsync(boxDto.PaletteId, ct)
                              ?? throw new EntityNotFoundException(boxDto.PaletteId);
         
             await _boxRepository.DeleteAsync(id, ct);

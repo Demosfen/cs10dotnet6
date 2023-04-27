@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Wms.Web.Common.Exceptions;
 using Wms.Web.Repositories.Abstract;
 using Wms.Web.Store.Interfaces;
+using Wms.Web.Store.Specifications;
 
 namespace Wms.Web.Repositories.Concrete;
 
@@ -45,14 +46,16 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
     }
 
     public async Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken) 
-        => await _dbSet.SingleOrDefaultAsync(x => x.Id == id,
-            cancellationToken: cancellationToken);
+        => await _dbSet.SingleOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
     
-    public async Task<TEntity?> GetByIdAsync(Guid id, string includeProperties, CancellationToken cancellationToken)
+    public async Task<TEntity?> GetByIdAsync(Guid id, int offset, int size, string includeProperties,
+        CancellationToken cancellationToken)
     {
         var entities =
-            await GetAllAsync(null, null, includeProperties: includeProperties, cancellationToken: cancellationToken);
-
+            await GetAllAsync(null, 
+                q => q.Skip(offset).Take(size).OrderBy(x => x.CreatedAt), 
+                includeProperties: includeProperties, cancellationToken: cancellationToken);
+        
         return entities.SingleOrDefault(x => x.Id == id);
     }
 
