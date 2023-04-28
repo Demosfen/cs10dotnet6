@@ -1,10 +1,15 @@
+using Microsoft.AspNetCore.Mvc;
+
 namespace Wms.Web.Api.Contracts.Requests;
 
 public sealed class CreatePaletteRequest
 {
-    public required decimal Width { get; set; }
+    [FromRoute(Name = "paletteId")]
+    public required Guid Id { get; init; }
     
-    public required decimal Height { get; set; }
+    [FromRoute(Name = "warehouseId")]
+    public required Guid WarehouseId { get; init; }
 
-    public required decimal Depth { get; set; }
+    [FromBody]
+    public required PaletteRequest PaletteRequest { get; init;}
 }

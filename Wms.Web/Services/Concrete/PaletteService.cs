@@ -15,25 +15,34 @@ internal sealed class PaletteService : IPaletteService
 
     private readonly IGenericRepository<Warehouse> _warehouseRepository;
     private readonly IGenericRepository<Palette> _paletteRepository;
+    private readonly IGenericRepository<Box> _boxRepository;
     private readonly IMapper _mapper;
 
     public PaletteService(
         IGenericRepository<Warehouse> warehouseRepository,
-        IGenericRepository<Palette> paletteRepository, 
+        IGenericRepository<Palette> paletteRepository,  
+        IGenericRepository<Box> boxRepository,
         IMapper mapper)
     {
         _warehouseRepository = warehouseRepository;
         _paletteRepository = paletteRepository;
+        _boxRepository = boxRepository;
         _mapper = mapper;
     }
 
-    public async Task CreateAsync(PaletteDto paletteDto, CancellationToken ct)
+    public async Task CreateAsync(PaletteDto paletteDto, CancellationToken cancellationToken)
     {
-        var warehouse = await _warehouseRepository.GetByIdAsync(paletteDto.WarehouseId, ct);
+        var warehouse = await _warehouseRepository.GetByIdAsync(paletteDto.WarehouseId, cancellationToken)
+            ?? throw new EntityNotFoundException(paletteDto.WarehouseId);
 
-        if (warehouse is { DeletedAt: not null })
+        if (warehouse.DeletedAt is not null)
         {
             throw new EntityWasDeletedException(paletteDto.WarehouseId);
+        }
+
+        if (await _paletteRepository.GetByIdAsync(paletteDto.Id, cancellationToken) is not null)
+        {
+            throw new EntityAlreadyExistException(paletteDto.Id);
         }
         
         paletteDto.Weight = DefaultWeight;
@@ -41,7 +50,7 @@ internal sealed class PaletteService : IPaletteService
         
         var entity = _mapper.Map<Palette>(paletteDto);
 
-        await _paletteRepository.CreateAsync(entity, ct);
+        await _paletteRepository.CreateAsync(entity, cancellationToken);
     }
 
     public async Task<IReadOnlyCollection<PaletteDto>> GetAllAsync(
@@ -74,34 +83,38 @@ internal sealed class PaletteService : IPaletteService
         return _mapper.Map<IReadOnlyCollection<PaletteDto>>(entities);
     }
 
-    public async Task<PaletteDto?> GetByIdAsync(Guid id, int boxListOffset, int boxListSize, CancellationToken ct)
+    public async Task<PaletteDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        var entity = await _paletteRepository
-            .GetByIdAsync(id, boxListOffset, boxListSize, nameof(Palette.Boxes), ct);
+        var entity = await _paletteRepository.GetByIdAsync(id, cancellationToken)
+            ?? throw new EntityNotFoundException(id);
 
-        return _mapper.Map<PaletteDto?>(entity);
+        return _mapper.Map<PaletteDto>(entity);
     }
 
     public async Task RefreshAsync(Guid id, CancellationToken cancellationToken)
     {
-        var palette = await _paletteRepository.GetByIdAsync(
-            id,
-            includeProperties: nameof(Palette.Boxes),
+        var boxDto = await _boxRepository.GetAllAsync(
+            b => b.PaletteId == id,
+            q => q.NotDeleted().OrderBy(b => b.CreatedAt),
             cancellationToken: cancellationToken);
 
-        if (palette != null)
+        var paletteDto = await _paletteRepository.GetByIdAsync(id, cancellationToken)
+                         ?? throw new EntityNotFoundException(id);
+
+        paletteDto.Weight = 30;
+        paletteDto.Volume = paletteDto.Width * paletteDto.Height * paletteDto.Depth;
+
+        var boxesDto = boxDto.ToList();
+        
+        foreach (var box in boxesDto.ToList())
         {
-            palette.Weight = 30;
-            palette.Volume = palette.Width * palette.Height * palette.Depth;
-            
-            foreach (var box in palette.Boxes)
-            {
-                palette.Weight += box.Weight;
-                palette.Volume += box.Volume;
-            }
-            
-            palette.ExpiryDate = palette.Boxes.Where(b => b.ExpiryDate.)
-        } 
+            paletteDto.Weight += box.Weight;
+            paletteDto.Volume += box.Volume;
+        }
+
+        paletteDto.ExpiryDate = boxesDto.Min(b => b.ExpiryDate);
+
+        await _paletteRepository.UpdateAsync(_mapper.Map<Palette>(paletteDto), cancellationToken);
     }
 
     public async Task UpdateAsync(PaletteDto paletteDto, CancellationToken cancellationToken)
@@ -112,24 +125,24 @@ internal sealed class PaletteService : IPaletteService
                              cancellationToken: cancellationToken)
                      ?? throw new EntityNotFoundException(paletteDto.Id);
 
-        var warehouse = await _warehouseRepository.GetByIdAsync(palette.WarehouseId, cancellationToken)
+        if (palette.DeletedAt is not null)
+        {
+            throw new EntityWasDeletedException(palette.Id);
+        }
+        
+        if (palette.Boxes.Count != 0)
+        {
+            throw new EntityNotEmptyException(palette.Id);
+        }
+
+        var warehouse = await _warehouseRepository.GetByIdAsync(paletteDto.WarehouseId, cancellationToken)
             ?? throw new EntityNotFoundException(palette.WarehouseId);
 
         if (warehouse.DeletedAt is not null)
         {
             throw new EntityWasDeletedException(warehouse.Id);
         }
-        
-        if (palette.DeletedAt is not null)
-        {
-            throw new EntityWasDeletedException(palette.Id);
-        }
 
-        if (palette.Boxes.Count != 0)
-        {
-            throw new EntityNotEmptyException(palette.Id);
-        }
-        
         paletteDto.Weight = DefaultWeight;
         paletteDto.Volume = paletteDto.Width * paletteDto.Height * paletteDto.Depth;
         
@@ -138,20 +151,23 @@ internal sealed class PaletteService : IPaletteService
         await _paletteRepository.UpdateAsync(palette, cancellationToken);
     }
 
-    public async Task DeleteAsync(Guid id, CancellationToken ct)
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        var palette = await _paletteRepository.GetByIdAsync(id, ct);
+        var palette = await _paletteRepository.GetByIdAsync(id, cancellationToken)
+            ?? throw new EntityNotFoundException(id);
 
-        if (palette != null)
+        if (palette.DeletedAt is not null) return;
+
+        var box = _boxRepository.GetAllAsync(
+            f => f.PaletteId == id,
+            q => q.NotDeleted().Take(1).OrderBy(b => b.CreatedAt),
+            cancellationToken: cancellationToken);
+
+        if (box is not null)
         {
-            var warehouse = await _warehouseRepository.GetByIdAsync(palette.WarehouseId, ct);
-
-            if (warehouse is { DeletedAt: not null })
-            {
-                throw new EntityWasDeletedException(palette.WarehouseId);
-            }
+            throw new EntityNotEmptyException(id);
         }
 
-        await _paletteRepository.DeleteAsync(id, ct);
+        await _paletteRepository.DeleteAsync(id, cancellationToken);
     }
 }

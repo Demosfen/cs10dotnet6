@@ -14,7 +14,7 @@ public interface IGenericRepository<TEntity> : IRepository
     
     public Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
 
-    public Task<TEntity?> GetByIdAsync(Guid id, 
+    public Task<TEntity?> GetByIdAsync(Guid id,
         int offset = 0, int size = 100,
         string includeProperties = "", 
         CancellationToken cancellationToken = default);

@@ -4,6 +4,7 @@ using Wms.Web.Services.Abstract;
 using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Services.Dto;
 using Microsoft.AspNetCore.Mvc;
+using Wms.Web.Common.Exceptions;
 
 namespace Wms.Web.Api.Controllers;
 
@@ -30,12 +31,12 @@ public sealed class BoxController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IReadOnlyCollection<BoxResponse>>> GetNotDeletedAsync(
         [FromRoute] Guid paletteId,
-        int offset = 0, 
-        int size = 10,
+        int boxOffset = 0, 
+        int boxSize = 10,
         CancellationToken cancellationToken = default)
     {
         var boxesDto = await _boxService
-            .GetAllAsync(paletteId, offset, size, false, cancellationToken);
+            .GetAllAsync(paletteId, boxOffset, boxSize, false, cancellationToken);
         
         var boxResponse = _mapper.Map<IReadOnlyCollection<BoxResponse>>(boxesDto);
 
@@ -46,12 +47,12 @@ public sealed class BoxController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IReadOnlyCollection<BoxResponse>>> GetDeletedAsync(
         [FromRoute] Guid paletteId,
-        int offset = 0,
-        int size = 10,
+        int boxOffset = 0,
+        int boxSize = 10,
         CancellationToken cancellationToken = default)
     {
         var boxDto = await _boxService
-            .GetAllAsync(paletteId, offset, size, true, cancellationToken);
+            .GetAllAsync(paletteId, boxOffset, boxSize, true, cancellationToken);
        
         var boxResponse = _mapper.Map<IReadOnlyCollection<BoxResponse>>(boxDto);
     
@@ -66,10 +67,8 @@ public sealed class BoxController : ControllerBase
         CancellationToken cancellationToken = default)
     {
         var boxDto = await _boxService.GetByIdAsync(boxId, cancellationToken);
-    
-        var boxResponse = _mapper.Map<BoxResponse>(boxDto);
-        
-        return Ok(boxResponse);
+
+        return Ok(_mapper.Map<BoxResponse>(boxDto));
     }
 
     [HttpPost("{paletteId:guid}/boxes/{boxId:guid}", Name = "CreateBox")]
@@ -81,16 +80,6 @@ public sealed class BoxController : ControllerBase
         [FromBody] BoxRequest request,
         CancellationToken cancellationToken = default)
     {
-        if (await _boxService.GetByIdAsync(boxId, cancellationToken) != null)
-        {
-            return Conflict("Box with the same id already exist.");
-        }
-        
-        if (await _paletteService.GetByIdAsync(paletteId, ct: cancellationToken) is null)
-        {
-            return NotFound($"Palette with id={paletteId} does not exist");
-        }
-    
         var createBox = new CreateBoxRequest
         {
             Id = boxId,
@@ -101,19 +90,40 @@ public sealed class BoxController : ControllerBase
         var boxDto = _mapper.Map<BoxDto>(createBox);
     
         await _boxService.CreateAsync(boxDto, cancellationToken);
-    
-        var response = _mapper.Map<BoxResponse>(boxDto);
-        
-        return Created("Box created!", response);
+
+        return Created("Box created!", _mapper.Map<BoxResponse>(boxDto));
     }
+
+    [HttpPut("boxes/{boxId:guid}", Name = "UpdateBox")]
+    [ProducesResponseType(StatusCodes.Status202Accepted)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<BoxResponse>> UpdateAsync(
+        [FromRoute] Guid boxId,
+        [FromQuery] Guid paletteId,
+        [FromBody] BoxRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var updateRequest = new UpdateBoxRequest
+        {
+            Id = boxId,
+            PaletteId = paletteId,
+            BoxRequest = request
+        };
+
+        var boxDto = _mapper.Map<BoxDto>(updateRequest);
+
+        await _boxService.UpdateAsync(boxDto, cancellationToken);
+
+        return Ok(_mapper.Map<BoxResponse>(boxDto));
+    }
+
+    [HttpDelete("boxes/{boxId:guid}", Name = "DeleteBox")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteAsync([FromRoute] Guid boxId)
+    {
+        await _boxService.DeleteAsync(boxId);
     
-    // [HttpDelete("{boxId:guid}", Name = "DeleteBox")]
-    // [ProducesResponseType(StatusCodes.Status200OK)]
-    // [ProducesResponseType(StatusCodes.Status404NotFound)]
-    // public async Task<IActionResult> DeleteAsync([FromRoute] Guid boxId)
-    // {
-    //     await _boxService.DeleteAsync(boxId);
-    //
-    //     return Ok();
-    // }
+        return Ok("Box deleted");
+    }
 }

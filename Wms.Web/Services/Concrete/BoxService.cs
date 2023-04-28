@@ -3,6 +3,7 @@ using Wms.Web.Common.Exceptions;
 using Wms.Web.Repositories.Abstract;
 using Wms.Web.Services.Abstract;
 using Wms.Web.Services.Dto;
+using Wms.Web.Services.Extensions;
 using Wms.Web.Store.Entities;
 using Wms.Web.Store.Specifications;
 
@@ -11,16 +12,20 @@ namespace Wms.Web.Services.Concrete;
 internal sealed class BoxService : IBoxService
 {
     private const int ExpiryDays = 100;
+
+    private readonly IPaletteService _paletteService;
     
     private readonly IGenericRepository<Box> _boxRepository;
     private readonly IGenericRepository<Palette> _paletteRepository;
     private readonly IMapper _mapper;
 
     public BoxService(
+        IPaletteService paletteService,
         IGenericRepository<Box> boxRepository, 
         IGenericRepository<Palette> paletteRepository, 
         IMapper mapper)
     {
+        _paletteService = paletteService;
         _boxRepository = boxRepository;
         _paletteRepository = paletteRepository;
         _mapper = mapper;
@@ -29,10 +34,9 @@ internal sealed class BoxService : IBoxService
     /// <inheritdoc />
     public async Task<IReadOnlyCollection<BoxDto>> GetAllAsync(
         Guid id,
-        int offset,
-        int size,
+        int offset, int size,
         bool deleted,
-        CancellationToken ct)
+        CancellationToken cancellationToken)
     {
         IEnumerable<Box?> entities;
 
@@ -43,7 +47,7 @@ internal sealed class BoxService : IBoxService
                     .GetAllAsync(
                         x => x.PaletteId == id,
                         q => q.NotDeleted().Skip(offset).Take(size).OrderBy(p => p.CreatedAt),
-                        cancellationToken: ct);
+                        cancellationToken: cancellationToken);
                 break;
             
             case true:
@@ -51,7 +55,7 @@ internal sealed class BoxService : IBoxService
                     .GetAllAsync(
                         x => x.PaletteId == id,
                         q => q.Deleted().Skip(offset).Take(size).OrderBy(p => p.CreatedAt),
-                        cancellationToken: ct);
+                        cancellationToken: cancellationToken);
                 break;
         }
         
@@ -61,40 +65,32 @@ internal sealed class BoxService : IBoxService
     /// <inheritdoc />
     public async Task CreateAsync(BoxDto boxDto, CancellationToken cancellationToken)
     {
-        var paletteDto = await _paletteRepository
-                             .GetByIdAsync(boxDto.PaletteId, cancellationToken)
-                         ?? throw new EntityNotFoundException(boxDto.PaletteId);
+        var box = await _boxRepository.GetByIdAsync(boxDto.Id, cancellationToken);
         
-        if (boxDto.Width > paletteDto.Width 
-            | boxDto.Height > paletteDto.Height 
-            | boxDto.Depth > paletteDto.Depth)
+        if (box != null)
         {
-            throw new UnitOversizeException(boxDto.Id);
+            throw new EntityAlreadyExistException(boxDto.Id);
         }
         
-        if (boxDto.ProductionDate != null)
+        var palette = await _paletteRepository
+                          .GetByIdAsync(boxDto.PaletteId, cancellationToken)
+                      ?? throw new EntityNotFoundException(boxDto.PaletteId);
+
+        if (palette.DeletedAt is not null)
         {
-            boxDto.ExpiryDate ??= boxDto.ProductionDate.Value.AddDays(ExpiryDays);
-        }
-        else
-        {
-            if (boxDto.ExpiryDate == null)
-            {
-                throw new InvalidOperationException("Both Production and Expiry date should not be null");
-            }
+            throw new EntityWasDeletedException(palette.Id);
         }
         
-        if (boxDto.ExpiryDate <= boxDto.ProductionDate)
-        {
-            throw new ArgumentException(
-                "Expiry date cannot be lower than Production date!");
-        }
+        BoxValidations.BoxSizeValidation(palette, boxDto);
+        BoxValidations.BoxExpiryValidation(palette, boxDto);
 
         boxDto.Volume = boxDto.Width * boxDto.Height * boxDto.Depth;   
 
-        var box = _mapper.Map<Box>(boxDto);
+        box = _mapper.Map<Box>(boxDto);
 
         await _boxRepository.CreateAsync(box, cancellationToken);
+
+        await _paletteService.RefreshAsync(box.PaletteId, cancellationToken);
     }
 
     /// <inheritdoc />
@@ -106,34 +102,50 @@ internal sealed class BoxService : IBoxService
     }
 
     /// <inheritdoc />
-    public async Task UpdateAsync(BoxDto boxDto, CancellationToken ct)
+    public async Task UpdateAsync(BoxDto boxDto, CancellationToken cancellationToken)
     {
-        var box = _mapper.Map<Box>(boxDto);
+        var box = await _boxRepository.GetByIdAsync(boxDto.Id, cancellationToken)
+                  ?? throw new EntityNotFoundException(boxDto.Id);
+
+        if (box.DeletedAt is not null)
+        {
+            throw new EntityWasDeletedException(box.Id);
+        }
+
+        var oldPalette = box.PaletteId;
         
-        await _boxRepository.UpdateAsync(box, ct);
+        var palette = await _paletteRepository.GetByIdAsync(boxDto.PaletteId, cancellationToken)
+                      ?? throw new EntityNotFoundException(boxDto.PaletteId);
+        
+        if (palette.DeletedAt is not null)
+        {
+            throw new EntityWasDeletedException(palette.Id);
+        }
+        
+        BoxValidations.BoxSizeValidation(palette, boxDto);
+        BoxValidations.BoxExpiryValidation(palette, boxDto);
+        
+        boxDto.Volume = boxDto.Width * boxDto.Height * boxDto.Depth;
+        
+        _mapper.Map(boxDto, box);
+        
+        await _boxRepository.UpdateAsync(box, cancellationToken);
+
+        await _paletteService.RefreshAsync(palette.Id, cancellationToken);
+
+        await _paletteService.RefreshAsync(oldPalette, cancellationToken);
     }
 
     /// <inheritdoc />
-    public async Task DeleteAsync(Guid id, CancellationToken ct)
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        var boxDto = await _boxRepository.GetByIdAsync(id, ct);
-
-        if (boxDto != null)
-        {
-            var paletteDto = await _paletteRepository
-                                 .GetByIdAsync(boxDto.PaletteId, ct)
-                             ?? throw new EntityNotFoundException(boxDto.PaletteId);
+        var box = await _boxRepository.GetByIdAsync(id, cancellationToken)
+            ?? throw new EntityNotFoundException(id);
         
-            await _boxRepository.DeleteAsync(id, ct);
-        
-            paletteDto.Weight -= boxDto.Weight;
-            paletteDto.Volume -= boxDto.Volume;
-            paletteDto.Boxes?.Remove(boxDto);
-            paletteDto.ExpiryDate = paletteDto.Boxes?.Min(x => x.ExpiryDate);
+        if (box.DeletedAt is not null) return;
 
-            var palette = _mapper.Map<Palette>(paletteDto);
+        await _boxRepository.DeleteAsync(id, cancellationToken);
 
-            await _paletteRepository.UpdateAsync(palette, ct);
-        }
+        await _paletteService.RefreshAsync(box.PaletteId, cancellationToken);
     }
 }

@@ -1,6 +1,12 @@
+using Microsoft.AspNetCore.Mvc;
+
 namespace Wms.Web.Api.Contracts.Requests;
 
 public class UpdateWarehouseRequest
 {
-    public required string Name { get; init; }
+    [FromRoute(Name = "warehouseId")]
+    public required Guid Id { get; init; }
+    
+    [FromBody]
+    public required WarehouseRequest WarehouseRequest { get; init; }
 }

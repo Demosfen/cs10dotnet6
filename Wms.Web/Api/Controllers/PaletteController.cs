@@ -17,14 +17,16 @@ namespace Wms.Web.Api.Controllers;
 public sealed class PaletteController : ControllerBase
 {
     private readonly IPaletteService _paletteService;
+    private readonly IBoxService _boxService;
     private readonly IMapper _mapper;
 
     public PaletteController(
         IPaletteService paletteService, 
-        IMapper mapper)
+        IMapper mapper, IBoxService boxService)
     {
         _paletteService = paletteService;
         _mapper = mapper;
+        _boxService = boxService;
     }
     
     [HttpGet("{warehouseId:guid}/palettes/", Name = "GetNotDeletedPalettes")]
@@ -59,18 +61,20 @@ public sealed class PaletteController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<PaletteResponse>> GetByIdAsync(
-        [FromRoute] Guid paletteId, int boxListoffset = 0, int boxListSize = 10)
+        [FromRoute] Guid paletteId, 
+        int boxListOffset = 0, int boxListSize = 10, 
+        CancellationToken cancellationToken = default)
     {
-        var paletteDto = await _paletteService.GetByIdAsync(
-            paletteId, boxListoffset, boxListSize);
-    
-        if (paletteDto is null)
-        {
-            return NotFound();
-        }
-    
-        var paletteResponse = _mapper.Map<PaletteResponse>(paletteDto);
-        return Ok(paletteResponse);
+        var paletteDto = await _paletteService.GetByIdAsync(paletteId, cancellationToken);
+        
+        var boxDto = await _boxService.GetAllAsync(
+            paletteId,
+            boxListOffset, boxListSize, false,
+            cancellationToken);
+        
+        paletteDto?.Boxes.AddRange(boxDto);
+        
+        return Ok(_mapper.Map<PaletteResponse>(paletteDto));
     }
 
     [HttpPost("{warehouseId:guid}/palettes/{paletteId:guid}", Name = "CreatePalette")]
@@ -79,54 +83,52 @@ public sealed class PaletteController : ControllerBase
     public async Task<ActionResult<PaletteResponse>> CreateAsync(
         [FromRoute] Guid paletteId, 
         [FromRoute] Guid warehouseId, 
-        [FromBody] CreatePaletteRequest request)
+        [FromBody] PaletteRequest request,
+        CancellationToken cancellationToken = default)
     {
-        if (await _paletteService.GetByIdAsync(paletteId) != null)
+        var createRequest = new CreatePaletteRequest
         {
-            return Conflict("Palette with the same id already exist.");
-        }
+            Id = paletteId,
+            WarehouseId = warehouseId,
+            PaletteRequest = request
+        };
         
-        var paletteDto = _mapper.Map<PaletteDto>(request);
+        var paletteDto = _mapper.Map<PaletteDto>(createRequest);
 
-        paletteDto.Id = paletteId;
-        paletteDto.WarehouseId = warehouseId;
-
-        await _paletteService.CreateAsync(paletteDto);
-
-        var response = _mapper.Map<PaletteResponse>(paletteDto);
+        await _paletteService.CreateAsync(paletteDto, cancellationToken);
         
-        return Created("Palette created:", response);
+        return Created("Palette created:", _mapper.Map<PaletteResponse>(paletteDto));
     }
     
     [HttpPut("palettes/{paletteId:guid}", Name = "UpdatePalette")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<WarehouseResponse>> UpdateAsync(
-        [FromRoute] Guid paletteId, [FromBody] UpdatePaletteRequest request)
+    public async Task<ActionResult<PaletteResponse>> UpdateAsync(
+        [FromRoute] Guid paletteId,
+        [FromQuery] Guid warehouseId,
+        [FromBody] PaletteRequest request,
+        CancellationToken cancellationToken = default)
     {
-        var paletteDto = _mapper.Map<PaletteDto>(request);
+        var updateRequest = new UpdatePaletteRequest
+        {
+            Id = paletteId,
+            WarehouseId = warehouseId,
+            PaletteRequest = request
+        };
+        
+        var paletteDto = _mapper.Map<PaletteDto>(updateRequest);
 
-        paletteDto.Id = paletteId;
+        await _paletteService.UpdateAsync(paletteDto, cancellationToken);
 
-        await _paletteService.UpdateAsync(paletteDto);
-
-        var paletteResponse = _mapper.Map<PaletteResponse>(paletteDto);
-        return Ok(paletteResponse);
+        return Ok(_mapper.Map<PaletteResponse>(paletteDto));
     }
     
     [HttpDelete("palettes/{paletteId}", Name = "DeletePalette")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteAsync(Guid paletteId)
+    public async Task<IActionResult> DeleteAsync(Guid paletteId, CancellationToken cancellationToken = default)
     {
-        var paletteDto = await _paletteService.GetByIdAsync(paletteId);
-
-        if (paletteDto?.Boxes?.Count != 0)
-        {
-            return BadRequest("Warehouse is not empty! Remove palettes first. Return.");
-        } 
-        
-        await _paletteService.DeleteAsync(paletteId);
+        await _paletteService.DeleteAsync(paletteId, cancellationToken);
 
         return Ok("Palette deleted");
     }

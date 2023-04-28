@@ -10,22 +10,22 @@ public sealed class ApiContractToDtoMappingProfile : Profile
 {
     public ApiContractToDtoMappingProfile()
     {
-        CreateMap<CreateWarehouseRequest, WarehouseDto>(MemberList.Source);
+        CreateMap<WarehouseRequest, WarehouseDto>(MemberList.Source);
+        CreateMap<CreateWarehouseRequest, WarehouseDto>(MemberList.Source)
+            .IncludeMembers(m => m.WarehouseRequest);
+        CreateMap<UpdateWarehouseRequest, WarehouseDto>(MemberList.Source)
+            .IncludeMembers(m => m.WarehouseRequest);
 
-        CreateMap<UpdateWarehouseRequest, WarehouseDto>(MemberList.Source);
-
-        CreateMap<UpdatePaletteRequest, PaletteDto>(MemberList.Source); 
-
+        CreateMap<PaletteRequest, PaletteDto>(MemberList.Source);
         CreateMap<CreatePaletteRequest, PaletteDto>(MemberList.Source)
-            .ForMember(x => x.Id, 
-                opt => opt.Ignore())
-            .ForMember(x => x.WarehouseId,
-                opt => opt.Ignore());
-        
+            .IncludeMembers(m => m.PaletteRequest);
+        CreateMap<UpdatePaletteRequest, PaletteDto>(MemberList.Source)
+            .IncludeMembers(m => m.PaletteRequest);
+
         CreateMap<BoxRequest, BoxDto>(MemberList.Source);
-        CreateMap<CreateBoxRequest, BoxDto>(MemberList.Source).IncludeMembers(s => s.BoxRequest);
-        
-        CreateMap<UpdateBoxRequest, BoxDto>()
-            .ReverseMap();
+        CreateMap<CreateBoxRequest, BoxDto>(MemberList.Source)
+            .IncludeMembers(m => m.BoxRequest);
+        CreateMap<UpdateBoxRequest, BoxDto>(MemberList.Source)
+            .IncludeMembers(m => m.BoxRequest);
     }
 }

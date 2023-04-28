@@ -48,12 +48,14 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
     public async Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken) 
         => await _dbSet.SingleOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
     
-    public async Task<TEntity?> GetByIdAsync(Guid id, int offset, int size, string includeProperties,
+    public async Task<TEntity?> GetByIdAsync(Guid id,
+        int offset, int size, 
+        string includeProperties,
         CancellationToken cancellationToken)
     {
         var entities =
-            await GetAllAsync(null, 
-                q => q.Skip(offset).Take(size).OrderBy(x => x.CreatedAt), 
+            await GetAllAsync(
+                null, q => q.Skip(offset).Take(size).OrderBy(x => x.CreatedAt), 
                 includeProperties: includeProperties, cancellationToken: cancellationToken);
         
         return entities.SingleOrDefault(x => x.Id == id);

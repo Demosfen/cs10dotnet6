@@ -12,33 +12,33 @@ namespace Wms.Web.Services.Concrete;
 internal sealed class WarehouseService : IWarehouseService
 {
     private readonly IGenericRepository<Warehouse> _warehouseRepository;
+    private readonly IGenericRepository<Palette> _paletteRepository;
     private readonly IMapper _mapper;
 
     public WarehouseService(
         IGenericRepository<Warehouse> warehouseRepository, 
+        IGenericRepository<Palette> paletteRepository, 
         IMapper mapper)
     {
         _warehouseRepository = warehouseRepository;
+        _paletteRepository = paletteRepository;
         _mapper = mapper;
     }
 
-    public async Task CreateAsync(WarehouseDto warehouseDto, CancellationToken ct)
+    public async Task CreateAsync(WarehouseDto warehouseDto, CancellationToken cancellationToken)
     {
-        var entity = await _warehouseRepository.GetByIdAsync(warehouseDto.Id, ct);
-
-        if (entity is not null)
+        if (await _warehouseRepository.GetByIdAsync(warehouseDto.Id, cancellationToken) != null)
         {
-            throw new EntityAlreadyExistException(entity.Id);
+            throw new EntityAlreadyExistException(warehouseDto.Id);
         }
 
-        entity = _mapper.Map<Warehouse>(warehouseDto);
-        await _warehouseRepository.CreateAsync(entity, ct);
+        await _warehouseRepository.CreateAsync(_mapper.Map<Warehouse>(warehouseDto), cancellationToken);
     }
 
     public async Task<IReadOnlyCollection<WarehouseDto>?> GetAllAsync(
         int offset, int size, 
         bool deleted, 
-        CancellationToken ct)
+        CancellationToken cancellationToken)
     {
         IEnumerable<Warehouse?> entities;
 
@@ -48,45 +48,60 @@ internal sealed class WarehouseService : IWarehouseService
                 entities = await _warehouseRepository
                     .GetAllAsync(null,
                         q => q.Skip(offset).Deleted().Take(size).OrderBy(x => x.CreatedAt),
-                        cancellationToken: ct);
+                        cancellationToken: cancellationToken);
                 break;
             
             case false: 
                 entities = await _warehouseRepository
                     .GetAllAsync(null,
                         q => q.Skip(offset).NotDeleted().Take(size).OrderBy(x => x.CreatedAt),
-                        cancellationToken: ct);
+                        cancellationToken: cancellationToken);
                 break;
         }
 
         return _mapper.Map<IReadOnlyCollection<WarehouseDto>>(entities);
     }
 
-    public async Task<WarehouseDto?> GetByIdAsync(Guid id, int offset, int size, CancellationToken ct)
+    public async Task<WarehouseDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        var entity = await _warehouseRepository
-            .GetByIdAsync(id, offset, size, nameof(Warehouse.Palettes), ct);
+        var entity = await _warehouseRepository.GetByIdAsync(id, cancellationToken)
+            ?? throw new EntityNotFoundException(id);
 
         return _mapper.Map<WarehouseDto>(entity);
     }
 
-    public async Task UpdateAsync(WarehouseDto warehouseDto, CancellationToken ct)
+    public async Task UpdateAsync(WarehouseDto warehouseDto, CancellationToken cancellationToken)
     {
-        var entity = await _warehouseRepository.GetByIdAsync(warehouseDto.Id, ct)
+        var warehouse = await _warehouseRepository.GetByIdAsync(warehouseDto.Id, cancellationToken)
                      ?? throw new EntityNotFoundException(warehouseDto.Id);
 
-        if (entity.DeletedAt is not null)
+        if (warehouse.DeletedAt is not null)
         {
-            throw new EntityWasDeletedException(entity.Id);
+            throw new EntityWasDeletedException(warehouse.Id);
         }
         
-        _mapper.Map(warehouseDto, entity);
+        _mapper.Map(warehouseDto, warehouse);
 
-        await _warehouseRepository.UpdateAsync(entity, ct);
+        await _warehouseRepository.UpdateAsync(warehouse, cancellationToken);
     }
 
-    public async Task DeleteAsync(Guid id, CancellationToken ct)
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        await _warehouseRepository.DeleteAsync(id, ct);
+        var warehouse = await _warehouseRepository.GetByIdAsync(id, cancellationToken)
+                     ?? throw new EntityNotFoundException(id);
+        
+        if (warehouse.DeletedAt is not null) return;
+
+        var palette = await _paletteRepository.GetAllAsync(
+            f => f.Id == warehouse.Id,
+            q => q.Take(1).NotDeleted().OrderBy(x => x.CreatedAt),
+            cancellationToken: cancellationToken);
+
+        if (palette is not null)
+        {
+            throw new EntityNotEmptyException(id);
+        } 
+        
+        await _warehouseRepository.DeleteAsync(id, cancellationToken);
     }
 }

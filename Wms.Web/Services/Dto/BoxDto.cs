@@ -20,4 +20,10 @@ public sealed class BoxDto
     
     public DateTime? ExpiryDate { get; set; }
     
+    // public DateTime CreatedAt { get; init; }
+    //
+    // public DateTime? UpdatedAt { get; init; }
+    //
+    // public DateTime? DeletedAt { get; init; }
+    
 }

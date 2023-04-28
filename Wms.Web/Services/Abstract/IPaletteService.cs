@@ -5,7 +5,7 @@ namespace Wms.Web.Services.Abstract;
 
 public interface IPaletteService : IBusinessService
 {
-    Task CreateAsync(PaletteDto paletteDto, CancellationToken ct = default);
+    Task CreateAsync(PaletteDto paletteDto, CancellationToken cancellationToken = default);
     
     Task<IReadOnlyCollection<PaletteDto>> GetAllAsync(
         Guid id, 
@@ -13,9 +13,11 @@ public interface IPaletteService : IBusinessService
         bool deleted = false,
         CancellationToken ct = default);
 
-    Task<PaletteDto?> GetByIdAsync(Guid id, int offset = 0, int size = 10, CancellationToken ct = default);
+    Task<PaletteDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
     
-    Task UpdateAsync(PaletteDto paletteDto, CancellationToken ct = default);
+    Task RefreshAsync(Guid id, CancellationToken cancellationToken);
     
-    Task DeleteAsync(Guid id, CancellationToken ct = default);
+    Task UpdateAsync(PaletteDto paletteDto, CancellationToken cancellationToken = default);
+    
+    Task DeleteAsync(Guid id, CancellationToken cancellationToken = default);
 }

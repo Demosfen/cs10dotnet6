@@ -20,16 +20,16 @@ public interface IBoxService : IBusinessService
     /// </summary>
     /// <param name="size"></param>
     /// <param name="deleted"></param>
-    /// <param name="ct">Cancellation Token</param>
+    /// <param name="cancellationToken">Cancellation Token</param>
     /// <param name="id"></param>
     /// <param name="offset"></param>
     /// <returns>Box list</returns>
     Task<IReadOnlyCollection<BoxDto>> GetAllAsync(
         Guid id, 
-        int offset, 
-        int size, 
-        bool deleted,
-        CancellationToken ct);
+        int offset = 0, 
+        int size = 100, 
+        bool deleted = false,
+        CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets box by its Id
@@ -38,14 +38,15 @@ public interface IBoxService : IBusinessService
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>Box</returns>
     Task<BoxDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
-    
+
     /// <summary>
     /// Updates box entity in Database
     /// </summary>
     /// <param name="boxDto">Box</param>
     /// <param name="ct">Cancellation Token</param>
+    /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task UpdateAsync(BoxDto boxDto, CancellationToken ct = default);
+    Task UpdateAsync(BoxDto boxDto, CancellationToken cancellationToken);
     
     /// <summary>
     /// Deletes box from database
