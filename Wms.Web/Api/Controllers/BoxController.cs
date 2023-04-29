@@ -9,7 +9,7 @@ using Wms.Web.Common.Exceptions;
 namespace Wms.Web.Api.Controllers;
 
 [ApiController]
-[Route("api/v1/warehouses/palettes/")]
+[Route("api/v1/")]
 [ProducesResponseType(StatusCodes.Status400BadRequest)]
 public sealed class BoxController : ControllerBase
 {
@@ -27,7 +27,7 @@ public sealed class BoxController : ControllerBase
         _mapper = mapper;
     }
     
-    [HttpGet("{paletteId}/boxes", Name = "GetAllBoxes")]
+    [HttpGet("palettes/{paletteId}/boxes", Name = "GetAllBoxes")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IReadOnlyCollection<BoxResponse>>> GetNotDeletedAsync(
         [FromRoute] Guid paletteId,
@@ -43,7 +43,7 @@ public sealed class BoxController : ControllerBase
         return Ok(boxResponse);
     }
 
-    [HttpGet("{paletteId}/boxes/archive", Name = "GetDeletedBoxes")]
+    [HttpGet("palettes/{paletteId}/boxes/archive", Name = "GetDeletedBoxes")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IReadOnlyCollection<BoxResponse>>> GetDeletedAsync(
         [FromRoute] Guid paletteId,
@@ -71,7 +71,7 @@ public sealed class BoxController : ControllerBase
         return Ok(_mapper.Map<BoxResponse>(boxDto));
     }
 
-    [HttpPost("{paletteId:guid}/boxes/{boxId:guid}", Name = "CreateBox")]
+    [HttpPost("palettes/{paletteId:guid}/boxes/{boxId:guid}", Name = "CreateBox")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<ActionResult<BoxResponse>> CreateAsync(

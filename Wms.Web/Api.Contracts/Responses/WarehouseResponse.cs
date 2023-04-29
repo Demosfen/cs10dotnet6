@@ -6,7 +6,5 @@ public sealed class WarehouseResponse
 
     public required string Name { get; set; }
 
-    public IReadOnlyCollection<PaletteResponse>? Palettes { set; get; }
-    
-    
+    public IReadOnlyCollection<PaletteResponse> Palettes { set; get; } = Array.Empty<PaletteResponse>();
 }

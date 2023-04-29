@@ -12,7 +12,7 @@ using Wms.Web.Store.Entities;
 namespace Wms.Web.Api.Controllers;
 
 [ApiController]
-[Route("api/v1/warehouses/")]
+[Route("api/v1/")]
 [ProducesResponseType(StatusCodes.Status400BadRequest)]
 public sealed class PaletteController : ControllerBase
 {
@@ -29,7 +29,7 @@ public sealed class PaletteController : ControllerBase
         _boxService = boxService;
     }
     
-    [HttpGet("{warehouseId:guid}/palettes/", Name = "GetNotDeletedPalettes")]
+    [HttpGet("warehouses/{warehouseId:guid}/palettes/", Name = "GetNotDeletedPalettes")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IReadOnlyCollection<PaletteResponse>>> GetAllNotDeleted(
@@ -43,7 +43,7 @@ public sealed class PaletteController : ControllerBase
         return Ok(paletteResponse);
     }
     
-    [HttpGet("{warehouseId:guid}/palettes/archive/", Name = "GetDeletedPalettes")]
+    [HttpGet("warehouses/{warehouseId:guid}/palettes/archive/", Name = "GetDeletedPalettes")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IReadOnlyCollection<PaletteResponse>>> GetAllDeleted(
@@ -77,7 +77,7 @@ public sealed class PaletteController : ControllerBase
         return Ok(_mapper.Map<PaletteResponse>(paletteDto));
     }
 
-    [HttpPost("{warehouseId:guid}/palettes/{paletteId:guid}", Name = "CreatePalette")]
+    [HttpPost("warehouses/{warehouseId:guid}/palettes/{paletteId:guid}", Name = "CreatePalette")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<ActionResult<PaletteResponse>> CreateAsync(

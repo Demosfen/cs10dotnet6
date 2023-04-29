@@ -2,9 +2,9 @@ namespace Wms.Web.Services.Dto;
 
 public sealed class PaletteDto
 {
-    public required Guid Id { get; set; }
+    public required Guid Id { get; init; }
 
-    public required Guid WarehouseId { get; set; }
+    public required Guid WarehouseId { get; init; }
 
     public required decimal Width { get; init; }
     
@@ -19,10 +19,4 @@ public sealed class PaletteDto
     public DateTime? ExpiryDate { get; set; }
     
     public List<BoxDto> Boxes { get; set; } = new();
-    
-    // public DateTime CreatedAt { get; init; }
-    //
-    // public DateTime? UpdatedAt { get; init; }
-    //
-    // public DateTime? DeletedAt { get; init; }
 }

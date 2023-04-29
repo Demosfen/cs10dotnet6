@@ -14,7 +14,7 @@ public sealed class BoxResponse
     
     public required decimal Weight { get; set; }
     
-    public decimal Volume { get; set; }
+    public required decimal Volume { get; set; }
 
     public DateTime? ProductionDate { get; set; }
     
