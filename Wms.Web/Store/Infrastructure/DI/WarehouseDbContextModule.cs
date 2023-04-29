@@ -21,7 +21,7 @@ public sealed class WarehouseDbContextModule : Module
                 
                 return new WarehouseDbContext(options);
             })
-            .AsSelf()
+            .AsSelf()           //TODO needed when create new Migration https://github.com/Demosfen/cs10dotnet6/pull/6#discussion_r1161709855
             .AsImplementedInterfaces()
             .InstancePerLifetimeScope();
     }

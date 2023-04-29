@@ -46,7 +46,7 @@ public sealed class BoxController : ControllerBase
     [HttpGet("palettes/{paletteId}/boxes/archive", Name = "GetDeletedBoxes")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IReadOnlyCollection<BoxResponse>>> GetDeletedAsync(
-        [FromRoute] Guid paletteId,
+        [FromRoute] Guid paletteId, //TODO why [FromQuery]? https://github.com/Demosfen/cs10dotnet6/pull/6#discussion_r1174358966
         int boxOffset = 0,
         int boxSize = 10,
         CancellationToken cancellationToken = default)

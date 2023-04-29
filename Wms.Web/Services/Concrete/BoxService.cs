@@ -11,9 +11,11 @@ namespace Wms.Web.Services.Concrete;
 
 internal sealed class BoxService : IBoxService
 {
-    private const int ExpiryDays = 100;
+    private const int ExpiryDays = 100;         //TODO Finish business logic
 
     private readonly IPaletteService _paletteService;
+    
+    //TODO implement ILogger https://github.com/Demosfen/cs10dotnet6/pull/6#discussion_r1173487786
     
     private readonly IGenericRepository<Box> _boxRepository;
     private readonly IGenericRepository<Palette> _paletteRepository;

@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc; //TODO kill this nuget here. How? https://github.com/alex1ozr/DockerTests/blob/main/src/Api/Contracts/Requests/CreatePersonRequest.cs
 
 namespace Wms.Web.Api.Contracts.Requests;
 

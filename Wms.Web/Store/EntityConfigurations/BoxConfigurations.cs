@@ -13,7 +13,7 @@ public sealed class BoxConfigurations : IEntityTypeConfiguration<Box>
         
         builder.HasKey(x => x.Id);
         
-        // builder.ConfigureEntity();
+        // builder.ConfigureEntity(); //TODO does not work still, repeat https://github.com/Demosfen/cs10dotnet6/pull/6#discussion_r1173483476
 
         builder
             .Property(x => x.Width)
