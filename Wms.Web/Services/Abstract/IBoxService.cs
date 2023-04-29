@@ -12,7 +12,6 @@ public interface IBoxService : IBusinessService
     /// <param name="ct">Cancellation Token</param>
     /// <exception cref="EntityNotFoundException"></exception>
     /// <exception cref="UnitOversizeException"></exception>
-    /// <returns></returns>
     Task CreateAsync(BoxDto boxDto, CancellationToken ct = default);
 
     /// <summary>

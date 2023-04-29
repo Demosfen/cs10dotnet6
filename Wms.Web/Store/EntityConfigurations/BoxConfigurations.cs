@@ -13,7 +13,7 @@ public sealed class BoxConfigurations : IEntityTypeConfiguration<Box>
         
         builder.HasKey(x => x.Id);
         
-        // builder.ConfigureEntity(); //TODO does not work still, repeat https://github.com/Demosfen/cs10dotnet6/pull/6#discussion_r1173483476
+        builder.ConfigureAuditableEntity();
 
         builder
             .Property(x => x.Width)
@@ -44,17 +44,5 @@ public sealed class BoxConfigurations : IEntityTypeConfiguration<Box>
             .Property(x => x.ExpiryDate)
             .HasConversion<DateTime>()
             .IsRequired();
-        
-        builder
-            .Property(x => x.CreatedAt)
-            .IsRequired();
-        
-        builder
-            .Property(x => x.UpdatedAt)
-            .HasDefaultValue(null);
-        
-        builder
-            .Property(x => x.DeletedAt)
-            .HasDefaultValue(null);
     }
 }

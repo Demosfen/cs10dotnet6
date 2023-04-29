@@ -81,8 +81,8 @@ public sealed class PaletteController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<ActionResult<PaletteResponse>> CreateAsync(
-        [FromRoute] Guid paletteId, 
         [FromRoute] Guid warehouseId, 
+        [FromRoute] Guid paletteId,
         [FromBody] PaletteRequest request,
         CancellationToken cancellationToken = default)
     {
