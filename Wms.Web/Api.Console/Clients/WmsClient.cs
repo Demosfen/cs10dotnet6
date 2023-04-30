@@ -1,5 +1,5 @@
 using System.Net.Http.Json;
-using Wms.Web.Api.Contracts.Responses;
+using Wms.Web.Api.Contracts.Requests;
 
 namespace Wms.Web.Api.Console.Clients;
 
@@ -12,15 +12,14 @@ public class WmsClient : IWmsClient
         _client = client;
     }
 
-    public async Task<WarehouseResponse?> PostAsync(
-        Guid id, CancellationToken cancellationToken)
+    public async Task<WarehouseRequest?> PostAsync(Guid id, CancellationToken cancellationToken)
     {
         var warehouseId = Guid.NewGuid();
 
         var result = await _client.PostAsJsonAsync(
-            $"/api/v1/warehouses/{warehouseId}", 
-            new WarehouseResponse{Id = warehouseId, Name = "TestClient1" }, cancellationToken);
+            $"/api/v1/warehouses/?warehouseId={warehouseId}", 
+            new WarehouseRequest{ Name = "TestClient2" }, cancellationToken);
 
-        return await result.Content.ReadFromJsonAsync<WarehouseResponse>(cancellationToken: cancellationToken);
+        return await result.Content.ReadFromJsonAsync<WarehouseRequest>(cancellationToken: cancellationToken);
     }
 }
