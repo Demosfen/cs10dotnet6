@@ -1,5 +1,6 @@
 using AutoMapper;
 using JetBrains.Annotations;
+using Wms.Web.Api.Contracts;
 using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Services.Dto;
 

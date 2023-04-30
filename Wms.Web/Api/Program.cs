@@ -45,9 +45,6 @@ builder.Services.AddSwaggerGen(c =>
         { Title = "My Warehouse Service API", Version = "v1" });
 });
 
-// builder.Services.AddAutoMapper(typeof(ApiContractToDtoMappingProfile));
-// builder.Services.AddAutoMapper(typeof(DtoEntitiesMappingProfile));
-
 builder.Services.AddAutoMapper(
     typeof(ApiContractToDtoMappingProfile), 
     typeof(DtoEntitiesMappingProfile));

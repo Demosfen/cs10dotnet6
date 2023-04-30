@@ -4,6 +4,7 @@ using Wms.Web.Services.Abstract;
 using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Services.Dto;
 using Microsoft.AspNetCore.Mvc;
+using Wms.Web.Api.Contracts;
 
 namespace Wms.Web.Api.Controllers;
 

@@ -4,6 +4,7 @@ using Wms.Web.Services.Abstract;
 using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Services.Dto;
 using Microsoft.AspNetCore.Mvc;
+using Wms.Web.Api.Contracts;
 using Wms.Web.Common.Exceptions;
 
 namespace Wms.Web.Api.Controllers;
@@ -46,7 +47,7 @@ public sealed class BoxController : ControllerBase
     [HttpGet("palettes/{paletteId}/boxes/archive", Name = "GetDeletedBoxes")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IReadOnlyCollection<BoxResponse>>> GetDeletedAsync(
-        [FromRoute] Guid paletteId, //TODO why [FromQuery]? https://github.com/Demosfen/cs10dotnet6/pull/6#discussion_r1174358966
+        [FromRoute] Guid paletteId,
         int boxOffset = 0,
         int boxSize = 10,
         CancellationToken cancellationToken = default)
@@ -75,8 +76,8 @@ public sealed class BoxController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<ActionResult<BoxResponse>> CreateAsync(
-        [FromRoute] Guid boxId,
         [FromRoute] Guid paletteId,
+        [FromRoute] Guid boxId,
         [FromBody] BoxRequest request,
         CancellationToken cancellationToken = default)
     {

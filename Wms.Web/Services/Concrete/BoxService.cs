@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.Extensions.Logging;
 using Wms.Web.Common.Exceptions;
 using Wms.Web.Repositories.Abstract;
 using Wms.Web.Services.Abstract;
@@ -19,6 +20,7 @@ internal sealed class BoxService : IBoxService
     
     private readonly IGenericRepository<Box> _boxRepository;
     private readonly IGenericRepository<Palette> _paletteRepository;
+    
     private readonly IMapper _mapper;
 
     public BoxService(

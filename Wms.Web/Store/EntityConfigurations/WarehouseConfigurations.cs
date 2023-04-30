@@ -12,6 +12,8 @@ public sealed class WarehouseConfigurations : IEntityTypeConfiguration<Warehouse
         builder.ToTable("Warehouses");
 
         builder.HasKey(x => x.Id);
+        
+        builder.ConfigureAuditableEntity();
 
         builder
             .Property(x => x.Name)
@@ -23,19 +25,5 @@ public sealed class WarehouseConfigurations : IEntityTypeConfiguration<Warehouse
             .HasForeignKey(x => x.WarehouseId)
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
-
-        // builder.ConfigureEntity();
-        
-        builder
-            .Property(x => x.CreatedAt)
-            .IsRequired();
-        
-        builder
-            .Property(x => x.UpdatedAt)
-            .HasDefaultValue(null);
-        
-        builder
-            .Property(x => x.DeletedAt)
-            .HasDefaultValue(null);
     }
 }

@@ -13,7 +13,7 @@ public sealed class PaletteConfigurations : IEntityTypeConfiguration<Palette>
 
         builder.HasKey(x => x.Id);
         
-        // builder.ConfigureEntity();
+        builder.ConfigureAuditableEntity();
         
         builder
             .Property(x => x.Width)
@@ -49,17 +49,5 @@ public sealed class PaletteConfigurations : IEntityTypeConfiguration<Palette>
             .WithOne()
             .HasForeignKey(x => x.PaletteId)
             .OnDelete(DeleteBehavior.Restrict);
-
-        builder
-            .Property(x => x.CreatedAt)
-            .IsRequired();
-        
-        builder
-            .Property(x => x.UpdatedAt)
-            .HasDefaultValue(null);
-        
-        builder
-            .Property(x => x.DeletedAt)
-            .HasDefaultValue(null);
     }
 }

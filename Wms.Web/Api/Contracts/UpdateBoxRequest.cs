@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Wms.Web.Api.Contracts.Requests;
 
-namespace Wms.Web.Api.Contracts.Requests;
+namespace Wms.Web.Api.Contracts;
 
 public sealed class UpdateBoxRequest
 {
