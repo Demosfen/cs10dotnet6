@@ -1,6 +1,4 @@
-﻿using System.Net.Http.Json;
-using Wms.Web.Api.Console.Clients;
-using Wms.Web.Api.Contracts.Responses;
+﻿using Wms.Web.Api.Console.Clients;
 
 using var httpClient = new HttpClient
 {
