@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using Wms.Web.Api.Console.Clients;
 using Wms.Web.Api.Contracts.Responses;
 
 using var httpClient = new HttpClient
@@ -6,10 +7,8 @@ using var httpClient = new HttpClient
     BaseAddress = new Uri("http://localhost:5003")
 };
 
-var warehouseId = Guid.NewGuid();
+var client = new WmsClient(httpClient);
 
-var result = await httpClient.PostAsJsonAsync(
-    $"/api/v1/warehouses/{warehouseId}", 
-    new WarehouseResponse{Id = warehouseId, Name = "TestClient1" });
-        
+var result = await client.PostAsync(Guid.NewGuid(), CancellationToken.None);
+
 Console.ReadKey();

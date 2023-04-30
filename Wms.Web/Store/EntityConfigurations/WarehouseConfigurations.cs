@@ -19,6 +19,8 @@ public sealed class WarehouseConfigurations : IEntityTypeConfiguration<Warehouse
             .Property(x => x.Name)
             .IsRequired();
 
+        builder.HasIndex(e => e.Name).IsUnique();
+
         builder 
             .HasMany<Palette>(x => x.Palettes)
             .WithOne()
