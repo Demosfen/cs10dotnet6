@@ -8,8 +8,8 @@ using var httpClient = new HttpClient
 
 var warehouseId = Guid.NewGuid();
 
-var result = await httpClient.PostAsJsonAsync<WarehouseResponse>(
+var result = await httpClient.PostAsJsonAsync(
     $"/api/v1/warehouses/{warehouseId}", 
-    new WarehouseResponse{Id = warehouseId, Name = "TestClient" });
+    new WarehouseResponse{Id = warehouseId, Name = "TestClient1" });
         
 Console.ReadKey();
