@@ -5,5 +5,5 @@ namespace Wms.Web.Api.Console.Clients;
 
 public interface IWmsClient
 {
-    Task<WarehouseRequest?> PostAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<WarehouseRequest?> PostAsync(Guid id, string name, CancellationToken cancellationToken = default);
 }

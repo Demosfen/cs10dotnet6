@@ -12,11 +12,11 @@ public class WmsClient : IWmsClient
         _client = client;
     }
 
-    public async Task<WarehouseRequest?> PostAsync(Guid warehouseId, CancellationToken cancellationToken)
+    public async Task<WarehouseRequest?> PostAsync(Guid warehouseId, string name, CancellationToken cancellationToken)
     {
         var result = await _client.PostAsJsonAsync(
             $"/api/v1/warehouses?warehouseId={warehouseId}", 
-            new WarehouseRequest{ Name = "TestClient2" }, cancellationToken);
+            new WarehouseRequest{ Name = name }, cancellationToken);
 
         
         return await result.Content.ReadFromJsonAsync<WarehouseRequest>(cancellationToken: cancellationToken);
