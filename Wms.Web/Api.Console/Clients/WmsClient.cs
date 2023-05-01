@@ -17,9 +17,10 @@ public class WmsClient : IWmsClient
         var warehouseId = Guid.NewGuid();
 
         var result = await _client.PostAsJsonAsync(
-            $"/api/v1/warehouses/?warehouseId={warehouseId}", 
+            $"/api/v1/warehouses?warehouseId={warehouseId}", 
             new WarehouseRequest{ Name = "TestClient2" }, cancellationToken);
 
+        
         return await result.Content.ReadFromJsonAsync<WarehouseRequest>(cancellationToken: cancellationToken);
     }
 }
