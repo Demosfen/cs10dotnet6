@@ -2,9 +2,10 @@
 using Wms.Web.Api.Console.Clients;
 using Wms.Web.Api.Console.Extensions;
 
-var serviceCollection = new ServiceCollection();
-serviceCollection.AddConfiguration();
-serviceCollection.AddWmsClient();
+var serviceCollection = new ServiceCollection()
+    .AddConfiguration()
+    .AddWmsClient();
+
 var serviceProvider = serviceCollection.BuildServiceProvider();
 
 var client = serviceProvider.GetRequiredService<WmsClient>();

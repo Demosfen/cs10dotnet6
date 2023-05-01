@@ -9,10 +9,14 @@ public static class ServiceCollectionExtensions
     public static ServiceCollection AddWmsClient(this ServiceCollection serviceCollection)
     {
         serviceCollection.AddSingleton<IWmsClient, WmsClient>();
-        serviceCollection.AddHttpClient<WmsClient>("wms", (provider, client) =>
+        serviceCollection.AddHttpClient<WmsClient>("Wms", (provider, client) =>
         {
             var config = provider.GetRequiredService<IConfiguration>();
-            client.BaseAddress = config.GetSection("WmsApi:HostUri").Get<Uri>();
+            
+            client.BaseAddress = config.GetSection(WmsClientOptions.Wms)
+                .Get<WmsClientOptions>()?.HostUri
+                ?? throw new InvalidOperationException(
+                    $"Not initiated value: {nameof(WmsClientOptions.HostUri)}");
         });
 
         return serviceCollection;
