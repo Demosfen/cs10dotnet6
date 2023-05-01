@@ -28,4 +28,8 @@
         </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Generator\" />
+    </ItemGroup>
+
 </Project>
