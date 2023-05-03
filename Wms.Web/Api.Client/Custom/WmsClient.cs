@@ -1,7 +1,8 @@
 using System.Net.Http.Json;
+using Wms.Web.Api.Client.Custom.Abstract;
 using Wms.Web.Api.Contracts.Requests;
 
-namespace Wms.Web.Api.Console.Clients;
+namespace Wms.Web.Api.Client.Custom;
 
 public class WmsClient : IWmsClient
 {

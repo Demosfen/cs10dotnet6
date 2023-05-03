@@ -1,20 +1,21 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Wms.Web.Api.Console.Clients;
+using Wms.Web.Api.Client.Custom;
 
-namespace Wms.Web.Api.Console.Extensions;
+namespace Wms.Web.Api.Client.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static ServiceCollection AddWmsClient(this ServiceCollection serviceCollection)
+    public static ServiceCollection AddCustomWmsClient(this ServiceCollection serviceCollection)
     {
-        serviceCollection.AddSingleton<IWmsClient, WmsClient>();
+        // serviceCollection.AddSingleton<IWmsClient, WmsClient>();
         serviceCollection.AddHttpClient<WmsClient>("Wms", (provider, client) =>
         {
             var config = provider.GetRequiredService<IConfiguration>();
             
             client.BaseAddress = config.GetSection(WmsClientOptions.Wms)
-                .Get<WmsClientOptions>()?.HostUri
+                .Get<WmsClientOptions>()?
+                .HostUri
                 ?? throw new InvalidOperationException(
                     $"Not initiated value: {nameof(WmsClientOptions.HostUri)}");
         });

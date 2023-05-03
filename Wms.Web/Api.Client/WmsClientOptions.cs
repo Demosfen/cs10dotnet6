@@ -1,4 +1,4 @@
-namespace Wms.Web.Api.Console.Clients;
+namespace Wms.Web.Api.Client;
 
 public sealed class WmsClientOptions
 {

@@ -1,7 +1,6 @@
 using Wms.Web.Api.Contracts.Requests;
-using Wms.Web.Api.Contracts.Responses;
 
-namespace Wms.Web.Api.Console.Clients;
+namespace Wms.Web.Api.Client.Custom.Abstract;
 
 public interface IWmsClient
 {

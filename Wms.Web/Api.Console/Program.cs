@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Wms.Web.Api.Console.Clients;
-using Wms.Web.Api.Console.Extensions;
+﻿using Wms.Web.Api.Client.Extensions;
+using Wms.Web.Api.Client.Custom;
+using Microsoft.Extensions.DependencyInjection;
 
 var serviceCollection = new ServiceCollection()
     .AddConfiguration()
-    .AddWmsClient();
+    .AddCustomWmsClient();
 
 var serviceProvider = serviceCollection.BuildServiceProvider();
 

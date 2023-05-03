@@ -1,7 +1,7 @@
 ﻿$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 $GeneratedClientDir = Resolve-Path "$ScriptDir/../Implementations"
 $GeneratedClientFilePath = "$GeneratedClientDir/GeneratedClient.cs"
-$Namespace = "ANikolaev.Wms.Api.Client.Implementations"
+$Namespace = "Wms.Web.Api.Client.Implementations"
 
 if (Test-Path $GeneratedClientFilePath) {
   Remove-Item $GeneratedClientFilePath
