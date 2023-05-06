@@ -1,8 +1,11 @@
-using Wms.Web.Api.Contracts.Requests;
+using Wms.Web.Api.Client.Custom.Concrete;
+using PaletteClient = Wms.Web.Api.Client.Implementations.PaletteClient;
 
 namespace Wms.Web.Api.Client.Custom.Abstract;
 
 public interface IWmsClient
 {
-    Task<WarehouseRequest?> PostAsync(Guid id, string name, CancellationToken cancellationToken = default);
+    WarehouseClient WarehouseClient { get; }
+    
+    PaletteClient PaletteClient { get; }
 }
