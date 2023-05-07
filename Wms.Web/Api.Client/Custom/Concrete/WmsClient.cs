@@ -1,15 +1,14 @@
 using Wms.Web.Api.Client.Custom.Abstract;
-using Wms.Web.Api.Contracts.Responses;
 
 namespace Wms.Web.Api.Client.Custom.Concrete;
 
 internal sealed class WmsClient : IWmsClient
 {
     private readonly HttpClient _client;
-    public WarehouseClient WarehouseClient { get; }
-    
-    public PaletteClient PaletteClient { get; }
-    
+    public IWarehouseClient WarehouseClient { get; }
+    public IPaletteClient PaletteClient { get; }
+    // public IBoxClient BoxClient { get; }
+
     public WmsClient(
         HttpClient client, 
         WarehouseClient warehouseClient, 
@@ -18,5 +17,6 @@ internal sealed class WmsClient : IWmsClient
         _client = client;
         WarehouseClient = warehouseClient;
         PaletteClient = paletteClient;
+        // BoxClient = boxClient;
     }
 }

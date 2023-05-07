@@ -160,12 +160,12 @@ internal sealed class PaletteService : IPaletteService
 
         if (palette.DeletedAt is not null) return;
 
-        var box = _boxRepository.GetAllAsync(
+        var box = await _boxRepository.GetAllAsync(
             f => f.PaletteId == id,
             q => q.NotDeleted().Take(1).OrderBy(b => b.CreatedAt),
             cancellationToken: cancellationToken);
 
-        if (box is not null)
+        if (!box.Count().Equals(0))
         {
             throw new EntityNotEmptyException(id);
         }

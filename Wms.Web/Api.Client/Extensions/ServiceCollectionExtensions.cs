@@ -31,6 +31,17 @@ public static class ServiceCollectionExtensions
                                      $"Not initiated value: {nameof(WmsClientOptions.HostUri)}");
         });
         
+        serviceCollection.AddHttpClient<BoxClient>((provider, client) =>
+        {
+            var config = provider.GetRequiredService<IConfiguration>();
+                
+            client.BaseAddress = config.GetSection(WmsClientOptions.Wms)
+                                     .Get<WmsClientOptions>()?
+                                     .HostUri
+                                 ?? throw new InvalidOperationException(
+                                     $"Not initiated value: {nameof(WmsClientOptions.HostUri)}");
+        });
+        
         serviceCollection.AddHttpClient<IWmsClient, WmsClient>((provider, client) =>
         {
             var config = provider.GetRequiredService<IConfiguration>();

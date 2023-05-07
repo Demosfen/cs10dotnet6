@@ -3,7 +3,7 @@ using Wms.Web.Api.Contracts.Responses;
 
 namespace Wms.Web.Api.Client.Custom.Abstract;
 
-internal interface IWarehouseClient
+public interface IWarehouseClient
 {
     Task<IReadOnlyCollection<WarehouseResponse>?> GetAllAsync(
         int? offset, int? size, 

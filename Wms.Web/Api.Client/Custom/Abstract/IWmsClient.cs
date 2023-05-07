@@ -5,7 +5,9 @@ namespace Wms.Web.Api.Client.Custom.Abstract;
 
 public interface IWmsClient
 {
-    WarehouseClient WarehouseClient { get; }
+    IWarehouseClient WarehouseClient { get; }
     
-    PaletteClient PaletteClient { get; }
+    IPaletteClient PaletteClient { get; }
+    
+    // IBoxClient BoxClient { get; }
 }

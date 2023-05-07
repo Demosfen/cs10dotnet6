@@ -6,7 +6,7 @@ using Wms.Web.Api.Contracts.Responses;
 
 namespace Wms.Web.Api.Client.Custom.Concrete;
 
-public class WarehouseClient : IWarehouseClient
+internal sealed class WarehouseClient : IWarehouseClient
 {
     private readonly HttpClient _client;
     private const string BaseUrl = "/api/v1/warehouses";
