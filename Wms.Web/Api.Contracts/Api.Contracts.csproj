@@ -1,5 +1,3 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <Folder Include="Responses\" />
-  </ItemGroup>
+  
 </Project>

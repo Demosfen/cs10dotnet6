@@ -1,8 +1,6 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Wms.Web.Services.Abstract;
-using Wms.Web.Services.Infrastructure.Mapping;
-using Wms.Web.Repositories.Infrastructure.DI;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Wms.Web.Services.Infrastructure.DI;
@@ -11,12 +9,7 @@ public sealed class ServiceModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {
-        builder.RegisterModule<RepositoriesModule>();
-
         var serviceCollection = new ServiceCollection();
-
-        serviceCollection.AddAutoMapper(typeof(DtoEntitiesMappingProfile));
-        
         builder.Populate(serviceCollection);
         
         builder

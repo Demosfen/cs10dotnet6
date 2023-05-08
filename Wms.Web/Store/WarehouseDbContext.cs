@@ -5,26 +5,20 @@ using Wms.Web.Store.Interfaces;
 
 namespace Wms.Web.Store;
 
-public sealed class WarehouseDbContext : DbContext, IWarehouseDbContext, IDbUnitOfWork
+internal sealed class WarehouseDbContext : DbContext, IWarehouseDbContext
 {
-    private const string DefaultDbFileName = "warehouse.db";
-
-    private readonly string _dbFileName;
-
     public DbSet<Warehouse> Warehouses => Set<Warehouse>();
 
     public DbSet<Palette> Palettes => Set<Palette>();
 
     public DbSet<Box> Boxes => Set<Box>();
 
-    public WarehouseDbContext(string dbFileName = DefaultDbFileName)
+    public WarehouseDbContext(DbContextOptions options) : base(options)
     {
-        _dbFileName = dbFileName;
     }
-
+    
     protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.UseSqlite($"Data Source=../{_dbFileName}")
-            .LogTo(Console.WriteLine, LogLevel.Information);
+        => options.LogTo(Console.WriteLine, LogLevel.Information);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -43,17 +37,32 @@ public sealed class WarehouseDbContext : DbContext, IWarehouseDbContext, IDbUnit
     {
         ChangeTracker.DetectChanges();
 
+        var markedAsCreated = ChangeTracker.Entries()
+            .Where(x => x.State == EntityState.Added);
+
+        var markedAsModified = ChangeTracker.Entries()
+            .Where(x => x.State == EntityState.Modified);
+
         var markedAsDeleted = ChangeTracker.Entries()
             .Where(x => x.State == EntityState.Deleted);
+        
+        foreach (var item in markedAsCreated)
+        {
+            if (item.Entity is not IAuditableEntity entity) continue;
+            entity.CreatedAt = DateTime.Now.ToUniversalTime();
+        }
+        
+        foreach (var item in markedAsModified)
+        {
+            if (item.Entity is not IAuditableEntity entity) continue;
+            entity.UpdatedAt = DateTime.Now.ToUniversalTime();
+        }
 
         foreach (var item in markedAsDeleted)
         {
-            if (item.Entity is not ISoftDeletable entity) continue;
-            // Set the entity to unchanged
-            // (if we mark the whole entity as Modified, every field gets sent to Db as an update)!
+            if (item.Entity is not IAuditableEntity entity) continue;
             item.State = EntityState.Unchanged;
-            // Update only IsDeleted flag
-            entity.IsDeleted = true;
+            entity.DeletedAt = DateTime.Now.ToUniversalTime();
         }
 
         return await base.SaveChangesAsync(cancellationToken);

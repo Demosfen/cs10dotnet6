@@ -25,7 +25,7 @@ public class WarehouseRepositoryTests: WarehouseTestsBase
     {
         // Arrange, Act
         var warehouse = new Warehouse(WarehouseName);
-        await _sut.AddAsync(warehouse, default);
+        await _sut.CreateAsync(warehouse, default);
         await _sut.UnitOfWork.SaveChangesAsync();
 
         // Assert

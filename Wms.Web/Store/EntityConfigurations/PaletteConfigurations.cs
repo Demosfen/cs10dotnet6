@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Wms.Web.Store.Entities;
+using Wms.Web.Store.EntityExtensions;
 
 namespace Wms.Web.Store.EntityConfigurations;
 
@@ -10,6 +11,10 @@ public sealed class PaletteConfigurations : IEntityTypeConfiguration<Palette>
     {
         builder.ToTable("Palettes");
 
+        builder.HasKey(x => x.Id);
+        
+        builder.ConfigureAuditableEntity();
+        
         builder
             .Property(x => x.Width)
             .HasConversion<double>()
@@ -38,14 +43,11 @@ public sealed class PaletteConfigurations : IEntityTypeConfiguration<Palette>
         builder
             .Property(x => x.ExpiryDate)
             .HasConversion<DateTime>();
-
-        builder
-            .HasOne(x => x.Warehouse)
-            .WithMany(x => x.Palettes)
-            .HasForeignKey(x => x.WarehouseId);
-
+        
         builder
             .HasMany<Box>(x => x.Boxes)
-            .WithOne(x => x.Palette);
+            .WithOne()
+            .HasForeignKey(x => x.PaletteId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -29,7 +29,7 @@ public class PaletteRepositoryTests : WarehouseTestsBase
         var warehouse = await CreateWarehouseWithPalettesAndBoxes(WarehouseName, 3, 1);
         
         // Act
-        await _sut.AddAsync(new Palette(warehouse.Id, 10, 10, 10), default);
+        await _sut.CreateAsync(new Palette(warehouse.Id, 10, 10, 10), default);
         await _sut.UnitOfWork.SaveChangesAsync();
 
         // Assert

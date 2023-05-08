@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Wms.Web.Store.Entities;
+using Wms.Web.Store.EntityExtensions;
 
 namespace Wms.Web.Store.EntityConfigurations;
 
@@ -8,7 +9,11 @@ public sealed class BoxConfigurations : IEntityTypeConfiguration<Box>
 {
     public void Configure(EntityTypeBuilder<Box> builder)
     {
+        builder.ToTable("Boxes");
+        
         builder.HasKey(x => x.Id);
+        
+        builder.ConfigureAuditableEntity();
 
         builder
             .Property(x => x.Width)
@@ -37,13 +42,7 @@ public sealed class BoxConfigurations : IEntityTypeConfiguration<Box>
         
         builder
             .Property(x => x.ExpiryDate)
-            //.HasConversion<double>()
             .HasConversion<DateTime>()
             .IsRequired();
-
-        builder
-            .HasOne(x => x.Palette)
-            .WithMany(x => x.Boxes)
-            .HasForeignKey(x => x.PaletteId);
     }
 }

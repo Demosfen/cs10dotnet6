@@ -8,12 +8,11 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
         <LangVersion>default</LangVersion>
         <EmbedAllSources>true</EmbedAllSources>
         <DebugType>embedded</DebugType>
         <DebugSymbols>true</DebugSymbols>
-        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -24,13 +23,13 @@
 
     <!--Add analyzers-->
     <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" Version="2022.3.1">
+        <PackageReference Include="JetBrains.Annotations">
             <PrivateAssets>All</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.CodeAnalysis" Version="4.4.0-4.final">
+        <PackageReference Include="Microsoft.CodeAnalysis">
             <PrivateAssets>All</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3">
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers">
             <PrivateAssets>All</PrivateAssets>
         </PackageReference>
     </ItemGroup>

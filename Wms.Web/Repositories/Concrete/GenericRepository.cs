@@ -1,29 +1,27 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using Wms.Web.Store.Specifications;
 using Wms.Web.Common.Exceptions;
 using Wms.Web.Repositories.Abstract;
-using Wms.Web.Store;
 using Wms.Web.Store.Interfaces;
+using Wms.Web.Store.Specifications;
 
 namespace Wms.Web.Repositories.Concrete;
 
 public class GenericRepository<TEntity> : IGenericRepository<TEntity>
-    where TEntity : class, IEntityWithId, ISoftDeletable
+    where TEntity : class, IEntityWithId, IAuditableEntity
 {
     private readonly DbSet<TEntity> _dbSet;
     
     public IDbUnitOfWork UnitOfWork { get; }
 
-    public GenericRepository(WarehouseDbContext dbContext)
+    public GenericRepository(IWarehouseDbContext dbContext)
     {
         _dbSet = dbContext.Set<TEntity>();
 
         UnitOfWork = dbContext;
     }
 
-    public async Task<IEnumerable<TEntity>> GetAllAsync(
-        Expression<Func<TEntity, bool>>? filter,
+    public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? filter,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy,
         string includeProperties,
         CancellationToken cancellationToken)
@@ -41,18 +39,41 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
                 => current.Include(includeProperty));
 
         return orderBy != null 
-            ? await orderBy(query).NotDeleted().ToListAsync(cancellationToken)
-            : await query.NotDeleted().ToListAsync(cancellationToken);
+            ? await orderBy(query).ToListAsync(cancellationToken)
+            : await query
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
     }
 
     public async Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken) 
-        => await _dbSet.FindAsync(id);
+        => await _dbSet.SingleOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
+    
+    public async Task<TEntity?> GetByIdAsync(Guid id,
+        int offset, int size, 
+        string includeProperties,
+        CancellationToken cancellationToken)
+    {
+        var entities =
+            await GetAllAsync(
+                null, q => q.Skip(offset).Take(size).OrderBy(x => x.CreatedAt), 
+                includeProperties: includeProperties, cancellationToken: cancellationToken);
+        
+        return entities.SingleOrDefault(x => x.Id == id);
+    }
 
-    public async Task AddAsync(TEntity entity, CancellationToken cancellationToken) 
-        => await _dbSet.AddAsync(entity, cancellationToken);
+    public async Task CreateAsync(TEntity entity, CancellationToken cancellationToken)
+    {
+        await _dbSet.AddAsync(entity, cancellationToken);
 
-    public async Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken) 
-        => await _dbSet.AddRangeAsync(entities, cancellationToken);
+        await UnitOfWork.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken)
+    {
+        _dbSet.Update(entity);
+        
+        await UnitOfWork.SaveChangesAsync(cancellationToken);
+    }
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
@@ -60,5 +81,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
                          ?? throw new EntityNotFoundException(id);
 
         _dbSet.Remove(entity);
+
+        await UnitOfWork.SaveChangesAsync(cancellationToken);
     }
 }
