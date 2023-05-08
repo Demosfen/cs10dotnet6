@@ -9,7 +9,7 @@ namespace Wms.Web.Api.Client.Custom.Concrete;
 internal sealed class PaletteClient : IPaletteClient
 {
     private readonly HttpClient _client;
-    private readonly string? _requestUrl;
+    private readonly Uri? _requestUrl;
 
     public PaletteClient(HttpClient client, IOptions<WmsClientOptions> options)
     {

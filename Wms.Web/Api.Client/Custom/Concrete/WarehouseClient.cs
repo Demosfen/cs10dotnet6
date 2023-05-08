@@ -9,7 +9,7 @@ namespace Wms.Web.Api.Client.Custom.Concrete;
 internal sealed class WarehouseClient : IWarehouseClient
 {
     private readonly HttpClient _client;
-    private readonly string? _requestUri;
+    private readonly Uri? _requestUri;
 
     public WarehouseClient(HttpClient client, IOptions<WmsClientOptions> options)
     {
