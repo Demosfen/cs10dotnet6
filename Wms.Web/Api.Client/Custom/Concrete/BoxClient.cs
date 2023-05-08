@@ -9,12 +9,10 @@ namespace Wms.Web.Api.Client.Custom.Concrete;
 internal sealed class BoxClient : IBoxClient
 {
     private readonly HttpClient _client;
-    private readonly Uri?  _requestUri;
 
     public BoxClient(HttpClient client, IOptions<WmsClientOptions> options)
     {
         _client = client;
-        _requestUri = options.Value.BoxClientBaseUrl;
     }
 
     public async Task<IReadOnlyCollection<BoxResponse>?> GetAllAsync(
@@ -22,7 +20,7 @@ internal sealed class BoxClient : IBoxClient
         int? offset, int? size,
         CancellationToken cancellationToken)
         => await _client.GetFromJsonAsync<IReadOnlyCollection<BoxResponse>>(
-            $"{_requestUri}palettes/{paletteId}/boxes?{nameof(offset)}={offset}&{nameof(size)}={size}", 
+            $"palettes/{paletteId}/boxes?{nameof(offset)}={offset}&{nameof(size)}={size}", 
             cancellationToken); 
 
     public async Task<IReadOnlyCollection<BoxResponse>?> GetAllDeletedAsync(
@@ -30,7 +28,7 @@ internal sealed class BoxClient : IBoxClient
         int? offset, int? size, 
         CancellationToken cancellationToken)
     => await _client.GetFromJsonAsync<IReadOnlyCollection<BoxResponse>>(
-        $"{_requestUri}palettes/{paletteId}/boxes/archive?" +
+        $"palettes/{paletteId}/boxes/archive?" +
         $"{nameof(offset)}={offset}&{nameof(size)}={size}", 
         cancellationToken);
     
@@ -40,7 +38,7 @@ internal sealed class BoxClient : IBoxClient
         CancellationToken cancellationToken)
     {
         var result = await _client.PostAsJsonAsync(
-            $"{_requestUri}palettes/{paletteId}/boxes/{boxId}", 
+            $"palettes/{paletteId}/boxes/{boxId}", 
             request, 
             cancellationToken);
         
@@ -54,7 +52,7 @@ internal sealed class BoxClient : IBoxClient
         CancellationToken cancellationToken)
     {
         var result = await _client.PutAsJsonAsync(
-            $"{_requestUri}boxes/{boxId}?" +
+            $"boxes/{boxId}?" +
             $"{(nameof(paletteId))}={paletteId}",
             request, cancellationToken);
 
@@ -62,5 +60,5 @@ internal sealed class BoxClient : IBoxClient
     }
 
     public async Task<HttpResponseMessage> DeleteAsync(Guid boxId, CancellationToken cancellationToken)
-        => await _client.DeleteAsync($"{_requestUri}boxes/{boxId}", cancellationToken);
+        => await _client.DeleteAsync($"boxes/{boxId}", cancellationToken);
 }

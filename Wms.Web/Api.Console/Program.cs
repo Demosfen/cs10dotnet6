@@ -45,18 +45,18 @@ var deletedWarehouse = await client.WarehouseClient.GetAllDeletedAsync(
 //
 // var resultDelete = await client.WarehouseClient.DeleteAsync(warehouseId, CancellationToken.None);
 //
-// var palettesNotDeleted = await client
-//     .PaletteClient.GetAllAsync(
-//         new Guid("FF1D4274-2DBB-4B03-9085-E542F314AC22"),
-//         0,1,
-//         CancellationToken.None);
-//
-// var palettesDeleted = await client
-//     .PaletteClient.GetAllAsync(
-//         new Guid("04F9CB58-CE3E-4BAE-92CD-C63B0EC35104"),
-//         0,10,
-//         CancellationToken.None);
-//
+var palettesNotDeleted = await client
+    .PaletteClient.GetAllAsync(
+        new Guid("FF1D4274-2DBB-4B03-9085-E542F314AC22"),
+        0,1,
+        CancellationToken.None);
+
+var palettesDeleted = await client
+    .PaletteClient.GetAllAsync(
+        new Guid("04F9CB58-CE3E-4BAE-92CD-C63B0EC35104"),
+        0,10,
+        CancellationToken.None);
+
 // var paletteCreateRequest = new PaletteRequest
 // {
 //     Width = 20,
