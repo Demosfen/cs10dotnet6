@@ -9,5 +9,5 @@ public interface IWmsClient
     
     IPaletteClient PaletteClient { get; }
     
-    // IBoxClient BoxClient { get; }
+    IBoxClient BoxClient { get; }
 }

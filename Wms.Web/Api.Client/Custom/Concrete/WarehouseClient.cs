@@ -1,5 +1,5 @@
-using System.Net;
 using System.Net.Http.Json;
+using Microsoft.Extensions.Options;
 using Wms.Web.Api.Client.Custom.Abstract;
 using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Api.Contracts.Responses;
@@ -9,47 +9,57 @@ namespace Wms.Web.Api.Client.Custom.Concrete;
 internal sealed class WarehouseClient : IWarehouseClient
 {
     private readonly HttpClient _client;
-    private const string BaseUrl = "/api/v1/warehouses";
+    private readonly string? _requestUri;
 
-    public WarehouseClient(HttpClient client)
+    public WarehouseClient(HttpClient client, IOptions<WmsClientOptions> options)
     {
         _client = client;
+        _requestUri = options.Value.WarehouseClientBaseUrl;
     }
 
     public async Task<IReadOnlyCollection<WarehouseResponse>?> GetAllAsync(
         int? offset, int? size, CancellationToken cancellationToken)
+    
         => await _client.GetFromJsonAsync<IReadOnlyCollection<WarehouseResponse>>(
-            $"{BaseUrl}?offset={offset}&size={size}", 
-            cancellationToken); //TODO how from here client goes to controller?
+            $"{_requestUri}?" +
+            $"{nameof(offset)}={offset}&{nameof(size)}={size}", 
+            cancellationToken);
 
     public async Task<IReadOnlyCollection<WarehouseResponse>?> GetAllDeletedAsync(
         int? offset, int? size, CancellationToken cancellationToken)
+    
     => await _client.GetFromJsonAsync<IReadOnlyCollection<WarehouseResponse>>(
-            $"{BaseUrl}/archive?offset={offset}&limit={size}", 
+            $"{_requestUri}/archive?" +
+            $"{nameof(offset)}={offset}&{nameof(size)}={size}", 
             cancellationToken);
 
-    public async Task<WarehouseResponse?> PostAsync(Guid warehouseId, WarehouseRequest request,
+    public async Task<WarehouseResponse?> PostAsync(
+        Guid warehouseId, 
+        WarehouseRequest request,
         CancellationToken cancellationToken)
     {
         var result = await _client.PostAsJsonAsync(
-            $"{BaseUrl}?warehouseId={warehouseId}", 
+            $"{_requestUri}?warehouseId={warehouseId}", 
             request, 
             cancellationToken);
         
         return await result.Content.ReadFromJsonAsync<WarehouseResponse>(cancellationToken: cancellationToken);
     }
     
-    public async Task<WarehouseResponse?> PutAsync(Guid warehouseId, WarehouseRequest request, CancellationToken cancellationToken = default)
+    public async Task<WarehouseResponse?> PutAsync(
+        Guid warehouseId, 
+        WarehouseRequest request, 
+        CancellationToken cancellationToken)
     {
         var result = await _client.PutAsJsonAsync(
-            $"{BaseUrl}/{warehouseId}", 
+            $"{_requestUri}/{warehouseId}", 
             request, 
             cancellationToken);
         
         return await result.Content.ReadFromJsonAsync<WarehouseResponse>(cancellationToken: cancellationToken);
     }
 
-    public async Task<HttpResponseMessage> DeleteAsync(Guid warehouseId, CancellationToken cancellationToken = default)
-    => await _client.DeleteAsync($"{BaseUrl}/{warehouseId}", cancellationToken);
+    public async Task<HttpResponseMessage> DeleteAsync(Guid warehouseId, CancellationToken cancellationToken)
+    => await _client.DeleteAsync($"{_requestUri}/{warehouseId}", cancellationToken);
 
 }
