@@ -99,7 +99,7 @@ internal sealed class WarehouseService : IWarehouseService
             q => q.Take(1).NotDeleted().OrderBy(x => x.CreatedAt),
             cancellationToken: cancellationToken);
 
-        if (palette is not null)
+        if (!palette.Count().Equals(0))
         {
             throw new EntityNotEmptyException(id);
         } 

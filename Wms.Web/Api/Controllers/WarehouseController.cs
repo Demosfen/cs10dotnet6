@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using Wms.Web.Api.Contracts.Responses;
 using Wms.Web.Services.Abstract;
@@ -74,11 +75,11 @@ public sealed class WarehouseController : ControllerBase
         return Ok(_mapper.Map<WarehouseResponse>(warehouseDto));
     }
 
-    [HttpPost("{warehouseId:guid}", Name = "CreateWarehouse")]
+    [HttpPost(Name = "CreateWarehouse")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<ActionResult<WarehouseResponse>> CreateAsync(
-        [FromRoute] Guid warehouseId, 
+        [FromQuery][Required] Guid warehouseId, 
         [FromBody] WarehouseRequest request,
         CancellationToken cancellationToken = default)
     {

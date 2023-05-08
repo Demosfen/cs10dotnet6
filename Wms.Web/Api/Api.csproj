@@ -5,6 +5,7 @@
         <PackageReference Include="Autofac.Extensions.DependencyInjection" />
         <PackageReference Include="AutoMapper" />
         <PackageReference Include="FluentValidation.AspNetCore" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
         <PackageReference Include="Swashbuckle.AspNetCore" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
             <PrivateAssets>all</PrivateAssets>
