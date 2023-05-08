@@ -8,6 +8,8 @@ namespace Wms.Web.Api.Client.Custom.Concrete;
 
 internal sealed class PaletteClient : IPaletteClient
 {
+    private const string ver1 = "/api/v1/";
+    
     private readonly HttpClient _client;
 
     public PaletteClient(HttpClient client, IOptions<WmsClientOptions> options)
@@ -20,8 +22,8 @@ internal sealed class PaletteClient : IPaletteClient
         int? offset, int? size, 
         CancellationToken cancellationToken)
         => await _client.GetFromJsonAsync<IReadOnlyCollection<PaletteResponse>>(
-            $"warehouses/{warehouseId}/palettes?" +
-            $"{nameof(offset)}={offset}&{nameof(size)}={size}", 
+            $"{ver1}warehouses/{warehouseId}/palettes?" +
+            $"offset={offset}&size={size}", 
             cancellationToken);
 
     public async Task<IReadOnlyCollection<PaletteResponse>?> GetAllDeletedAsync(
@@ -29,8 +31,8 @@ internal sealed class PaletteClient : IPaletteClient
         int? offset, int? size, 
         CancellationToken cancellationToken)
         => await _client.GetFromJsonAsync<IReadOnlyCollection<PaletteResponse>>(
-            $"warehouses/{warehouseId}/palettes/archive?" +
-            $"{nameof(offset)}={offset}&{nameof(size)}={size}", 
+            $"{ver1}warehouses/{warehouseId}/palettes/archive?" +
+            $"offset={offset}&size={size}", 
             cancellationToken);
 
     public async Task<PaletteResponse?> PostAsync(
@@ -40,7 +42,7 @@ internal sealed class PaletteClient : IPaletteClient
         CancellationToken cancellationToken)
     {
         var result = await _client.PostAsJsonAsync(
-            $"warehouses/{warehouseId}/palettes/{paletteId}", 
+            $"{ver1}warehouses/{warehouseId}/palettes/{paletteId}", 
             request, 
             cancellationToken);
         
@@ -54,8 +56,8 @@ internal sealed class PaletteClient : IPaletteClient
         CancellationToken cancellationToken)
     {
         var result = await _client.PutAsJsonAsync(
-            $"palettes/{paletteId}?" +
-            $"{nameof(warehouseId)}={warehouseId}", 
+            $"{ver1}palettes/{paletteId}?" +
+            $"warehouseId={warehouseId}", 
             request, 
             cancellationToken);
         
@@ -63,5 +65,5 @@ internal sealed class PaletteClient : IPaletteClient
     }
     
     public async Task<HttpResponseMessage> DeleteAsync(Guid paletteId, CancellationToken cancellationToken)
-        => await _client.DeleteAsync($"palettes/{paletteId}", cancellationToken);
+        => await _client.DeleteAsync($"{ver1}palettes/{paletteId}", cancellationToken);
 }

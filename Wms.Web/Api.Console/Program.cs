@@ -20,11 +20,11 @@ var serviceProvider = serviceCollection.BuildServiceProvider();
 
 var client = serviceProvider.GetRequiredService<IWmsClient>();
 
-var notDeletedWarehouse = await client.WarehouseClient.GetAllAsync(
-    0, 3, CancellationToken.None);
-
-var deletedWarehouse = await client.WarehouseClient.GetAllDeletedAsync(
-    0, 2, CancellationToken.None);
+// var notDeletedWarehouse = await client.WarehouseClient.GetAllAsync(
+//     0, 3, CancellationToken.None);
+//
+// var deletedWarehouse = await client.WarehouseClient.GetAllDeletedAsync(
+//     0, 2, CancellationToken.None);
 
 // var warehouseId = Guid.NewGuid();
 //
@@ -45,17 +45,17 @@ var deletedWarehouse = await client.WarehouseClient.GetAllDeletedAsync(
 //
 // var resultDelete = await client.WarehouseClient.DeleteAsync(warehouseId, CancellationToken.None);
 //
-var palettesNotDeleted = await client
-    .PaletteClient.GetAllAsync(
-        new Guid("FF1D4274-2DBB-4B03-9085-E542F314AC22"),
-        0,1,
-        CancellationToken.None);
-
-var palettesDeleted = await client
-    .PaletteClient.GetAllAsync(
-        new Guid("04F9CB58-CE3E-4BAE-92CD-C63B0EC35104"),
-        0,10,
-        CancellationToken.None);
+// var palettesNotDeleted = await client
+//     .PaletteClient.GetAllAsync(
+//         new Guid("FF1D4274-2DBB-4B03-9085-E542F314AC22"),
+//         0,1,
+//         CancellationToken.None);
+//
+// var palettesDeleted = await client
+//     .PaletteClient.GetAllAsync(
+//         new Guid("04F9CB58-CE3E-4BAE-92CD-C63B0EC35104"),
+//         0,10,
+//         CancellationToken.None);
 
 // var paletteCreateRequest = new PaletteRequest
 // {
@@ -103,11 +103,11 @@ var palettesDeleted = await client
 //         boxCreateRequest,
 //         CancellationToken.None);
 //
-// var boxGet = await client.BoxClient.GetAllAsync(
-//     new Guid("E01E24F8-3D86-472E-8FA9-7382F2062061"), 0, 5, cancellationToken: CancellationToken.None);
-//
-// var boxGetDeleted = await client.BoxClient.GetAllDeletedAsync(
-//     new Guid("DD57D940-D495-40E7-86C2-68C4FD995CF7"), 0, 5, cancellationToken: CancellationToken.None);
+var boxGet = await client.BoxClient.GetAllAsync(
+    new Guid("E01E24F8-3D86-472E-8FA9-7382F2062061"), 0, 5, cancellationToken: CancellationToken.None);
+
+var boxGetDeleted = await client.BoxClient.GetAllDeletedAsync(
+    new Guid("DD57D940-D495-40E7-86C2-68C4FD995CF7"), 0, 5, cancellationToken: CancellationToken.None);
 //
 // var boxUpdateRequest = new BoxRequest
 // {
