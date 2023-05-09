@@ -21,4 +21,8 @@
       <ProjectReference Include="..\Store\Store.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <InternalsVisibleTo Include="Api.ContainerTests"/>
+    </ItemGroup>
+
 </Project>

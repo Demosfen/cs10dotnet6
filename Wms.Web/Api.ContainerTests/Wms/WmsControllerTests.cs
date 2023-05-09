@@ -9,14 +9,16 @@ public sealed class WmsControllerTests : TestControllerBase
 {
     private readonly IWmsClient _sut;
     
-    public WmsControllerTests(TestApplication apiFactory) : base(apiFactory)
+    public WmsControllerTests(TestApplication apiFactory, IWmsClient sut) : base(apiFactory)
     {
-        _sut = new WmsClient();
+        _sut = sut;
+        // _sut = new WmsClient(new HttpClient(), 
+    // new WarehouseClient(), new PaletteClient(), new BoxClient());
     }
-
-    [Fact(DisplayName = "...")]
-    public async Task BoxController_GetNotDeletedAsync_ShouldReturnUndeletedBoxList()
-    {
-        
-    } 
+    //
+    // [Fact(DisplayName = "...")]
+    // public async Task BoxController_GetNotDeletedAsync_ShouldReturnUndeletedBoxList()
+    // {
+    //     
+    // } 
 }

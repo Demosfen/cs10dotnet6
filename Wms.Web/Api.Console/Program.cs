@@ -9,22 +9,22 @@ using WarehouseRequest = Wms.Web.Api.Contracts.Requests.WarehouseRequest;
 
 var serviceCollection = new ServiceCollection();
 
-serviceCollection.AddCustomWmsClient();
-
 var configuration = GetConfiguration();
 serviceCollection.AddScoped<IConfiguration>(_ => configuration);
 
 serviceCollection.Configure<WmsClientOptions>(configuration.GetSection("WmsClient"));
 
+serviceCollection.AddCustomWmsClient();
+
 var serviceProvider = serviceCollection.BuildServiceProvider();
 
 var client = serviceProvider.GetRequiredService<IWmsClient>();
 
-// var notDeletedWarehouse = await client.WarehouseClient.GetAllAsync(
-//     0, 3, CancellationToken.None);
-//
-// var deletedWarehouse = await client.WarehouseClient.GetAllDeletedAsync(
-//     0, 2, CancellationToken.None);
+var notDeletedWarehouse = await client.WarehouseClient.GetAllAsync(
+    0, 3, CancellationToken.None);
+
+var deletedWarehouse = await client.WarehouseClient.GetAllDeletedAsync(
+    0, 2, CancellationToken.None);
 
 // var warehouseId = Guid.NewGuid();
 //

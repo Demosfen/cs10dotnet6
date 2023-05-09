@@ -10,23 +10,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="Wms.Web.Api.ContainerTests" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Api.Contracts\Api.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Generated\Implementations\" />
   </ItemGroup>
-
-  <PropertyGroup>
-    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
-  </PropertyGroup>
-
-  <!--  <ItemGroup>-->
-<!--    <Folder Include="Generated\Implementations\" />-->
-<!--  </ItemGroup>-->
-
-<!--  <ItemGroup>-->
-<!--    <PackageVersion Update="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />-->
-<!--  </ItemGroup>-->
-
+  
 </Project>
