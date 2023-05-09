@@ -22,6 +22,7 @@
     <PackageVersion Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <!-- API hosting -->
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageVersion Include="Respawn" Version="6.0.0" />
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <!-- DI -->
     <PackageVersion Include="Autofac" Version="7.0.1" />
