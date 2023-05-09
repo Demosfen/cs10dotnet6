@@ -17,7 +17,11 @@
     <Folder Include="Generated\Implementations\" />
   </ItemGroup>
 
-<!--  <ItemGroup>-->
+  <PropertyGroup>
+    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+  <!--  <ItemGroup>-->
 <!--    <Folder Include="Generated\Implementations\" />-->
 <!--  </ItemGroup>-->
 

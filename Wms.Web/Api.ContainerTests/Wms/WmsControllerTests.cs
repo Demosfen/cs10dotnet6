@@ -11,7 +11,7 @@ public sealed class WmsControllerTests : TestControllerBase
     
     public WmsControllerTests(TestApplication apiFactory) : base(apiFactory)
     {
-        _sut = new WmsClient(HttpClient);
+        _sut = new WmsClient();
     }
 
     [Fact(DisplayName = "...")]
