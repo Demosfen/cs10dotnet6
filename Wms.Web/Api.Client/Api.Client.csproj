@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="Wms.Web.Api.ContainerTests" />
+    <InternalsVisibleTo Include="Wms.Web.Api.IntegrationTests" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,11 +1,12 @@
 using Xunit;
 
-namespace Wms.Web.Api.ContainerTests.Abstract;
+namespace Wms.Web.Api.IntegrationTests.Abstract;
 
-[Collection(ContainerTestCollection.Name)]
+[Collection(IntegrationTestCollection.Name)]
 public abstract class TestControllerBase : IAsyncLifetime
 {
     protected readonly HttpClient HttpClient;
+    // protected readonly IOptions<WmsClientOptions> Options;
 
     protected TestControllerBase(TestApplication apiFactory)
     {

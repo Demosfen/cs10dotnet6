@@ -21,10 +21,10 @@ public static class ServiceCollectionExtensions
                                      $"Not initiated value: {nameof(WmsClientOptions.HostUri)}");
         });
 
-        serviceCollection.AddHttpClient<WarehouseClient>(configureClient);
-        serviceCollection.AddHttpClient<PaletteClient>(configureClient);
-        serviceCollection.AddHttpClient<BoxClient>(configureClient);
-        serviceCollection.AddHttpClient<IWmsClient, WmsClient>(configureClient);
+        serviceCollection.AddHttpClient<IWarehouseClient, WarehouseClient>(configureClient);
+        serviceCollection.AddHttpClient<IPaletteClient, PaletteClient>(configureClient);
+        serviceCollection.AddHttpClient<IBoxClient, BoxClient>(configureClient);
+        serviceCollection.AddTransient<IWmsClient, WmsClient>();
 
         return serviceCollection;
     }
