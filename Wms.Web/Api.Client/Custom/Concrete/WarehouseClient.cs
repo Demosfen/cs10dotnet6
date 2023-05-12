@@ -32,7 +32,7 @@ internal sealed class WarehouseClient : IWarehouseClient
             $"offset={offset}&size={size}", 
             cancellationToken);
 
-    public async Task<WarehouseResponse?> PostAsync(
+    public async Task<HttpResponseMessage> PostAsync(
         Guid warehouseId, 
         WarehouseRequest request,
         CancellationToken cancellationToken)
@@ -42,10 +42,10 @@ internal sealed class WarehouseClient : IWarehouseClient
             request, 
             cancellationToken);
         
-        return await result.Content.ReadFromJsonAsync<WarehouseResponse>(cancellationToken: cancellationToken);
+        return result;//.Content.ReadFromJsonAsync<WarehouseResponse>(cancellationToken: cancellationToken);
     }
     
-    public async Task<WarehouseResponse?> PutAsync(
+    public async Task<HttpResponseMessage> PutAsync(
         Guid warehouseId, 
         WarehouseRequest request, 
         CancellationToken cancellationToken)
@@ -55,7 +55,7 @@ internal sealed class WarehouseClient : IWarehouseClient
             request, 
             cancellationToken);
         
-        return await result.Content.ReadFromJsonAsync<WarehouseResponse>(cancellationToken: cancellationToken);
+        return result; //.Content.ReadFromJsonAsync<WarehouseResponse>(cancellationToken: cancellationToken);
     }
 
     public async Task<HttpResponseMessage> DeleteAsync(Guid warehouseId, CancellationToken cancellationToken)

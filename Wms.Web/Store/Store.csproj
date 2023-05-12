@@ -24,4 +24,8 @@
       <Folder Include="Migrations" />
     </ItemGroup>
 
+    <ItemGroup>
+        <InternalsVisibleTo Include="Wms.Web.Api.IntegrationTests" />
+    </ItemGroup>
+
 </Project>

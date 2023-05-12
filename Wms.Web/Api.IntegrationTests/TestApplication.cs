@@ -1,43 +1,39 @@
-using System.Data.Common;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
-using Wms.Web.Store.Interfaces;
+using Wms.Web.Api.IntegrationTests.Infrastructure;
+using Wms.Web.Store;
 using Xunit;
 
 namespace Wms.Web.Api.IntegrationTests;
 
-public sealed class TestApplication : WebApplicationFactory<IApiMarker>, IAsyncLifetime
+public class TestApplication : WebApplicationFactory<IApiMarker>, IAsyncLifetime
 {
-    private DbConnection? _dbConnection;
+    private readonly TestDatabaseFixture _dbFixture = new();
+    
     private HttpClient? _httpClient;
 
-    private DbConnection DbConnection => _dbConnection ?? throw new InvalidOperationException("No dbConnection");
-    public HttpClient HttpClient => _httpClient  ?? throw new InvalidOperationException("No HttpClient");
+    public HttpClient HttpClient => _httpClient ?? throw new InvalidOperationException("No httpClient");
     
-    protected override void ConfigureWebHost(IWebHostBuilder builder)
+    protected override void ConfigureWebHost(IWebHostBuilder builder) 
+        // => builder.UseSetting("WarehouseDbContextCS", _dbFixture.GetConnectionString());
     {
-        // Use the in-memory database connection string
-        builder.ConfigureServices(services =>
+        builder.ConfigureServices((context, services) =>
         {
-            var descriptor = services.SingleOrDefault(
-                d => d.ServiceType == typeof(DbContextOptions<WarehouseDbContext>));
-            if (descriptor != null)
+            services.AddDbContext<WarehouseDbContext>(options =>
             {
-                services.Remove(descriptor);
-            }
-
-            services.AddDbContext<PopulationDbContext>(options =>
-            {
-                options.UseSqlite(DbConnection);
+                options.UseSqlite(_dbFixture.GetConnectionString());
             });
         });
     }
-    
-    public async Task InitializeAsync()
+    public Task InitializeAsync()
     {
         _httpClient = CreateClient();
+        return Task.CompletedTask;
     }
-    
-    public new async Task DisposeAsync()
-        => await _dbContainer.StopAsync();
+
+    public new Task DisposeAsync()
+    {
+        _dbFixture.Dispose();
+        return Task.CompletedTask;
+    }
 }

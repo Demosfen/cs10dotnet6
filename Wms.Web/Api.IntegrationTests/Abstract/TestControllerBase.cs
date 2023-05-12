@@ -6,7 +6,6 @@ namespace Wms.Web.Api.IntegrationTests.Abstract;
 public abstract class TestControllerBase : IAsyncLifetime
 {
     protected readonly HttpClient HttpClient;
-    // protected readonly IOptions<WmsClientOptions> Options;
 
     protected TestControllerBase(TestApplication apiFactory)
     {

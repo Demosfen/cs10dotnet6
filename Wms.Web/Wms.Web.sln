@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Client", "Api.Client\Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.IntegrationTests", "Api.IntegrationTests\Api.IntegrationTests.csproj", "{147571E4-AD25-4EEA-A284-60210709FC80}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{3AF99714-1D8C-425D-AB34-D86E79A52715}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{147571E4-AD25-4EEA-A284-60210709FC80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{147571E4-AD25-4EEA-A284-60210709FC80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{147571E4-AD25-4EEA-A284-60210709FC80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AF99714-1D8C-425D-AB34-D86E79A52715}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AF99714-1D8C-425D-AB34-D86E79A52715}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AF99714-1D8C-425D-AB34-D86E79A52715}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AF99714-1D8C-425D-AB34-D86E79A52715}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection

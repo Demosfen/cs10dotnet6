@@ -13,13 +13,12 @@ public interface IWarehouseClient
         int? offset, int? size, 
         CancellationToken cancellationToken = default);
 
-    Task<WarehouseResponse?> PostAsync(
+    Task<HttpResponseMessage> PostAsync(
         Guid warehouseId, 
         WarehouseRequest request,
         CancellationToken cancellationToken = default);
 
-    Task<WarehouseResponse?> PutAsync(
-        Guid warehouseId,
+    Task<HttpResponseMessage> PutAsync(Guid warehouseId,
         WarehouseRequest request,
         CancellationToken cancellationToken = default);
 

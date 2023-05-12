@@ -78,7 +78,7 @@ public sealed class WarehouseController : ControllerBase
     [HttpPost(Name = "CreateWarehouse")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public async Task<ActionResult<WarehouseResponse>> CreateAsync(
+    public async Task<ActionResult<HttpResponseMessage>> CreateAsync(
         [FromQuery][Required] Guid warehouseId, 
         [FromBody] WarehouseRequest request,
         CancellationToken cancellationToken = default)
@@ -93,7 +93,10 @@ public sealed class WarehouseController : ControllerBase
 
         await _warehouseService.CreateAsync(warehouseDto, cancellationToken);
         
-        return Created("Warehouse created:", _mapper.Map<WarehouseResponse>(warehouseDto));
+        var locationUri = Url.Link("GetWarehouseById", new { warehouseId });
+        
+        return Created(locationUri ?? throw new InvalidOperationException(),  
+            _mapper.Map<WarehouseResponse>(warehouseDto));
     }
     
     [HttpPut("{warehouseId:guid}", Name = "UpdateWarehouse")]
