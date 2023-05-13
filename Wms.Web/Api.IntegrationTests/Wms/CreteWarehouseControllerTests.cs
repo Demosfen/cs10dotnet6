@@ -4,7 +4,9 @@ using Microsoft.Extensions.Options;
 using Wms.Web.Api.Client;
 using Wms.Web.Api.Client.Custom.Abstract;
 using Wms.Web.Api.Client.Custom.Concrete;
+using Wms.Web.Api.Contracts;
 using Wms.Web.Api.Contracts.Requests;
+using Wms.Web.Api.Contracts.Responses;
 using Wms.Web.Api.IntegrationTests.Abstract;
 
 using Xunit;
@@ -27,7 +29,7 @@ public sealed class CreteWarehouseControllerTests : TestControllerBase
     }
     
     [Fact(DisplayName = "CreateWarehouse")]
-    public async Task WarehouseController_CreateWarehouse_ShouldCreateWarehouse()
+    public async Task Create_ShouldCreateWarehouse()
     {
         // Arrange
         var id = Guid.NewGuid();
@@ -45,8 +47,25 @@ public sealed class CreteWarehouseControllerTests : TestControllerBase
         warehouseResponse.Should().BeEquivalentTo(request);
         response.StatusCode.Should().Be(HttpStatusCode.Created);
         response.Headers.Location.Should().Be($"http://localhost/api/v1/warehouses/{id}");
+    }
 
-
-
-    } 
+    [Fact]
+    public async Task Create_ReturnsValidatorError_WhenNameIsNull()
+    {
+        // Arrange
+        var id = Guid.NewGuid();
+        var request = new WarehouseRequest
+        {
+            Name = ""
+        };
+        
+        // Act
+        var response = await _sut.PostAsync(id, request);
+        
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        var error = await response.Content.ReadFromJsonAsync<HttpValidationProblemDetails>();
+        error!.Status.Should().Be(400);
+        error.Errors.Should().ContainKey("Name");
+    }
 }
