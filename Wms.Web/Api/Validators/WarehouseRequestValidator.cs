@@ -10,5 +10,9 @@ public sealed class WarehouseRequestValidator : AbstractValidator<WarehouseReque
         RuleFor(x => x.Name)
             .NotEmpty()
             .WithMessage("Name of the warehouse should not be null or empty.");
+
+        RuleFor(x => x.Name.Length)
+            .LessThanOrEqualTo(25)
+            .WithMessage("Warehouse name sholuld be less than or equal to 25 characters");
     }
 }

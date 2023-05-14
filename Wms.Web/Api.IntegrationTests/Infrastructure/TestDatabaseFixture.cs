@@ -5,11 +5,16 @@ namespace Wms.Web.Api.IntegrationTests.Infrastructure;
 
 public class TestDatabaseFixture : IDisposable
 {
+    private readonly IConfigurationRoot _configuration;
     private readonly string _connectionString;
     private readonly WarehouseDbContext _dbContext;
 
     public TestDatabaseFixture()
     {
+        _configuration = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json")
+            .Build();
+        
         var dbFileName = $"{Guid.NewGuid().ToString()}.db";
         _connectionString = $"Data Source=../{dbFileName}";
 
@@ -19,6 +24,8 @@ public class TestDatabaseFixture : IDisposable
 
         _dbContext = new WarehouseDbContext(options);
         _dbContext.Database.EnsureCreated();
+        
+        _configuration["ConnectionStrings:WarehouseDbContextCS"] = _connectionString;
     }
 
     public string GetConnectionString() => _connectionString;
