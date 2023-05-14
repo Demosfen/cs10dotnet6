@@ -49,14 +49,14 @@ internal sealed class WarehouseService : IWarehouseService
             case true:
                 entities = await _warehouseRepository
                     .GetAllAsync(null,
-                        q => q.Skip(offset).Deleted().Take(size).OrderBy(x => x.CreatedAt),
+                        q => q.Deleted().Skip(offset).Take(size).OrderBy(x => x.CreatedAt),
                         cancellationToken: cancellationToken);
                 break;
             
             case false: 
                 entities = await _warehouseRepository
                     .GetAllAsync(null,
-                        q => q.Skip(offset).NotDeleted().Take(size).OrderBy(x => x.CreatedAt),
+                        q => q.NotDeleted().Skip(offset).Take(size).OrderBy(x => x.CreatedAt),
                         cancellationToken: cancellationToken);
                 break;
         }

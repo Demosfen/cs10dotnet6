@@ -24,6 +24,7 @@ public class TestDatabaseFixture : IDisposable
 
         _dbContext = new WarehouseDbContext(options);
         _dbContext.Database.EnsureCreated();
+        _dbContext.Database.MigrateAsync();
         
         _configuration["ConnectionStrings:WarehouseDbContextCS"] = _connectionString;
     }

@@ -72,6 +72,6 @@ var mapper = app.Services.GetRequiredService<IMapper>();
 mapper.ConfigurationProvider.AssertConfigurationIsValid();
 
 await using var dbContext = app.Services.GetRequiredService<Func<Owned<IWarehouseDbContext>>>()();
-await dbContext.Value.Database.MigrateAsync();
+// await dbContext.Value.Database.MigrateAsync();
 
 app.Run();

@@ -32,6 +32,14 @@ internal sealed class WarehouseClient : IWarehouseClient
             $"offset={offset}&size={size}", 
             cancellationToken);
 
+    public async Task<WarehouseResponse?> GetByIdAsync(
+        Guid warehouseId,
+        int? offset, int? size,
+        CancellationToken cancellationToken)
+        => await _client.GetFromJsonAsync<WarehouseResponse>(
+            $"{ver1}warehouses/{warehouseId}?palettesOffset={offset}&palettesSize={size}",
+            cancellationToken);
+
     public async Task<HttpResponseMessage> PostAsync(
         Guid warehouseId, 
         WarehouseRequest request,

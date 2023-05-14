@@ -13,6 +13,11 @@ public interface IWarehouseClient
         int? offset, int? size, 
         CancellationToken cancellationToken = default);
 
+    Task<WarehouseResponse?> GetByIdAsync(
+        Guid warehouseId,
+        int? offset, int? size,
+        CancellationToken cancellationToken = default);
+
     Task<HttpResponseMessage> PostAsync(
         Guid warehouseId, 
         WarehouseRequest request,
