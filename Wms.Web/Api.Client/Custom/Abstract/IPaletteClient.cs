@@ -1,3 +1,4 @@
+using System.Net;
 using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Api.Contracts.Responses;
 
@@ -14,8 +15,13 @@ public interface IPaletteClient
             Guid warehouseId,
             int? offset, int? size, 
             CancellationToken cancellationToken = default);
-        
-        Task<PaletteResponse?> PostAsync(
+
+        Task<PaletteResponse?> GetByIdAsync(
+            Guid paletteId,
+            int? offset, int? size,
+            CancellationToken cancellationToken = default);
+
+        Task<HttpResponseMessage> PostAsync(
             Guid warehouseId,
             Guid paletteId, 
             PaletteRequest request,

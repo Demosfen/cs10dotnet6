@@ -7,6 +7,7 @@ using Wms.Web.Api.Client.Custom.Concrete;
 using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Api.Contracts.Responses;
 using Wms.Web.Api.IntegrationTests.Abstract;
+using Wms.Web.Api.IntegrationTests.Extensions;
 using Xunit;
 
 namespace Wms.Web.Api.IntegrationTests.Wms.WarehouseControllerTests;
@@ -14,16 +15,21 @@ namespace Wms.Web.Api.IntegrationTests.Wms.WarehouseControllerTests;
 public sealed class GetAllWarehouseControllerTests : TestControllerBase
 {
     private readonly IWarehouseClient _sut;
+    private readonly WmsDataHelper _dataHelper;
+    private const string BaseUri = "http://localhost";
+    private const string Ver1 = "/api/v1/";
 
     public GetAllWarehouseControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
     {
         var options = Options.Create(new WmsClientOptions
         {
-            HostUri = new Uri("http://localhost:5000")
+            HostUri = new Uri(BaseUri)
         });
         
         _sut = new WarehouseClient(HttpClient, options);
+
+        _dataHelper = new WmsDataHelper(apiFactory);
     }
     
     [Fact(DisplayName = "GetAllWarehouses")]
@@ -35,18 +41,12 @@ public sealed class GetAllWarehouseControllerTests : TestControllerBase
         
         // Act
         var existingWarehouses = await HttpClient
-            .GetFromJsonAsync<IReadOnlyCollection<WarehouseResponse>>($"/api/v1/warehouses");
+            .GetFromJsonAsync<IReadOnlyCollection<WarehouseResponse>>($"{Ver1}warehouses");
         
-        var createFirst = await HttpClient.PostAsJsonAsync(
-            $"/api/v1/warehouses?warehouseId={warehouseId1}", 
-                new WarehouseRequest(){Name = "Warehouse#GetAll1"}, CancellationToken.None);
-            
+        var createFirst = await _dataHelper.GenerateWarehouse(warehouseId1);
         var createdFirst = await createFirst.Content.ReadFromJsonAsync<WarehouseResponse>();
         
-        var createSecond = await HttpClient.PostAsJsonAsync(
-            $"/api/v1/warehouses?warehouseId={warehouseId2}", 
-            new WarehouseRequest(){Name = "Warehouse#GetAll2"}, CancellationToken.None);
-        
+        var createSecond = await _dataHelper.GenerateWarehouse(warehouseId2);
         var createdSecond = await createSecond.Content.ReadFromJsonAsync<WarehouseResponse>();
 
         var responseAll = 

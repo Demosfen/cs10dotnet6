@@ -3,10 +3,10 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Wms.Web.Api.Client;
-using Wms.Web.Api.Client.Custom.Abstract;
 using Wms.Web.Api.Client.Custom.Concrete;
 using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Api.IntegrationTests.Abstract;
+using Wms.Web.Api.IntegrationTests.Extensions;
 using Xunit;
 
 namespace Wms.Web.Api.IntegrationTests.Wms.PaletteControllerTest;
@@ -14,98 +14,90 @@ namespace Wms.Web.Api.IntegrationTests.Wms.PaletteControllerTest;
 public sealed class CretePaletteControllerTests : TestControllerBase
 {
     private readonly PaletteClient _sut;
+    private readonly WmsDataHelper _dataHelper;
+    private const string Ver1 = "/api/v1/";
+    private const string BaseUri = "http://localhost";
 
     public CretePaletteControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
     {
         var options = Options.Create(new WmsClientOptions
         {
-            HostUri = new Uri("http://localhost:5000")
+            HostUri = new Uri(BaseUri)
         });
         
         _sut = new PaletteClient(HttpClient, options);
+
+        _dataHelper = new WmsDataHelper(apiFactory);
     }
     
     [Fact(DisplayName = "CreatePalette")]
-    public async Task Create_ShouldCreateWaPalette()
+    public async Task Create_ShouldCreatePalette()
     {
         // Arrange
-        var id = Guid.NewGuid();
-        var request = new WarehouseRequest
-        {
-            Name = "Warehouse#Create"
-        };
+        var warehouseId = Guid.NewGuid();
+        var paletteId = Guid.NewGuid();
+        var request = new PaletteRequest { Width = 10, Height = 10, Depth = 10 };
         
-        // Act
-        var response = await _sut.PostAsync(id, request);
+        var createWarehouse = await _dataHelper.GenerateWarehouse(warehouseId);
+        
+        var createPalette = await _sut
+            .PostAsync(warehouseId, paletteId, request, CancellationToken.None);
+        var paletteResponse = await createPalette.Content.ReadFromJsonAsync<PaletteRequest>();
 
         // Assert
-        var warehouseResponse = await response.Content.ReadFromJsonAsync<WarehouseRequest>();
-
-        warehouseResponse.Should().BeEquivalentTo(request);
-        response.StatusCode.Should().Be(HttpStatusCode.Created);
-        response.Headers.Location.Should().Be($"http://localhost/api/v1/warehouses/{id}");
-    }
-
-    [Fact(DisplayName = "EmptyWarehouseName")]
-    public async Task Create_ReturnsValidatorError_WhenNameIsNull()
-    {
-        // Arrange
-        var id = Guid.NewGuid();
-        var request = new WarehouseRequest
-        {
-            Name = ""
-        };
-        
-        // Act
-        var response = await _sut.PostAsync(id, request);
-        
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        var error = await response.Content.ReadFromJsonAsync<ValidationProblemDetails>();
-        error!.Status.Should().Be(400);
-        error.Errors.Should().ContainKey("Name");
+        createWarehouse.StatusCode.Should().Be(HttpStatusCode.Created);
+        createPalette.StatusCode.Should().Be(HttpStatusCode.Created);
+        paletteResponse.Should().BeEquivalentTo(request);
+        createPalette.Headers.Location
+            .Should().Be($"{BaseUri}{Ver1}palettes/{paletteId.ToString()}");
     }
     
-    [Fact(DisplayName = "WarehouseNameTooLong")]
-    public async Task Create_ReturnsValidatorError_WhenNameGreaterThan25Characters()
+    [Fact(DisplayName = "CreatePaletteConflict")]
+    public async Task Create_ShouldReturnConflict_IfPaletteExist()
     {
         // Arrange
-        var id = Guid.NewGuid();
-        var request = new WarehouseRequest
-        {
-            Name = "Warehouse-" + Guid.NewGuid()
-        };
+        var warehouseId = Guid.NewGuid();
+        var paletteId = Guid.NewGuid();
+        var request = new PaletteRequest { Width = 10, Height = 10, Depth = 10 };
+        
+        var createWarehouse = await _dataHelper.GenerateWarehouse(warehouseId);
         
         // Act
-        var response = await _sut.PostAsync(id, request);
+        var createPaletteFirst = await _sut
+            .PostAsync(warehouseId, paletteId, request, CancellationToken.None);
+        
+        var createPaletteSecond = await _sut
+            .PostAsync(warehouseId, paletteId, request, CancellationToken.None);
         
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        var error = await response.Content.ReadFromJsonAsync<ValidationProblemDetails>();
-        error!.Status.Should().Be(400);
-        error.Errors.Should().ContainKey("Name.Length"); 
+        createWarehouse.StatusCode.Should().Be(HttpStatusCode.Created);
+        createPaletteFirst.StatusCode.Should().Be(HttpStatusCode.Created);
+        createPaletteSecond.StatusCode.Should().Be(HttpStatusCode.Conflict);
     }
-
-    [Fact(DisplayName = "WarehouseConflict")]
-    public async Task Create_ReturnsError_WhenWarehouseAlreadyExist()
+    
+    [Fact(DisplayName = "PaletteSizeValidation")]
+    public async Task Create_ShouldReturnError_IfPaletteSizeIncorrect()
     {
         // Arrange
-        var id = Guid.NewGuid();
-        var request = new WarehouseRequest
-        {
-            Name = "Warehouse#Conflict"
-        };
+        var warehouseId = Guid.NewGuid();
+        var paletteId = Guid.NewGuid();
+        var request = new PaletteRequest { Width = -10, Height = 0, Depth = 1000 };
+        
+        var createWarehouse = await _dataHelper.GenerateWarehouse(warehouseId);
         
         // Act
-        var createResponse = await _sut.PostAsync(id, request);
-        var response = await _sut.PostAsync(id, request);
-        
+        var createPalette = await _sut
+            .PostAsync(warehouseId, paletteId, request, CancellationToken.None);
+
         // Assert
-        createResponse.StatusCode.Should().Be(HttpStatusCode.Created);
-        response.StatusCode.Should().Be(HttpStatusCode.Conflict);
-        var error = response.Content.ReadFromJsonAsync<ProblemDetails>();
-        error.Result?.Type.Should().Be("entity_already_exist");
-        error.Result?.Status.Should().Be(409);
+        createWarehouse.StatusCode.Should().Be(HttpStatusCode.Created);
+        createPalette.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        var error = await createPalette.Content.ReadFromJsonAsync<ValidationProblemDetails>();
+        error!.Status.Should().Be(400);
+        error.Errors.Should().ContainKey("Depth", "Palette depth too big");
+        error.Errors.Should().ContainKey("Width", "Palette width should not be zero or negative.");
+        error.Errors.Should().ContainKey("Height", "Palette height should not be zero or negative.");
+        error.Errors.Should().ContainKey("Height", "'Height' must not be empty.");
     }
 }

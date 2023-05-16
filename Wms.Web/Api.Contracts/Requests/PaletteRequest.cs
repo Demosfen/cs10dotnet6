@@ -2,9 +2,9 @@ namespace Wms.Web.Api.Contracts.Requests;
 
 public class PaletteRequest
 {
-    public required decimal Width { get; set; }
+    public required decimal Width { get; init; }
     
-    public required decimal Height { get; set; }
+    public required decimal Height { get; init; }
 
-    public required decimal Depth { get; set; }
+    public required decimal Depth { get; init; }
 }

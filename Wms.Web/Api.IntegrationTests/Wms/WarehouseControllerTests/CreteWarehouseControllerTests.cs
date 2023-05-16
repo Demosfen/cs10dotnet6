@@ -14,13 +14,15 @@ namespace Wms.Web.Api.IntegrationTests.Wms.WarehouseControllerTests;
 public sealed class CreteWarehouseControllerTests : TestControllerBase
 {
     private readonly IWarehouseClient _sut;
+    private const string BaseUri = "http://localhost";
+    private const string Ver1 = "/api/v1/";
 
     public CreteWarehouseControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
     {
         var options = Options.Create(new WmsClientOptions
         {
-            HostUri = new Uri("http://localhost:5000")
+            HostUri = new Uri(BaseUri)
         });
         
         _sut = new WarehouseClient(HttpClient, options);
@@ -37,14 +39,14 @@ public sealed class CreteWarehouseControllerTests : TestControllerBase
         };
         
         // Act
-        var response = await _sut.PostAsync(id, request);
+        var response = await _sut.PostAsync(id, request, CancellationToken.None);
 
         // Assert
         var warehouseResponse = await response.Content.ReadFromJsonAsync<WarehouseRequest>();
 
         warehouseResponse.Should().BeEquivalentTo(request);
         response.StatusCode.Should().Be(HttpStatusCode.Created);
-        response.Headers.Location.Should().Be($"http://localhost/api/v1/warehouses/{id}");
+        response.Headers.Location.Should().Be($"{BaseUri}{Ver1}warehouses/{id.ToString()}");
     }
 
     [Fact(DisplayName = "EmptyWarehouseName")]
@@ -52,13 +54,9 @@ public sealed class CreteWarehouseControllerTests : TestControllerBase
     {
         // Arrange
         var id = Guid.NewGuid();
-        var request = new WarehouseRequest
-        {
-            Name = ""
-        };
-        
+
         // Act
-        var response = await _sut.PostAsync(id, request);
+        var response = await _sut.PostAsync(id, new WarehouseRequest{Name = ""});
         
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -72,13 +70,9 @@ public sealed class CreteWarehouseControllerTests : TestControllerBase
     {
         // Arrange
         var id = Guid.NewGuid();
-        var request = new WarehouseRequest
-        {
-            Name = "Warehouse-" + Guid.NewGuid()
-        };
-        
+
         // Act
-        var response = await _sut.PostAsync(id, request);
+        var response = await _sut.PostAsync(id, new WarehouseRequest{Name = "Warehouse-" + Guid.NewGuid()});
         
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);

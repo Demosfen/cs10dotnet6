@@ -7,6 +7,7 @@ using Wms.Web.Api.Client.Custom.Concrete;
 using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Api.Contracts.Responses;
 using Wms.Web.Api.IntegrationTests.Abstract;
+using Wms.Web.Api.IntegrationTests.Extensions;
 using Xunit;
 
 namespace Wms.Web.Api.IntegrationTests.Wms.WarehouseControllerTests;
@@ -14,17 +15,20 @@ namespace Wms.Web.Api.IntegrationTests.Wms.WarehouseControllerTests;
 public sealed class GetByIdWarehouseControllerTests : TestControllerBase
 {
     private readonly IWarehouseClient _sut;
-    private const string Ver1 = "/api/v1/";
+    private readonly WmsDataHelper _dataHelper;
+    private const string BaseUri = "http://localhost";
 
     public GetByIdWarehouseControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
     {
         var options = Options.Create(new WmsClientOptions
         {
-            HostUri = new Uri("http://localhost:5000")
+            HostUri = new Uri(BaseUri)
         });
         
         _sut = new WarehouseClient(HttpClient, options);
+
+        _dataHelper = new WmsDataHelper(apiFactory);
     }
     
     [Fact(DisplayName = "GetWarehouseById")]
@@ -33,19 +37,16 @@ public sealed class GetByIdWarehouseControllerTests : TestControllerBase
         // Arrange
         var warehouseId = Guid.NewGuid();
         var paletteId = Guid.NewGuid();
-
-        // Act
-        var createWarehouse = await HttpClient.PostAsJsonAsync(
-            $"{Ver1}warehouses?warehouseId={warehouseId}", 
-                new WarehouseRequest(){Name = "Warehouse#GetById1"}, CancellationToken.None);
-            
-        var createPalette = await HttpClient.PostAsJsonAsync(
-            $"{Ver1}warehouses/{warehouseId}/palettes/{paletteId}", 
-            new PaletteRequest{ Width = 10, Height = 10, Depth = 10}, CancellationToken.None);
-        var createdPalette = await createPalette.Content.ReadFromJsonAsync<PaletteResponse>();
+        var paletteRequest = new PaletteRequest { Width = 10, Height = 10, Depth = 10 };
         
+        var createWarehouse = await _dataHelper.GenerateWarehouse(warehouseId);
         var createdWarehouse = await createWarehouse.Content.ReadFromJsonAsync<WarehouseResponse>();
         
+        var createPalette = await _dataHelper
+            .GeneratePalette(warehouseId, paletteId, paletteRequest);
+        var createdPalette = await createPalette.Content.ReadFromJsonAsync<PaletteRequest>();
+
+        // Act
         var response = await _sut.GetByIdAsync(warehouseId, 0, 1, CancellationToken.None);
         
         // Assert
@@ -62,7 +63,7 @@ public sealed class GetByIdWarehouseControllerTests : TestControllerBase
         // Act
         try
         {
-            var response = await _sut.GetByIdAsync(Guid.NewGuid(), 0, 0, CancellationToken.None);
+            await _sut.GetByIdAsync(Guid.NewGuid(), 0, 0, CancellationToken.None);
         }
         catch (HttpRequestException response)
         {
@@ -76,16 +77,13 @@ public sealed class GetByIdWarehouseControllerTests : TestControllerBase
     {
         // Arrange
         var warehouseId = Guid.NewGuid();
-        
-        // Act
-        var createWarehouse = await HttpClient.PostAsJsonAsync(
-            $"{Ver1}warehouses?warehouseId={warehouseId}", 
-            new WarehouseRequest(){Name = "Warehouse#3"}, CancellationToken.None);
+
+        var createWarehouse = await _dataHelper.GenerateWarehouse(warehouseId);
         var createdWarehouse = await createWarehouse.Content.ReadFromJsonAsync<WarehouseResponse>();
 
-        var deleteWarehouse = await HttpClient
-            .DeleteAsync($"{Ver1}warehouses/{warehouseId}", CancellationToken.None);
+        var deleteWarehouse = await _dataHelper.DeleteWarehouse(warehouseId);
         
+        // Act
         var response = await _sut.GetByIdAsync(warehouseId, 0, 0, CancellationToken.None);
         
         // Assert

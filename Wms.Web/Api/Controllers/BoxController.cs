@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using Wms.Web.Api.Contracts.Responses;
 using Wms.Web.Services.Abstract;
@@ -72,12 +73,12 @@ public sealed class BoxController : ControllerBase
         return Ok(_mapper.Map<BoxResponse>(boxDto));
     }
 
-    [HttpPost("palettes/{paletteId:guid}/boxes/{boxId:guid}", Name = "CreateBox")]
+    [HttpPost("palettes/{paletteId:guid}", Name = "CreateBox")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<ActionResult<BoxResponse>> CreateAsync(
-        [FromRoute] Guid paletteId,
-        [FromRoute] Guid boxId,
+        [FromRoute][Required] Guid paletteId,
+        [FromQuery][Required] Guid boxId,
         [FromBody] BoxRequest request,
         CancellationToken cancellationToken = default)
     {

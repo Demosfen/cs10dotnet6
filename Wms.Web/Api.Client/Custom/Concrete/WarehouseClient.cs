@@ -8,7 +8,7 @@ namespace Wms.Web.Api.Client.Custom.Concrete;
 
 internal sealed class WarehouseClient : IWarehouseClient
 {
-    private const string ver1 = "/api/v1/";
+    private const string Ver1 = "/api/v1/";
     
     private readonly HttpClient _client;
 
@@ -21,14 +21,14 @@ internal sealed class WarehouseClient : IWarehouseClient
         int? offset, int? size, CancellationToken cancellationToken)
     
         => await _client.GetFromJsonAsync<IReadOnlyCollection<WarehouseResponse>>(
-            $"{ver1}warehouses?offset={offset}&size={size}", 
+            $"{Ver1}warehouses?offset={offset}&size={size}", 
             cancellationToken);
 
     public async Task<IReadOnlyCollection<WarehouseResponse>?> GetAllDeletedAsync(
         int? offset, int? size, CancellationToken cancellationToken)
     
     => await _client.GetFromJsonAsync<IReadOnlyCollection<WarehouseResponse>>(
-            $"{ver1}warehouses/archive?" +
+            $"{Ver1}warehouses/archive?" +
             $"offset={offset}&size={size}", 
             cancellationToken);
 
@@ -37,7 +37,7 @@ internal sealed class WarehouseClient : IWarehouseClient
         int? offset, int? size,
         CancellationToken cancellationToken)
         => await _client.GetFromJsonAsync<WarehouseResponse>(
-            $"{ver1}warehouses/{warehouseId}?palettesOffset={offset}&palettesSize={size}",
+            $"{Ver1}warehouses/{warehouseId}?palettesOffset={offset}&palettesSize={size}",
             cancellationToken);
 
     public async Task<HttpResponseMessage> PostAsync(
@@ -46,11 +46,11 @@ internal sealed class WarehouseClient : IWarehouseClient
         CancellationToken cancellationToken)
     {
         var result = await _client.PostAsJsonAsync(
-            $"{ver1}warehouses?warehouseId={warehouseId}", 
+            $"{Ver1}warehouses?warehouseId={warehouseId}", 
             request, 
             cancellationToken);
         
-        return result;//.Content.ReadFromJsonAsync<WarehouseResponse>(cancellationToken: cancellationToken);
+        return result;
     }
     
     public async Task<HttpResponseMessage> PutAsync(
@@ -59,14 +59,14 @@ internal sealed class WarehouseClient : IWarehouseClient
         CancellationToken cancellationToken)
     {
         var result = await _client.PutAsJsonAsync(
-            $"{ver1}warehouses/{warehouseId}", 
+            $"{Ver1}warehouses/{warehouseId}", 
             request, 
             cancellationToken);
         
-        return result; //.Content.ReadFromJsonAsync<WarehouseResponse>(cancellationToken: cancellationToken);
+        return result;
     }
 
     public async Task<HttpResponseMessage> DeleteAsync(Guid warehouseId, CancellationToken cancellationToken)
-    => await _client.DeleteAsync($"{ver1}warehouses/{warehouseId}", cancellationToken);
+    => await _client.DeleteAsync($"{Ver1}warehouses/{warehouseId}", cancellationToken);
 
 }

@@ -95,8 +95,8 @@ internal sealed class WarehouseService : IWarehouseService
         if (warehouse.DeletedAt is not null) return;
 
         var palette = await _paletteRepository.GetAllAsync(
-            f => f.Id == warehouse.Id,
-            q => q.Take(1).NotDeleted().OrderBy(x => x.CreatedAt),
+            f => f.WarehouseId == warehouse.Id,
+            q => q.NotDeleted().Take(1).OrderBy(x => x.CreatedAt),
             cancellationToken: cancellationToken);
 
         if (!palette.Count().Equals(0))
