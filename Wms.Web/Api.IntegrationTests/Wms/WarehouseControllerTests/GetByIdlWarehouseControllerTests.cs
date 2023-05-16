@@ -1,6 +1,5 @@
 using System.Net;
 using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.Extensions.Options;
 using Wms.Web.Api.Client;
 using Wms.Web.Api.Client.Custom.Abstract;
@@ -29,7 +28,7 @@ public sealed class GetByIdWarehouseControllerTests : TestControllerBase
     }
     
     [Fact(DisplayName = "GetWarehouseById")]
-    public async Task GetById_ShouldReturnWarehouse()
+    public async Task GetById_ReturnWarehouse_WhenWarehouseExist()
     {
         // Arrange
         var warehouseId = Guid.NewGuid();
@@ -38,71 +37,60 @@ public sealed class GetByIdWarehouseControllerTests : TestControllerBase
         // Act
         var createWarehouse = await HttpClient.PostAsJsonAsync(
             $"{Ver1}warehouses?warehouseId={warehouseId}", 
-                new WarehouseRequest(){Name = "Warehouse#GetById"}, CancellationToken.None);
+                new WarehouseRequest(){Name = "Warehouse#GetById1"}, CancellationToken.None);
             
         var createPalette = await HttpClient.PostAsJsonAsync(
-            $"{Ver1}warehouses/{warehouseId}/palettes/{paletteId}", CancellationToken.None);
+            $"{Ver1}warehouses/{warehouseId}/palettes/{paletteId}", 
+            new PaletteRequest{ Width = 10, Height = 10, Depth = 10}, CancellationToken.None);
         var createdPalette = await createPalette.Content.ReadFromJsonAsync<PaletteResponse>();
         
         var createdWarehouse = await createWarehouse.Content.ReadFromJsonAsync<WarehouseResponse>();
-        // createdWarehouse!.Palettes.Append<PaletteRequest>(createPalette);
-
+        
         var response = await _sut.GetByIdAsync(warehouseId, 0, 1, CancellationToken.None);
         
         // Assert
         createWarehouse.StatusCode.Should().Be(HttpStatusCode.Created);
         createPalette.StatusCode.Should().Be(HttpStatusCode.Created);
-        // responseAll?.Count.Should().Be(2);
-        // responseOne?.Count.Should().Be(1);
-        // responseAll!.FirstOrDefault().Should().BeEquivalentTo(createdFirst);
-        // responseAll!.LastOrDefault().Should().BeEquivalentTo(createdSecond);
-        // responseOne!.Single().Should().BeEquivalentTo(createdSecond);
+        response.Should().BeEquivalentTo(createdWarehouse, 
+            options => options.Excluding(x => x!.Palettes));
+        response?.Palettes.ElementAt(0).Should().BeEquivalentTo(createdPalette);
     }
-    //
-    // [Fact(DisplayName = "GetDeletedWarehouses")]
-    // public async Task GetAllDeleted_ShouldReturnWarehouses()
-    // {
-    //     // Arrange
-    //     var warehouseId1 = Guid.NewGuid();
-    //     var warehouseId2 = Guid.NewGuid();
-    //     
-    //     // Act
-    //     var existingWarehouses = await HttpClient
-    //         .GetFromJsonAsync<IReadOnlyCollection<WarehouseResponse>>($"/api/v1/warehouses/archive");
-    //
-    //     var createFirst = await HttpClient.PostAsJsonAsync(
-    //         $"/api/v1/warehouses?warehouseId={warehouseId1}", 
-    //         new WarehouseRequest(){Name = "Warehouse#GetDeleted1"}, CancellationToken.None);
-    //         
-    //     var createdFirst = await createFirst.Content.ReadFromJsonAsync<WarehouseResponse>();
-    //
-    //     var deleteFirst = await HttpClient.DeleteAsync(
-    //         $"/api/v1/warehouses/{warehouseId1}", CancellationToken.None);
-    //     
-    //     var createSecond = await HttpClient.PostAsJsonAsync(
-    //         $"/api/v1/warehouses?warehouseId={warehouseId2}", 
-    //         new WarehouseRequest(){Name = "Warehouse#GetDeleted2"}, CancellationToken.None);
-    //     
-    //     var createdSecond = await createSecond.Content.ReadFromJsonAsync<WarehouseResponse>();
-    //     
-    //     var deleteSecond = await HttpClient.DeleteAsync(
-    //         $"/api/v1/warehouses/{warehouseId2}", CancellationToken.None);
-    //
-    //     var responseAll = 
-    //         await _sut.GetAllDeletedAsync(existingWarehouses?.Count, 2, CancellationToken.None);
-    //     
-    //     var responseOne =
-    //         await _sut.GetAllDeletedAsync(existingWarehouses?.Count + 1, 1, CancellationToken.None);
-    //     
-    //     // Assert
-    //     createFirst.StatusCode.Should().Be(HttpStatusCode.Created);
-    //     createSecond.StatusCode.Should().Be(HttpStatusCode.Created);
-    //     deleteFirst.StatusCode.Should().Be(HttpStatusCode.OK);
-    //     deleteSecond.StatusCode.Should().Be(HttpStatusCode.OK);
-    //     responseAll?.Count.Should().Be(2);
-    //     responseOne?.Count.Should().Be(1);
-    //     responseAll!.FirstOrDefault().Should().BeEquivalentTo(createdFirst);
-    //     responseAll!.LastOrDefault().Should().BeEquivalentTo(createdSecond);
-    //     responseOne!.Single().Should().BeEquivalentTo(createdSecond);
-    // }
+
+    [Fact(DisplayName = "NotFoundWhenWarehouseDoesNotExist")]
+    public async Task GetById_ReturnsNotFound_WhenWarehouseDoesNotExist()
+    {
+        // Act
+        try
+        {
+            var response = await _sut.GetByIdAsync(Guid.NewGuid(), 0, 0, CancellationToken.None);
+        }
+        catch (HttpRequestException response)
+        {
+            response.StatusCode.HasValue.Should().Be(true);
+            response.StatusCode?.Should().Be(HttpStatusCode.NotFound);
+        }
+    }
+    
+    [Fact(DisplayName = "GetWarehouseByIdIfDeleted")]
+    public async Task GetById_ReturnWarehouse_WhenWarehouseWasDeleted()
+    {
+        // Arrange
+        var warehouseId = Guid.NewGuid();
+        
+        // Act
+        var createWarehouse = await HttpClient.PostAsJsonAsync(
+            $"{Ver1}warehouses?warehouseId={warehouseId}", 
+            new WarehouseRequest(){Name = "Warehouse#3"}, CancellationToken.None);
+        var createdWarehouse = await createWarehouse.Content.ReadFromJsonAsync<WarehouseResponse>();
+
+        var deleteWarehouse = await HttpClient
+            .DeleteAsync($"{Ver1}warehouses/{warehouseId}", CancellationToken.None);
+        
+        var response = await _sut.GetByIdAsync(warehouseId, 0, 0, CancellationToken.None);
+        
+        // Assert
+        createWarehouse.StatusCode.Should().Be(HttpStatusCode.Created);
+        deleteWarehouse.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.Should().BeEquivalentTo(createdWarehouse);
+    }
 }

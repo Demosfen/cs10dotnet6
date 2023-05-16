@@ -9,13 +9,13 @@ using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Api.IntegrationTests.Abstract;
 using Xunit;
 
-namespace Wms.Web.Api.IntegrationTests.Wms.WarehouseControllerTests;
+namespace Wms.Web.Api.IntegrationTests.Wms.PaletteControllerTest;
 
-public sealed class CreteWarehouseControllerTests : TestControllerBase
+public sealed class CretePaletteControllerTests : TestControllerBase
 {
-    private readonly IWarehouseClient _sut;
+    private readonly PaletteClient _sut;
 
-    public CreteWarehouseControllerTests(TestApplication apiFactory) 
+    public CretePaletteControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
     {
         var options = Options.Create(new WmsClientOptions
@@ -23,11 +23,11 @@ public sealed class CreteWarehouseControllerTests : TestControllerBase
             HostUri = new Uri("http://localhost:5000")
         });
         
-        _sut = new WarehouseClient(HttpClient, options);
+        _sut = new PaletteClient(HttpClient, options);
     }
     
-    [Fact(DisplayName = "CreateWarehouse")]
-    public async Task Create_ShouldCreateWarehouse()
+    [Fact(DisplayName = "CreatePalette")]
+    public async Task Create_ShouldCreateWaPalette()
     {
         // Arrange
         var id = Guid.NewGuid();

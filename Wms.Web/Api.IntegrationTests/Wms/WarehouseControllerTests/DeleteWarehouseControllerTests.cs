@@ -7,10 +7,9 @@ using Wms.Web.Api.Client.Custom.Abstract;
 using Wms.Web.Api.Client.Custom.Concrete;
 using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Api.IntegrationTests.Abstract;
-
 using Xunit;
 
-namespace Wms.Web.Api.IntegrationTests.Wms;
+namespace Wms.Web.Api.IntegrationTests.Wms.WarehouseControllerTests;
 
 public sealed class DeleteWarehouseControllerTests : TestControllerBase
 {
