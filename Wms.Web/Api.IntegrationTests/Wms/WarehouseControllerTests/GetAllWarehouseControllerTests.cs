@@ -15,9 +15,6 @@ namespace Wms.Web.Api.IntegrationTests.Wms.WarehouseControllerTests;
 public sealed class GetAllWarehouseControllerTests : TestControllerBase
 {
     private readonly IWarehouseClient _sut;
-    private readonly WmsDataHelper _dataHelper;
-    private const string BaseUri = "http://localhost";
-    private const string Ver1 = "/api/v1/";
 
     public GetAllWarehouseControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
@@ -28,8 +25,6 @@ public sealed class GetAllWarehouseControllerTests : TestControllerBase
         });
         
         _sut = new WarehouseClient(HttpClient, options);
-
-        _dataHelper = new WmsDataHelper(apiFactory);
     }
     
     [Fact(DisplayName = "GetAllWarehouses")]
@@ -43,10 +38,10 @@ public sealed class GetAllWarehouseControllerTests : TestControllerBase
         var existingWarehouses = await HttpClient
             .GetFromJsonAsync<IReadOnlyCollection<WarehouseResponse>>($"{Ver1}warehouses");
         
-        var createFirst = await _dataHelper.GenerateWarehouse(warehouseId1);
+        var createFirst = await DataHelper.GenerateWarehouse(warehouseId1);
         var createdFirst = await createFirst.Content.ReadFromJsonAsync<WarehouseResponse>();
         
-        var createSecond = await _dataHelper.GenerateWarehouse(warehouseId2);
+        var createSecond = await DataHelper.GenerateWarehouse(warehouseId2);
         var createdSecond = await createSecond.Content.ReadFromJsonAsync<WarehouseResponse>();
 
         var responseAll = 

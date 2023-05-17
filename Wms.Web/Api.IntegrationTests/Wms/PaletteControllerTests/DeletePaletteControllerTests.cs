@@ -9,13 +9,11 @@ using Wms.Web.Api.IntegrationTests.Abstract;
 using Wms.Web.Api.IntegrationTests.Extensions;
 using Xunit;
 
-namespace Wms.Web.Api.IntegrationTests.Wms.PaletteControllerTest;
+namespace Wms.Web.Api.IntegrationTests.Wms.PaletteControllerTests;
 
 public sealed class DeletePaletteControllerTests : TestControllerBase
 {
     private readonly PaletteClient _sut;
-    private readonly WmsDataHelper _dataHelper;
-    private const string BaseUri = "http://localhost";
 
     public DeletePaletteControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
@@ -26,8 +24,6 @@ public sealed class DeletePaletteControllerTests : TestControllerBase
         });
         
         _sut = new PaletteClient(HttpClient, options);
-        
-        _dataHelper = new WmsDataHelper(apiFactory);
     }
     
     [Fact(DisplayName = "DeleteExistingPalette")]
@@ -38,8 +34,8 @@ public sealed class DeletePaletteControllerTests : TestControllerBase
         var paletteId = Guid.NewGuid();
         var request = new PaletteRequest { Width = 10, Height = 10, Depth = 10 };
 
-        await _dataHelper.GenerateWarehouse(warehouseId);
-        await _dataHelper.GeneratePalette(warehouseId, paletteId, request);
+        await DataHelper.GenerateWarehouse(warehouseId);
+        await DataHelper.GeneratePalette(warehouseId, paletteId, request);
         
         // Act
         var deleteResponse = await _sut.DeleteAsync(paletteId, CancellationToken.None);
@@ -70,9 +66,9 @@ public sealed class DeletePaletteControllerTests : TestControllerBase
             Depth = 1, Width = 1, Height = 1, Weight = 1, 
             ExpiryDate = new DateTime(2007, 1, 1) };
 
-        await _dataHelper.GenerateWarehouse(warehouseId);
-        await _dataHelper.GeneratePalette(warehouseId, paletteId, paletteRequest);
-        await _dataHelper.GenerateBox(paletteId, boxId, boxRequest);
+        await DataHelper.GenerateWarehouse(warehouseId);
+        await DataHelper.GeneratePalette(warehouseId, paletteId, paletteRequest);
+        await DataHelper.GenerateBox(paletteId, boxId, boxRequest);
 
         // Act
         var deleteResponse = await _sut.DeleteAsync(paletteId, CancellationToken.None);

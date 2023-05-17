@@ -9,13 +9,11 @@ using Wms.Web.Api.IntegrationTests.Abstract;
 using Wms.Web.Api.IntegrationTests.Extensions;
 using Xunit;
 
-namespace Wms.Web.Api.IntegrationTests.Wms.PaletteControllerTest;
+namespace Wms.Web.Api.IntegrationTests.Wms.PaletteControllerTests;
 
 public sealed class GetAllPaletteControllerTests : TestControllerBase
 {
     private readonly IPaletteClient _sut;
-    private readonly WmsDataHelper _dataHelper;
-    private const string BaseUri = "http://localhost";
 
     public GetAllPaletteControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
@@ -26,8 +24,6 @@ public sealed class GetAllPaletteControllerTests : TestControllerBase
         });
         
         _sut = new PaletteClient(HttpClient, options);
-
-        _dataHelper = new WmsDataHelper(apiFactory);
     }
     
     [Fact(DisplayName = "GetAllPalettes")]
@@ -39,11 +35,11 @@ public sealed class GetAllPaletteControllerTests : TestControllerBase
         var paletteId2 = Guid.NewGuid();
         var paletteRequest = new PaletteRequest{ Width = 10, Height = 10, Depth = 10 };
         
-        await _dataHelper.GenerateWarehouse(warehouseId);
+        await DataHelper.GenerateWarehouse(warehouseId);
 
-        var createPalette1 = await _dataHelper
+        var createPalette1 = await DataHelper
             .GeneratePalette(warehouseId, paletteId1, paletteRequest);
-        var createPalette2 = await _dataHelper
+        var createPalette2 = await DataHelper
             .GeneratePalette(warehouseId, paletteId2, paletteRequest);
         var createdPalette1 = await createPalette1.Content.ReadFromJsonAsync<PaletteRequest>();
         var createdPalette2 = await createPalette2.Content.ReadFromJsonAsync<PaletteRequest>();
@@ -74,17 +70,17 @@ public sealed class GetAllPaletteControllerTests : TestControllerBase
         var paletteId2 = Guid.NewGuid();
         var paletteRequest = new PaletteRequest { Width = 10, Height = 10, Depth = 10 };
         
-        await _dataHelper.GenerateWarehouse(warehouseId);
+        await DataHelper.GenerateWarehouse(warehouseId);
 
-        var createPalette1 = await _dataHelper
+        var createPalette1 = await DataHelper
             .GeneratePalette(warehouseId, paletteId1, paletteRequest);
-        var createPalette2 = await _dataHelper
+        var createPalette2 = await DataHelper
             .GeneratePalette(warehouseId, paletteId2, paletteRequest);
         var createdPalette1 = await createPalette1.Content.ReadFromJsonAsync<PaletteRequest>();
         var createdPalette2 = await createPalette2.Content.ReadFromJsonAsync<PaletteRequest>();
 
-        var deleteResponse1 = await _dataHelper.DeletePalette(paletteId1);
-        var deleteResponse2 = await _dataHelper.DeletePalette(paletteId2);
+        var deleteResponse1 = await DataHelper.DeletePalette(paletteId1);
+        var deleteResponse2 = await DataHelper.DeletePalette(paletteId2);
 
         // Act
         var responseAll = 

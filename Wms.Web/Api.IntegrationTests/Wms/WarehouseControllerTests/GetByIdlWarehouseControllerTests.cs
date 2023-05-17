@@ -7,7 +7,6 @@ using Wms.Web.Api.Client.Custom.Concrete;
 using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Api.Contracts.Responses;
 using Wms.Web.Api.IntegrationTests.Abstract;
-using Wms.Web.Api.IntegrationTests.Extensions;
 using Xunit;
 
 namespace Wms.Web.Api.IntegrationTests.Wms.WarehouseControllerTests;
@@ -15,8 +14,6 @@ namespace Wms.Web.Api.IntegrationTests.Wms.WarehouseControllerTests;
 public sealed class GetByIdWarehouseControllerTests : TestControllerBase
 {
     private readonly IWarehouseClient _sut;
-    private readonly WmsDataHelper _dataHelper;
-    private const string BaseUri = "http://localhost";
 
     public GetByIdWarehouseControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
@@ -27,8 +24,6 @@ public sealed class GetByIdWarehouseControllerTests : TestControllerBase
         });
         
         _sut = new WarehouseClient(HttpClient, options);
-
-        _dataHelper = new WmsDataHelper(apiFactory);
     }
     
     [Fact(DisplayName = "GetWarehouseById")]
@@ -39,10 +34,10 @@ public sealed class GetByIdWarehouseControllerTests : TestControllerBase
         var paletteId = Guid.NewGuid();
         var paletteRequest = new PaletteRequest { Width = 10, Height = 10, Depth = 10 };
         
-        var createWarehouse = await _dataHelper.GenerateWarehouse(warehouseId);
+        var createWarehouse = await DataHelper.GenerateWarehouse(warehouseId);
         var createdWarehouse = await createWarehouse.Content.ReadFromJsonAsync<WarehouseResponse>();
         
-        var createPalette = await _dataHelper
+        var createPalette = await DataHelper
             .GeneratePalette(warehouseId, paletteId, paletteRequest);
         var createdPalette = await createPalette.Content.ReadFromJsonAsync<PaletteRequest>();
 
@@ -78,10 +73,10 @@ public sealed class GetByIdWarehouseControllerTests : TestControllerBase
         // Arrange
         var warehouseId = Guid.NewGuid();
 
-        var createWarehouse = await _dataHelper.GenerateWarehouse(warehouseId);
+        var createWarehouse = await DataHelper.GenerateWarehouse(warehouseId);
         var createdWarehouse = await createWarehouse.Content.ReadFromJsonAsync<WarehouseResponse>();
 
-        var deleteWarehouse = await _dataHelper.DeleteWarehouse(warehouseId);
+        var deleteWarehouse = await DataHelper.DeleteWarehouse(warehouseId);
         
         // Act
         var response = await _sut.GetByIdAsync(warehouseId, 0, 0, CancellationToken.None);

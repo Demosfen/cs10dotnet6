@@ -34,17 +34,17 @@ internal sealed class BoxClient : IBoxClient
         $"offset={offset}&size={size}", 
         cancellationToken);
     
-    public async Task<BoxResponse?> PostAsync(Guid paletteId,
+    public async Task<HttpResponseMessage> PostAsync(Guid paletteId,
         Guid boxId, 
         BoxRequest request, 
         CancellationToken cancellationToken)
     {
         var result = await _client.PostAsJsonAsync(
-            $"{ver1}palettes/{paletteId}/boxes/{boxId}", 
+            $"{ver1}palettes/{paletteId}?boxId={boxId}", 
             request, 
             cancellationToken);
         
-        return await result.Content.ReadFromJsonAsync<BoxResponse>(cancellationToken: cancellationToken);
+        return result;
     }
     
     public async Task<BoxResponse?> PutAsync(

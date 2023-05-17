@@ -92,8 +92,11 @@ public sealed class BoxController : ControllerBase
         var boxDto = _mapper.Map<BoxDto>(createBox);
     
         await _boxService.CreateAsync(boxDto, cancellationToken);
-
-        return Created("Box created!", _mapper.Map<BoxResponse>(boxDto));
+        
+        var locationUri = Url.Link("GetBoxById", new { boxId });
+        
+        return Created(locationUri ?? throw new InvalidOperationException(),  
+            _mapper.Map<BoxResponse>(boxDto));
     }
 
     [HttpPut("boxes/{boxId:guid}", Name = "UpdateBox")]

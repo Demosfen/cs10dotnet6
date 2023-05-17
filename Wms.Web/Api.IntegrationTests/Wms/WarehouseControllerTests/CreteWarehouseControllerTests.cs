@@ -14,8 +14,6 @@ namespace Wms.Web.Api.IntegrationTests.Wms.WarehouseControllerTests;
 public sealed class CreteWarehouseControllerTests : TestControllerBase
 {
     private readonly IWarehouseClient _sut;
-    private const string BaseUri = "http://localhost";
-    private const string Ver1 = "/api/v1/";
 
     public CreteWarehouseControllerTests(TestApplication apiFactory) 
         : base(apiFactory)

@@ -9,15 +9,12 @@ using Wms.Web.Api.IntegrationTests.Abstract;
 using Wms.Web.Api.IntegrationTests.Extensions;
 using Xunit;
 
-namespace Wms.Web.Api.IntegrationTests.Wms.PaletteControllerTest;
+namespace Wms.Web.Api.IntegrationTests.Wms.PaletteControllerTests;
 
 public sealed class CretePaletteControllerTests : TestControllerBase
 {
     private readonly PaletteClient _sut;
-    private readonly WmsDataHelper _dataHelper;
-    private const string Ver1 = "/api/v1/";
-    private const string BaseUri = "http://localhost";
-
+    
     public CretePaletteControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
     {
@@ -27,8 +24,6 @@ public sealed class CretePaletteControllerTests : TestControllerBase
         });
         
         _sut = new PaletteClient(HttpClient, options);
-
-        _dataHelper = new WmsDataHelper(apiFactory);
     }
     
     [Fact(DisplayName = "CreatePalette")]
@@ -39,7 +34,7 @@ public sealed class CretePaletteControllerTests : TestControllerBase
         var paletteId = Guid.NewGuid();
         var request = new PaletteRequest { Width = 10, Height = 10, Depth = 10 };
         
-        var createWarehouse = await _dataHelper.GenerateWarehouse(warehouseId);
+        var createWarehouse = await DataHelper.GenerateWarehouse(warehouseId);
         
         var createPalette = await _sut
             .PostAsync(warehouseId, paletteId, request, CancellationToken.None);
@@ -61,7 +56,7 @@ public sealed class CretePaletteControllerTests : TestControllerBase
         var paletteId = Guid.NewGuid();
         var request = new PaletteRequest { Width = 10, Height = 10, Depth = 10 };
         
-        var createWarehouse = await _dataHelper.GenerateWarehouse(warehouseId);
+        var createWarehouse = await DataHelper.GenerateWarehouse(warehouseId);
         
         // Act
         var createPaletteFirst = await _sut
@@ -84,7 +79,7 @@ public sealed class CretePaletteControllerTests : TestControllerBase
         var paletteId = Guid.NewGuid();
         var request = new PaletteRequest { Width = -10, Height = 0, Depth = 1000 };
         
-        var createWarehouse = await _dataHelper.GenerateWarehouse(warehouseId);
+        var createWarehouse = await DataHelper.GenerateWarehouse(warehouseId);
         
         // Act
         var createPalette = await _sut

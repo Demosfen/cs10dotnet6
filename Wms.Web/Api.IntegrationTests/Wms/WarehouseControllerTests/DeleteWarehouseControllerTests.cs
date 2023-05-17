@@ -15,9 +15,6 @@ namespace Wms.Web.Api.IntegrationTests.Wms.WarehouseControllerTests;
 public sealed class DeleteWarehouseControllerTests : TestControllerBase
 {
     private readonly IWarehouseClient _sut;
-    private readonly WmsDataHelper _dataHelper;
-    private const string BaseUri = "http://localhost";
-    private const string Ver1 = "/api/v1/";
 
     public DeleteWarehouseControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
@@ -28,8 +25,6 @@ public sealed class DeleteWarehouseControllerTests : TestControllerBase
         });
         
         _sut = new WarehouseClient(HttpClient, options);
-
-        _dataHelper = new WmsDataHelper(apiFactory);
     }
     
     [Fact(DisplayName = "DeleteExistingWarehouse")]
@@ -38,7 +33,7 @@ public sealed class DeleteWarehouseControllerTests : TestControllerBase
         // Arrange
         var id = Guid.NewGuid();
         
-        await _dataHelper.GenerateWarehouse(id);
+        await DataHelper.GenerateWarehouse(id);
         
         // Act
         var deleteResponse = await _sut.DeleteAsync(id);
@@ -52,7 +47,7 @@ public sealed class DeleteWarehouseControllerTests : TestControllerBase
     {
         // Arrange
         var id = Guid.NewGuid();
-        await _dataHelper.GenerateWarehouse(id);
+        await DataHelper.GenerateWarehouse(id);
         
         // Act
         var deleteResponse = await _sut.DeleteAsync(Guid.NewGuid());
@@ -78,8 +73,8 @@ public sealed class DeleteWarehouseControllerTests : TestControllerBase
             Depth = 10
         };
         
-        await _dataHelper.GenerateWarehouse(warehouseId);
-        await _dataHelper.GeneratePalette(warehouseId, paletteId, requestPalette);
+        await DataHelper.GenerateWarehouse(warehouseId);
+        await DataHelper.GeneratePalette(warehouseId, paletteId, requestPalette);
         
         // Act
         var deleteResponse = await _sut.DeleteAsync(warehouseId);
