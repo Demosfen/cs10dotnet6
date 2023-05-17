@@ -47,7 +47,7 @@ public sealed class CreteBoxControllerTests : TestControllerBase
             .GeneratePalette(warehouseId, paletteId, paletteRequest);
 
         // Act
-        var createBox = await _sut.PostAsync(paletteId, boxId, boxRequest, CancellationToken.None);
+        var createBox = await _sut.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
         var createdBox = await createBox.Content.ReadFromJsonAsync<BoxRequest>();
 
         // Assert
@@ -76,8 +76,8 @@ public sealed class CreteBoxControllerTests : TestControllerBase
             .GeneratePalette(warehouseId, paletteId, paletteRequest);
 
         // Act
-        var createBox = await _sut.PostAsync(paletteId, boxId, boxRequest, CancellationToken.None);
-        var createCloneBox = await _sut.PostAsync(paletteId, boxId, boxRequest, CancellationToken.None);
+        var createBox = await _sut.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
+        var createCloneBox = await _sut.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
 
         // Assert
         createBox.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -106,7 +106,7 @@ public sealed class CreteBoxControllerTests : TestControllerBase
             .GeneratePalette(warehouseId, paletteId, paletteRequest);
 
         // Act
-        var createBox = await _sut.PostAsync(paletteId, boxId, boxRequest, CancellationToken.None);
+        var createBox = await _sut.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
     
         // Assert
         createBox.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -117,5 +117,92 @@ public sealed class CreteBoxControllerTests : TestControllerBase
         error.Errors.Should().ContainKey("Depth", "Box depth should not be zero or negative.");
         error.Errors.Should().ContainKey("Width", "Box width should not be zero or negative.");
         error.Errors.Should().ContainKey("Height", "Box height too big");
+    }
+    
+    [Fact(DisplayName = "BoxExpiryAndProductionDatesValidation")]
+    public async Task Create_ShouldReturnError_IfBoxExpiryLowerThanProduction()
+    {
+        // Arrange
+        var warehouseId = Guid.NewGuid();
+        var paletteId = Guid.NewGuid();
+        var boxId = Guid.NewGuid();
+        var paletteRequest = new PaletteRequest { Width = 10, Height = 10, Depth = 10 };
+        var boxRequest = new BoxRequest
+        {
+            Width = 1, Depth = 1, Height = 1,
+            Weight = 1, 
+            ProductionDate = new DateTime(2008,1,1),
+            ExpiryDate = new DateTime(2007, 1, 1)
+        };
+        
+        await DataHelper.GenerateWarehouse(warehouseId);
+        await DataHelper
+            .GeneratePalette(warehouseId, paletteId, paletteRequest);
+
+        // Act
+        var createBox = await _sut.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
+    
+        // Assert
+        createBox.StatusCode.Should().Be(HttpStatusCode.UnprocessableEntity);
+        var error = await createBox.Content.ReadFromJsonAsync<ValidationProblemDetails>();
+        error!.Status.Should().Be(422);
+        error.Type.Should().Be("entity_expiry_incorrect");
+    }
+    
+    [Fact(DisplayName = "EmptyExpiryAndProductionDatesValidation")]
+    public async Task Create_ShouldReturnError_IfBoxExpiryAndProductionEmpty()
+    {
+        // Arrange
+        var warehouseId = Guid.NewGuid();
+        var paletteId = Guid.NewGuid();
+        var boxId = Guid.NewGuid();
+        var paletteRequest = new PaletteRequest { Width = 10, Height = 10, Depth = 10 };
+        var boxRequest = new BoxRequest
+        {
+            Width = 1, Depth = 1, Height = 1,
+            Weight = 1
+        };
+        
+        await DataHelper.GenerateWarehouse(warehouseId);
+        await DataHelper
+            .GeneratePalette(warehouseId, paletteId, paletteRequest);
+
+        // Act
+        var createBox = await _sut.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
+
+        // Assert
+        createBox.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
+        var error = await createBox.Content.ReadFromJsonAsync<ProblemDetails>();
+        error!.Status.Should().Be(500);
+    }
+    
+    [Fact(DisplayName = "BoxOversizeException")]
+    public async Task Create_ShouldReturnError_IfBoxBiggerThanPalette()
+    {
+        // Arrange
+        var warehouseId = Guid.NewGuid();
+        var paletteId = Guid.NewGuid();
+        var boxId = Guid.NewGuid();
+        var paletteRequest = new PaletteRequest { Width = 10, Height = 10, Depth = 10 };
+        var boxRequest = new BoxRequest
+        {
+            Width = 15, Depth = 155, Height = 15,
+            Weight = 1,
+            ProductionDate = new DateTime(2007,1,1),
+            ExpiryDate = new DateTime(2008,1,1)
+        };
+        
+        await DataHelper.GenerateWarehouse(warehouseId);
+        await DataHelper
+            .GeneratePalette(warehouseId, paletteId, paletteRequest);
+
+        // Act
+        var createBox = await _sut.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
+
+        // Assert
+        createBox.StatusCode.Should().Be(HttpStatusCode.UnprocessableEntity);
+        var error = await createBox.Content.ReadFromJsonAsync<ValidationProblemDetails>();
+        error!.Status.Should().Be(422);
+        error.Type.Should().Be("unit_oversize");
     }
 }

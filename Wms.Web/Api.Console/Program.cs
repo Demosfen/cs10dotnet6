@@ -4,8 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Wms.Web.Api.Client;
 using Wms.Web.Api.Client.Custom.Abstract;
 using Wms.Web.Api.Contracts.Requests;
-using PaletteRequest = Wms.Web.Api.Contracts.Requests.PaletteRequest;
-using WarehouseRequest = Wms.Web.Api.Contracts.Requests.WarehouseRequest;
 
 var serviceCollection = new ServiceCollection();
 
@@ -87,27 +85,27 @@ var deletedWarehouse = await client.WarehouseClient.GetAllDeletedAsync(
 // var deleteResult = await client.PaletteClient.DeleteAsync(
 //     new Guid("44F2B87A-B19A-4D7C-B875-136DCC0A3F74"), CancellationToken.None);
 //
-// var boxCreateRequest = new BoxRequest
-// {
-//     Width = 20,
-//     Height = 20,
-//     Depth = 20,
-//     Weight = 10,
-//     ExpiryDate = new DateTime(2013,01,01)
-// };
-//
-// var boxCreate = await client
-//     .BoxClient.PostAsync(
-//         new Guid("E01E24F8-3D86-472E-8FA9-7382F2062061"),
-//         Guid.NewGuid(),
-//         boxCreateRequest,
-//         CancellationToken.None);
-//
-var boxGet = await client.BoxClient.GetAllAsync(
-    new Guid("E01E24F8-3D86-472E-8FA9-7382F2062061"), 0, 5, cancellationToken: CancellationToken.None);
+var boxCreateRequest = new BoxRequest
+{
+    Width = 20,
+    Height = 20,
+    Depth = 20,
+    Weight = 10,
+    ExpiryDate = new DateTime(2013,01,01)
+};
 
-var boxGetDeleted = await client.BoxClient.GetAllDeletedAsync(
-    new Guid("DD57D940-D495-40E7-86C2-68C4FD995CF7"), 0, 5, cancellationToken: CancellationToken.None);
+var boxCreate = await client
+    .BoxClient.CreateAsync(
+        new Guid("E01E24F8-3D86-472E-8FA9-7382F2062061"),
+        Guid.NewGuid(),
+        boxCreateRequest,
+        CancellationToken.None);
+//
+// var boxGet = await client.BoxClient.GetAllAsync(
+//     new Guid("E01E24F8-3D86-472E-8FA9-7382F2062061"), 0, 5, cancellationToken: CancellationToken.None);
+//
+// var boxGetDeleted = await client.BoxClient.GetAllDeletedAsync(
+//     new Guid("DD57D940-D495-40E7-86C2-68C4FD995CF7"), 0, 5, cancellationToken: CancellationToken.None);
 //
 // var boxUpdateRequest = new BoxRequest
 // {

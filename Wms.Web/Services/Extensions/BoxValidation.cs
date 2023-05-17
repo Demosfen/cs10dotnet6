@@ -8,10 +8,6 @@ internal sealed class BoxValidations
 {
     private const int ExpiryDays = 100;
 
-    public BoxValidations()
-    {
-    }
-    
     public static void BoxSizeValidation(Palette paletteDto, BoxDto boxDto)
     {
         if (boxDto.Width > paletteDto.Width 
@@ -38,8 +34,7 @@ internal sealed class BoxValidations
         
         if (boxDto.ExpiryDate <= boxDto.ProductionDate)
         {
-            throw new ArgumentException(
-                "Expiry date cannot be lower than Production date!");
+            throw new EntityExpiryDateException(boxDto.Id);
         }
     }
 }

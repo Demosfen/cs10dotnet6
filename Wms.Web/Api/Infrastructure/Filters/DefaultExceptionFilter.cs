@@ -52,7 +52,8 @@ internal sealed class DefaultExceptionFilter : IExceptionFilter
             EntityWasDeletedException => StatusCodes.Status405MethodNotAllowed,
             EntityNotEmptyException => StatusCodes.Status422UnprocessableEntity,
             UninitializedPropertyException => StatusCodes.Status422UnprocessableEntity,
-            UnitOversizeException => StatusCodes.Status400BadRequest,
+            UnitOversizeException => StatusCodes.Status422UnprocessableEntity,
+            EntityExpiryDateException => StatusCodes.Status422UnprocessableEntity,
             _ => StatusCodes.Status422UnprocessableEntity
         };
 

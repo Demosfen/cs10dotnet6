@@ -15,7 +15,7 @@ public interface IBoxClient
         int? offset, int? size, 
         CancellationToken cancellationToken = default);
         
-    Task<HttpResponseMessage> PostAsync(
+    Task<HttpResponseMessage> CreateAsync(
         Guid paletteId,
         Guid boxId, 
         BoxRequest request,

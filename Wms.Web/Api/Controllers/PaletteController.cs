@@ -78,6 +78,7 @@ public sealed class PaletteController : ControllerBase
     [HttpPost("warehouses/{warehouseId:guid}", Name = "CreatePalette")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     public async Task<ActionResult<HttpResponseMessage>> CreateAsync(
         [FromRoute][Required] Guid warehouseId, 
         [FromQuery][Required] Guid paletteId,
