@@ -77,7 +77,7 @@ public sealed class BoxController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-    public async Task<ActionResult<HttpResponseMessage>> CreateAsync(
+    public async Task<ActionResult<BoxResponse>> CreateAsync(
         [FromRoute][Required] Guid paletteId,
         [FromQuery][Required] Guid boxId,
         [FromBody] BoxRequest request,

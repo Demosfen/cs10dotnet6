@@ -1,8 +1,10 @@
+using System.Net;
 using System.Net.Http.Json;
 using Microsoft.Extensions.Options;
 using Wms.Web.Api.Client.Custom.Abstract;
 using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Api.Contracts.Responses;
+using Wms.Web.Common.Exceptions;
 
 namespace Wms.Web.Api.Client.Custom.Concrete;
 
@@ -40,17 +42,26 @@ internal sealed class WarehouseClient : IWarehouseClient
             $"{Ver1}warehouses/{warehouseId}?palettesOffset={offset}&palettesSize={size}",
             cancellationToken);
 
-    public async Task<HttpResponseMessage> PostAsync(
+    public async Task<WarehouseResponse?> CreateAsync(
         Guid warehouseId, 
         WarehouseRequest request,
         CancellationToken cancellationToken)
     {
         var result = await _client.PostAsJsonAsync(
             $"{Ver1}warehouses?warehouseId={warehouseId}", 
-            request, 
-            cancellationToken);
-        
-        return result;
+            request, cancellationToken);
+
+        if (result.StatusCode == HttpStatusCode.Conflict)
+        {
+            throw new EntityAlreadyExistException(warehouseId);
+        }
+
+        if (result.StatusCode == HttpStatusCode.BadRequest)
+        {
+            throw new UninitializedPropertyException(nameof(WarehouseRequest));
+        }
+
+        return await result.Content.ReadFromJsonAsync<WarehouseResponse>(cancellationToken: cancellationToken);
     }
     
     public async Task<HttpResponseMessage> PutAsync(

@@ -78,7 +78,7 @@ public sealed class WarehouseController : ControllerBase
     [HttpPost(Name = "CreateWarehouse")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public async Task<ActionResult<HttpResponseMessage>> CreateAsync(
+    public async Task<ActionResult<WarehouseResponse>> CreateAsync(
         [FromQuery][Required] Guid warehouseId, 
         [FromBody] WarehouseRequest request,
         CancellationToken cancellationToken = default)
