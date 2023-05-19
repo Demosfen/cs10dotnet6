@@ -6,7 +6,6 @@ using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Services.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Wms.Web.Api.Contracts;
-using Wms.Web.Common.Exceptions;
 
 namespace Wms.Web.Api.Controllers;
 

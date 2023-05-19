@@ -55,7 +55,8 @@ public sealed class CreteWarehouseControllerTests : TestControllerBase
         Func<Task> act = async () => await _sut.CreateAsync(id, new WarehouseRequest { Name = "" });
 
         // Assert
-        await act.Should().ThrowAsync<UninitializedPropertyException>();
+        await act.Should().ThrowAsync<ArgumentException>()
+            .WithMessage("Name of the warehouse should not be null or empty.");
     }
     
     // [Fact(DisplayName = "WarehouseNameTooLong")]

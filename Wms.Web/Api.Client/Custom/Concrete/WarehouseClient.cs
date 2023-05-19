@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Http.Json;
+using System.Text.Json;
 using Microsoft.Extensions.Options;
 using Wms.Web.Api.Client.Custom.Abstract;
 using Wms.Web.Api.Contracts.Requests;
@@ -58,7 +59,18 @@ internal sealed class WarehouseClient : IWarehouseClient
 
         if (result.StatusCode == HttpStatusCode.BadRequest)
         {
-            throw new UninitializedPropertyException(nameof(WarehouseRequest));
+            var problemDetails = await result.Content.ReadAsStringAsync(cancellationToken);
+            
+            var document = JsonDocument.Parse(problemDetails);
+            var errors = document.RootElement.GetProperty("errors");
+            var errorMessage = errors.EnumerateObject().First().Value.EnumerateArray().First().GetString();
+            throw new ArgumentException(errorMessage)э
+        }
+        else if (result.StatusCode == HttpStatusCode.InternalServerError)
+        {
+            var problemDetails = await result.Content
+                .ReadAsStringAsync(cancellationToken: cancellationToken);
+
         }
 
         return await result.Content.ReadFromJsonAsync<WarehouseResponse>(cancellationToken: cancellationToken);
