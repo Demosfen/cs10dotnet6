@@ -1,8 +1,13 @@
+using System.Net;
 using System.Net.Http.Json;
+using System.Text.Json;
 using Microsoft.Extensions.Options;
 using Wms.Web.Api.Client.Custom.Abstract;
+using Wms.Web.Api.Client.Extensions;
+using Wms.Web.Api.Contracts.Extensions;
 using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Api.Contracts.Responses;
+using Wms.Web.Common.Exceptions;
 
 namespace Wms.Web.Api.Client.Custom.Concrete;
 
@@ -44,12 +49,22 @@ internal sealed class BoxClient : IBoxClient
             request,
             cancellationToken);
 
-        var a = await result.Content.ReadAsStringAsync(CancellationToken.None);
+        await result.HandleBadRequestAsync();
+
+        switch (result.StatusCode)
+        {
+            case HttpStatusCode.Conflict:
+                throw new EntityAlreadyExistException(boxId);
+
+            case HttpStatusCode.UnprocessableEntity:
+                throw new EntityExpiryDateException(boxId);
+            
+            case HttpStatusCode.InternalServerError:
+                throw new ApiValidationException(result);
+        }
 
         return await result.Content.ReadFromJsonAsync<BoxResponse>(cancellationToken: cancellationToken);
     }
-        
-    
     
     public async Task<BoxResponse?> PutAsync(
         Guid boxId, 
@@ -61,6 +76,8 @@ internal sealed class BoxClient : IBoxClient
             $"{Ver1}boxes/{boxId}?" +
             $"paletteId={paletteId}",
             request, cancellationToken);
+        
+        await result.HandleBadRequestAsync();
 
         return await result.Content.ReadFromJsonAsync<BoxResponse>(cancellationToken: cancellationToken);
     }

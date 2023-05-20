@@ -21,9 +21,8 @@ public interface IPaletteClient
             int? offset, int? size,
             CancellationToken cancellationToken = default);
 
-        Task<HttpResponseMessage> PostAsync(
-            Guid warehouseId,
-            Guid paletteId, 
+        Task<PaletteResponse?> CreateAsync(Guid warehouseId,
+            Guid paletteId,
             PaletteRequest request,
             CancellationToken cancellationToken = default);
         

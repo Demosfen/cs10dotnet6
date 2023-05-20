@@ -1,12 +1,10 @@
-using System.Net;
 using FluentAssertions;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Wms.Web.Api.Client;
 using Wms.Web.Api.Client.Custom.Concrete;
 using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Api.IntegrationTests.Abstract;
-using Wms.Web.Api.IntegrationTests.Extensions;
+using Wms.Web.Common.Exceptions;
 using Xunit;
 
 namespace Wms.Web.Api.IntegrationTests.Wms.PaletteControllerTests;
@@ -34,18 +32,15 @@ public sealed class CretePaletteControllerTests : TestControllerBase
         var paletteId = Guid.NewGuid();
         var request = new PaletteRequest { Width = 10, Height = 10, Depth = 10 };
         
-        var createWarehouse = await DataHelper.GenerateWarehouse(warehouseId);
+        await DataHelper.GenerateWarehouse(warehouseId);
         
         var createPalette = await _sut
-            .PostAsync(warehouseId, paletteId, request, CancellationToken.None);
-        var paletteResponse = await createPalette.Content.ReadFromJsonAsync<PaletteRequest>();
-
+            .CreateAsync(warehouseId, paletteId, request, CancellationToken.None);
+        
         // Assert
-        createWarehouse.StatusCode.Should().Be(HttpStatusCode.Created);
-        createPalette.StatusCode.Should().Be(HttpStatusCode.Created);
-        paletteResponse.Should().BeEquivalentTo(request);
-        createPalette.Headers.Location
-            .Should().Be($"{BaseUri}{Ver1}palettes/{paletteId.ToString()}");
+        createPalette.Should().BeEquivalentTo(request);
+        createPalette?.Volume.Should().Be(request.Width * request.Height * request.Depth);
+        createPalette?.Weight.Should().Be(30);
     }
     
     [Fact(DisplayName = "CreatePaletteConflict")]
@@ -56,19 +51,16 @@ public sealed class CretePaletteControllerTests : TestControllerBase
         var paletteId = Guid.NewGuid();
         var request = new PaletteRequest { Width = 10, Height = 10, Depth = 10 };
         
-        var createWarehouse = await DataHelper.GenerateWarehouse(warehouseId);
+        await DataHelper.GenerateWarehouse(warehouseId);
         
         // Act
-        var createPaletteFirst = await _sut
-            .PostAsync(warehouseId, paletteId, request, CancellationToken.None);
+        await _sut
+            .CreateAsync(warehouseId, paletteId, request, CancellationToken.None);
+        async Task Act() => await _sut.CreateAsync(warehouseId, paletteId, request, CancellationToken.None);
         
-        var createPaletteSecond = await _sut
-            .PostAsync(warehouseId, paletteId, request, CancellationToken.None);
-        
-        // Assert
-        createWarehouse.StatusCode.Should().Be(HttpStatusCode.Created);
-        createPaletteFirst.StatusCode.Should().Be(HttpStatusCode.Created);
-        createPaletteSecond.StatusCode.Should().Be(HttpStatusCode.Conflict);
+        var exception = await Assert.ThrowsAsync<EntityAlreadyExistException>(Act);
+        exception.Id.Should().Be(paletteId);
+        exception.Message.Should().Be($"The entity with id={paletteId} already exist");
     }
     
     [Fact(DisplayName = "PaletteSizeValidation")]
@@ -79,20 +71,24 @@ public sealed class CretePaletteControllerTests : TestControllerBase
         var paletteId = Guid.NewGuid();
         var request = new PaletteRequest { Width = -10, Height = 0, Depth = 1000 };
         
-        var createWarehouse = await DataHelper.GenerateWarehouse(warehouseId);
+        await DataHelper.GenerateWarehouse(warehouseId);
         
         // Act
-        var createPalette = await _sut
-            .PostAsync(warehouseId, paletteId, request, CancellationToken.None);
+        async Task Act() => await _sut.CreateAsync(warehouseId, paletteId, request, CancellationToken.None);
+        var exception = await Assert.ThrowsAsync<ApiValidationException>(Act);
 
         // Assert
-        createWarehouse.StatusCode.Should().Be(HttpStatusCode.Created);
-        createPalette.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        var error = await createPalette.Content.ReadFromJsonAsync<ValidationProblemDetails>();
-        error!.Status.Should().Be(400);
-        error.Errors.Should().ContainKey("Depth", "Palette depth too big");
-        error.Errors.Should().ContainKey("Width", "Palette width should not be zero or negative.");
-        error.Errors.Should().ContainKey("Height", "Palette height should not be zero or negative.");
-        error.Errors.Should().ContainKey("Height", "'Height' must not be empty.");
+        exception.ErrorCode.Should().Be("incorrect_http_request");
+        exception.Message.Should().Be("API request failed!");
+        exception.ProblemDetails?.Status.Should().Be(400);
+        exception.ProblemDetails?.Errors?.Count.Should().Be(3);
+        exception.ProblemDetails!.Errors!.ContainsKey("Depth").Should().BeTrue();
+        exception.ProblemDetails!.Errors!["Depth"].Should().Contain("Palette depth too big");
+        exception.ProblemDetails!.Errors!.ContainsKey("Width").Should().BeTrue();
+        exception.ProblemDetails!.Errors!["Width"].Should().Contain("Palette width should not be zero or negative.");
+        exception.ProblemDetails!.Errors!.ContainsKey("Height").Should().BeTrue();
+        exception.ProblemDetails!.Errors!["Height"].Should().Contain("'Height' must not be empty.");
+        exception.ProblemDetails!.Errors!.ContainsKey("Height").Should().BeTrue();
+        exception.ProblemDetails!.Errors!["Height"].Should().Contain("Palette height should not be zero or negative.");
     }
 }

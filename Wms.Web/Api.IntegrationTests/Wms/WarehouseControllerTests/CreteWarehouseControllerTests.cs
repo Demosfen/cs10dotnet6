@@ -36,10 +36,10 @@ public sealed class CreteWarehouseControllerTests : TestControllerBase
         };
         
         // Act
-        var response = await _sut.CreateAsync(id, request, CancellationToken.None);
+        var createWarehouse = await _sut.CreateAsync(id, request, CancellationToken.None);
 
         // Assert
-        response.Should().BeEquivalentTo(request);
+        createWarehouse.Should().BeEquivalentTo(request);
     }
 
     [Fact(DisplayName = "EmptyWarehouseName")]
@@ -52,8 +52,8 @@ public sealed class CreteWarehouseControllerTests : TestControllerBase
         async Task Act() => await _sut.CreateAsync(id, new WarehouseRequest { Name = "" });
 
         var exception = await Assert.ThrowsAsync<ApiValidationException>(Act);
-        exception.ProblemDetails!.Errors!.ContainsKey("Name").Should().BeTrue();
-        exception.ProblemDetails!.Errors!["Name"].Should().Contain("Name of the warehouse should not be null or empty.");
+        exception.ProblemDetails?.Errors!.ContainsKey("Name").Should().BeTrue();
+        exception.ProblemDetails?.Errors!["Name"].Should().Contain("Name of the warehouse should not be null or empty.");
         exception.Message.Should().Be("API request failed!");
     }
 
@@ -67,8 +67,8 @@ public sealed class CreteWarehouseControllerTests : TestControllerBase
         async Task Act() => await _sut.CreateAsync(id, new WarehouseRequest { Name = Guid.NewGuid().ToString() + Guid.NewGuid() });
 
         var exception = await Assert.ThrowsAsync<ApiValidationException>(Act);
-        exception.ProblemDetails!.Errors!.ContainsKey("Name.Length").Should().BeTrue();
-        exception.ProblemDetails!.Errors!["Name.Length"]
+        exception.ProblemDetails?.Errors!.ContainsKey("Name.Length").Should().BeTrue();
+        exception.ProblemDetails?.Errors!["Name.Length"]
             .Should().Contain("Warehouse name sholuld be less than or equal to 40 characters");
         exception.Message.Should().Be("API request failed!");
     }

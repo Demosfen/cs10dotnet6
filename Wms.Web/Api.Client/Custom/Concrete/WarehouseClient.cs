@@ -4,6 +4,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Wms.Web.Api.Client.Custom.Abstract;
+using Wms.Web.Api.Client.Extensions;
 using Wms.Web.Api.Contracts.Extensions;
 using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Api.Contracts.Responses;
@@ -54,29 +55,15 @@ internal sealed class WarehouseClient : IWarehouseClient
             $"{Ver1}warehouses?warehouseId={warehouseId}", 
             request, cancellationToken);
 
-        if (result.StatusCode == HttpStatusCode.Conflict)
-        {
-            throw new EntityAlreadyExistException(warehouseId);
-        }
+        await result.HandleBadRequestAsync();
 
-        if (result.StatusCode == HttpStatusCode.BadRequest)
+        switch (result.StatusCode)
         {
-            var content = await result.Content.ReadAsStringAsync(cancellationToken);
+            case HttpStatusCode.Conflict:
+                throw new EntityAlreadyExistException(warehouseId);
 
-            if (!result.IsSuccessStatusCode)
-            {
-                var problemDetails = JsonSerializer.Deserialize<WmsProblemDetails>(content);
-
-                problemDetails!.Instance = result.RequestMessage?.RequestUri?.ToString();
-                problemDetails.Detail = "See the errors property for details.";
-                
-                throw new ApiValidationException("API request failed!", problemDetails);
-            }
-        }
-        else if (result.StatusCode == HttpStatusCode.InternalServerError)
-        {
-            var problemDetails = await result.Content
-                .ReadAsStringAsync(cancellationToken: cancellationToken);
+            case HttpStatusCode.InternalServerError:
+                throw new ApiValidationException(result);
         }
 
         return await result.Content.ReadFromJsonAsync<WarehouseResponse>(cancellationToken: cancellationToken);
@@ -91,6 +78,8 @@ internal sealed class WarehouseClient : IWarehouseClient
             $"{Ver1}warehouses/{warehouseId}", 
             request, 
             cancellationToken);
+        
+        await result.HandleBadRequestAsync();
         
         return result;
     }

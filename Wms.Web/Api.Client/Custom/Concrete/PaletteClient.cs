@@ -1,8 +1,13 @@
+using System.Net;
 using System.Net.Http.Json;
+using System.Text.Json;
 using Microsoft.Extensions.Options;
 using Wms.Web.Api.Client.Custom.Abstract;
+using Wms.Web.Api.Client.Extensions;
+using Wms.Web.Api.Contracts.Extensions;
 using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Api.Contracts.Responses;
+using Wms.Web.Common.Exceptions;
 
 namespace Wms.Web.Api.Client.Custom.Concrete;
 
@@ -43,7 +48,7 @@ internal sealed class PaletteClient : IPaletteClient
             $"{Ver1}palettes/{paletteId}?boxListOffset={offset}&boxListSize={size}",
             cancellationToken);
     
-    public async Task<HttpResponseMessage> PostAsync(
+    public async Task<PaletteResponse?> CreateAsync(
         Guid warehouseId,
         Guid paletteId, 
         PaletteRequest request, 
@@ -53,8 +58,19 @@ internal sealed class PaletteClient : IPaletteClient
             $"{Ver1}warehouses/{warehouseId}?paletteId={paletteId}", 
             request, 
             cancellationToken);
+
+        await result.HandleBadRequestAsync();
         
-        return result;
+        switch (result.StatusCode)
+        {
+            case HttpStatusCode.Conflict:
+                throw new EntityAlreadyExistException(paletteId);
+            
+            case HttpStatusCode.InternalServerError:
+                throw new ApiValidationException(result);
+        }
+
+        return await result.Content.ReadFromJsonAsync<PaletteResponse>(cancellationToken: cancellationToken);
     }
 
     public async Task<PaletteResponse?> PutAsync(
@@ -68,6 +84,8 @@ internal sealed class PaletteClient : IPaletteClient
             $"warehouseId={warehouseId}", 
             request, 
             cancellationToken);
+        
+        await result.HandleBadRequestAsync();
         
         return await result.Content.ReadFromJsonAsync<PaletteResponse>(cancellationToken: cancellationToken);
     }
