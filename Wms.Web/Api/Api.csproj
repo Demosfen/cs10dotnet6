@@ -15,7 +15,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Api.Contracts\Api.Contracts.csproj" />
-      <ProjectReference Include="..\Common\Common.csproj" />
+      <ProjectReference Include="..\Common.Exceptions\Common.Exceptions.csproj" />
       <ProjectReference Include="..\Repositories\Repositories.csproj" />
       <ProjectReference Include="..\Services\Services.csproj" />
       <ProjectReference Include="..\Store\Store.csproj" />

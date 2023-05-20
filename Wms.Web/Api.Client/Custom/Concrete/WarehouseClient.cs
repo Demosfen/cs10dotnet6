@@ -1,8 +1,10 @@
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Wms.Web.Api.Client.Custom.Abstract;
+using Wms.Web.Api.Contracts.Extensions;
 using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Api.Contracts.Responses;
 using Wms.Web.Common.Exceptions;
@@ -59,18 +61,22 @@ internal sealed class WarehouseClient : IWarehouseClient
 
         if (result.StatusCode == HttpStatusCode.BadRequest)
         {
-            var problemDetails = await result.Content.ReadAsStringAsync(cancellationToken);
-            
-            var document = JsonDocument.Parse(problemDetails);
-            var errors = document.RootElement.GetProperty("errors");
-            var errorMessage = errors.EnumerateObject().First().Value.EnumerateArray().First().GetString();
-            throw new ArgumentException(errorMessage)э
+            var content = await result.Content.ReadAsStringAsync(cancellationToken);
+
+            if (!result.IsSuccessStatusCode)
+            {
+                var problemDetails = JsonSerializer.Deserialize<WmsProblemDetails>(content);
+
+                problemDetails!.Instance = result.RequestMessage?.RequestUri?.ToString();
+                problemDetails.Detail = "See the errors property for details.";
+                
+                throw new ApiValidationException("API request failed!", problemDetails);
+            }
         }
         else if (result.StatusCode == HttpStatusCode.InternalServerError)
         {
             var problemDetails = await result.Content
                 .ReadAsStringAsync(cancellationToken: cancellationToken);
-
         }
 
         return await result.Content.ReadFromJsonAsync<WarehouseResponse>(cancellationToken: cancellationToken);
