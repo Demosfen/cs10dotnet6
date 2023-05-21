@@ -58,7 +58,7 @@ public interface IWarehouseClient
     /// <param name="warehouseId">Warehouse ID</param>
     /// <param name="request">Request body</param>
     /// <param name="cancellationToken">Token</param>
-    /// <returns>Updated warehouse etity</returns>
+    /// <returns>Updated warehouse entity</returns>
     Task<WarehouseResponse?> PutAsync(Guid warehouseId,
         WarehouseRequest request,
         CancellationToken cancellationToken = default);
