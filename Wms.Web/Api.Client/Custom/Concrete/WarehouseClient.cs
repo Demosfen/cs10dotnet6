@@ -69,7 +69,7 @@ internal sealed class WarehouseClient : IWarehouseClient
         return await result.Content.ReadFromJsonAsync<WarehouseResponse>(cancellationToken: cancellationToken);
     }
     
-    public async Task<HttpResponseMessage> PutAsync(
+    public async Task<WarehouseResponse?> PutAsync(
         Guid warehouseId, 
         WarehouseRequest request, 
         CancellationToken cancellationToken)
@@ -81,10 +81,9 @@ internal sealed class WarehouseClient : IWarehouseClient
         
         await result.HandleBadRequestAsync();
         
-        return result;
+        return await result.Content.ReadFromJsonAsync<WarehouseResponse>(cancellationToken: cancellationToken);
     }
 
     public async Task<HttpResponseMessage> DeleteAsync(Guid warehouseId, CancellationToken cancellationToken)
     => await _client.DeleteAsync($"{Ver1}warehouses/{warehouseId}", cancellationToken);
-
 }
