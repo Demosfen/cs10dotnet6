@@ -18,12 +18,7 @@ public sealed class GetAllPaletteControllerTests : TestControllerBase
     public GetAllPaletteControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
     {
-        var options = Options.Create(new WmsClientOptions
-        {
-            HostUri = new Uri(BaseUri)
-        });
-        
-        _sut = new PaletteClient(HttpClient, options);
+        _sut = new PaletteClient(HttpClient);
     }
     
     [Fact(DisplayName = "GetAllPalettes")]

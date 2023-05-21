@@ -16,12 +16,7 @@ public sealed class CretePaletteControllerTests : TestControllerBase
     public CretePaletteControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
     {
-        var options = Options.Create(new WmsClientOptions
-        {
-            HostUri = new Uri(BaseUri)
-        });
-        
-        _sut = new PaletteClient(HttpClient, options);
+        _sut = new PaletteClient(HttpClient);
     }
     
     [Fact(DisplayName = "CreatePalette")]

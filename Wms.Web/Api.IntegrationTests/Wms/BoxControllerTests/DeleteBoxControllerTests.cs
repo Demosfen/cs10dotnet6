@@ -22,7 +22,7 @@ public sealed class DeleteBoxControllerTests : TestControllerBase
             HostUri = new Uri(BaseUri)
         });
         
-        _sut = new BoxClient(HttpClient, options);
+        _sut = new BoxClient(HttpClient);
     }
     
     [Fact(DisplayName = "DeleteExistingBox")]

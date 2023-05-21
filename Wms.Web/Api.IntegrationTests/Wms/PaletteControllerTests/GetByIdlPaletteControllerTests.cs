@@ -19,12 +19,7 @@ public sealed class GetByIdWPaletteControllerTests : TestControllerBase
     public GetByIdWPaletteControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
     {
-        var options = Options.Create(new WmsClientOptions
-        {
-            HostUri = new Uri(BaseUri)
-        });
-        
-        _sut = new PaletteClient(HttpClient, options);
+        _sut = new PaletteClient(HttpClient);
     }
     
     [Fact(DisplayName = "GetPaletteById")]

@@ -19,12 +19,7 @@ public sealed class DeleteWarehouseControllerTests : TestControllerBase
     public DeleteWarehouseControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
     {
-        var options = Options.Create(new WmsClientOptions
-        {
-            HostUri = new Uri(BaseUri)
-        });
-        
-        _sut = new WarehouseClient(HttpClient, options);
+        _sut = new WarehouseClient(HttpClient);
     }
     
     [Fact(DisplayName = "DeleteExistingWarehouse")]

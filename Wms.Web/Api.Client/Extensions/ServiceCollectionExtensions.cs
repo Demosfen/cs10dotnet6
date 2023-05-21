@@ -14,7 +14,7 @@ public static class ServiceCollectionExtensions
         {
             var config = provider.GetRequiredService<IConfiguration>();
 
-            client.BaseAddress = config.GetSection(WmsClientOptions.Wms)
+            client.BaseAddress = config.GetRequiredSection(WmsClientOptions.Wms)
                                      .Get<WmsClientOptions>()?
                                      .HostUri
                                  ?? throw new InvalidOperationException(

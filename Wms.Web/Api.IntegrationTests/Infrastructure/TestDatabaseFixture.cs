@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Wms.Web.Store;
+using Wms.Web.Store.Interfaces;
 
 namespace Wms.Web.Api.IntegrationTests.Infrastructure;
 
@@ -17,7 +18,7 @@ public class TestDatabaseFixture : IDisposable
         
         var dbFileName = $"{Guid.NewGuid().ToString()}.db";
         _connectionString = $"Data Source=../{dbFileName}";
-
+        
         var options = new DbContextOptionsBuilder<WarehouseDbContext>()
             .UseSqlite(_connectionString)
             .Options;

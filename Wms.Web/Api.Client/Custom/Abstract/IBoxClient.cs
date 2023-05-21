@@ -16,7 +16,8 @@ public interface IBoxClient
     /// <returns>Collection of boxes</returns>
     Task<IReadOnlyCollection<BoxResponse>?> GetAllAsync(
         Guid paletteId,
-        int? offset, int? size, 
+        int? offset, 
+        int? size, 
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -29,7 +30,8 @@ public interface IBoxClient
     /// <returns>Collection of deleted boxes</returns>
     Task<IReadOnlyCollection<BoxResponse>?> GetAllDeletedAsync(
         Guid paletteId,
-        int? offset, int? size, 
+        int? offset, 
+        int? size, 
         CancellationToken cancellationToken = default);
     
     /// <summary>
@@ -40,7 +42,8 @@ public interface IBoxClient
     /// <exception cref="EntityNotFoundException"></exception>
     /// <returns>Box entity</returns>
     Task<BoxResponse?> GetByIdAsync(
-        Guid boxId, CancellationToken cancellationToken = default);
+        Guid boxId, 
+        CancellationToken cancellationToken = default);
         
     /// <summary>
     /// Create box

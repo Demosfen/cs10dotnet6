@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using Wms.Web.Api.Client;
 using Wms.Web.Api.Client.Custom.Abstract;
 using Wms.Web.Api.Client.Custom.Concrete;
+using Wms.Web.Api.Contracts.Extensions;
 using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Api.IntegrationTests.Abstract;
 using Wms.Web.Common.Exceptions;
@@ -17,12 +18,7 @@ public sealed class CreteBoxControllerTests : TestControllerBase
     public CreteBoxControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
     {
-        var options = Options.Create(new WmsClientOptions
-        {
-            HostUri = new Uri(BaseUri)
-        });
-        
-        _sut = new BoxClient(HttpClient, options);
+        _sut = new BoxClient(HttpClient);
     }
     
     [Fact(DisplayName = "CreateBox")]

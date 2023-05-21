@@ -1,5 +1,6 @@
 using System.Net;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Wms.Web.Api.Client;
 using Wms.Web.Api.Client.Custom.Abstract;
@@ -19,12 +20,7 @@ public sealed class GetByIdBoxControllerTests : TestControllerBase
     public GetByIdBoxControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
     {
-        var options = Options.Create(new WmsClientOptions
-        {
-            HostUri = new Uri(BaseUri)
-        });
-        
-        _sut = new BoxClient(HttpClient, options);
+        _sut = new BoxClient(HttpClient);
     }
     
     [Fact(DisplayName = "GetBoxById")]
@@ -44,11 +40,12 @@ public sealed class GetByIdBoxControllerTests : TestControllerBase
         };
         
         await DataHelper.GenerateWarehouse(warehouseId);
+        var warehouse = await DbContext.Warehouses.FirstOrDefaultAsync();
+        
         await DataHelper
             .GeneratePalette(warehouseId, paletteId, paletteRequest);
-        var createBox = await DataHelper.GenerateBox(paletteId, boxId, boxRequest);
-        var createdBox = await createBox.Content.ReadFromJsonAsync<BoxResponse>();
-
+        var createdBox = _sut.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
+        
         // Act
         var response = await _sut.GetByIdAsync(boxId, CancellationToken.None);
         

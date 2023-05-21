@@ -4,7 +4,7 @@ using Wms.Web.Store.Entities;
 
 namespace Wms.Web.Store.Interfaces;
 
-public interface IWarehouseDbContext : IDbUnitOfWork
+public interface IWarehouseDbContext : IDbUnitOfWork, IDisposable
 {
     DbSet<Warehouse> Warehouses { get; }
     

@@ -17,14 +17,15 @@ internal sealed class BoxClient : IBoxClient
     
     private readonly HttpClient _client;
 
-    public BoxClient(HttpClient client, IOptions<WmsClientOptions> options)
+    public BoxClient(HttpClient client)
     {
         _client = client;
     }
 
     public async Task<IReadOnlyCollection<BoxResponse>?> GetAllAsync(
         Guid paletteId,
-        int? offset, int? size,
+        int? offset, 
+        int? size,
         CancellationToken cancellationToken)
         => await _client.GetFromJsonAsync<IReadOnlyCollection<BoxResponse>>(
             $"{Ver1}palettes/{paletteId}/boxes?offset={offset}&size={size}", 

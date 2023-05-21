@@ -17,7 +17,7 @@ internal sealed class PaletteClient : IPaletteClient
     
     private readonly HttpClient _client;
 
-    public PaletteClient(HttpClient client, IOptions<WmsClientOptions> options)
+    public PaletteClient(HttpClient client)
     {
         _client = client;
     }

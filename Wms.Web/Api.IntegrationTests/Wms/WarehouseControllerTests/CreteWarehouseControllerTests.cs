@@ -17,12 +17,7 @@ public sealed class CreteWarehouseControllerTests : TestControllerBase
     public CreteWarehouseControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
     {
-        var options = Options.Create(new WmsClientOptions
-        {
-            HostUri = new Uri(BaseUri)
-        });
-        
-        _sut = new WarehouseClient(HttpClient, options);
+        _sut = new WarehouseClient(HttpClient);
     }
     
     [Fact(DisplayName = "CreateWarehouse")]
