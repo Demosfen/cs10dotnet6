@@ -79,8 +79,8 @@ public sealed class GetAllPaletteControllerTests : TestControllerBase
         var createdPalette1 = await createPalette1.Content.ReadFromJsonAsync<PaletteRequest>();
         var createdPalette2 = await createPalette2.Content.ReadFromJsonAsync<PaletteRequest>();
 
-        var deleteResponse1 = await DataHelper.DeletePalette(paletteId1);
-        var deleteResponse2 = await DataHelper.DeletePalette(paletteId2);
+        await DataHelper.DeletePalette(paletteId1);
+        await DataHelper.DeletePalette(paletteId2);
 
         // Act
         var responseAll = 
@@ -90,10 +90,6 @@ public sealed class GetAllPaletteControllerTests : TestControllerBase
             await _sut.GetAllDeletedAsync(warehouseId, 1, 1, CancellationToken.None);
 
         // Assert
-        createPalette1.StatusCode.Should().Be(HttpStatusCode.Created);
-        createPalette2.StatusCode.Should().Be(HttpStatusCode.Created);
-        deleteResponse1.StatusCode.Should().Be(HttpStatusCode.OK);
-        deleteResponse1.StatusCode.Should().Be(HttpStatusCode.OK);
         responseAll?.Count.Should().Be(2);
         responseOne?.Count.Should().Be(1);
         responseAll!.FirstOrDefault().Should().BeEquivalentTo(createdPalette1);

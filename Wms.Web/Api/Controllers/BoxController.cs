@@ -32,12 +32,12 @@ public sealed class BoxController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IReadOnlyCollection<BoxResponse>>> GetNotDeletedAsync(
         [FromRoute] Guid paletteId,
-        int boxOffset = 0, 
-        int boxSize = 10,
+        int offset = 0, 
+        int size = 10,
         CancellationToken cancellationToken = default)
     {
         var boxesDto = await _boxService
-            .GetAllAsync(paletteId, boxOffset, boxSize, false, cancellationToken);
+            .GetAllAsync(paletteId, offset, size, false, cancellationToken);
         
         var boxResponse = _mapper.Map<IReadOnlyCollection<BoxResponse>>(boxesDto);
 
@@ -48,12 +48,12 @@ public sealed class BoxController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IReadOnlyCollection<BoxResponse>>> GetDeletedAsync(
         [FromRoute] Guid paletteId,
-        int boxOffset = 0,
-        int boxSize = 10,
+        int offset = 0,
+        int size = 10,
         CancellationToken cancellationToken = default)
     {
         var boxDto = await _boxService
-            .GetAllAsync(paletteId, boxOffset, boxSize, true, cancellationToken);
+            .GetAllAsync(paletteId, offset, size, true, cancellationToken);
        
         var boxResponse = _mapper.Map<IReadOnlyCollection<BoxResponse>>(boxDto);
     

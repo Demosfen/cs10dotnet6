@@ -38,7 +38,11 @@ internal sealed class BoxClient : IBoxClient
         $"{Ver1}palettes/{paletteId}/boxes/archive?" +
         $"offset={offset}&size={size}", 
         cancellationToken);
-    
+
+    public async Task<BoxResponse?> GetByIdAsync(Guid boxId, CancellationToken cancellationToken = default)
+        => await _client.GetFromJsonAsync<BoxResponse>(
+            $"{Ver1}boxes/{boxId}", cancellationToken);
+
     public async Task<BoxResponse?> CreateAsync(Guid paletteId,
         Guid boxId,
         BoxRequest request,
@@ -50,14 +54,12 @@ internal sealed class BoxClient : IBoxClient
             cancellationToken);
 
         await result.HandleBadRequestAsync();
+        await result.HandleUnprocessableEntityAsync();
 
         switch (result.StatusCode)
         {
             case HttpStatusCode.Conflict:
                 throw new EntityAlreadyExistException(boxId);
-
-            case HttpStatusCode.UnprocessableEntity:
-                throw new EntityExpiryDateException(boxId);
             
             case HttpStatusCode.InternalServerError:
                 throw new ApiValidationException(result);

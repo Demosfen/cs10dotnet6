@@ -44,6 +44,11 @@ public sealed class WmsDataHelper: IAsyncLifetime
         return await _httpClient.DeleteAsync($"{Ver1}palettes/{id}", CancellationToken.None);
     }
     
+    internal async Task<HttpResponseMessage> DeleteBox(Guid id)
+    {
+        return await _httpClient.DeleteAsync($"{Ver1}boxes/{id}", CancellationToken.None);
+    }
+    
     public Task InitializeAsync() => Task.CompletedTask;
 
     public Task DisposeAsync() => Task.CompletedTask;

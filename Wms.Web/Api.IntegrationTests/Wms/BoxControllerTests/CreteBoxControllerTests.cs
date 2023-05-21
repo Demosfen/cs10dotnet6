@@ -1,12 +1,10 @@
-using System.Net;
 using FluentAssertions;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Wms.Web.Api.Client;
+using Wms.Web.Api.Client.Custom.Abstract;
 using Wms.Web.Api.Client.Custom.Concrete;
 using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Api.IntegrationTests.Abstract;
-using Wms.Web.Api.IntegrationTests.Extensions;
 using Wms.Web.Common.Exceptions;
 using Xunit;
 
@@ -14,7 +12,7 @@ namespace Wms.Web.Api.IntegrationTests.Wms.BoxControllerTests;
 
 public sealed class CreteBoxControllerTests : TestControllerBase
 {
-    private readonly BoxClient _sut;
+    private readonly IBoxClient _sut;
     
     public CreteBoxControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
@@ -143,42 +141,47 @@ public sealed class CreteBoxControllerTests : TestControllerBase
 
         // Act
         async Task Act() => await _sut.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
-        var exception = await Assert.ThrowsAsync<EntityExpiryDateException>(Act);
+        var exception = await Assert.ThrowsAsync<UnprocessableEntityException>(Act);
     
         // Assert
-        exception.ErrorCode.Should().Be("entity_expiry_incorrect");
-        exception.Message
-            .Should().Be(
-                $"The entity with id={boxId} has incorrect Expiry date. Probably Expiry lower than Production date.");
-        exception.ShortDescription.Should().Be("The entity with specified Expiry date cannot be created");
+        exception.ErrorCode.Should().Be("unprocessable_entity");
+        exception.ShortDescription.Should().Be("Unprocessable entity properties was requested");
+        exception.ProblemDetails?.Status.Should().Be(422);
+        exception.ProblemDetails?.Type.Should().Be("entity_expiry_incorrect");
+        exception.ProblemDetails?.Title.Should().Be(
+            "The entity with specified Expiry date cannot be created");
+        exception.ProblemDetails?.Detail.Should().Be(
+                $"The entity with id={boxId} has incorrect Expiry date. Probably Expiry lower than Production date."); 
     }
     
-    // [Fact(DisplayName = "EmptyExpiryAndProductionDatesValidation")]
-    // public async Task Create_ShouldReturnError_IfBoxExpiryAndProductionEmpty()
-    // {
-    //     // Arrange
-    //     var warehouseId = Guid.NewGuid();
-    //     var paletteId = Guid.NewGuid();
-    //     var boxId = Guid.NewGuid();
-    //     var paletteRequest = new PaletteRequest { Width = 10, Height = 10, Depth = 10 };
-    //     var boxRequest = new BoxRequest
-    //     {
-    //         Width = 1, Depth = 1, Height = 1,
-    //         Weight = 1
-    //     };
-    //     
-    //     await DataHelper.GenerateWarehouse(warehouseId);
-    //     await DataHelper
-    //         .GeneratePalette(warehouseId, paletteId, paletteRequest);
-    //
-    //     // Act
-    //     var createBox = await _sut.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
-    //
-    //     // Assert
-    //     createBox.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
-    //     var error = await createBox.Content.ReadFromJsonAsync<ProblemDetails>();
-    //     error!.Status.Should().Be(500);
-    // }
+    [Fact(DisplayName = "EmptyExpiryAndProductionDatesValidation")]
+    public async Task Create_ShouldReturnError_IfBoxExpiryAndProductionEmpty()
+    {
+        // Arrange
+        var warehouseId = Guid.NewGuid();
+        var paletteId = Guid.NewGuid();
+        var boxId = Guid.NewGuid();
+        var paletteRequest = new PaletteRequest { Width = 10, Height = 10, Depth = 10 };
+        var boxRequest = new BoxRequest
+        {
+            Width = 1, Depth = 1, Height = 1,
+            Weight = 1
+        };
+        
+        await DataHelper.GenerateWarehouse(warehouseId);
+        await DataHelper
+            .GeneratePalette(warehouseId, paletteId, paletteRequest);
+    
+        // Act
+        async Task Act() => await _sut.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
+        var exception = await Assert.ThrowsAsync<ApiValidationException>(Act);
+    
+        // Assert
+        exception.ErrorCode.Should().Be("incorrect_http_request");
+        exception.Message.Should().Be("API request failed");
+        exception.ProblemDetails?.Detail.Should().Be("Both Production and Expiry date should not be null");
+        exception.ProblemDetails?.Status.Should().Be(500); //TODO change to BadRequest?
+    }
     
     [Fact(DisplayName = "BoxOversizeException")]
     public async Task Create_ShouldReturnError_IfBoxBiggerThanPalette()
@@ -201,12 +204,15 @@ public sealed class CreteBoxControllerTests : TestControllerBase
             .GeneratePalette(warehouseId, paletteId, paletteRequest);
 
         // Act
-        await _sut.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
-
+        async Task Act() => await _sut.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
+        var exception = await Assert.ThrowsAsync<UnprocessableEntityException>(Act);
+    
         // Assert
-        // createBox.StatusCode.Should().Be(HttpStatusCode.UnprocessableEntity);
-        // var error = await createBox.Content.ReadFromJsonAsync<ValidationProblemDetails>();
-        // error!.Status.Should().Be(422);
-        // error.Type.Should().Be("unit_oversize");
+        exception.ErrorCode.Should().Be("unprocessable_entity");
+        exception.ProblemDetails?.Type.Should().Be("unit_oversize");
+        exception.ProblemDetails?.Status.Should().Be(422);
+        exception.ProblemDetails?.Title.Should().Be("The box does not match the dimensions of the pallet");
+        exception.ProblemDetails?.Instance.Should().Be(
+            $"http://localhost/api/v1/palettes/{paletteId}?boxId={boxId}");
     }
 }
