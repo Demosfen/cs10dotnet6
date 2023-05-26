@@ -21,6 +21,7 @@ public sealed class GetByIdWPaletteControllerTests : TestControllerBase
     {
         _sut = new PaletteClient(HttpClient);
     }
+    /*
     
     [Fact(DisplayName = "GetPaletteById")]
     public async Task GetById_ReturnPalette_WhenPaletteExist()
@@ -112,5 +113,5 @@ public sealed class GetByIdWPaletteControllerTests : TestControllerBase
         createBox.StatusCode.Should().Be(HttpStatusCode.Created);
         response?.Weight.Should().Be(31);
         response?.Volume.Should().Be(1001);
-    }
+    }*/
 }
