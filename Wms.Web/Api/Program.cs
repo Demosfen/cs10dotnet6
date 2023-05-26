@@ -4,7 +4,6 @@ using Autofac.Features.OwnedInstances;
 using AutoMapper;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using Microsoft.EntityFrameworkCore;
 using Wms.Web.Api.Infrastructure.Filters;
 using Wms.Web.Api.Infrastructure.Mapping;
 using Wms.Web.Api.Validators;

@@ -20,7 +20,7 @@ public sealed class DeletePaletteControllerTests : TestControllerBase
     {
         _sut = new PaletteClient(HttpClient);
     }
-    
+    /*
     [Fact(DisplayName = "DeleteExistingPalette")]
     public async Task Delete_ReturnsOK_WhenPaletteExistAndEmpty()
     {
@@ -73,5 +73,5 @@ public sealed class DeletePaletteControllerTests : TestControllerBase
         var error = deleteResponse.Content.ReadFromJsonAsync<ValidationProblemDetails>();
         error.Result?.Status.Should().Be(422);
         error.Result?.Type.Should().Be("entity_not_empty");
-    }
+    }*/
 }

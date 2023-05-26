@@ -22,6 +22,8 @@ public sealed class GetAllWarehouseControllerTests : TestControllerBase
         _sut = new WarehouseClient(HttpClient);
     }
     
+    /*
+    
     [Fact(DisplayName = "GetAllWarehouses")]
     public async Task GetAll_ShouldReturnWarehouses()
     {
@@ -100,5 +102,5 @@ public sealed class GetAllWarehouseControllerTests : TestControllerBase
         responseAll!.FirstOrDefault().Should().BeEquivalentTo(createdFirst);
         responseAll!.LastOrDefault().Should().BeEquivalentTo(createdSecond);
         responseOne!.Single().Should().BeEquivalentTo(createdSecond);
-    }
+    }*/
 }

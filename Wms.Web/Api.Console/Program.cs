@@ -17,7 +17,7 @@ serviceCollection.AddCustomWmsClient();
 var serviceProvider = serviceCollection.BuildServiceProvider();
 
 var client = serviceProvider.GetRequiredService<IWmsClient>();
-
+//
 var notDeletedWarehouse = await client.WarehouseClient.GetAllAsync(
     0, 3, CancellationToken.None);
 

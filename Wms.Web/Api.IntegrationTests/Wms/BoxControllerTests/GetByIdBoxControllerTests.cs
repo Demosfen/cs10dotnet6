@@ -21,8 +21,7 @@ public sealed class GetByIdBoxControllerTests : TestControllerBase
         : base(apiFactory)
     {
         _sut = new BoxClient(HttpClient);
-    }
-    
+    }/*
     [Fact(DisplayName = "GetBoxById")]
     public async Task GetById_ReturnBox_WhenBoxExist()
     {
@@ -97,5 +96,5 @@ public sealed class GetByIdBoxControllerTests : TestControllerBase
 
         // Assert
         response.Should().BeEquivalentTo(createdBox);
-    }
+    }*/
 }

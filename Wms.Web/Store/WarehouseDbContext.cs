@@ -16,7 +16,7 @@ internal sealed class WarehouseDbContext : DbContext, IWarehouseDbContext
     public WarehouseDbContext(DbContextOptions options) : base(options)
     {
     }
-    
+
     protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.LogTo(Console.WriteLine, LogLevel.Information);
 

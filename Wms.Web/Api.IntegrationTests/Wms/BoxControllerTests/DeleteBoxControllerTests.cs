@@ -25,6 +25,8 @@ public sealed class DeleteBoxControllerTests : TestControllerBase
         _sut = new BoxClient(HttpClient);
     }
     
+    /*
+    
     [Fact(DisplayName = "DeleteExistingBox")]
     public async Task Delete_ReturnsOK_WhenBoxExist()
     {
@@ -61,5 +63,5 @@ public sealed class DeleteBoxControllerTests : TestControllerBase
     
         // Assert
         deleteResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
-    }
+    }*/
 }

@@ -1,39 +1,50 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Wms.Web.Api.Contracts.Requests;
+using Wms.Web.Store;
+using Wms.Web.Store.Entities;
+using Wms.Web.Store.Interfaces;
 using Xunit;
 
 namespace Wms.Web.Api.IntegrationTests.Extensions;
 
 public sealed class WmsDataHelper: IAsyncLifetime
 {
-    private readonly HttpClient _httpClient;
-    private const string Ver1 = "/api/v1/";
+    private readonly IWarehouseDbContext _dbContext;
     
-    public WmsDataHelper(TestApplication apiFactory)
+    public WmsDataHelper(IWarehouseDbContext dbContext)
     {
-        _httpClient = apiFactory.HttpClient;
+        _dbContext = dbContext;
     }
 
-    internal async Task<HttpResponseMessage> GenerateWarehouse(Guid id)
+    internal async Task<EntityEntry<Warehouse>> GenerateWarehouse(Guid id)
     {
-        return await _httpClient.PostAsJsonAsync(
-            $"{Ver1}warehouses?warehouseId={id}", 
-            new WarehouseRequest{ Name = $"{id}" }, CancellationToken.None);
+        return await _dbContext.Warehouses.AddAsync(
+            new Warehouse{Id = id, Name = Guid.NewGuid().ToString()}, CancellationToken.None);
     }
 
-    internal async Task<HttpResponseMessage> GeneratePalette(
+    internal async Task<EntityEntry<Palette>> GeneratePalette(
         Guid warehouseId, Guid paletteId, PaletteRequest request)
     {
-        return await _httpClient.PostAsJsonAsync(
-            $"{Ver1}warehouses/{warehouseId}?paletteId={paletteId}", request, CancellationToken.None); 
+        return await _dbContext.Palettes.AddAsync(
+            new Palette
+            {
+                Id = paletteId,
+                WarehouseId = warehouseId,
+                Width = 10,
+                Height = 10,
+                Depth = 10
+            });
     }
-    
+/*
     internal async Task<HttpResponseMessage> GenerateBox(
         Guid paletteId, Guid boxId, BoxRequest request)
     {
         return await _httpClient.PostAsJsonAsync(
             $"{Ver1}palettes/{paletteId}?boxId={boxId}", request, CancellationToken.None);
     }
-    
+
     internal async Task<HttpResponseMessage> DeleteWarehouse(Guid id)
     {
         return await _httpClient.DeleteAsync($"{Ver1}warehouses/{id}", CancellationToken.None);
@@ -43,11 +54,11 @@ public sealed class WmsDataHelper: IAsyncLifetime
     {
         return await _httpClient.DeleteAsync($"{Ver1}palettes/{id}", CancellationToken.None);
     }
-    
+
     internal async Task<HttpResponseMessage> DeleteBox(Guid id)
     {
         return await _httpClient.DeleteAsync($"{Ver1}boxes/{id}", CancellationToken.None);
-    }
+    }*/
     
     public Task InitializeAsync() => Task.CompletedTask;
 

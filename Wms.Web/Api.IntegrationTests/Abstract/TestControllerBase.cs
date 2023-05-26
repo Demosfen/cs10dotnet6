@@ -18,9 +18,8 @@ public abstract partial class TestControllerBase : IAsyncLifetime
     protected TestControllerBase(TestApplication apiFactory)
     {
         HttpClient = apiFactory.HttpClient;
-        
-        DataHelper = new WmsDataHelper(apiFactory);
         DbContext = apiFactory.CreateDbContext();
+        DataHelper = new WmsDataHelper(DbContext);
     }
     
     public Task InitializeAsync() => Task.CompletedTask;

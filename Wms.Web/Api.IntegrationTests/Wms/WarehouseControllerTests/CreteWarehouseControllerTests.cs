@@ -1,6 +1,4 @@
 using FluentAssertions;
-using Microsoft.Extensions.Options;
-using Wms.Web.Api.Client;
 using Wms.Web.Api.Client.Custom.Abstract;
 using Wms.Web.Api.Client.Custom.Concrete;
 using Wms.Web.Api.Contracts.Requests;
@@ -53,13 +51,14 @@ public sealed class CreteWarehouseControllerTests : TestControllerBase
     }
 
     [Fact(DisplayName = "WarehouseNameTooLong")]
-    public async Task Create_ReturnsValidatorError_WhenNameGreaterThan25Characters()
+    public async Task Create_ReturnsValidatorError_WhenNameGreaterThan40Characters()
     {
         // Arrange
         var id = Guid.NewGuid();
 
         // Act
-        async Task Act() => await _sut.CreateAsync(id, new WarehouseRequest { Name = Guid.NewGuid().ToString() + Guid.NewGuid() });
+        async Task Act() => await _sut
+            .CreateAsync(id, new WarehouseRequest { Name = Guid.NewGuid().ToString() + Guid.NewGuid() });
 
         var exception = await Assert.ThrowsAsync<ApiValidationException>(Act);
         exception.ProblemDetails?.Errors!.ContainsKey("Name.Length").Should().BeTrue();

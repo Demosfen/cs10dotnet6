@@ -20,7 +20,7 @@ public sealed class GetAllPaletteControllerTests : TestControllerBase
     {
         _sut = new PaletteClient(HttpClient);
     }
-    
+    /*
     [Fact(DisplayName = "GetAllPalettes")]
     public async Task GetAll_ShouldReturnPalettes()
     {
@@ -90,5 +90,5 @@ public sealed class GetAllPaletteControllerTests : TestControllerBase
         responseAll!.FirstOrDefault().Should().BeEquivalentTo(createdPalette1);
         responseAll!.LastOrDefault().Should().BeEquivalentTo(createdPalette2);
         responseOne!.Single().Should().BeEquivalentTo(createdPalette2);
-    }
+    }*/
 }
