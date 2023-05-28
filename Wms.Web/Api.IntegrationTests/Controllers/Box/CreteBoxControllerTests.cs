@@ -3,6 +3,7 @@ using Wms.Web.Api.Client.Custom.Abstract;
 using Wms.Web.Api.Client.Custom.Concrete;
 using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Api.IntegrationTests.Abstract;
+using Wms.Web.Api.IntegrationTests.Infrastructure;
 using Wms.Web.Common.Exceptions;
 using Xunit;
 
@@ -10,12 +11,15 @@ namespace Wms.Web.Api.IntegrationTests.Controllers.Box;
 
 public sealed class CreteBoxControllerTests : TestControllerBase
 {
-    private readonly IBoxClient _sut;
+    private readonly IWmsClient _sut;
     
     public CreteBoxControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
     {
-        _sut = new BoxClient(HttpClient);
+        _sut = new WmsClient(
+            new WarehouseClient(apiFactory.HttpClient),
+            new PaletteClient(apiFactory.HttpClient),
+            new BoxClient(apiFactory.HttpClient));
     }
     
     [Fact(DisplayName = "CreateBox")]
@@ -25,6 +29,7 @@ public sealed class CreteBoxControllerTests : TestControllerBase
         var warehouseId = Guid.NewGuid();
         var paletteId = Guid.NewGuid();
         var boxId = Guid.NewGuid();
+        
         var boxRequest = new BoxRequest
         {
             Width = 1, Depth = 1, Height = 1,
@@ -33,12 +38,11 @@ public sealed class CreteBoxControllerTests : TestControllerBase
             ProductionDate = new DateTime(2006,1,1)
         };
         
-        await DataHelper.GenerateWarehouse(warehouseId);
-        await DataHelper
-            .GeneratePalette(warehouseId, paletteId);
+        await GenerateWarehouse(warehouseId);
+        await GeneratePalette(warehouseId, paletteId);
     
         // Act
-        var createBox = await _sut.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
+        var createBox = await _sut.BoxClient.CreateAsync(paletteId, boxId, boxRequest);
 
         // Assert
         createBox.Should().BeEquivalentTo(boxRequest);
@@ -57,13 +61,12 @@ public sealed class CreteBoxControllerTests : TestControllerBase
             Weight = 1, ExpiryDate = new DateTime(2007, 1, 1)
         };
         
-        await DataHelper.GenerateWarehouse(warehouseId);
-        await DataHelper
-            .GeneratePalette(warehouseId, paletteId);
+        await GenerateWarehouse(warehouseId);
+        await GeneratePalette(warehouseId, paletteId);
+        await GenerateBox(paletteId, boxId);
     
         // Act
-        await _sut.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
-        async Task Act() => await _sut.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
+        async Task Act() => await _sut.BoxClient.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
 
         var exception = await Assert.ThrowsAsync<EntityAlreadyExistException>(Act);
     
@@ -80,19 +83,18 @@ public sealed class CreteBoxControllerTests : TestControllerBase
         var warehouseId = Guid.NewGuid();
         var paletteId = Guid.NewGuid();
         var boxId = Guid.NewGuid();
-        var paletteRequest = new PaletteRequest { Width = 10, Height = 10, Depth = 10 };
+        
         var boxRequest = new BoxRequest
         {
             Width = -1, Depth = 0, Height = 1000,
             Weight = 1, ExpiryDate = new DateTime(2007, 1, 1)
         };
         
-        await DataHelper.GenerateWarehouse(warehouseId);
-        await DataHelper
-            .GeneratePalette(warehouseId, paletteId);
+        await GenerateWarehouse(warehouseId);
+        await GeneratePalette(warehouseId, paletteId);
     
         // Act
-        async Task Act() => await _sut.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
+        async Task Act() => await _sut.BoxClient.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
         var exception = await Assert.ThrowsAsync<ApiValidationException>(Act);
 
         // Assert

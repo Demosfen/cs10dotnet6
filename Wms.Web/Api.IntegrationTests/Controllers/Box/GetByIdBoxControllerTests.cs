@@ -1,17 +1,8 @@
-using System.Net;
-using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Wms.Web.Api.Client;
 using Wms.Web.Api.Client.Custom.Abstract;
 using Wms.Web.Api.Client.Custom.Concrete;
-using Wms.Web.Api.Contracts.Requests;
-using Wms.Web.Api.Contracts.Responses;
 using Wms.Web.Api.IntegrationTests.Abstract;
-using Wms.Web.Api.IntegrationTests.Extensions;
-using Xunit;
 
-namespace Wms.Web.Api.IntegrationTests.Wms.BoxControllerTests;
+namespace Wms.Web.Api.IntegrationTests.Controllers.Box;
 
 public sealed class GetByIdBoxControllerTests : TestControllerBase
 {
