@@ -11,7 +11,7 @@ public abstract partial class TestControllerBase : IAsyncLifetime
     
     protected IWarehouseDbContext DbContext { get; }
     
-    internal readonly WmsDataHelper DataHelper;
+    internal readonly DataHelper DataHelper;
     internal const string Ver1 = "/api/v1/";
     internal const string BaseUri = "http://localhost";
     
@@ -19,7 +19,7 @@ public abstract partial class TestControllerBase : IAsyncLifetime
     {
         HttpClient = apiFactory.HttpClient;
         DbContext = apiFactory.CreateDbContext();
-        DataHelper = new WmsDataHelper(DbContext);
+        DataHelper = new DataHelper(DbContext);
     }
     
     public Task InitializeAsync() => Task.CompletedTask;
