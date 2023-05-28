@@ -1,6 +1,5 @@
 using FluentValidation;
 using Wms.Web.Api.Contracts;
-using Wms.Web.Api.Contracts.Requests;
 
 namespace Wms.Web.Api.Validators;
 

@@ -10,7 +10,8 @@ public class EntityExpiryDateException : DomainException
     }
 
     public EntityExpiryDateException(Guid id)
-        : base($"The entity with id={id} has incorrect Expiry date. Probably Expiry lower than Production date.")
+        : base($"The entity with id={id} has incorrect Expiry date. " +
+               $"Probably Expiry lower than Production date, or both dates is null.")
     {
         Id = id;
     }
@@ -19,5 +20,5 @@ public class EntityExpiryDateException : DomainException
     public override string ErrorCode => "entity_expiry_incorrect";
 
     /// <inheritdoc />
-    public override string ShortDescription => "The entity with specified Expiry date cannot be created";
+    public override string ShortDescription => "The entity with specified Expiry and Production dates cannot be created";
 }

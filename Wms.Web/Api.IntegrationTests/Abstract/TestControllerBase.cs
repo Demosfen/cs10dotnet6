@@ -10,7 +10,6 @@ public abstract partial class TestControllerBase : IAsyncLifetime
     
     protected IWarehouseDbContext DbContext { get; }
     
-    internal const string Ver1 = "/api/v1/";
     internal const string BaseUri = "http://localhost";
     
     protected TestControllerBase(TestApplication apiFactory)
@@ -23,7 +22,7 @@ public abstract partial class TestControllerBase : IAsyncLifetime
     
     public Task DisposeAsync()
     {
-        DbContext.Dispose();
+        // DbContext.Dispose(); //TODO shouldn't be here, or the error occurs
         return Task.CompletedTask;
     }
 }

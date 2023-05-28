@@ -1,5 +1,4 @@
 using Wms.Web.Services.Dto;
-using Wms.Web.Store.Entities;
 
 namespace Wms.Web.Services.Abstract;
 

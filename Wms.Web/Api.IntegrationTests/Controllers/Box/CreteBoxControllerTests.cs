@@ -3,7 +3,6 @@ using Wms.Web.Api.Client.Custom.Abstract;
 using Wms.Web.Api.Client.Custom.Concrete;
 using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Api.IntegrationTests.Abstract;
-using Wms.Web.Api.IntegrationTests.Infrastructure;
 using Wms.Web.Common.Exceptions;
 using Xunit;
 
@@ -102,13 +101,9 @@ public sealed class CreteBoxControllerTests : TestControllerBase
         exception.Message.Should().Be("API request failed!");
         exception.ProblemDetails?.Status.Should().Be(400);
         exception.ProblemDetails?.Errors?.Count.Should().Be(3);
-        exception.ProblemDetails!.Errors!.ContainsKey("Depth").Should().BeTrue();
         exception.ProblemDetails!.Errors!["Depth"].Should().Contain("'Depth' must not be empty.");
-        exception.ProblemDetails!.Errors!.ContainsKey("Depth").Should().BeTrue();
         exception.ProblemDetails!.Errors!["Depth"].Should().Contain("Box depth should not be zero or negative.");
-        exception.ProblemDetails!.Errors!.ContainsKey("Width").Should().BeTrue();
         exception.ProblemDetails!.Errors!["Width"].Should().Contain("Box width should not be zero or negative.");
-        exception.ProblemDetails!.Errors!.ContainsKey("Height").Should().BeTrue();
         exception.ProblemDetails!.Errors!["Height"].Should().Contain("Box height too big");
     }
     
@@ -119,7 +114,7 @@ public sealed class CreteBoxControllerTests : TestControllerBase
         var warehouseId = Guid.NewGuid();
         var paletteId = Guid.NewGuid();
         var boxId = Guid.NewGuid();
-        var paletteRequest = new PaletteRequest { Width = 10, Height = 10, Depth = 10 };
+
         var boxRequest = new BoxRequest
         {
             Width = 1, Depth = 1, Height = 1,
@@ -128,23 +123,20 @@ public sealed class CreteBoxControllerTests : TestControllerBase
             ExpiryDate = new DateTime(2007, 1, 1)
         };
         
-        await DataHelper.GenerateWarehouse(warehouseId);
-        await DataHelper
-            .GeneratePalette(warehouseId, paletteId);
+        await GenerateWarehouse(warehouseId);
+        await GeneratePalette(warehouseId, paletteId);
 
         // Act
-        async Task Act() => await _sut.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
-        var exception = await Assert.ThrowsAsync<UnprocessableEntityException>(Act);
+        async Task Act() => await _sut.BoxClient.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
+        var exception = await Assert.ThrowsAsync<ApiValidationException>(Act);
     
         // Assert
-        exception.ErrorCode.Should().Be("unprocessable_entity");
-        exception.ShortDescription.Should().Be("Unprocessable entity properties was requested");
-        exception.ProblemDetails?.Status.Should().Be(422);
+        exception.ErrorCode.Should().Be("incorrect_http_request");
+        exception.Message.Should().Be("API request failed!");
+        exception.ProblemDetails?.Status.Should().Be(400);
         exception.ProblemDetails?.Type.Should().Be("entity_expiry_incorrect");
-        exception.ProblemDetails?.Title.Should().Be(
-            "The entity with specified Expiry date cannot be created");
-        exception.ProblemDetails?.Detail.Should().Be(
-                $"The entity with id={boxId} has incorrect Expiry date. Probably Expiry lower than Production date."); 
+        exception.ProblemDetails?.Title
+            .Should().Be("The entity with specified Expiry and Production dates cannot be created"); 
     }
     
     [Fact(DisplayName = "EmptyExpiryAndProductionDatesValidation")]
@@ -161,19 +153,20 @@ public sealed class CreteBoxControllerTests : TestControllerBase
             Weight = 1
         };
         
-        await DataHelper.GenerateWarehouse(warehouseId);
-        await DataHelper
-            .GeneratePalette(warehouseId, paletteId);
+        await GenerateWarehouse(warehouseId);
+        await GeneratePalette(warehouseId, paletteId);
     
         // Act
-        async Task Act() => await _sut.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
+        async Task Act() => await _sut.BoxClient.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
         var exception = await Assert.ThrowsAsync<ApiValidationException>(Act);
     
         // Assert
         exception.ErrorCode.Should().Be("incorrect_http_request");
-        exception.Message.Should().Be("API request failed");
-        exception.ProblemDetails?.Detail.Should().Be("Both Production and Expiry date should not be null");
-        exception.ProblemDetails?.Status.Should().Be(500); //TODO change to BadRequest?
+        exception.Message.Should().Be("API request failed!");
+        exception.ProblemDetails?.Status.Should().Be(400);
+        exception.ProblemDetails?.Title
+            .Should().Be("The entity with specified Expiry and Production dates cannot be created");
+
     }
     
     [Fact(DisplayName = "BoxOversizeException")]
@@ -183,7 +176,6 @@ public sealed class CreteBoxControllerTests : TestControllerBase
         var warehouseId = Guid.NewGuid();
         var paletteId = Guid.NewGuid();
         var boxId = Guid.NewGuid();
-        var paletteRequest = new PaletteRequest { Width = 10, Height = 10, Depth = 10 };
         var boxRequest = new BoxRequest
         {
             Width = 15, Depth = 15, Height = 15,
@@ -192,18 +184,18 @@ public sealed class CreteBoxControllerTests : TestControllerBase
             ExpiryDate = new DateTime(2008,1,1)
         };
         
-        await DataHelper.GenerateWarehouse(warehouseId);
-        await DataHelper
-            .GeneratePalette(warehouseId, paletteId);
+        await GenerateWarehouse(warehouseId);
+        await GeneratePalette(warehouseId, paletteId);
 
         // Act
-        async Task Act() => await _sut.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
-        var exception = await Assert.ThrowsAsync<UnprocessableEntityException>(Act);
+        async Task Act() => await _sut.BoxClient.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
+        var exception = await Assert.ThrowsAsync<ApiValidationException>(Act);
     
         // Assert
-        exception.ErrorCode.Should().Be("unprocessable_entity");
+        exception.Message.Should().Be("API request failed!");
+        exception.ProblemDetails?.Status.Should().Be(400);
+        exception.ErrorCode.Should().Be("incorrect_http_request");
         exception.ProblemDetails?.Type.Should().Be("unit_oversize");
-        exception.ProblemDetails?.Status.Should().Be(422);
         exception.ProblemDetails?.Title.Should().Be("The box does not match the dimensions of the pallet");
         exception.ProblemDetails?.Instance.Should().Be(
             $"http://localhost/api/v1/palettes/{paletteId}?boxId={boxId}");

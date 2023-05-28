@@ -1,13 +1,11 @@
 using FluentAssertions;
-using Microsoft.Extensions.Options;
-using Wms.Web.Api.Client;
 using Wms.Web.Api.Client.Custom.Concrete;
 using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Api.IntegrationTests.Abstract;
 using Wms.Web.Common.Exceptions;
 using Xunit;
 
-namespace Wms.Web.Api.IntegrationTests.Wms.PaletteControllerTests;
+namespace Wms.Web.Api.IntegrationTests.Controllers.Palette;
 
 public sealed class CretePaletteControllerTests : TestControllerBase
 {
@@ -27,7 +25,7 @@ public sealed class CretePaletteControllerTests : TestControllerBase
         var paletteId = Guid.NewGuid();
         var request = new PaletteRequest { Width = 10, Height = 10, Depth = 10 };
         
-        await DataHelper.GenerateWarehouse(warehouseId);
+        await GenerateWarehouse(warehouseId);
         
         var createPalette = await _sut
             .CreateAsync(warehouseId, paletteId, request, CancellationToken.None);
@@ -46,7 +44,7 @@ public sealed class CretePaletteControllerTests : TestControllerBase
         var paletteId = Guid.NewGuid();
         var request = new PaletteRequest { Width = 10, Height = 10, Depth = 10 };
         
-        await DataHelper.GenerateWarehouse(warehouseId);
+        await GenerateWarehouse(warehouseId);
         
         // Act
         await _sut
@@ -66,7 +64,7 @@ public sealed class CretePaletteControllerTests : TestControllerBase
         var paletteId = Guid.NewGuid();
         var request = new PaletteRequest { Width = -10, Height = 0, Depth = 1000 };
         
-        await DataHelper.GenerateWarehouse(warehouseId);
+        await GenerateWarehouse(warehouseId);
         
         // Act
         async Task Act() => await _sut.CreateAsync(warehouseId, paletteId, request, CancellationToken.None);

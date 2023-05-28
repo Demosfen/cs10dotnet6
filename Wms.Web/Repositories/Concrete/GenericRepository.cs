@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Wms.Web.Common.Exceptions;
 using Wms.Web.Repositories.Abstract;
 using Wms.Web.Store.Interfaces;
-using Wms.Web.Store.Specifications;
 
 namespace Wms.Web.Repositories.Concrete;
 

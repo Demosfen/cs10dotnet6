@@ -1,5 +1,3 @@
-using System;
-
 namespace Wms.Web.Common.Exceptions;
 
 public class EntityNotFoundException : DomainException

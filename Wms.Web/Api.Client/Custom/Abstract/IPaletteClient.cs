@@ -1,4 +1,3 @@
-using System.Net;
 using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Api.Contracts.Responses;
 using Wms.Web.Common.Exceptions;

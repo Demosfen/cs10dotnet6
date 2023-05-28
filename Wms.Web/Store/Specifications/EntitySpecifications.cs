@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Wms.Web.Store.Interfaces;
 
 namespace Wms.Web.Store.Specifications;

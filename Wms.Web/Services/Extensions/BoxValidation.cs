@@ -28,7 +28,7 @@ internal sealed class BoxValidations
         {
             if (boxDto.ExpiryDate == null)
             {
-                throw new InvalidOperationException("Both Production and Expiry date should not be null");
+                throw new EntityExpiryDateException(boxDto.Id);
             }
         }
         

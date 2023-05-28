@@ -1,9 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Wms.Web.Api.Contracts.Requests;
-using Wms.Web.Common.Exceptions;
 using Wms.Web.Store;
-using Wms.Web.Store.Entities;
-using Wms.Web.Store.Interfaces;
 
 namespace Wms.Web.Api.IntegrationTests.Infrastructure;
 

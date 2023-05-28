@@ -1,16 +1,12 @@
 using System.Net;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Wms.Web.Api.Client;
 using Wms.Web.Api.Client.Custom.Abstract;
 using Wms.Web.Api.Client.Custom.Concrete;
-using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Api.IntegrationTests.Abstract;
-using Wms.Web.Api.IntegrationTests.Extensions;
 using Xunit;
 
-namespace Wms.Web.Api.IntegrationTests.Wms.WarehouseControllerTests;
+namespace Wms.Web.Api.IntegrationTests.Controllers.Warehouse;
 
 public sealed class DeleteWarehouseControllerTests : TestControllerBase
 {
@@ -28,7 +24,7 @@ public sealed class DeleteWarehouseControllerTests : TestControllerBase
         // Arrange
         var id = Guid.NewGuid();
         
-        await DataHelper.GenerateWarehouse(id);
+        await GenerateWarehouse(id);
         
         // Act
         var deleteResponse = await _sut.DeleteAsync(id);
@@ -42,7 +38,7 @@ public sealed class DeleteWarehouseControllerTests : TestControllerBase
     {
         // Arrange
         var id = Guid.NewGuid();
-        await DataHelper.GenerateWarehouse(id);
+        await GenerateWarehouse(id);
         
         // Act
         var deleteResponse = await _sut.DeleteAsync(Guid.NewGuid());

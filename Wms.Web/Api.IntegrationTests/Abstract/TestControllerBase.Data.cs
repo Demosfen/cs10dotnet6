@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Common.Exceptions;
 using Wms.Web.Store.Entities;
 
@@ -46,6 +44,7 @@ public abstract partial class TestControllerBase
                 Height = 5,
                 Depth = 5,
                 Weight = 5,
+                Volume = 125,
                 ProductionDate = new DateTime(2007,1,1),
                 ExpiryDate = new DateTime(2008,1,1)
             });

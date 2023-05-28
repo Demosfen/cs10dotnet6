@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
 using Wms.Web.Api.Client.Custom.Abstract;
 using Wms.Web.Api.Client.Custom.Concrete;
 using Wms.Web.Api.IntegrationTests.Infrastructure;
-using Wms.Web.Store;
 using Wms.Web.Store.Interfaces;
 using Xunit;
 
