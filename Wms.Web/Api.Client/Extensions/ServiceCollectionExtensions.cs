@@ -1,6 +1,5 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Wms.Web.Api.Client.Custom.Abstract;
 using Wms.Web.Api.Client.Custom.Concrete;
 
@@ -14,17 +13,17 @@ public static class ServiceCollectionExtensions
         {
             var config = provider.GetRequiredService<IConfiguration>();
 
-            client.BaseAddress = config.GetSection(WmsClientOptions.Wms)
+            client.BaseAddress = config.GetRequiredSection(WmsClientOptions.Wms)
                                      .Get<WmsClientOptions>()?
                                      .HostUri
                                  ?? throw new InvalidOperationException(
                                      $"Not initiated value: {nameof(WmsClientOptions.HostUri)}");
         });
 
-        serviceCollection.AddHttpClient<WarehouseClient>(configureClient);
-        serviceCollection.AddHttpClient<PaletteClient>(configureClient);
-        serviceCollection.AddHttpClient<BoxClient>(configureClient);
-        serviceCollection.AddHttpClient<IWmsClient, WmsClient>(configureClient);
+        serviceCollection.AddHttpClient<IWarehouseClient, WarehouseClient>(configureClient);
+        serviceCollection.AddHttpClient<IPaletteClient, PaletteClient>(configureClient);
+        serviceCollection.AddHttpClient<IBoxClient, BoxClient>(configureClient);
+        serviceCollection.AddTransient<IWmsClient, WmsClient>();
 
         return serviceCollection;
     }

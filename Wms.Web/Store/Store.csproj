@@ -17,11 +17,15 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Common\Common.csproj" />
+      <ProjectReference Include="..\Common.Exceptions\Common.Exceptions.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Migrations" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Wms.Web.Api.IntegrationTests" />
     </ItemGroup>
 
 </Project>

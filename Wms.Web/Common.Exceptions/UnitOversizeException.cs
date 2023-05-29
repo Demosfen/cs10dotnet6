@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Wms.Web.Common.Exceptions;
+﻿namespace Wms.Web.Common.Exceptions;
 
 public class UnitOversizeException : DomainException
 {

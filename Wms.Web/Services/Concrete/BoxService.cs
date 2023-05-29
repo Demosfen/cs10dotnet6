@@ -1,5 +1,4 @@
 using AutoMapper;
-using Microsoft.Extensions.Logging;
 using Wms.Web.Common.Exceptions;
 using Wms.Web.Repositories.Abstract;
 using Wms.Web.Services.Abstract;
@@ -100,7 +99,8 @@ internal sealed class BoxService : IBoxService
     /// <inheritdoc />
     public async Task<BoxDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        var box = await _boxRepository.GetByIdAsync(id, cancellationToken);
+        var box = await _boxRepository.GetByIdAsync(id, cancellationToken) 
+            ?? throw new EntityNotFoundException(id);
 
         return _mapper.Map<BoxDto>(box);
     }

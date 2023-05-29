@@ -1,5 +1,4 @@
 using AutoMapper;
-using Microsoft.CodeAnalysis.Tags;
 using Wms.Web.Common.Exceptions;
 using Wms.Web.Repositories.Abstract;
 using Wms.Web.Services.Abstract;
@@ -49,14 +48,14 @@ internal sealed class WarehouseService : IWarehouseService
             case true:
                 entities = await _warehouseRepository
                     .GetAllAsync(null,
-                        q => q.Skip(offset).Deleted().Take(size).OrderBy(x => x.CreatedAt),
+                        q => q.Deleted().Skip(offset).Take(size).OrderBy(x => x.CreatedAt),
                         cancellationToken: cancellationToken);
                 break;
             
             case false: 
                 entities = await _warehouseRepository
                     .GetAllAsync(null,
-                        q => q.Skip(offset).NotDeleted().Take(size).OrderBy(x => x.CreatedAt),
+                        q => q.NotDeleted().Skip(offset).Take(size).OrderBy(x => x.CreatedAt),
                         cancellationToken: cancellationToken);
                 break;
         }
@@ -95,8 +94,8 @@ internal sealed class WarehouseService : IWarehouseService
         if (warehouse.DeletedAt is not null) return;
 
         var palette = await _paletteRepository.GetAllAsync(
-            f => f.Id == warehouse.Id,
-            q => q.Take(1).NotDeleted().OrderBy(x => x.CreatedAt),
+            f => f.WarehouseId == warehouse.Id,
+            q => q.NotDeleted().Take(1).OrderBy(x => x.CreatedAt),
             cancellationToken: cancellationToken);
 
         if (!palette.Count().Equals(0))

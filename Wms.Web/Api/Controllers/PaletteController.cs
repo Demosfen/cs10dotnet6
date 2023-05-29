@@ -1,4 +1,4 @@
-using System.Text;
+using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using Wms.Web.Api.Contracts.Responses;
 using Wms.Web.Services.Abstract;
@@ -6,9 +6,6 @@ using Wms.Web.Api.Contracts.Requests;
 using Wms.Web.Services.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Wms.Web.Api.Contracts;
-using Wms.Web.Common.Exceptions;
-using Wms.Web.Repositories.Abstract;
-using Wms.Web.Store.Entities;
 
 namespace Wms.Web.Api.Controllers;
 
@@ -78,12 +75,13 @@ public sealed class PaletteController : ControllerBase
         return Ok(_mapper.Map<PaletteResponse>(paletteDto));
     }
 
-    [HttpPost("warehouses/{warehouseId:guid}/palettes/{paletteId:guid}", Name = "CreatePalette")]
+    [HttpPost("warehouses/{warehouseId:guid}", Name = "CreatePalette")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public async Task<ActionResult<PaletteResponse>> CreateAsync(
-        [FromRoute] Guid warehouseId, 
-        [FromRoute] Guid paletteId,
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+    public async Task<ActionResult<HttpResponseMessage>> CreateAsync(
+        [FromRoute][Required] Guid warehouseId, 
+        [FromQuery][Required] Guid paletteId,
         [FromBody] PaletteRequest request,
         CancellationToken cancellationToken = default)
     {
@@ -98,7 +96,10 @@ public sealed class PaletteController : ControllerBase
 
         await _paletteService.CreateAsync(paletteDto, cancellationToken);
         
-        return Created("Palette created:", _mapper.Map<PaletteResponse>(paletteDto));
+        var locationUri = Url.Link("GetPaletteById", new { paletteId });
+        
+        return Created(locationUri ?? throw new InvalidOperationException(),  
+            _mapper.Map<PaletteResponse>(paletteDto));
     }
     
     [HttpPut("palettes/{paletteId:guid}", Name = "UpdatePalette")]

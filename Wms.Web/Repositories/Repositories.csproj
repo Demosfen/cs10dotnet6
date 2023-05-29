@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
-      <ProjectReference Include="..\Common\Common.csproj" />
+      <ProjectReference Include="..\Common.Exceptions\Common.Exceptions.csproj" />
       <ProjectReference Include="..\Store\Store.csproj" />
     </ItemGroup>
 
