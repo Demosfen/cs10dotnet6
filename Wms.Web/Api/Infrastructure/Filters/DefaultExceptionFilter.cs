@@ -49,8 +49,8 @@ internal sealed class DefaultExceptionFilter : IExceptionFilter
         {
             EntityAlreadyExistException => StatusCodes.Status409Conflict,
             EntityNotFoundException => StatusCodes.Status404NotFound,
-            EntityWasDeletedException => StatusCodes.Status405MethodNotAllowed,
-            EntityNotEmptyException => StatusCodes.Status405MethodNotAllowed,
+            EntityWasDeletedException => StatusCodes.Status409Conflict,
+            EntityNotEmptyException => StatusCodes.Status409Conflict,
             UninitializedPropertyException => StatusCodes.Status400BadRequest,
             UnitOversizeException => StatusCodes.Status400BadRequest,
             EntityExpiryDateException => StatusCodes.Status400BadRequest,

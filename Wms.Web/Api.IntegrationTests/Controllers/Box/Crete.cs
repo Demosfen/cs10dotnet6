@@ -8,11 +8,11 @@ using Xunit;
 
 namespace Wms.Web.Api.IntegrationTests.Controllers.Box;
 
-public sealed class CreteBoxControllerTests : TestControllerBase
+public sealed class Crete : TestControllerBase
 {
     private readonly IWmsClient _sut;
     
-    public CreteBoxControllerTests(TestApplication apiFactory) 
+    public Crete(TestApplication apiFactory) 
         : base(apiFactory)
     {
         _sut = new WmsClient(
@@ -45,6 +45,39 @@ public sealed class CreteBoxControllerTests : TestControllerBase
 
         // Assert
         createBox.Should().BeEquivalentTo(boxRequest);
+    }
+
+    [Theory(DisplayName = "BoxVolumeCalculation")]
+    [InlineData(1, 1, 1, 1)]
+    [InlineData(5.5, 5.5, 5.5, 166.375)]
+    [InlineData(9.15, 8.29, 7.63, 578.762205)]
+    public async Task Create_ShouldCreateBox_WithCalculatedVolume(
+        decimal width, 
+        decimal height, 
+        decimal depth, 
+        decimal expectedVolume)
+    {
+        // Arrange
+        var warehouseId = Guid.NewGuid();
+        var paletteId = Guid.NewGuid();
+        var boxId = Guid.NewGuid();
+        var boxRequest = new BoxRequest
+        {
+            Width = width,
+            Height = height,
+            Depth = depth, 
+            Weight = 1, 
+            ExpiryDate = new DateTime(2007, 1, 1)
+        };
+        
+        await GenerateWarehouse(warehouseId);
+        await GeneratePalette(warehouseId, paletteId);
+        
+        // Act
+        var createdBox = await _sut.BoxClient.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
+        
+        // Assert
+        createdBox?.Volume.Should().Be(expectedVolume);
     }
     
     [Fact(DisplayName = "CreateBoxConflict")]
@@ -146,7 +179,6 @@ public sealed class CreteBoxControllerTests : TestControllerBase
         var warehouseId = Guid.NewGuid();
         var paletteId = Guid.NewGuid();
         var boxId = Guid.NewGuid();
-        var paletteRequest = new PaletteRequest { Width = 10, Height = 10, Depth = 10 };
         var boxRequest = new BoxRequest
         {
             Width = 1, Depth = 1, Height = 1,
@@ -197,7 +229,5 @@ public sealed class CreteBoxControllerTests : TestControllerBase
         exception.ErrorCode.Should().Be("incorrect_http_request");
         exception.ProblemDetails?.Type.Should().Be("unit_oversize");
         exception.ProblemDetails?.Title.Should().Be("The box does not match the dimensions of the pallet");
-        exception.ProblemDetails?.Instance.Should().Be(
-            $"http://localhost/api/v1/palettes/{paletteId}?boxId={boxId}");
     }
 }

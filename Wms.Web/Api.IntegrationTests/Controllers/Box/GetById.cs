@@ -7,11 +7,11 @@ using Xunit;
 
 namespace Wms.Web.Api.IntegrationTests.Controllers.Box;
 
-public sealed class GetByIdBoxControllerTests : TestControllerBase
+public sealed class GetById : TestControllerBase
 {
     private readonly IWmsClient _sut;
 
-    public GetByIdBoxControllerTests(TestApplication apiFactory) 
+    public GetById(TestApplication apiFactory) 
         : base(apiFactory)
     {
         _sut = new WmsClient(

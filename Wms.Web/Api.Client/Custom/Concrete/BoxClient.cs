@@ -52,7 +52,6 @@ internal sealed class BoxClient : IBoxClient
             cancellationToken);
 
         await result.HandleBadRequestAsync();
-        await result.HandleUnprocessableEntityAsync();
 
         switch (result.StatusCode)
         {

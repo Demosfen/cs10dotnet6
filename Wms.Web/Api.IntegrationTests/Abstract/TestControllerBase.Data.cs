@@ -26,7 +26,9 @@ public abstract partial class TestControllerBase
                 WarehouseId = warehouseId,
                 Width = 10,
                 Height = 10,
-                Depth = 10
+                Depth = 10,
+                Volume = 1000,
+                Weight = 30
             });
 
         await DbContext.SaveChangesAsync(CancellationToken.None);

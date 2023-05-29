@@ -7,11 +7,11 @@ using Xunit;
 
 namespace Wms.Web.Api.IntegrationTests.Controllers.Box;
 
-public sealed class DeleteBoxControllerTests : TestControllerBase
+public sealed class Delete : TestControllerBase
 {
     private readonly IWmsClient _sut;
 
-    public DeleteBoxControllerTests(TestApplication apiFactory) 
+    public Delete(TestApplication apiFactory) 
         : base(apiFactory)
     {
         _sut = new WmsClient(

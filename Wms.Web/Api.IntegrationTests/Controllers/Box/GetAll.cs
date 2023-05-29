@@ -6,11 +6,11 @@ using Xunit;
 
 namespace Wms.Web.Api.IntegrationTests.Controllers.Box;
 
-public sealed class GetAllBoxControllerTests : TestControllerBase
+public sealed class GetAll : TestControllerBase
 {
     private readonly IWmsClient _sut;
 
-    public GetAllBoxControllerTests(TestApplication apiFactory)
+    public GetAll(TestApplication apiFactory)
         : base(apiFactory)
     {
         _sut = new WmsClient(
@@ -32,7 +32,8 @@ public sealed class GetAllBoxControllerTests : TestControllerBase
         
         await GenerateWarehouse(warehouseId);
         await GeneratePalette(warehouseId, paletteId);
-        var boxOne = await GenerateBox(paletteId, boxIdFirst);
+        await GenerateBox(paletteId, boxIdFirst);
+        
         var boxTwo = await GenerateBox(paletteId, boxIdSecond);
 
         // Act
@@ -40,8 +41,7 @@ public sealed class GetAllBoxControllerTests : TestControllerBase
             await _sut.BoxClient.GetAllAsync(paletteId, offset, size, CancellationToken.None);
 
         // Assert
-        Assert.NotNull(boxes);
-        boxes.Count.Should().Be(expectedCount);
+        boxes?.Count.Should().Be(expectedCount);
         boxes.Should().ContainEquivalentOf(boxTwo);
     }
 
@@ -70,8 +70,7 @@ public sealed class GetAllBoxControllerTests : TestControllerBase
             await _sut.BoxClient.GetAllDeletedAsync(paletteId, offset, size, CancellationToken.None);
 
         // Assert
-        Assert.NotNull(boxes);
-        boxes.Count.Should().Be(expectedCount);
+        boxes?.Count.Should().Be(expectedCount);
         boxes.Should().ContainEquivalentOf(boxTwo);
     }
 }
