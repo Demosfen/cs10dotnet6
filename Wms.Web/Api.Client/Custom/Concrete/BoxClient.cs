@@ -60,7 +60,7 @@ internal sealed class BoxClient : IBoxClient
                 throw new EntityAlreadyExistException(boxId);
             
             case HttpStatusCode.InternalServerError:
-                throw new ApiValidationException(result);
+                throw new InvalidOperationException("Unexpected error occured");
         }
 
         return await result.Content.ReadFromJsonAsync<BoxResponse>(cancellationToken: cancellationToken);

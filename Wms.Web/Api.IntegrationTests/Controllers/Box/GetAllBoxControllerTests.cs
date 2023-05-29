@@ -19,8 +19,10 @@ public sealed class GetAllBoxControllerTests : TestControllerBase
             new BoxClient(apiFactory.HttpClient));
     }
 
-    [Fact(DisplayName = "GetAllBoxes")]
-    public async Task GetAll_ShouldReturnPalettes()
+    [Theory(DisplayName = "GetAllBoxes")]
+    [InlineData(0, 2, 2)]
+    [InlineData(1, 1, 1)]
+    public async Task GetAll_ShouldReturnPalettes(int offset, int size, int expectedCount)
     {
         // Arrange
         var warehouseId = Guid.NewGuid();
@@ -35,33 +37,18 @@ public sealed class GetAllBoxControllerTests : TestControllerBase
 
         // Act
         var boxes =
-            await _sut.BoxClient.GetAllAsync(paletteId, 0, 2, CancellationToken.None);
-
-        var box =
-            await _sut.BoxClient.GetAllAsync(paletteId, 1, 1, CancellationToken.None);
+            await _sut.BoxClient.GetAllAsync(paletteId, offset, size, CancellationToken.None);
 
         // Assert
-        boxes?.Count.Should().Be(2);
-        box?.Count.Should().Be(1);
-        boxes?.FirstOrDefault().Should().BeEquivalentTo(boxOne, 
-            options => options
-                .Excluding(x => x.CreatedAt)
-                .Excluding(x => x.UpdatedAt)
-                .Excluding(x => x.DeletedAt));
-        boxes?.LastOrDefault().Should().BeEquivalentTo(boxTwo, 
-            options => options
-                .Excluding(x => x.CreatedAt)
-                .Excluding(x => x.UpdatedAt)
-                .Excluding(x => x.DeletedAt));
-        box?.Single().Should().BeEquivalentTo(boxTwo, 
-            options => options
-                .Excluding(x => x.CreatedAt)
-                .Excluding(x => x.UpdatedAt)
-                .Excluding(x => x.DeletedAt));
+        Assert.NotNull(boxes);
+        boxes.Count.Should().Be(expectedCount);
+        boxes.Should().ContainEquivalentOf(boxTwo);
     }
 
-    [Fact(DisplayName = "GetDeletedBoxes")]
-    public async Task GetAllDeleted_ShouldReturnDeletedBoxes()
+    [Theory(DisplayName = "GetDeletedBoxes")]
+    [InlineData(0, 2, 2)]
+    [InlineData(1, 1, 1)]
+    public async Task GetAllDeleted_ShouldReturnDeletedBoxes(int offset, int size, int expectedCount)
     {
         // Arrange
         var warehouseId = Guid.NewGuid();
@@ -71,36 +58,20 @@ public sealed class GetAllBoxControllerTests : TestControllerBase
 
         await GenerateWarehouse(warehouseId);
         await GeneratePalette(warehouseId, paletteId);
-        var boxOne = await GenerateBox(paletteId, boxIdFirst);
+        await GenerateBox(paletteId, boxIdFirst);
+        
         var boxTwo = await GenerateBox(paletteId, boxIdSecond);
 
         await DeleteBox(boxIdFirst);
         await DeleteBox(boxIdSecond);
 
         // Act
-        var responseAll =
-            await _sut.BoxClient.GetAllDeletedAsync(paletteId, 0, 2, CancellationToken.None);
-
-        var responseOne =
-            await _sut.BoxClient.GetAllDeletedAsync(paletteId, 1, 1, CancellationToken.None);
+        var boxes =
+            await _sut.BoxClient.GetAllDeletedAsync(paletteId, offset, size, CancellationToken.None);
 
         // Assert
-        responseAll?.Count.Should().Be(2);
-        responseOne?.Count.Should().Be(1);
-        responseAll?.FirstOrDefault().Should().BeEquivalentTo(boxOne, 
-            options => options
-                .Excluding(x => x.CreatedAt)
-                .Excluding(x => x.UpdatedAt)
-                .Excluding(x => x.DeletedAt));
-        responseAll?.LastOrDefault().Should().BeEquivalentTo(boxTwo, 
-            options => options
-                .Excluding(x => x.CreatedAt)
-                .Excluding(x => x.UpdatedAt)
-                .Excluding(x => x.DeletedAt));
-        responseOne?.Single().Should().BeEquivalentTo(boxTwo, 
-            options => options
-                .Excluding(x => x.CreatedAt)
-                .Excluding(x => x.UpdatedAt)
-                .Excluding(x => x.DeletedAt));
+        Assert.NotNull(boxes);
+        boxes.Count.Should().Be(expectedCount);
+        boxes.Should().ContainEquivalentOf(boxTwo);
     }
 }

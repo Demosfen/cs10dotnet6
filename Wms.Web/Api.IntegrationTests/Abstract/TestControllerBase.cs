@@ -1,3 +1,5 @@
+using AutoMapper;
+using Wms.Web.Services.Infrastructure.Mapping;
 using Wms.Web.Store.Interfaces;
 using Xunit;
 
@@ -16,6 +18,12 @@ public abstract partial class TestControllerBase : IAsyncLifetime
     {
         HttpClient = apiFactory.HttpClient;
         DbContext = apiFactory.CreateDbContext();
+        var configurationProvider = new MapperConfiguration(cfg =>
+            {
+                cfg.AddMaps(typeof(DtoEntitiesMappingProfile));
+            });
+
+        Mapper = configurationProvider.CreateMapper();
     }
     
     public Task InitializeAsync() => Task.CompletedTask;

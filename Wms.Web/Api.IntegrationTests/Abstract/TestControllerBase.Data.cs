@@ -1,21 +1,23 @@
+using AutoMapper;
 using Wms.Web.Common.Exceptions;
+using Wms.Web.Services.Dto;
 using Wms.Web.Store.Entities;
 
 namespace Wms.Web.Api.IntegrationTests.Abstract;
 
 public abstract partial class TestControllerBase
 {
-    protected async Task<Warehouse> GenerateWarehouse(Guid id)
+    protected readonly IMapper Mapper;
+    protected async Task<WarehouseDto> GenerateWarehouse(Guid id)
     {
         var entity = await DbContext.Warehouses.AddAsync(
             new Warehouse{Id = id, Name = Guid.NewGuid().ToString()}, CancellationToken.None);
 
         await DbContext.SaveChangesAsync(CancellationToken.None);
-
-        return entity.Entity;
+        return Mapper.Map<WarehouseDto>(entity.Entity);
     }
 
-    protected async Task<Palette> GeneratePalette(Guid warehouseId, Guid paletteId)
+    protected async Task<PaletteDto> GeneratePalette(Guid warehouseId, Guid paletteId)
     {
         var entity = await DbContext.Palettes.AddAsync(
             new Palette
@@ -29,10 +31,10 @@ public abstract partial class TestControllerBase
 
         await DbContext.SaveChangesAsync(CancellationToken.None);
 
-        return entity.Entity;
+        return Mapper.Map<PaletteDto>(entity.Entity);
     }
 
-    protected async Task<Box> GenerateBox(
+    protected async Task<BoxDto> GenerateBox(
         Guid paletteId, Guid boxId)
     {
         var entity = await DbContext.Boxes.AddAsync(
@@ -51,7 +53,7 @@ public abstract partial class TestControllerBase
         
         await DbContext.SaveChangesAsync(CancellationToken.None);
 
-        return entity.Entity;
+        return Mapper.Map<BoxDto>(entity.Entity);
     }
 
     protected async Task<Warehouse> DeleteWarehouse(Guid id)

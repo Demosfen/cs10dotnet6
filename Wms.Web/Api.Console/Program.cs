@@ -18,11 +18,11 @@ var serviceProvider = serviceCollection.BuildServiceProvider();
 
 var client = serviceProvider.GetRequiredService<IWmsClient>();
 //
-var notDeletedWarehouse = await client.WarehouseClient.GetAllAsync(
-    0, 3, CancellationToken.None);
-
-var deletedWarehouse = await client.WarehouseClient.GetAllDeletedAsync(
-    0, 2, CancellationToken.None);
+// var notDeletedWarehouse = await client.WarehouseClient.GetAllAsync(
+//     0, 3, CancellationToken.None);
+//
+// var deletedWarehouse = await client.WarehouseClient.GetAllDeletedAsync(
+//     0, 2, CancellationToken.None);
 
 // var warehouseId = Guid.NewGuid();
 //
