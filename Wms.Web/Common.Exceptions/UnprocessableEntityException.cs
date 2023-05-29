@@ -1,5 +1,5 @@
 using System.Text.Json;
-using Wms.Web.Api.Contracts.Extensions;
+using Wms.Web.Contracts.Extensions;
 
 namespace Wms.Web.Common.Exceptions;
 

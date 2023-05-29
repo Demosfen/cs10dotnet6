@@ -1,7 +1,7 @@
 using AutoMapper;
-using Wms.Web.Api.Contracts.Responses;
 using Wms.Web.Services.Dto;
 using JetBrains.Annotations;
+using Wms.Web.Contracts.Responses;
 
 namespace Wms.Web.Api.Infrastructure.Mapping;
 
