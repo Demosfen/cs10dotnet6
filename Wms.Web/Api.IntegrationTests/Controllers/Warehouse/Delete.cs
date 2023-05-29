@@ -8,16 +8,18 @@ using Xunit;
 
 namespace Wms.Web.Api.IntegrationTests.Controllers.Warehouse;
 
-public sealed class DeleteWarehouseControllerTests : TestControllerBase
+public sealed class Delete : TestControllerBase
 {
-    private readonly IWarehouseClient _sut;
+    private readonly IWmsClient _sut;
 
-    public DeleteWarehouseControllerTests(TestApplication apiFactory) 
+    public Delete(TestApplication apiFactory) 
         : base(apiFactory)
     {
-        _sut = new WarehouseClient(HttpClient);
-    }
-    
+        _sut = new WmsClient(
+            new WarehouseClient(apiFactory.HttpClient),
+            new PaletteClient(apiFactory.HttpClient),
+            new BoxClient(apiFactory.HttpClient));    }
+
     [Fact(DisplayName = "DeleteExistingWarehouse")]
     public async Task Delete_ReturnsOK_WhenWarehouseExist()
     {
@@ -27,7 +29,8 @@ public sealed class DeleteWarehouseControllerTests : TestControllerBase
         await GenerateWarehouse(id);
         
         // Act
-        var deleteResponse = await _sut.DeleteAsync(id);
+        var deleteResponse = await _sut.WarehouseClient
+            .DeleteAsync(id);
 
         // Assert
         deleteResponse.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -41,40 +44,36 @@ public sealed class DeleteWarehouseControllerTests : TestControllerBase
         await GenerateWarehouse(id);
         
         // Act
-        var deleteResponse = await _sut.DeleteAsync(Guid.NewGuid());
+        var deletedWarehouse = await _sut.WarehouseClient
+            .DeleteAsync(Guid.NewGuid());
 
         // Assert
-        deleteResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        var error = deleteResponse.Content.ReadFromJsonAsync<ValidationProblemDetails>();
+        deletedWarehouse.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        var error = deletedWarehouse.Content.ReadFromJsonAsync<ValidationProblemDetails>();
         error.Result?.Status.Should().Be(404);
         error.Result?.Title.Should().Be("The entity with specified id was not found");
         error.Result?.Type.Should().Be("entity_not_found");
     }
     
-    /*
     [Fact(DisplayName = "DeleteNonEmptyWarehouse")]
-    public async Task Delete_ReturnsUnprocessable_WhenWarehouseNonEmpty()
+    public async Task Delete_ReturnsConflict_WhenWarehouseNonEmpty()
     {
         // Arrange
         var warehouseId = Guid.NewGuid();
         var paletteId = Guid.NewGuid();
-        var requestPalette = new PaletteRequest()
-        {
-            Width = 10,
-            Height = 10,
-            Depth = 10
-        };
-        
-        await DataHelper.GenerateWarehouse(warehouseId);
-        await DataHelper.GeneratePalette(warehouseId, paletteId, requestPalette);
+
+        await GenerateWarehouse(warehouseId);
+        await GeneratePalette(warehouseId, paletteId);
         
         // Act
-        var deleteResponse = await _sut.DeleteAsync(warehouseId);
+        var deleteResponse = await _sut.WarehouseClient
+            .DeleteAsync(warehouseId);
+        var error = deleteResponse.Content.ReadFromJsonAsync<ValidationProblemDetails>();
 
         // Assert
-        deleteResponse.StatusCode.Should().Be(HttpStatusCode.UnprocessableEntity);
-        var error = deleteResponse.Content.ReadFromJsonAsync<ValidationProblemDetails>();
-        error.Result?.Status.Should().Be(422);
+        deleteResponse.StatusCode.Should().Be(HttpStatusCode.Conflict);
+        error.Result?.Status.Should().Be(409);
+        error.Result?.Detail.Should().Be($"The entity with id={warehouseId} not empty");
         error.Result?.Type.Should().Be("entity_not_empty");
-    }*/
+    }
 }

@@ -6,16 +6,19 @@ using Wms.Web.Api.IntegrationTests.Abstract;
 using Wms.Web.Common.Exceptions;
 using Xunit;
 
-namespace Wms.Web.Api.IntegrationTests.Wms.WarehouseControllerTests;
+namespace Wms.Web.Api.IntegrationTests.Controllers.Warehouse;
 
-public sealed class CreteWarehouseControllerTests : TestControllerBase
+public sealed class Create : TestControllerBase
 {
-    private readonly IWarehouseClient _sut;
+    private readonly IWmsClient _sut;
 
-    public CreteWarehouseControllerTests(TestApplication apiFactory) 
+    public Create(TestApplication apiFactory) 
         : base(apiFactory)
     {
-        _sut = new WarehouseClient(HttpClient);
+        _sut = new WmsClient(
+            new WarehouseClient(apiFactory.HttpClient),
+            new PaletteClient(apiFactory.HttpClient),
+            new BoxClient(apiFactory.HttpClient));    
     }
     
     [Fact(DisplayName = "CreateWarehouse")]
@@ -29,7 +32,8 @@ public sealed class CreteWarehouseControllerTests : TestControllerBase
         };
         
         // Act
-        var createWarehouse = await _sut.CreateAsync(id, request, CancellationToken.None);
+        var createWarehouse = await _sut.WarehouseClient
+            .CreateAsync(id, request, CancellationToken.None);
 
         // Assert
         createWarehouse.Should().BeEquivalentTo(request);
@@ -42,10 +46,11 @@ public sealed class CreteWarehouseControllerTests : TestControllerBase
         var id = Guid.NewGuid();
     
         // Act
-        async Task Act() => await _sut.CreateAsync(id, new WarehouseRequest { Name = "" });
-
+        async Task Act() => await _sut.WarehouseClient
+            .CreateAsync(id, new WarehouseRequest { Name = "" });
         var exception = await Assert.ThrowsAsync<ApiValidationException>(Act);
-        exception.ProblemDetails?.Errors!.ContainsKey("Name").Should().BeTrue();
+        
+        // Assert
         exception.ProblemDetails?.Errors!["Name"].Should().Contain("Name of the warehouse should not be null or empty.");
         exception.Message.Should().Be("API request failed!");
     }
@@ -57,13 +62,13 @@ public sealed class CreteWarehouseControllerTests : TestControllerBase
         var id = Guid.NewGuid();
 
         // Act
-        async Task Act() => await _sut
+        async Task Act() => await _sut.WarehouseClient
             .CreateAsync(id, new WarehouseRequest { Name = Guid.NewGuid().ToString() + Guid.NewGuid() });
-
         var exception = await Assert.ThrowsAsync<ApiValidationException>(Act);
-        exception.ProblemDetails?.Errors!.ContainsKey("Name.Length").Should().BeTrue();
+        
+        // Assert
         exception.ProblemDetails?.Errors!["Name.Length"]
-            .Should().Contain("Warehouse name sholuld be less than or equal to 40 characters");
+            .Should().Contain("Warehouse name should be less than or equal to 40 characters");
         exception.Message.Should().Be("API request failed!");
     }
     
@@ -78,9 +83,11 @@ public sealed class CreteWarehouseControllerTests : TestControllerBase
         };
         
         // Act
-        await _sut.CreateAsync(id, request);
-        async Task Act() => await _sut.CreateAsync(id, request);
+        await _sut.WarehouseClient.CreateAsync(id, request);
+        async Task Act() => await _sut.WarehouseClient.CreateAsync(id, request);
         var exception = await Assert.ThrowsAsync<EntityAlreadyExistException>(Act);
+        
+        // Assert
         exception.Id.Should().Be(id);
         exception.Message.Should().Be($"The entity with id={id} already exist");
     }

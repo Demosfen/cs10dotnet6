@@ -13,6 +13,6 @@ public sealed class WarehouseRequestValidator : AbstractValidator<WarehouseReque
 
         RuleFor(x => x.Name.Length)
             .LessThanOrEqualTo(40)
-            .WithMessage("Warehouse name sholuld be less than or equal to 40 characters");
+            .WithMessage("Warehouse name should be less than or equal to 40 characters");
     }
 }

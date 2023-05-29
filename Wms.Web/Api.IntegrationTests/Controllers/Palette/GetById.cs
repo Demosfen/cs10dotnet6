@@ -3,7 +3,6 @@ using FluentAssertions;
 using Wms.Web.Api.Client.Custom.Abstract;
 using Wms.Web.Api.Client.Custom.Concrete;
 using Wms.Web.Api.Contracts.Requests;
-using Wms.Web.Api.Contracts.Responses;
 using Wms.Web.Api.IntegrationTests.Abstract;
 using Xunit;
 
@@ -84,7 +83,7 @@ public sealed class GetByIdWPaletteControllerTests : TestControllerBase
         
         await GenerateWarehouse(warehouseId);
         
-        var createdPalette = await GeneratePalette(warehouseId, paletteId);
+        await GeneratePalette(warehouseId, paletteId);
 
         var createBox = await _sut.BoxClient.CreateAsync(
             paletteId,
