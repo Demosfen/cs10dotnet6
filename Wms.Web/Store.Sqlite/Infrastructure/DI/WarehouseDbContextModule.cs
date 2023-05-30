@@ -2,7 +2,7 @@ using Autofac;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace Wms.Web.Store.Infrastructure.DI;
+namespace Wms.Web.Store.Sqlite.Infrastructure.DI;
 
 public sealed class WarehouseDbContextModule : Module
 {

@@ -1,4 +1,4 @@
-namespace Wms.Web.Store.Interfaces;
+namespace Wms.Web.Store.Sqlite.Interfaces;
 
 public interface IDbUnitOfWork
 {

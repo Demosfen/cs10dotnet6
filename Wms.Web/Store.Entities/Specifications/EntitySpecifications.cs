@@ -1,6 +1,6 @@
-using Wms.Web.Store.Interfaces;
+using Wms.Web.Store.Entities.Interfaces;
 
-namespace Wms.Web.Store.Specifications;
+namespace Wms.Web.Store.Entities.Specifications;
 
 public static class EntitySpecifications
 {

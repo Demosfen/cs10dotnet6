@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Wms.Web.Store.Entities;
-using Wms.Web.Store.Interfaces;
+using Wms.Web.Store.Entities.Interfaces;
+using Wms.Web.Store.Sqlite.Interfaces;
 
-namespace Wms.Web.Store;
+namespace Wms.Web.Store.Sqlite;
 
 internal sealed class WarehouseDbContext : DbContext, IWarehouseDbContext
 {

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Wms.Web.Store.Interfaces;
+using Wms.Web.Store.Entities.Interfaces;
 
 namespace Wms.Web.Store.EntityExtensions;
 

@@ -5,7 +5,7 @@ using Wms.Web.Services.Abstract;
 using Wms.Web.Services.Dto;
 using Wms.Web.Services.Extensions;
 using Wms.Web.Store.Entities;
-using Wms.Web.Store.Specifications;
+using Wms.Web.Store.Entities.Specifications;
 
 namespace Wms.Web.Services.Concrete;
 

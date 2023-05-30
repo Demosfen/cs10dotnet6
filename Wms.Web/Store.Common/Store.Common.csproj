@@ -18,10 +18,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Common.Exceptions\Common.Exceptions.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Migrations" />
+      <ProjectReference Include="..\Store.Entities\Store.Entities.csproj" />
     </ItemGroup>
 
     <ItemGroup>

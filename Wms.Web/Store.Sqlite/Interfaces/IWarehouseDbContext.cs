@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Wms.Web.Store.Entities;
 
-namespace Wms.Web.Store.Interfaces;
+namespace Wms.Web.Store.Sqlite.Interfaces;
 
 public interface IWarehouseDbContext : IDbUnitOfWork, IDisposable
 {
