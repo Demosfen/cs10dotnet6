@@ -1,6 +1,6 @@
 using AutoMapper;
 using Wms.Web.Common.Exceptions;
-using Wms.Web.Repositories.Abstract;
+using Wms.Web.Repositories.Interfaces;
 using Wms.Web.Services.Abstract;
 using Wms.Web.Services.Dto;
 using Wms.Web.Services.Extensions;

@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <ItemGroup>
-      <ProjectReference Include="..\Common.Exceptions\Common.Exceptions.csproj" />
-      <ProjectReference Include="..\Store.Common\Store.Common.csproj" />
-    </ItemGroup>
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Autofac" />
-      <PackageReference Include="AutoMapper" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore" />
+      <ProjectReference Include="..\Store.Common\Store.Common.csproj" />
+      <ProjectReference Include="..\Store.Entities\Store.Entities.csproj" />
     </ItemGroup>
 
 </Project>

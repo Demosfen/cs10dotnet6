@@ -7,11 +7,10 @@ using FluentValidation.AspNetCore;
 using Wms.Web.Api.Infrastructure.Filters;
 using Wms.Web.Api.Infrastructure.Mapping;
 using Wms.Web.Api.Validators;
-using Wms.Web.Repositories.Infrastructure.DI;
+using Wms.Web.Repositories.DI;
 using Wms.Web.Services.Infrastructure.DI;
 using Wms.Web.Services.Infrastructure.Mapping;
-using Wms.Web.Store.Infrastructure.DI;
-using Wms.Web.Store.Interfaces;
+using Wms.Web.Store.Common.Interfaces;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {

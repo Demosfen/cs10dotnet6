@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Wms.Web.Store.Entities.Interfaces;
 
-namespace Wms.Web.Store.EntityExtensions;
+namespace Wms.Web.Store.Common.EntityExtensions;
 
 public static class AuditableEntityExtensions
 {

@@ -16,7 +16,6 @@
     <ItemGroup>
       <ProjectReference Include="..\Contracts\Contracts.csproj" />
       <ProjectReference Include="..\Common.Exceptions\Common.Exceptions.csproj" />
-      <ProjectReference Include="..\Repositories\Repositories.csproj" />
       <ProjectReference Include="..\Services\Services.csproj" />
       <ProjectReference Include="..\Store.Common\Store.Common.csproj" />
     </ItemGroup>

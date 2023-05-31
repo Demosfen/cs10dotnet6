@@ -24,6 +24,7 @@
       <ProjectReference Include="..\Contracts\Contracts.csproj" />
       <ProjectReference Include="..\Api\Api.csproj" />
       <ProjectReference Include="..\Common.Exceptions\Common.Exceptions.csproj" />
+      <ProjectReference Include="..\Store.Sqlite\Store.Sqlite.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Wms.Web.Store.Common.EntityExtensions;
 using Wms.Web.Store.Entities;
-using Wms.Web.Store.EntityExtensions;
 
-namespace Wms.Web.Store.EntityConfigurations;
+namespace Wms.Web.Store.Common.EntityConfigurations;
 
 public sealed class WarehouseConfigurations : IEntityTypeConfiguration<Warehouse>
 {

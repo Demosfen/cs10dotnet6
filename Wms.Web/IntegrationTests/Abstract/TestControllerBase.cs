@@ -1,6 +1,6 @@
 using AutoMapper;
 using Wms.Web.Services.Infrastructure.Mapping;
-using Wms.Web.Store.Interfaces;
+using Wms.Web.Store.Common.Interfaces;
 using Xunit;
 
 namespace Wms.Web.IntegrationTests.Abstract;

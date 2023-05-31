@@ -3,7 +3,7 @@ using Wms.Web.Api;
 using Wms.Web.Client.Custom.Abstract;
 using Wms.Web.Client.Custom.Concrete;
 using Wms.Web.IntegrationTests.Infrastructure;
-using Wms.Web.Store.Interfaces;
+using Wms.Web.Store.Common.Interfaces;
 using Xunit;
 
 namespace Wms.Web.IntegrationTests;

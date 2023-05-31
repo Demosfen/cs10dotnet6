@@ -1,8 +1,9 @@
 using Autofac;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Wms.Web.Store.Common;
 
-namespace Wms.Web.Store.Sqlite.Infrastructure.DI;
+namespace Wms.Web.Store.Sqlite;
 
 public sealed class WarehouseDbContextModule : Module
 {
@@ -21,7 +22,7 @@ public sealed class WarehouseDbContextModule : Module
                 
                 return new WarehouseDbContext(options);
             })
-            .AsSelf()           //TODO needed when create new Migration https://github.com/Demosfen/cs10dotnet6/pull/6#discussion_r1161709855
+            .AsSelf()
             .AsImplementedInterfaces()
             .InstancePerLifetimeScope();
     }
