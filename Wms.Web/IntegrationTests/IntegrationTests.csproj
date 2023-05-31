@@ -27,16 +27,4 @@
       <ProjectReference Include="..\Store.Sqlite\Store.Sqlite.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Reference Include="FluentAssertions">
-        <HintPath>..\..\..\..\..\..\..\home\alexander\.nuget\packages\fluentassertions\6.10.0\lib\net6.0\FluentAssertions.dll</HintPath>
-      </Reference>
-      <Reference Include="xunit.assert">
-        <HintPath>..\..\..\..\..\..\..\home\alexander\.nuget\packages\xunit.assert\2.4.1\lib\netstandard1.1\xunit.assert.dll</HintPath>
-      </Reference>
-      <Reference Include="xunit.core">
-        <HintPath>..\..\..\..\..\..\..\home\alexander\.nuget\packages\xunit.extensibility.core\2.4.1\lib\netstandard1.1\xunit.core.dll</HintPath>
-      </Reference>
-    </ItemGroup>
-
 </Project>

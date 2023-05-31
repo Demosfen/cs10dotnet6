@@ -1,10 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <Reference Include="Microsoft.AspNetCore.Http.Abstractions">
-      <HintPath>..\..\..\..\.dotnet\shared\Microsoft.AspNetCore.App\7.0.5\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\Contracts\Contracts.csproj" />
   </ItemGroup>
+  
 </Project>
