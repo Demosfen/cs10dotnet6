@@ -2,7 +2,6 @@ using AutoMapper;
 using Wms.Web.Common.Exceptions;
 using Wms.Web.Repositories.Interfaces;
 using Wms.Web.Services.Abstract;
-using Wms.Web.Store.Entities;
 using Wms.Web.Services.Dto;
 using Wms.Web.Store.Entities.Concrete;
 using Wms.Web.Store.Entities.Specifications;

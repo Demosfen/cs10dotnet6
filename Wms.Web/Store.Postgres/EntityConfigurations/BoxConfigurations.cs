@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Wms.Web.Store.Common.EntityExtensions;
-using Wms.Web.Store.Entities;
 using Wms.Web.Store.Entities.Concrete;
 
-namespace Wms.Web.Store.Common.EntityConfigurations;
+namespace Wms.Web.Store.Postgres.EntityConfigurations;
 
 public sealed class BoxConfigurations : IEntityTypeConfiguration<Box>
 {
