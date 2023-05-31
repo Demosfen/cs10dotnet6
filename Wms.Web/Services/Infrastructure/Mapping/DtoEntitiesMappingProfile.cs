@@ -1,6 +1,7 @@
 using AutoMapper;
 using Wms.Web.Store.Entities;
 using Wms.Web.Services.Dto;
+using Wms.Web.Store.Entities.Concrete;
 
 namespace Wms.Web.Services.Infrastructure.Mapping;
 

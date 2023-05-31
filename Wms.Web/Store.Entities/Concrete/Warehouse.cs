@@ -1,6 +1,6 @@
 using Wms.Web.Store.Entities.Interfaces;
 
-namespace Wms.Web.Store.Entities;
+namespace Wms.Web.Store.Entities.Concrete;
 
 public sealed class Warehouse : IEntityWithId, IAuditableEntity
 {

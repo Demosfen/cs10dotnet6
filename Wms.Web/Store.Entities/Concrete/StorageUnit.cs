@@ -1,6 +1,6 @@
 using Wms.Web.Store.Entities.Interfaces;
 
-namespace Wms.Web.Store.Entities;
+namespace Wms.Web.Store.Entities.Concrete;
 
 /// <summary>
 /// This is an abstract class, which contains common properties

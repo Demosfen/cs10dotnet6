@@ -1,4 +1,4 @@
-namespace Wms.Web.Store.Entities;
+namespace Wms.Web.Store.Entities.Concrete;
 
 public sealed class Palette : StorageUnit
 {

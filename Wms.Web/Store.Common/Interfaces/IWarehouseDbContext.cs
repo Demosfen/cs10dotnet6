@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Wms.Web.Store.Entities;
+using Wms.Web.Store.Entities.Concrete;
 
 namespace Wms.Web.Store.Common.Interfaces;
 

@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Wms.Web.Store.Common;
 
-namespace Wms.Web.Store.Sqlite;
+namespace Wms.Web.Store.Postgress;
 
-public sealed class WarehouseDbContextModule : Module
+public sealed class PostgressDbContextModule : Module
 {
     private static readonly string ConnectionStringName = "WarehouseDbContextCS";
 
@@ -16,9 +16,8 @@ public sealed class WarehouseDbContextModule : Module
                 var config = c.Resolve<IConfiguration>();
                 var connectionString = config.GetConnectionString(ConnectionStringName);
 
-                var options = new DbContextOptionsBuilder<WarehouseDbContext>()
-                    .UseSqlite(connectionString)
-                    .Options;
+                var options = ((DbContextOptionsBuilder)new DbContextOptionsBuilder<WarehouseDbContext>()
+                    .UseNpgsql(connectionString)).Options;
                 
                 return new WarehouseDbContext(options);
             })

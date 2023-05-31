@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Wms.Web.Store.Common.Interfaces;
 using Wms.Web.Store.Entities;
+using Wms.Web.Store.Entities.Concrete;
 using Wms.Web.Store.Entities.Interfaces;
 
 namespace Wms.Web.Store.Common;

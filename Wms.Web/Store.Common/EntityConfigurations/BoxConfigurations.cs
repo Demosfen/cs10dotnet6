@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Wms.Web.Store.Common.EntityExtensions;
 using Wms.Web.Store.Entities;
+using Wms.Web.Store.Entities.Concrete;
 
 namespace Wms.Web.Store.Common.EntityConfigurations;
 

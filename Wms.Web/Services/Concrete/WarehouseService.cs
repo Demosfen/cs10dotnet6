@@ -4,6 +4,7 @@ using Wms.Web.Repositories.Interfaces;
 using Wms.Web.Services.Abstract;
 using Wms.Web.Store.Entities;
 using Wms.Web.Services.Dto;
+using Wms.Web.Store.Entities.Concrete;
 using Wms.Web.Store.Entities.Specifications;
 
 namespace Wms.Web.Services.Concrete;

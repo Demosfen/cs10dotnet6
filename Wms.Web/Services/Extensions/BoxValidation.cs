@@ -1,6 +1,7 @@
 using Wms.Web.Common.Exceptions;
 using Wms.Web.Services.Dto;
 using Wms.Web.Store.Entities;
+using Wms.Web.Store.Entities.Concrete;
 
 namespace Wms.Web.Services.Extensions;
 
