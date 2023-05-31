@@ -11,7 +11,7 @@ using Wms.Web.Repositories.DI;
 using Wms.Web.Services.Infrastructure.DI;
 using Wms.Web.Services.Infrastructure.Mapping;
 using Wms.Web.Store.Common.Interfaces;
-using Wms.Web.Store.Postgress;
+using Wms.Web.Store.Postgres;
 using Wms.Web.Store.Sqlite;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
@@ -52,7 +52,7 @@ builder.Services.AddAutoMapper(
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {
     containerBuilder.RegisterModule<SqliteDbContextModule>();
-    containerBuilder.RegisterModule<PostgressDbContextModule>();
+    containerBuilder.RegisterModule<PostgresDbContextModule>();
     containerBuilder.RegisterModule<ServiceModule>();
     containerBuilder.RegisterModule<RepositoriesModule>();
 });

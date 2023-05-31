@@ -7,7 +7,7 @@ namespace Wms.Web.Store.Sqlite;
 
 public sealed class SqliteDbContextModule : Module
 {
-    private static readonly string ConnectionStringName = "WarehouseDbContextCS";
+    private static readonly string ConnectionStringName = "SqliteDbContextCS";
 
     protected override void Load(ContainerBuilder containerBuilder)
     {

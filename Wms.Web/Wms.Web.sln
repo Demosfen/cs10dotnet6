@@ -35,7 +35,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{18DAAB21-2FA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositories\Repositories.csproj", "{2DEBC05A-512B-4957-A1E1-1C76B5B33960}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.Postgress", "Store.Postgress\Store.Postgress.csproj", "{9DD59541-6B1D-4D95-AE8A-5B941C42DEE1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.Postgres", "Store.Postgres\Store.Postgres.csproj", "{9DD59541-6B1D-4D95-AE8A-5B941C42DEE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

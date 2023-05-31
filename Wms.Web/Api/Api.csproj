@@ -19,7 +19,7 @@
       <ProjectReference Include="..\Repositories\Repositories.csproj" />
       <ProjectReference Include="..\Services\Services.csproj" />
       <ProjectReference Include="..\Store.Common\Store.Common.csproj" />
-      <ProjectReference Include="..\Store.Postgress\Store.Postgress.csproj" />
+      <ProjectReference Include="..\Store.Postgres\Store.Postgres.csproj" />
       <ProjectReference Include="..\Store.Sqlite\Store.Sqlite.csproj" />
     </ItemGroup>
 

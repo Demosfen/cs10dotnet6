@@ -23,7 +23,7 @@
 
     <ItemGroup>
         <InternalsVisibleTo Include="Wms.Web.IntegrationTests" />
-        <InternalsVisibleTo Include="Wms.Web.Store.Postgress" />
+        <InternalsVisibleTo Include="Wms.Web.Store.Postgres" />
         <InternalsVisibleTo Include="Wms.Web.Store.Sqlite" />
     </ItemGroup>
 
