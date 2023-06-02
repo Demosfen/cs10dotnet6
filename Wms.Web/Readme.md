@@ -24,4 +24,6 @@ dotnet ef database update
 
 ## Project structure
 ### Api
-![Coupling analysis](/home/alexander/C#/cs10dotnet6/docs/diagrams/Wms.Api.png "Api structure")
+![Wms.Api.png](..%2Fdocs%2Fdiagrams%2FWms.Api.png)
+### Business
+![Wms.Business.png](..%2Fdocs%2Fdiagrams%2FWms.Business.png)
