@@ -1,7 +1,7 @@
+using Wms.Web.Business.Dto;
 using Wms.Web.Common.Exceptions;
-using Wms.Web.Services.Dto;
 
-namespace Wms.Web.Services.Abstract;
+namespace Wms.Web.Business.Abstract;
 
 public interface IBoxService : IBusinessService
 {

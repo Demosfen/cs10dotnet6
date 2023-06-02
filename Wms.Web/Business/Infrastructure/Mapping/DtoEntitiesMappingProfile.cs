@@ -1,8 +1,8 @@
 using AutoMapper;
-using Wms.Web.Services.Dto;
+using Wms.Web.Business.Dto;
 using Wms.Web.Store.Entities.Concrete;
 
-namespace Wms.Web.Services.Infrastructure.Mapping;
+namespace Wms.Web.Business.Infrastructure.Mapping;
 
 public sealed class DtoEntitiesMappingProfile : Profile
 {

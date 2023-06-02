@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{BA22245F-4BA6-4980-A611-4C54C0034B20}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{BA22245F-4BA6-4980-A611-4C54C0034B20}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.Common", "Store.Common\Store.Common.csproj", "{3B23E7A3-E62F-4A5B-875F-6CE4E8E42C02}"
 EndProject
@@ -36,6 +36,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositories\Repositories.csproj", "{2DEBC05A-512B-4957-A1E1-1C76B5B33960}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.Postgres", "Store.Postgres\Store.Postgres.csproj", "{9DD59541-6B1D-4D95-AE8A-5B941C42DEE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories.Interfaces", "Repositories.Interfaces\Repositories.Interfaces.csproj", "{E865B869-DBE4-4228-BBAE-8EAE61A8DEEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,6 +97,10 @@ Global
 		{9DD59541-6B1D-4D95-AE8A-5B941C42DEE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DD59541-6B1D-4D95-AE8A-5B941C42DEE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DD59541-6B1D-4D95-AE8A-5B941C42DEE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E865B869-DBE4-4228-BBAE-8EAE61A8DEEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E865B869-DBE4-4228-BBAE-8EAE61A8DEEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E865B869-DBE4-4228-BBAE-8EAE61A8DEEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E865B869-DBE4-4228-BBAE-8EAE61A8DEEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{147571E4-AD25-4EEA-A284-60210709FC80} = {0FD50018-3FE1-4EB1-B427-5AB10E4EF53B}
@@ -110,5 +116,6 @@ Global
 		{DDA88A2C-3FAD-437A-A63A-1CF1E45B2EE3} = {18DAAB21-2FA0-4F7B-B52C-CCE5244F8540}
 		{2DEBC05A-512B-4957-A1E1-1C76B5B33960} = {18DAAB21-2FA0-4F7B-B52C-CCE5244F8540}
 		{9DD59541-6B1D-4D95-AE8A-5B941C42DEE1} = {18DAAB21-2FA0-4F7B-B52C-CCE5244F8540}
+		{E865B869-DBE4-4228-BBAE-8EAE61A8DEEB} = {18DAAB21-2FA0-4F7B-B52C-CCE5244F8540}
 	EndGlobalSection
 EndGlobal

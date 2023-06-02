@@ -1,13 +1,13 @@
 using AutoMapper;
+using Wms.Web.Business.Abstract;
+using Wms.Web.Business.Dto;
+using Wms.Web.Business.Extensions;
 using Wms.Web.Common.Exceptions;
-using Wms.Web.Repositories.Interfaces;
-using Wms.Web.Services.Abstract;
-using Wms.Web.Services.Dto;
-using Wms.Web.Services.Extensions;
+using Wms.Web.Repositories.Interfaces.Interfaces;
 using Wms.Web.Store.Entities.Concrete;
 using Wms.Web.Store.Entities.Specifications;
 
-namespace Wms.Web.Services.Concrete;
+namespace Wms.Web.Business.Concrete;
 
 internal sealed class BoxService : IBoxService
 {

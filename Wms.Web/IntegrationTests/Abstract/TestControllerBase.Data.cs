@@ -1,6 +1,6 @@
 using AutoMapper;
+using Wms.Web.Business.Dto;
 using Wms.Web.Common.Exceptions;
-using Wms.Web.Services.Dto;
 using Wms.Web.Store.Entities.Concrete;
 
 namespace Wms.Web.IntegrationTests.Abstract;

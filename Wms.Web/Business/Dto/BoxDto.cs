@@ -1,4 +1,4 @@
-namespace Wms.Web.Services.Dto;
+namespace Wms.Web.Business.Dto;
 
 public sealed class BoxDto
 {

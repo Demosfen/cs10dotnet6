@@ -4,7 +4,7 @@ using Wms.Web.Store.Common.Interfaces;
 using Wms.Web.Store.Entities.Concrete;
 using Wms.Web.Store.Entities.Interfaces;
 
-namespace Wms.Web.Store.Common;
+namespace Wms.Web.Store.Postgres;
 
 internal sealed class WarehouseDbContext : DbContext, IWarehouseDbContext
 {
@@ -19,7 +19,10 @@ internal sealed class WarehouseDbContext : DbContext, IWarehouseDbContext
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.LogTo(Console.WriteLine, LogLevel.Information);
+    {
+        options.UseNpgsql("");
+        options.LogTo(Console.WriteLine, LogLevel.Information);
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

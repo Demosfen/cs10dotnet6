@@ -1,8 +1,8 @@
 using AutoMapper;
 using JetBrains.Annotations;
 using Wms.Web.Api.Contracts;
+using Wms.Web.Business.Dto;
 using Wms.Web.Contracts.Requests;
-using Wms.Web.Services.Dto;
 
 namespace Wms.Web.Api.Infrastructure.Mapping;
 

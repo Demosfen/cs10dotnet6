@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
+      <ProjectReference Include="..\Repositories.Interfaces\Repositories.Interfaces.csproj" />
       <ProjectReference Include="..\Store.Common\Store.Common.csproj" />
       <ProjectReference Include="..\Store.Entities\Store.Entities.csproj" />
     </ItemGroup>
