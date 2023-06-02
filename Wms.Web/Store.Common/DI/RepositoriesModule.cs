@@ -1,8 +1,9 @@
 using Autofac;
-using Wms.Web.Repositories.Concrete;
+using Wms.Web.Repositories.Interfaces;
 using Wms.Web.Repositories.Interfaces.Interfaces;
+using Wms.Web.Store.Common.Repositories;
 
-namespace Wms.Web.Repositories.DI;
+namespace Wms.Web.Store.Common.DI;
 
 public sealed class RepositoriesModule : Module
 {

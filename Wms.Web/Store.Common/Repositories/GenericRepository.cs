@@ -1,11 +1,12 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Wms.Web.Common.Exceptions;
+using Wms.Web.Repositories.Interfaces;
 using Wms.Web.Repositories.Interfaces.Interfaces;
 using Wms.Web.Store.Common.Interfaces;
 using Wms.Web.Store.Entities.Interfaces;
 
-namespace Wms.Web.Repositories.Concrete;
+namespace Wms.Web.Store.Common.Repositories;
 
 public class GenericRepository<TEntity> : IGenericRepository<TEntity>
     where TEntity : class, IEntityWithId, IAuditableEntity

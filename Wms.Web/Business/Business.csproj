@@ -2,7 +2,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Common.Exceptions\Common.Exceptions.csproj" />
-        <ProjectReference Include="..\Repositories\Repositories.csproj" />
+        <ProjectReference Include="..\Repositories.Interfaces\Repositories.Interfaces.csproj" />
         <ProjectReference Include="..\Store.Entities\Store.Entities.csproj" />
     </ItemGroup>
 

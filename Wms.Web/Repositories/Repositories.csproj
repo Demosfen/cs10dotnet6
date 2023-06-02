@@ -6,4 +6,9 @@
       <ProjectReference Include="..\Store.Entities\Store.Entities.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Concrete\" />
+      <Folder Include="DI\" />
+    </ItemGroup>
+
 </Project>

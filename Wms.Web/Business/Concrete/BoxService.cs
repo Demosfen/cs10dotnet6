@@ -3,7 +3,7 @@ using Wms.Web.Business.Abstract;
 using Wms.Web.Business.Dto;
 using Wms.Web.Business.Extensions;
 using Wms.Web.Common.Exceptions;
-using Wms.Web.Repositories.Interfaces.Interfaces;
+using Wms.Web.Repositories.Interfaces;
 using Wms.Web.Store.Entities.Concrete;
 using Wms.Web.Store.Entities.Specifications;
 

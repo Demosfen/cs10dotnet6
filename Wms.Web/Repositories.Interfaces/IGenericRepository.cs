@@ -1,6 +1,7 @@
 using System.Linq.Expressions;
+using Wms.Web.Repositories.Interfaces.Interfaces;
 
-namespace Wms.Web.Repositories.Interfaces.Interfaces;
+namespace Wms.Web.Repositories.Interfaces;
 
 public interface IGenericRepository<TEntity> : IRepository  
     where TEntity : class

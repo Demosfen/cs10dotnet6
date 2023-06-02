@@ -9,7 +9,7 @@ using Wms.Web.Api.Infrastructure.Mapping;
 using Wms.Web.Api.Validators;
 using Wms.Web.Business.Infrastructure.DI;
 using Wms.Web.Business.Infrastructure.Mapping;
-using Wms.Web.Repositories.DI;
+using Wms.Web.Store.Common.DI;
 using Wms.Web.Store.Common.Interfaces;
 using Wms.Web.Store.Postgres;
 using Wms.Web.Store.Sqlite;

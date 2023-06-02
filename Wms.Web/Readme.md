@@ -23,7 +23,11 @@ dotnet ef database update
 </details>
 
 ## Project structure
-### Api
-![Wms.Api.png](..%2Fdocs%2Fdiagrams%2FWms.Api.png)
-### Business
-![Wms.Business.png](..%2Fdocs%2Fdiagrams%2FWms.Business.png)
+<details>
+  <summary>Click to expand</summary>
+
+  <div>
+    <h3>Api</h3>
+    <img src="../docs/diagrams/Wms.Api.png" alt="Wms.Api.png">
+  </div>
+</details>

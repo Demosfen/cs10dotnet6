@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Wms.Web.Store.Common.Interfaces;
 
 namespace Wms.Web.IntegrationTests.Infrastructure;
 
