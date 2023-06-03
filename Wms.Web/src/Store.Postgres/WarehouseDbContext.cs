@@ -18,12 +18,6 @@ internal sealed class WarehouseDbContext : DbContext, IWarehouseDbContext
     {
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder options)
-    {
-        options.UseNpgsql("");
-        options.LogTo(Console.WriteLine, LogLevel.Information);
-    }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

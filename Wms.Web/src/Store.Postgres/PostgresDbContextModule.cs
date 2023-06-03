@@ -9,7 +9,7 @@ namespace Wms.Web.Store.Postgres;
 
 public sealed class PostgresDbContextModule : Module
 {
-    private static readonly string ConnectionStringName = "PopulationDbContext";
+    private static readonly string ConnectionStringName = "PostgresDbContextCS";
 
     protected override void Load(ContainerBuilder containerBuilder)
     {
