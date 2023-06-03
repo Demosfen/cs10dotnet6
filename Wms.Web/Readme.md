@@ -26,7 +26,7 @@ dotnet ef database update
 #### Container diagram (Level 2)
 ![Wms.png](..%2Fdocs%2Fdiagrams%2FWms.png)
 <details>
-  <summary>Click to expand</summary>
+  <summary>Click to expand component diagram (level 3)</summary>
   <div>
     <h3>Api</h3>
     <img src="../docs/diagrams/Wms.Api.png" alt="Api">
