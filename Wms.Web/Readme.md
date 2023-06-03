@@ -16,6 +16,11 @@ dotnet tool install --global dotnet-ef
 dotnet ef migrations add InitialCreate --startup-project Api/Api.csproj --project Store.Sqlite/Store.Sqlite.csproj --context Wms.Web.Store.Sqlite.WarehouseDbContext
 ```
 
+### Add new migrations in src/ (Postgres)
+```
+dotnet ef migrations add InitialMigration --startup-project Api/Api.csproj --project Store.Postgres/Store.Postgres.csproj --context Wms.Web.Store.Postgres.WarehouseDbContext
+```
+
 ### Update database
 ```
 dotnet ef database update
