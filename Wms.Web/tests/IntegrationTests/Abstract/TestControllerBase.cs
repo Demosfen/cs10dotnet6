@@ -1,22 +1,21 @@
 using AutoMapper;
 using Wms.Web.Business.Infrastructure.Mapping;
+using Wms.Web.Client.Custom.Abstract;
 using Wms.Web.Store.Common.Interfaces;
 using Xunit;
 
 namespace Wms.Web.IntegrationTests.Abstract;
 
 [Collection(IntegrationTestCollection.Name)]
-public abstract partial class TestControllerBase : IAsyncLifetime
+public abstract partial class TestControllerBase
 {
-    protected readonly HttpClient HttpClient;
+    protected readonly IWmsClient Sut;
     
     protected IWarehouseDbContext DbContext { get; }
-    
-    internal const string BaseUri = "http://localhost";
-    
+
     protected TestControllerBase(TestApplication apiFactory)
     {
-        HttpClient = apiFactory.HttpClient;
+        Sut = apiFactory.WmsClient;
         DbContext = apiFactory.CreateDbContext();
         var configurationProvider = new MapperConfiguration(cfg =>
             {
@@ -24,13 +23,5 @@ public abstract partial class TestControllerBase : IAsyncLifetime
             });
 
         Mapper = configurationProvider.CreateMapper();
-    }
-    
-    public Task InitializeAsync() => Task.CompletedTask;
-    
-    public Task DisposeAsync()
-    {
-        // DbContext.Dispose(); //TODO shouldn't be here, or the error occurs
-        return Task.CompletedTask;
     }
 }

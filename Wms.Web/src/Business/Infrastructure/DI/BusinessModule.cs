@@ -5,7 +5,7 @@ using Wms.Web.Business.Abstract;
 
 namespace Wms.Web.Business.Infrastructure.DI;
 
-public sealed class ServiceModule : Module
+public sealed class BusinessModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {

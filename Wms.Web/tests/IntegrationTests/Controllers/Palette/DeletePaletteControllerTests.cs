@@ -1,8 +1,6 @@
 using System.Net;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
-using Wms.Web.Client.Custom.Abstract;
-using Wms.Web.Client.Custom.Concrete;
 using Wms.Web.IntegrationTests.Abstract;
 using Xunit;
 
@@ -10,15 +8,9 @@ namespace Wms.Web.IntegrationTests.Controllers.Palette;
 
 public sealed class DeletePaletteControllerTests : TestControllerBase
 {
-    private readonly IWmsClient _sut;
-
     public DeletePaletteControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
     {
-        _sut = new WmsClient(
-            new WarehouseClient(apiFactory.HttpClient),
-            new PaletteClient(apiFactory.HttpClient),
-            new BoxClient(apiFactory.HttpClient));
     }
     
     [Fact(DisplayName = "DeleteExistingPalette")]
@@ -32,7 +24,7 @@ public sealed class DeletePaletteControllerTests : TestControllerBase
         await GeneratePalette(warehouseId, paletteId);
         
         // Act
-        var deleteResponse = await _sut.PaletteClient.DeleteAsync(paletteId, CancellationToken.None);
+        var deleteResponse = await Sut.PaletteClient.DeleteAsync(paletteId, CancellationToken.None);
 
         // Assert
         deleteResponse.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -42,7 +34,7 @@ public sealed class DeletePaletteControllerTests : TestControllerBase
     public async Task Delete_ReturnsNotFound_WhenPaletteDoesNotExist()
     {
         // Act
-        var deleteResponse = await _sut.PaletteClient.DeleteAsync(Guid.NewGuid(), CancellationToken.None);
+        var deleteResponse = await Sut.PaletteClient.DeleteAsync(Guid.NewGuid(), CancellationToken.None);
 
         // Assert
         deleteResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -61,7 +53,7 @@ public sealed class DeletePaletteControllerTests : TestControllerBase
         await GenerateBox(paletteId, boxId);
 
         // Act
-        var deleteResponse = await _sut.PaletteClient.DeleteAsync(paletteId, CancellationToken.None);
+        var deleteResponse = await Sut.PaletteClient.DeleteAsync(paletteId, CancellationToken.None);
 
         // Assert
         deleteResponse.StatusCode.Should().Be(HttpStatusCode.Conflict);

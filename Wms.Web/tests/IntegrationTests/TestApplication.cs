@@ -13,7 +13,7 @@ public sealed class TestApplication : WebApplicationFactory<IApiMarker>, IAsyncL
     private readonly TestDatabaseFixture _dbFixture = new();
     
     private HttpClient? _httpClient;
-    private IWmsClient? _wmsClient;
+    protected IWmsClient? _wmsClient;
 
     public HttpClient HttpClient => _httpClient ?? throw new InvalidOperationException("No httpClient");
     

@@ -1,6 +1,4 @@
 using FluentAssertions;
-using Wms.Web.Client.Custom.Abstract;
-using Wms.Web.Client.Custom.Concrete;
 using Wms.Web.IntegrationTests.Abstract;
 using Xunit;
 
@@ -8,15 +6,9 @@ namespace Wms.Web.IntegrationTests.Controllers.Box;
 
 public sealed class GetAllBoxControllerTests : TestControllerBase
 {
-    private readonly IWmsClient _sut;
-
     public GetAllBoxControllerTests(TestApplication apiFactory)
         : base(apiFactory)
     {
-        _sut = new WmsClient(
-            new WarehouseClient(apiFactory.HttpClient),
-            new PaletteClient(apiFactory.HttpClient),
-            new BoxClient(apiFactory.HttpClient));
     }
 
     [Theory(DisplayName = "GetAllBoxes")]
@@ -38,7 +30,7 @@ public sealed class GetAllBoxControllerTests : TestControllerBase
 
         // Act
         var boxes =
-            await _sut.BoxClient.GetAllAsync(paletteId, offset, size, CancellationToken.None);
+            await Sut.BoxClient.GetAllAsync(paletteId, offset, size, CancellationToken.None);
 
         // Assert
         boxes?.Count.Should().Be(expectedCount);
@@ -67,7 +59,7 @@ public sealed class GetAllBoxControllerTests : TestControllerBase
 
         // Act
         var boxes =
-            await _sut.BoxClient.GetAllDeletedAsync(paletteId, offset, size, CancellationToken.None);
+            await Sut.BoxClient.GetAllDeletedAsync(paletteId, offset, size, CancellationToken.None);
 
         // Assert
         boxes?.Count.Should().Be(expectedCount);

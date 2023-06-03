@@ -1,7 +1,5 @@
 using System.Net;
 using FluentAssertions;
-using Wms.Web.Client.Custom.Abstract;
-using Wms.Web.Client.Custom.Concrete;
 using Wms.Web.Contracts.Requests;
 using Wms.Web.IntegrationTests.Abstract;
 using Xunit;
@@ -10,15 +8,10 @@ namespace Wms.Web.IntegrationTests.Controllers.Palette;
 
 public sealed class GetByIdWPaletteControllerTests : TestControllerBase
 {
-    private readonly IWmsClient _sut;
-
-    public GetByIdWPaletteControllerTests(TestApplication apiFactory) 
+    public GetByIdWPaletteControllerTests(TestApplication apiFactory)
         : base(apiFactory)
     {
-        _sut = new WmsClient(
-            new WarehouseClient(apiFactory.HttpClient),
-            new PaletteClient(apiFactory.HttpClient),
-            new BoxClient(apiFactory.HttpClient));    }
+    }
 
     [Fact(DisplayName = "GetPaletteById")]
     public async Task GetById_ReturnPalette_WhenPaletteExist()
@@ -32,7 +25,7 @@ public sealed class GetByIdWPaletteControllerTests : TestControllerBase
         var createdPalette = await GeneratePalette(warehouseId, paletteId);
 
         // Act
-        var response = await _sut.PaletteClient
+        var response = await Sut.PaletteClient
             .GetByIdAsync(paletteId, 0, 0, CancellationToken.None);
         
         // Assert
@@ -43,7 +36,7 @@ public sealed class GetByIdWPaletteControllerTests : TestControllerBase
     public async Task GetById_ReturnsNotFound_WhenPaletteDoesNotExist()
     {
         // Act
-        async Task Act() => await _sut.PaletteClient
+        async Task Act() => await Sut.PaletteClient
             .GetByIdAsync(Guid.NewGuid(), 0,0, CancellationToken.None);
         
         var exception = await Assert.ThrowsAsync<HttpRequestException>(Act);
@@ -66,7 +59,7 @@ public sealed class GetByIdWPaletteControllerTests : TestControllerBase
         await DeletePalette(paletteId);
         
         // Act
-        var response = await _sut.PaletteClient
+        var response = await Sut.PaletteClient
             .GetByIdAsync(paletteId, 0, 0, CancellationToken.None);
         
         // Assert
@@ -85,7 +78,7 @@ public sealed class GetByIdWPaletteControllerTests : TestControllerBase
         
         await GeneratePalette(warehouseId, paletteId);
 
-        var createBox = await _sut.BoxClient.CreateAsync(
+        var createBox = await Sut.BoxClient.CreateAsync(
             paletteId,
             boxId,
             new BoxRequest
@@ -98,7 +91,7 @@ public sealed class GetByIdWPaletteControllerTests : TestControllerBase
             });
 
         // Act
-        var response = await _sut.PaletteClient
+        var response = await Sut.PaletteClient
             .GetByIdAsync(paletteId, 0, 1, CancellationToken.None);
         
         // Assert

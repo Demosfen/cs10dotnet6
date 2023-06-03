@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Wms.Web.Store.Common.Interfaces;
 using Wms.Web.Store.Entities.Concrete;
 using Wms.Web.Store.Entities.Interfaces;

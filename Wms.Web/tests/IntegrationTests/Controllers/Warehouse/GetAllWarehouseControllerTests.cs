@@ -1,6 +1,4 @@
 using FluentAssertions;
-using Wms.Web.Client.Custom.Abstract;
-using Wms.Web.Client.Custom.Concrete;
 using Wms.Web.Contracts.Responses;
 using Wms.Web.IntegrationTests.Abstract;
 using Xunit;
@@ -9,17 +7,9 @@ namespace Wms.Web.IntegrationTests.Controllers.Warehouse;
 
 public sealed class GetAllWarehouseControllerTests : TestControllerBase
 {
-    private readonly IWmsClient _sut;
-
-    private const string Ver1 = "/api/v1/";
-
     public GetAllWarehouseControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
     {
-        _sut = new WmsClient(
-            new WarehouseClient(apiFactory.HttpClient),
-            new PaletteClient(apiFactory.HttpClient),
-            new BoxClient(apiFactory.HttpClient));
     }
 
     [Theory(DisplayName = "GetAllWarehouses")]
@@ -32,15 +22,15 @@ public sealed class GetAllWarehouseControllerTests : TestControllerBase
         var warehouseId2 = Guid.NewGuid();
         
         // Act
-        var existingWarehouses = await HttpClient
-            .GetFromJsonAsync<IReadOnlyCollection<WarehouseResponse>>($"{Ver1}warehouses");
+        var existingWarehouses = await Sut.WarehouseClient
+            .GetAllAsync(offset, size, CancellationToken.None);
         
         await GenerateWarehouse(warehouseId1);
 
         var createdSecond = await GenerateWarehouse(warehouseId2);
 
         var response =
-            await _sut.WarehouseClient
+            await Sut.WarehouseClient
                 .GetAllAsync(existingWarehouses?.Count + offset, size, CancellationToken.None);
 
         // Assert
@@ -58,8 +48,8 @@ public sealed class GetAllWarehouseControllerTests : TestControllerBase
         var warehouseId2 = Guid.NewGuid();
         
         // Act
-        var existingWarehouses = await HttpClient
-            .GetFromJsonAsync<IReadOnlyCollection<WarehouseResponse>>($"{Ver1}warehouses/archive");
+        var existingWarehouses = await Sut.WarehouseClient
+            .GetAllAsync(offset, size, CancellationToken.None);
 
         await GenerateWarehouse(warehouseId1);
         var createdSecond = await GenerateWarehouse(warehouseId2);
@@ -67,7 +57,7 @@ public sealed class GetAllWarehouseControllerTests : TestControllerBase
         await DeleteWarehouse(warehouseId1);
         await DeleteWarehouse(warehouseId2);
 
-        var response = await _sut.WarehouseClient
+        var response = await Sut.WarehouseClient
             .GetAllDeletedAsync(existingWarehouses?.Count + offset, size, CancellationToken.None);
         
         // Assert

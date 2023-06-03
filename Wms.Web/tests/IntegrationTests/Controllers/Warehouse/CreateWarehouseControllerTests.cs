@@ -1,6 +1,4 @@
 using FluentAssertions;
-using Wms.Web.Client.Custom.Abstract;
-using Wms.Web.Client.Custom.Concrete;
 using Wms.Web.Common.Exceptions;
 using Wms.Web.Contracts.Requests;
 using Wms.Web.IntegrationTests.Abstract;
@@ -10,15 +8,9 @@ namespace Wms.Web.IntegrationTests.Controllers.Warehouse;
 
 public sealed class CreateWarehouseControllerTests : TestControllerBase
 {
-    private readonly IWmsClient _sut;
-
     public CreateWarehouseControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
     {
-        _sut = new WmsClient(
-            new WarehouseClient(apiFactory.HttpClient),
-            new PaletteClient(apiFactory.HttpClient),
-            new BoxClient(apiFactory.HttpClient));    
     }
     
     [Fact(DisplayName = "CreateWarehouse")]
@@ -32,7 +24,7 @@ public sealed class CreateWarehouseControllerTests : TestControllerBase
         };
         
         // Act
-        var createWarehouse = await _sut.WarehouseClient
+        var createWarehouse = await Sut.WarehouseClient
             .CreateAsync(id, request, CancellationToken.None);
 
         // Assert
@@ -46,7 +38,7 @@ public sealed class CreateWarehouseControllerTests : TestControllerBase
         var id = Guid.NewGuid();
     
         // Act
-        async Task Act() => await _sut.WarehouseClient
+        async Task Act() => await Sut.WarehouseClient
             .CreateAsync(id, new WarehouseRequest { Name = "" });
         var exception = await Assert.ThrowsAsync<ApiValidationException>(Act);
         
@@ -62,7 +54,7 @@ public sealed class CreateWarehouseControllerTests : TestControllerBase
         var id = Guid.NewGuid();
 
         // Act
-        async Task Act() => await _sut.WarehouseClient
+        async Task Act() => await Sut.WarehouseClient
             .CreateAsync(id, new WarehouseRequest { Name = Guid.NewGuid().ToString() + Guid.NewGuid() });
         var exception = await Assert.ThrowsAsync<ApiValidationException>(Act);
         
@@ -83,8 +75,8 @@ public sealed class CreateWarehouseControllerTests : TestControllerBase
         };
         
         // Act
-        await _sut.WarehouseClient.CreateAsync(id, request);
-        async Task Act() => await _sut.WarehouseClient.CreateAsync(id, request);
+        await Sut.WarehouseClient.CreateAsync(id, request);
+        async Task Act() => await Sut.WarehouseClient.CreateAsync(id, request);
         var exception = await Assert.ThrowsAsync<EntityAlreadyExistException>(Act);
         
         // Assert

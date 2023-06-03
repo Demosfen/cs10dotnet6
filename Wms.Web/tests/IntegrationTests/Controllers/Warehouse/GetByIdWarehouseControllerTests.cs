@@ -1,7 +1,5 @@
 using System.Net;
 using FluentAssertions;
-using Wms.Web.Client.Custom.Abstract;
-using Wms.Web.Client.Custom.Concrete;
 using Wms.Web.IntegrationTests.Abstract;
 using Xunit;
 
@@ -9,15 +7,9 @@ namespace Wms.Web.IntegrationTests.Controllers.Warehouse;
 
 public sealed class GetByIdWarehouseControllerTests : TestControllerBase
 {
-    private readonly IWmsClient _sut;
-
     public GetByIdWarehouseControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
     {
-        _sut = new WmsClient(
-            new WarehouseClient(apiFactory.HttpClient),
-            new PaletteClient(apiFactory.HttpClient),
-            new BoxClient(apiFactory.HttpClient));
     }
     
     [Fact(DisplayName = "GetWarehouseById")]
@@ -29,7 +21,7 @@ public sealed class GetByIdWarehouseControllerTests : TestControllerBase
         var createdWarehouse = await GenerateWarehouse(warehouseId);
 
         // Act
-        var response = await _sut.WarehouseClient
+        var response = await Sut.WarehouseClient
             .GetByIdAsync(warehouseId, 0, 1, CancellationToken.None);
         
         // Assert
@@ -41,7 +33,7 @@ public sealed class GetByIdWarehouseControllerTests : TestControllerBase
     {
         // Act
         // Act
-        async Task Act() => await _sut.WarehouseClient
+        async Task Act() => await Sut.WarehouseClient
             .GetByIdAsync(Guid.NewGuid(), 0,0, CancellationToken.None);
         
         var exception = await Assert.ThrowsAsync<HttpRequestException>(Act);
@@ -61,7 +53,7 @@ public sealed class GetByIdWarehouseControllerTests : TestControllerBase
         await DeleteWarehouse(warehouseId);
         
         // Act
-        var response = await _sut.WarehouseClient
+        var response = await Sut.WarehouseClient
             .GetByIdAsync(warehouseId, 0, 0, CancellationToken.None);
         
         // Assert

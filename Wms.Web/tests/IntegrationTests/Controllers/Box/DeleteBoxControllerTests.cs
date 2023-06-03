@@ -1,7 +1,5 @@
 using System.Net;
 using FluentAssertions;
-using Wms.Web.Client.Custom.Abstract;
-using Wms.Web.Client.Custom.Concrete;
 using Wms.Web.IntegrationTests.Abstract;
 using Xunit;
 
@@ -9,15 +7,9 @@ namespace Wms.Web.IntegrationTests.Controllers.Box;
 
 public sealed class DeleteBoxControllerTests : TestControllerBase
 {
-    private readonly IWmsClient _sut;
-
     public DeleteBoxControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
     {
-        _sut = new WmsClient(
-            new WarehouseClient(apiFactory.HttpClient),
-            new PaletteClient(apiFactory.HttpClient),
-            new BoxClient(apiFactory.HttpClient));
     }
 
     [Fact(DisplayName = "DeleteExistingBox")]
@@ -33,7 +25,7 @@ public sealed class DeleteBoxControllerTests : TestControllerBase
         await GenerateBox(paletteId, boxId);
         
         // Act
-        var deleteResponse = await _sut.BoxClient.DeleteAsync(boxId, CancellationToken.None);
+        var deleteResponse = await Sut.BoxClient.DeleteAsync(boxId, CancellationToken.None);
 
         // Assert
         deleteResponse.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -43,7 +35,7 @@ public sealed class DeleteBoxControllerTests : TestControllerBase
     public async Task Delete_ReturnsNotFound_WhenBoxDoesNotExist()
     {
         // Act
-        var deleteResponse = await _sut.BoxClient.DeleteAsync(Guid.NewGuid(), CancellationToken.None);
+        var deleteResponse = await Sut.BoxClient.DeleteAsync(Guid.NewGuid(), CancellationToken.None);
     
         // Assert
         deleteResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);

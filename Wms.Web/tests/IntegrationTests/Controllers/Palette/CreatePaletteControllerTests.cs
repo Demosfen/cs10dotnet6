@@ -1,6 +1,4 @@
 using FluentAssertions;
-using Wms.Web.Client.Custom.Abstract;
-using Wms.Web.Client.Custom.Concrete;
 using Wms.Web.Common.Exceptions;
 using Wms.Web.Contracts.Requests;
 using Wms.Web.IntegrationTests.Abstract;
@@ -10,15 +8,9 @@ namespace Wms.Web.IntegrationTests.Controllers.Palette;
 
 public sealed class CreatePaletteControllerTests : TestControllerBase
 {
-    private readonly IWmsClient _sut;
-    
     public CreatePaletteControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
     {
-        _sut = new WmsClient(
-            new WarehouseClient(apiFactory.HttpClient),
-            new PaletteClient(apiFactory.HttpClient),
-            new BoxClient(apiFactory.HttpClient));
     }
     
     [Theory(DisplayName = "CreatePalette")]
@@ -38,7 +30,7 @@ public sealed class CreatePaletteControllerTests : TestControllerBase
         
         await GenerateWarehouse(warehouseId);
         
-        var createPalette = await _sut.PaletteClient
+        var createPalette = await Sut.PaletteClient
             .CreateAsync(warehouseId, paletteId, request, CancellationToken.None);
         
         // Assert
@@ -58,9 +50,9 @@ public sealed class CreatePaletteControllerTests : TestControllerBase
         await GenerateWarehouse(warehouseId);
         
         // Act
-        await _sut.PaletteClient
+        await Sut.PaletteClient
             .CreateAsync(warehouseId, paletteId, request, CancellationToken.None);
-        async Task Act() => await _sut.PaletteClient.CreateAsync(warehouseId, paletteId, request, CancellationToken.None);
+        async Task Act() => await Sut.PaletteClient.CreateAsync(warehouseId, paletteId, request, CancellationToken.None);
         
         var exception = await Assert.ThrowsAsync<EntityAlreadyExistException>(Act);
         exception.Id.Should().Be(paletteId);
@@ -78,7 +70,7 @@ public sealed class CreatePaletteControllerTests : TestControllerBase
         await GenerateWarehouse(warehouseId);
         
         // Act
-        async Task Act() => await _sut.PaletteClient.CreateAsync(warehouseId, paletteId, request, CancellationToken.None);
+        async Task Act() => await Sut.PaletteClient.CreateAsync(warehouseId, paletteId, request, CancellationToken.None);
         var exception = await Assert.ThrowsAsync<ApiValidationException>(Act);
 
         // Assert

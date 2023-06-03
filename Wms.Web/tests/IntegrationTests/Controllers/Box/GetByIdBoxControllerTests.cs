@@ -1,7 +1,5 @@
 using System.Net;
 using FluentAssertions;
-using Wms.Web.Client.Custom.Abstract;
-using Wms.Web.Client.Custom.Concrete;
 using Wms.Web.IntegrationTests.Abstract;
 using Xunit;
 
@@ -9,16 +7,11 @@ namespace Wms.Web.IntegrationTests.Controllers.Box;
 
 public sealed class GetByIdBoxControllerTests : TestControllerBase
 {
-    private readonly IWmsClient _sut;
-
     public GetByIdBoxControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
     {
-        _sut = new WmsClient(
-            new WarehouseClient(apiFactory.HttpClient),
-            new PaletteClient(apiFactory.HttpClient),
-            new BoxClient(apiFactory.HttpClient));
     }
+    
     [Fact(DisplayName = "GetBoxById")]
     public async Task GetById_ReturnBox_WhenBoxExist()
     {
@@ -32,7 +25,7 @@ public sealed class GetByIdBoxControllerTests : TestControllerBase
         var box = await GenerateBox(paletteId, boxId);
         
         // Act
-        var response = await _sut.BoxClient.GetByIdAsync(boxId, CancellationToken.None);
+        var response = await Sut.BoxClient.GetByIdAsync(boxId, CancellationToken.None);
         
         // Assert
         response.Should().BeEquivalentTo(box);
@@ -42,7 +35,7 @@ public sealed class GetByIdBoxControllerTests : TestControllerBase
     public async Task GetById_ReturnsNotFound_WhenBoxDoesNotExist()
     {
         // Act
-        async Task Act() => await _sut.BoxClient.GetByIdAsync(Guid.NewGuid());
+        async Task Act() => await Sut.BoxClient.GetByIdAsync(Guid.NewGuid());
         var exception = await Assert.ThrowsAsync<HttpRequestException>(Act);
 
         exception.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -63,7 +56,7 @@ public sealed class GetByIdBoxControllerTests : TestControllerBase
         await DeleteBox(boxId);
         
         // Act
-        var response = await _sut.BoxClient.GetByIdAsync(boxId);
+        var response = await Sut.BoxClient.GetByIdAsync(boxId);
 
         // Assert
         response.Should().BeEquivalentTo(box);

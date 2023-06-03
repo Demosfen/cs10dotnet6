@@ -52,7 +52,7 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {
     containerBuilder.RegisterModule<SqliteDbContextModule>();
     containerBuilder.RegisterModule<PostgresDbContextModule>();
-    containerBuilder.RegisterModule<ServiceModule>();
+    containerBuilder.RegisterModule<BusinessModule>();
 });
 
 var app = builder.Build();

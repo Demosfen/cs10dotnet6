@@ -1,6 +1,4 @@
 using FluentAssertions;
-using Wms.Web.Client.Custom.Abstract;
-using Wms.Web.Client.Custom.Concrete;
 using Wms.Web.Common.Exceptions;
 using Wms.Web.Contracts.Requests;
 using Wms.Web.IntegrationTests.Abstract;
@@ -10,15 +8,9 @@ namespace Wms.Web.IntegrationTests.Controllers.Box;
 
 public sealed class CreteBoxControllerTests : TestControllerBase
 {
-    private readonly IWmsClient _sut;
-    
     public CreteBoxControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
     {
-        _sut = new WmsClient(
-            new WarehouseClient(apiFactory.HttpClient),
-            new PaletteClient(apiFactory.HttpClient),
-            new BoxClient(apiFactory.HttpClient));
     }
     
     [Fact(DisplayName = "CreateBox")]
@@ -41,7 +33,7 @@ public sealed class CreteBoxControllerTests : TestControllerBase
         await GeneratePalette(warehouseId, paletteId);
     
         // Act
-        var createBox = await _sut.BoxClient.CreateAsync(paletteId, boxId, boxRequest);
+        var createBox = await Sut.BoxClient.CreateAsync(paletteId, boxId, boxRequest);
 
         // Assert
         createBox.Should().BeEquivalentTo(boxRequest);
@@ -74,7 +66,7 @@ public sealed class CreteBoxControllerTests : TestControllerBase
         await GeneratePalette(warehouseId, paletteId);
         
         // Act
-        var createdBox = await _sut.BoxClient.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
+        var createdBox = await Sut.BoxClient.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
         
         // Assert
         createdBox?.Volume.Should().Be(expectedVolume);
@@ -98,7 +90,7 @@ public sealed class CreteBoxControllerTests : TestControllerBase
         await GenerateBox(paletteId, boxId);
     
         // Act
-        async Task Act() => await _sut.BoxClient.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
+        async Task Act() => await Sut.BoxClient.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
 
         var exception = await Assert.ThrowsAsync<EntityAlreadyExistException>(Act);
     
@@ -126,7 +118,7 @@ public sealed class CreteBoxControllerTests : TestControllerBase
         await GeneratePalette(warehouseId, paletteId);
     
         // Act
-        async Task Act() => await _sut.BoxClient.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
+        async Task Act() => await Sut.BoxClient.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
         var exception = await Assert.ThrowsAsync<ApiValidationException>(Act);
 
         // Assert
@@ -160,7 +152,7 @@ public sealed class CreteBoxControllerTests : TestControllerBase
         await GeneratePalette(warehouseId, paletteId);
 
         // Act
-        async Task Act() => await _sut.BoxClient.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
+        async Task Act() => await Sut.BoxClient.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
         var exception = await Assert.ThrowsAsync<ApiValidationException>(Act);
     
         // Assert
@@ -189,7 +181,7 @@ public sealed class CreteBoxControllerTests : TestControllerBase
         await GeneratePalette(warehouseId, paletteId);
     
         // Act
-        async Task Act() => await _sut.BoxClient.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
+        async Task Act() => await Sut.BoxClient.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
         var exception = await Assert.ThrowsAsync<ApiValidationException>(Act);
     
         // Assert
@@ -220,7 +212,7 @@ public sealed class CreteBoxControllerTests : TestControllerBase
         await GeneratePalette(warehouseId, paletteId);
 
         // Act
-        async Task Act() => await _sut.BoxClient.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
+        async Task Act() => await Sut.BoxClient.CreateAsync(paletteId, boxId, boxRequest, CancellationToken.None);
         var exception = await Assert.ThrowsAsync<ApiValidationException>(Act);
     
         // Assert
