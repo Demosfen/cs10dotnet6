@@ -23,7 +23,7 @@ dotnet ef database update
 </details>
 
 ## WMS structure
-#### Container diagram (Level 2)
+#### Project coupling diagram
 ![Wms.png](..%2Fdocs%2Fdiagrams%2FWms.png)
 <details>
   <summary>Click to expand component diagram (level 3)</summary>
