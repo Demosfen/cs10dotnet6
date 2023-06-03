@@ -3,7 +3,7 @@ using Autofac.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Wms.Web.Store.Common;
+using Wms.Web.Store.Postgres.DI;
 
 namespace Wms.Web.Store.Postgres;
 
@@ -27,5 +27,7 @@ public sealed class PostgresDbContextModule : Module
             .Register(context => context.Resolve<WarehouseDbContext>())
             .AsImplementedInterfaces()
             .InstancePerLifetimeScope();
+        
+        containerBuilder.RegisterModule<RepositoriesModule>();
     }
 }

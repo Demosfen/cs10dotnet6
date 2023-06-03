@@ -6,7 +6,7 @@ public class TestDatabaseFixture : IDisposable
 {
     private readonly IConfigurationRoot _configuration;
     private readonly string _connectionString;
-    private readonly WarehouseDbContext _dbContext;
+    private readonly Store.Postgres.WarehouseDbContext _dbContext;
 
     public TestDatabaseFixture()
     {

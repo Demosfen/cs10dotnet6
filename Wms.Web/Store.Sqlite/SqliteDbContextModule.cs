@@ -1,7 +1,7 @@
 using Autofac;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Wms.Web.Store.Common;
+using Wms.Web.Store.Sqlite.DI;
 
 namespace Wms.Web.Store.Sqlite;
 
@@ -25,5 +25,7 @@ public sealed class SqliteDbContextModule : Module
             .AsSelf()
             .AsImplementedInterfaces()
             .InstancePerLifetimeScope();
+        
+        containerBuilder.RegisterModule<RepositoriesModule>();
     }
 }

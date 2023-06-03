@@ -9,7 +9,6 @@ using Wms.Web.Api.Infrastructure.Mapping;
 using Wms.Web.Api.Validators;
 using Wms.Web.Business.Infrastructure.DI;
 using Wms.Web.Business.Infrastructure.Mapping;
-using Wms.Web.Store.Common.DI;
 using Wms.Web.Store.Common.Interfaces;
 using Wms.Web.Store.Postgres;
 using Wms.Web.Store.Sqlite;
@@ -54,7 +53,6 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
     containerBuilder.RegisterModule<SqliteDbContextModule>();
     containerBuilder.RegisterModule<PostgresDbContextModule>();
     containerBuilder.RegisterModule<ServiceModule>();
-    containerBuilder.RegisterModule<RepositoriesModule>();
 });
 
 var app = builder.Build();

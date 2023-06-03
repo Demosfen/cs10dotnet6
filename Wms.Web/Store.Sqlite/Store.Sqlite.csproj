@@ -12,4 +12,8 @@
       <ProjectReference Include="..\Store.Common\Store.Common.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <InternalsVisibleTo Include="Wms.Web.IntegrationTests" />
+    </ItemGroup>
+
 </Project>

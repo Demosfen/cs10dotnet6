@@ -1,9 +1,8 @@
 using Autofac;
 using Wms.Web.Repositories.Interfaces;
-using Wms.Web.Repositories.Interfaces.Interfaces;
-using Wms.Web.Store.Common.Repositories;
+using Wms.Web.Store.Postgres.Repositories;
 
-namespace Wms.Web.Store.Common.DI;
+namespace Wms.Web.Store.Postgres.DI;
 
 public sealed class RepositoriesModule : Module
 {

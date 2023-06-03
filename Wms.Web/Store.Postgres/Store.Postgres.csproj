@@ -6,11 +6,15 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Migrations\" />
+        <ProjectReference Include="..\Store.Common\Store.Common.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Store.Common\Store.Common.csproj" />
+      <Folder Include="Migrations\" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Wms.Web.IntegrationTests" />
     </ItemGroup>
 
 </Project>
