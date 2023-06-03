@@ -1,3 +1,4 @@
+using System;
 using Wms.Web.Contracts.Requests;
 
 namespace Wms.Web.Api.Contracts;

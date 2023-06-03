@@ -7,13 +7,13 @@ using Xunit;
 
 namespace Wms.Web.IntegrationTests.Controllers.Warehouse;
 
-public sealed class GetAll : TestControllerBase
+public sealed class GetAllWarehouseControllerTests : TestControllerBase
 {
     private readonly IWmsClient _sut;
 
     private const string Ver1 = "/api/v1/";
 
-    public GetAll(TestApplication apiFactory) 
+    public GetAllWarehouseControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
     {
         _sut = new WmsClient(

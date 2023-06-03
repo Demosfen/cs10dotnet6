@@ -8,11 +8,11 @@ using Xunit;
 
 namespace Wms.Web.IntegrationTests.Controllers.Warehouse;
 
-public sealed class Create : TestControllerBase
+public sealed class CreateWarehouseControllerTests : TestControllerBase
 {
     private readonly IWmsClient _sut;
 
-    public Create(TestApplication apiFactory) 
+    public CreateWarehouseControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
     {
         _sut = new WmsClient(
@@ -28,7 +28,7 @@ public sealed class Create : TestControllerBase
         var id = Guid.NewGuid();
         var request = new WarehouseRequest
         {
-            Name = "Warehouse#Create"
+            Name = id.ToString()
         };
         
         // Act

@@ -8,11 +8,11 @@ using Xunit;
 
 namespace Wms.Web.IntegrationTests.Controllers.Box;
 
-public sealed class Crete : TestControllerBase
+public sealed class CreteBoxControllerTests : TestControllerBase
 {
     private readonly IWmsClient _sut;
     
-    public Crete(TestApplication apiFactory) 
+    public CreteBoxControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
     {
         _sut = new WmsClient(

@@ -8,11 +8,11 @@ using Xunit;
 
 namespace Wms.Web.IntegrationTests.Controllers.Warehouse;
 
-public sealed class Delete : TestControllerBase
+public sealed class DeleteWarehouseControllerTests : TestControllerBase
 {
     private readonly IWmsClient _sut;
 
-    public Delete(TestApplication apiFactory) 
+    public DeleteWarehouseControllerTests(TestApplication apiFactory) 
         : base(apiFactory)
     {
         _sut = new WmsClient(
