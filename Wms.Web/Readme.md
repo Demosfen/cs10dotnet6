@@ -11,9 +11,9 @@
 dotnet tool install --global dotnet-ef
 ```
 
-### Add new migrations
+### Add new migrations in src/ (Sqlite)
 ```
-dotnet ef migrations add InitialCreate --startup-project Api/Api.csproj --project Store/Store.csproj --context WarehouseDbContext
+dotnet ef migrations add InitialCreate --startup-project Api/Api.csproj --project Store.Sqlite/Store.Sqlite.csproj --context Wms.Web.Store.Sqlite.WarehouseDbContext
 ```
 
 ### Update database
