@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc.Testing;
+using Testcontainers.PostgreSql;
 using Wms.Web.Api;
 using Wms.Web.Client.Custom.Abstract;
 using Wms.Web.Client.Custom.Concrete;
-using Wms.Web.IntegrationTests.Infrastructure;
 using Wms.Web.Store.Common.Interfaces;
 using Xunit;
 
@@ -10,7 +10,13 @@ namespace Wms.Web.IntegrationTests;
 
 public sealed class TestApplication : WebApplicationFactory<IApiMarker>, IAsyncLifetime
 {
-    private readonly TestDatabaseFixture _dbFixture = new();
+    private readonly PostgreSqlContainer _dbContainer =
+        new PostgreSqlBuilder()
+            .WithImage("postgres:alpine3.18")
+            .WithDatabase("TestDatabase")
+            .WithUsername("user")
+            .WithPassword("password").Build();
+
     
     private IWmsClient? _wmsClient;
 
@@ -18,25 +24,26 @@ public sealed class TestApplication : WebApplicationFactory<IApiMarker>, IAsyncL
 
     public IWarehouseDbContext CreateDbContext() => Services.GetRequiredService<IWarehouseDbContext>();
 
-    protected override void ConfigureWebHost(IWebHostBuilder builder) 
-        => builder.UseSetting("ConnectionStrings:WarehouseDbContextCS", 
-            _dbFixture.GetConnectionString());
-    
-    public Task InitializeAsync()
+    protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
+        builder.UseSetting("ConnectionStrings:WmsPgsql",
+            _dbContainer.GetConnectionString());
+        
+        builder.UseSetting("Wms:DbProvider", "Postgres");
+    }
+
+    public async Task InitializeAsync()
+    {
+        await _dbContainer.StartAsync();
+        
         var httpClient = CreateClient();
         
         _wmsClient = new WmsClient(
             new WarehouseClient(httpClient),
             new PaletteClient(httpClient),
             new BoxClient(httpClient));
-        
-        return Task.CompletedTask;
     }
 
-    public new Task DisposeAsync()
-    {
-        _dbFixture.Dispose();
-        return Task.CompletedTask;
-    }
+    public new async Task DisposeAsync()
+        => await _dbContainer.StopAsync();
 }

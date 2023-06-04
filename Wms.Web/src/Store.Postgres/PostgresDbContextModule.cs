@@ -9,7 +9,7 @@ namespace Wms.Web.Store.Postgres;
 
 public sealed class PostgresDbContextModule : Module
 {
-    private static readonly string ConnectionStringName = "PostgresDbContextCS";
+    private static readonly string ConnectionStringName = "WmsPgsql";
 
     protected override void Load(ContainerBuilder containerBuilder)
     {
@@ -19,7 +19,9 @@ public sealed class PostgresDbContextModule : Module
             var connectionString = provider
                 .GetRequiredService<IConfiguration>()
                 .GetConnectionString(ConnectionStringName);
-            builder.UseNpgsql(connectionString, optionsBuilder => { optionsBuilder.EnableRetryOnFailure(); });
+            builder.UseNpgsql(
+                connectionString, 
+                optionsBuilder => { optionsBuilder.EnableRetryOnFailure(); });
         });
         containerBuilder.Populate(services);
 

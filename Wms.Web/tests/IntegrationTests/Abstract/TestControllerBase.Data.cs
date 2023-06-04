@@ -49,8 +49,8 @@ public abstract partial class TestControllerBase
                 Depth = 5,
                 Weight = 5,
                 Volume = 125,
-                ProductionDate = new DateTime(2007,1,1),
-                ExpiryDate = new DateTime(2008,1,1)
+                ProductionDate = new DateTime(2007,1,1, 0,0,0,0, DateTimeKind.Utc),
+                ExpiryDate = new DateTime(2008,1,1, 0,0,0,0, DateTimeKind.Utc)
             });
         
         await DbContext.SaveChangesAsync(CancellationToken.None);

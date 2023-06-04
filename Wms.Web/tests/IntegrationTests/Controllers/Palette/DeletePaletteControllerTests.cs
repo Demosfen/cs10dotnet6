@@ -27,7 +27,7 @@ public sealed class DeletePaletteControllerTests : TestControllerBase
         var deleteResponse = await Sut.PaletteClient.DeleteAsync(paletteId, CancellationToken.None);
 
         // Assert
-        deleteResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        deleteResponse.StatusCode.Should().Be(HttpStatusCode.NoContent);
     }
 
     [Fact(DisplayName = "DeleteNonExistingPalette")]

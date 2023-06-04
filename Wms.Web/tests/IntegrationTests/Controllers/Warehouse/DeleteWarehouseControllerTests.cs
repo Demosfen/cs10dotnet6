@@ -26,7 +26,7 @@ public sealed class DeleteWarehouseControllerTests : TestControllerBase
             .DeleteAsync(id);
 
         // Assert
-        deleteResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        deleteResponse.StatusCode.Should().Be(HttpStatusCode.NoContent);
     }
 
     [Fact(DisplayName = "DeleteNonExistWarehouse")]

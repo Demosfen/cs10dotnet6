@@ -5,6 +5,7 @@ using AutoMapper;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using Wms.Web.Api;
 using Wms.Web.Api.Infrastructure.Filters;
 using Wms.Web.Api.Infrastructure.Mapping;
 using Wms.Web.Api.Validators.Warehouse;
@@ -49,20 +50,22 @@ builder.Services.AddAutoMapper(
     typeof(ApiContractToDtoMappingProfile), 
     typeof(DtoEntitiesMappingProfile));
 
-var dataSource = config.GetSection("DataSource").Value;
+var wmsOptions = config.GetRequiredSection(WmsOptions.SectionName)
+    .Get<WmsOptions>()
+    ?? throw new InvalidOperationException("Provide DbProvider options please");
 
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {
-    switch (dataSource)
+    switch (wmsOptions.DbProvider)
     {
-        case "Postgres":
+        case WmsOptions.DbProviderEnum.Postgres:
             containerBuilder.RegisterModule<PostgresDbContextModule>();
             break;
-        case "Sqlite":
+        case WmsOptions.DbProviderEnum.Sqlite:
             containerBuilder.RegisterModule<SqliteDbContextModule>();
             break;
         default:
-            throw new ArgumentException($"Invalid data source: {dataSource}");
+            throw new ArgumentException($"Invalid data source: {wmsOptions.DbProvider}");
     }
 
     containerBuilder.RegisterModule<BusinessModule>();

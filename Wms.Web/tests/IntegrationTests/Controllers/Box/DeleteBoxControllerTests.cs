@@ -28,7 +28,7 @@ public sealed class DeleteBoxControllerTests : TestControllerBase
         var deleteResponse = await Sut.BoxClient.DeleteAsync(boxId, CancellationToken.None);
 
         // Assert
-        deleteResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        deleteResponse.StatusCode.Should().Be(HttpStatusCode.NoContent);
     }
 
     [Fact(DisplayName = "DeleteNonExistingBox")]

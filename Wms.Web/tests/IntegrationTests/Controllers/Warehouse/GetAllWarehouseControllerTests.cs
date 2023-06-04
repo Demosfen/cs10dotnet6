@@ -1,5 +1,4 @@
 using FluentAssertions;
-using Wms.Web.Contracts.Responses;
 using Wms.Web.IntegrationTests.Abstract;
 using Xunit;
 
@@ -49,7 +48,7 @@ public sealed class GetAllWarehouseControllerTests : TestControllerBase
         
         // Act
         var existingWarehouses = await Sut.WarehouseClient
-            .GetAllAsync(offset, size, CancellationToken.None);
+            .GetAllDeletedAsync(offset, size, CancellationToken.None);
 
         await GenerateWarehouse(warehouseId1);
         var createdSecond = await GenerateWarehouse(warehouseId2);

@@ -25,8 +25,8 @@ public sealed class CreteBoxControllerTests : TestControllerBase
         {
             Width = 1, Depth = 1, Height = 1,
             Weight = 1, 
-            ExpiryDate = new DateTime(2007, 1, 1),
-            ProductionDate = new DateTime(2006,1,1)
+            ExpiryDate = new DateTime(2007, 1, 1, 0,0,0,0, DateTimeKind.Utc),
+            ProductionDate = new DateTime(2006,1,1, 0,0,0,0, DateTimeKind.Utc)
         };
         
         await GenerateWarehouse(warehouseId);
@@ -59,7 +59,7 @@ public sealed class CreteBoxControllerTests : TestControllerBase
             Height = height,
             Depth = depth, 
             Weight = 1, 
-            ExpiryDate = new DateTime(2007, 1, 1)
+            ExpiryDate = new DateTime(2007, 1, 1, 0,0,0,0, DateTimeKind.Utc)
         };
         
         await GenerateWarehouse(warehouseId);
@@ -82,7 +82,7 @@ public sealed class CreteBoxControllerTests : TestControllerBase
         var boxRequest = new BoxRequest
         {
             Width = 1, Depth = 1, Height = 1,
-            Weight = 1, ExpiryDate = new DateTime(2007, 1, 1)
+            Weight = 1, ExpiryDate = new DateTime(2007, 1, 1, 0,0,0,0, DateTimeKind.Utc)
         };
         
         await GenerateWarehouse(warehouseId);
@@ -111,7 +111,8 @@ public sealed class CreteBoxControllerTests : TestControllerBase
         var boxRequest = new BoxRequest
         {
             Width = -1, Depth = 0, Height = 1000,
-            Weight = 1, ExpiryDate = new DateTime(2007, 1, 1)
+            Weight = 1, ExpiryDate = 
+                new DateTime(2007, 1, 1, 0,0,0,0, DateTimeKind.Utc)
         };
         
         await GenerateWarehouse(warehouseId);
@@ -144,8 +145,8 @@ public sealed class CreteBoxControllerTests : TestControllerBase
         {
             Width = 1, Depth = 1, Height = 1,
             Weight = 1, 
-            ProductionDate = new DateTime(2008,1,1),
-            ExpiryDate = new DateTime(2007, 1, 1)
+            ProductionDate = new DateTime(2008,1,1, 0,0,0,0, DateTimeKind.Utc),
+            ExpiryDate = new DateTime(2007, 1, 1, 0,0,0,0, DateTimeKind.Utc)
         };
         
         await GenerateWarehouse(warehouseId);
@@ -204,8 +205,8 @@ public sealed class CreteBoxControllerTests : TestControllerBase
         {
             Width = 15, Depth = 15, Height = 15,
             Weight = 1,
-            ProductionDate = new DateTime(2007,1,1),
-            ExpiryDate = new DateTime(2008,1,1)
+            ProductionDate = new DateTime(2007,1,1, 0,0,0,0, DateTimeKind.Utc),
+            ExpiryDate = new DateTime(2008,1,1, 0,0,0,0, DateTimeKind.Utc)
         };
         
         await GenerateWarehouse(warehouseId);
