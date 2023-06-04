@@ -121,12 +121,12 @@ public sealed class WarehouseController : ControllerBase
     }
 
     [HttpDelete("{warehouseId:guid}", Name = "DeleteWarehouse")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeleteAsync(Guid warehouseId)
     {
         await _warehouseService.DeleteAsync(warehouseId);
 
-        return Ok("Warehouse deleted");
+        return NoContent();
     }
 }

@@ -126,12 +126,12 @@ public sealed class PaletteController : ControllerBase
     }
     
     [HttpDelete("palettes/{paletteId}", Name = "DeletePalette")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteAsync(Guid paletteId, CancellationToken cancellationToken = default)
     {
         await _paletteService.DeleteAsync(paletteId, cancellationToken);
 
-        return Ok("Palette deleted");
+        return NoContent();
     }
 }

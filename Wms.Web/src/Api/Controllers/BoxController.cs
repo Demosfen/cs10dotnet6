@@ -17,9 +17,7 @@ public sealed class BoxController : ControllerBase
     private readonly IBoxService _boxService;
     private readonly IMapper _mapper;
 
-    public BoxController(
-        IPaletteService paletteService, 
-        IBoxService boxService, 
+    public BoxController(IBoxService boxService, 
         IMapper mapper)
     {
         _boxService = boxService;
@@ -121,12 +119,12 @@ public sealed class BoxController : ControllerBase
     }
 
     [HttpDelete("boxes/{boxId:guid}", Name = "DeleteBox")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteAsync([FromRoute] Guid boxId)
     {
         await _boxService.DeleteAsync(boxId);
     
-        return Ok("Box deleted");
+        return NoContent();
     }
 }
