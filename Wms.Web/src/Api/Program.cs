@@ -4,9 +4,10 @@ using Autofac.Features.OwnedInstances;
 using AutoMapper;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.EntityFrameworkCore;
 using Wms.Web.Api.Infrastructure.Filters;
 using Wms.Web.Api.Infrastructure.Mapping;
-using Wms.Web.Api.Validators;
+using Wms.Web.Api.Validators.Warehouse;
 using Wms.Web.Business.Infrastructure.DI;
 using Wms.Web.Business.Infrastructure.Mapping;
 using Wms.Web.Store.Common.Interfaces;
@@ -50,8 +51,8 @@ builder.Services.AddAutoMapper(
 
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {
-    containerBuilder.RegisterModule<SqliteDbContextModule>();
     containerBuilder.RegisterModule<PostgresDbContextModule>();
+    containerBuilder.RegisterModule<SqliteDbContextModule>();
     containerBuilder.RegisterModule<BusinessModule>();
 });
 
@@ -71,6 +72,6 @@ var mapper = app.Services.GetRequiredService<IMapper>();
 mapper.ConfigurationProvider.AssertConfigurationIsValid();
 
 await using var dbContext = app.Services.GetRequiredService<Func<Owned<IWarehouseDbContext>>>()();
-// await dbContext.Value.Database.MigrateAsync();
+await dbContext.Value.Database.MigrateAsync();
 
 app.Run();

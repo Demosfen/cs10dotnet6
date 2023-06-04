@@ -17,6 +17,7 @@ public abstract partial class TestControllerBase
     {
         Sut = apiFactory.WmsClient;
         DbContext = apiFactory.CreateDbContext();
+        
         var configurationProvider = new MapperConfiguration(cfg =>
             {
                 cfg.AddMaps(typeof(DtoEntitiesMappingProfile));

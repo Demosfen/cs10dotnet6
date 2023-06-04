@@ -9,9 +9,6 @@ public sealed class BusinessModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {
-        var serviceCollection = new ServiceCollection();
-        builder.Populate(serviceCollection);
-        
         builder
             .RegisterAssemblyTypes(ThisAssembly)
             .AssignableTo<IBusinessService>()

@@ -12,12 +12,9 @@ public sealed class TestApplication : WebApplicationFactory<IApiMarker>, IAsyncL
 {
     private readonly TestDatabaseFixture _dbFixture = new();
     
-    private HttpClient? _httpClient;
-    protected IWmsClient? _wmsClient;
+    private IWmsClient? _wmsClient;
 
-    public HttpClient HttpClient => _httpClient ?? throw new InvalidOperationException("No httpClient");
-    
-    public IWmsClient WmsClient => _wmsClient ?? throw new InvalidOperationException("No httpClient");
+    public IWmsClient WmsClient => _wmsClient ?? throw new InvalidOperationException("No WmsClient");
 
     public IWarehouseDbContext CreateDbContext() => Services.GetRequiredService<IWarehouseDbContext>();
 
@@ -27,11 +24,12 @@ public sealed class TestApplication : WebApplicationFactory<IApiMarker>, IAsyncL
     
     public Task InitializeAsync()
     {
-        _httpClient = CreateClient();
+        var httpClient = CreateClient();
+        
         _wmsClient = new WmsClient(
-            new WarehouseClient(HttpClient),
-            new PaletteClient(HttpClient),
-            new BoxClient(HttpClient));
+            new WarehouseClient(httpClient),
+            new PaletteClient(httpClient),
+            new BoxClient(httpClient));
         
         return Task.CompletedTask;
     }

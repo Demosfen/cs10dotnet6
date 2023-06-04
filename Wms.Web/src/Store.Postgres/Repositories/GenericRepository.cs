@@ -21,7 +21,8 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
         UnitOfWork = dbContext;
     }
 
-    public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? filter,
+    public async Task<IEnumerable<TEntity>> GetAllAsync(
+        Expression<Func<TEntity, bool>>? filter,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy,
         string includeProperties,
         CancellationToken cancellationToken)
@@ -48,8 +49,10 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
     public async Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken) 
         => await _dbSet.SingleOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
     
-    public async Task<TEntity?> GetByIdAsync(Guid id,
-        int offset, int size, 
+    public async Task<TEntity?> GetByIdAsync(
+        Guid id,
+        int offset, 
+        int size, 
         string includeProperties,
         CancellationToken cancellationToken)
     {

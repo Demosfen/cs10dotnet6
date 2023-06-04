@@ -7,7 +7,7 @@ namespace Wms.Web.Client.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static ServiceCollection AddCustomWmsClient(this ServiceCollection serviceCollection)
+    public static void AddCustomWmsClient(this ServiceCollection serviceCollection)
     {
         var configureClient = new Action<IServiceProvider, HttpClient>((provider, client) =>
         {
@@ -24,7 +24,5 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddHttpClient<IPaletteClient, PaletteClient>(configureClient);
         serviceCollection.AddHttpClient<IBoxClient, BoxClient>(configureClient);
         serviceCollection.AddTransient<IWmsClient, WmsClient>();
-
-        return serviceCollection;
     }
 }

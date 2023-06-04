@@ -1,7 +1,7 @@
 using FluentValidation;
 using Wms.Web.Api.Contracts;
 
-namespace Wms.Web.Api.Validators;
+namespace Wms.Web.Api.Validators.Warehouse;
 
 public sealed class UpdateWarehouseRequestValidator: AbstractValidator<UpdateWarehouseRequest>
 {

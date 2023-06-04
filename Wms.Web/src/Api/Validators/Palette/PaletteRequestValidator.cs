@@ -1,7 +1,7 @@
 using FluentValidation;
 using Wms.Web.Contracts.Requests;
 
-namespace Wms.Web.Api.Validators;
+namespace Wms.Web.Api.Validators.Palette;
 
 public sealed class PaletteRequestValidator : AbstractValidator<PaletteRequest>
 {
