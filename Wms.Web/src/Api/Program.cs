@@ -49,10 +49,22 @@ builder.Services.AddAutoMapper(
     typeof(ApiContractToDtoMappingProfile), 
     typeof(DtoEntitiesMappingProfile));
 
+var dataSource = config.GetSection("DataSource").Value;
+
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {
-    containerBuilder.RegisterModule<PostgresDbContextModule>();
-    containerBuilder.RegisterModule<SqliteDbContextModule>();
+    switch (dataSource)
+    {
+        case "Postgres":
+            containerBuilder.RegisterModule<PostgresDbContextModule>();
+            break;
+        case "Sqlite":
+            containerBuilder.RegisterModule<SqliteDbContextModule>();
+            break;
+        default:
+            throw new ArgumentException($"Invalid data source: {dataSource}");
+    }
+
     containerBuilder.RegisterModule<BusinessModule>();
 });
 

@@ -61,11 +61,12 @@ public interface IBoxClient
         Guid boxId,
         BoxRequest request,
         CancellationToken cancellationToken = default);
-        
+
     /// <summary>
     /// Updates box
     /// </summary>
     /// <param name="boxId">Box ID</param>
+    /// <param name="paletteId">Palette ID</param>
     /// <param name="request">Create box request bodu</param>
     /// <param name="cancellationToken">Token</param>
     /// <exception cref="EntityAlreadyExistException"></exception>
