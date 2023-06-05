@@ -1,10 +1,15 @@
 # Warehouse Management System (WMS)
+Warehouse management system operates (CRUD) with array of warehouses containing palettes and boxes on them.
 
 ## Migrations
-
 <details>
 <summary>Setup / Add / Update</summary>
 
+## Db Providers
+- Postgresql
+- Sqlite
+
+## Key Technologies
 
 ### Setup
 ```
