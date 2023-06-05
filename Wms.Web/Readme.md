@@ -48,3 +48,6 @@ dotnet ef database update
 - [TestContainers + Docker](https://github.com/Demosfen/cs10dotnet6/tree/Wms.CleanArchitecture/Wms.Web/tests/IntegrationTests)
 - [UnitTests](https://github.com/Demosfen/cs10dotnet6/tree/Wms.CleanArchitecture/Wms.Web/tests/UnitTests)
 - [Moq (under construction)]()
+
+## IDE
+- JetBrains Rider Professional
