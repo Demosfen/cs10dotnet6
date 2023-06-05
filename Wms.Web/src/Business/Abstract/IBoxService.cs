@@ -3,16 +3,18 @@ using Wms.Web.Common.Exceptions;
 
 namespace Wms.Web.Business.Abstract;
 
+/// <summary>
+/// Box service (business logic) 
+/// </summary>
 public interface IBoxService : IBusinessService
 {
     /// <summary>
     /// Creates box with specified parameters in Database
     /// </summary>
     /// <param name="boxDto">Box Dto</param>
-    /// <param name="ct">Cancellation Token</param>
-    /// <exception cref="EntityNotFoundException"></exception>
+    /// <param name="cancellationToken">Cancellation Token</param>
     /// <exception cref="UnitOversizeException"></exception>
-    Task CreateAsync(BoxDto boxDto, CancellationToken ct = default);
+    Task CreateAsync(BoxDto boxDto, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets all boxes from Database
@@ -35,7 +37,7 @@ public interface IBoxService : IBusinessService
     /// </summary>
     /// <param name="id">Box Id</param>
     /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>Box</returns>
+    /// <returns>Box dto</returns>
     Task<BoxDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 
     /// <summary>

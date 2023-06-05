@@ -58,7 +58,7 @@ internal sealed class PaletteService : IPaletteService
         Guid id, 
         int offset, int size,
         bool deleted,
-        CancellationToken ct)
+        CancellationToken cancellationToken)
     {
         IEnumerable<Palette?> entities;
 
@@ -69,7 +69,7 @@ internal sealed class PaletteService : IPaletteService
                     .GetAllAsync(
                         x => x.WarehouseId == id,
                         q => q.NotDeleted().Skip(offset).Take(size).OrderBy(p => p.CreatedAt),
-                        cancellationToken: ct);
+                        cancellationToken: cancellationToken);
                 break;
             
             case true:
@@ -77,7 +77,7 @@ internal sealed class PaletteService : IPaletteService
                     .GetAllAsync(
                         x => x.WarehouseId == id,
                         q => q.Deleted().Skip(offset).Take(size).OrderBy(p => p.CreatedAt),
-                        cancellationToken: ct);
+                        cancellationToken: cancellationToken);
                 break;
         }
         
