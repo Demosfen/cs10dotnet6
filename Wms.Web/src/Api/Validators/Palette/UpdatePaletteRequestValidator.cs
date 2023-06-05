@@ -3,7 +3,7 @@ using Wms.Web.Api.Contracts;
 
 namespace Wms.Web.Api.Validators.Palette;
 
-public sealed class UpdatePaletteRequestValidator : AbstractValidator<UpdatePaletteRequest>
+internal sealed class UpdatePaletteRequestValidator : AbstractValidator<UpdatePaletteRequest>
 {
     public UpdatePaletteRequestValidator()
     {

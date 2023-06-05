@@ -9,6 +9,9 @@ using Wms.Web.Contracts.Responses;
 
 namespace Wms.Web.Api.Controllers;
 
+/// <summary>
+/// Palette controller with CRUD operations
+/// </summary>
 [ApiController]
 [Route("api/v1/")]
 [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -31,7 +34,10 @@ public sealed class PaletteController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IReadOnlyCollection<PaletteResponse>>> GetAllNotDeleted(
-        [FromRoute] Guid warehouseId, int offset = 0, int limit = 10)
+        [FromRoute] Guid warehouseId, 
+        [FromQuery] int offset = 0, 
+        [FromQuery] int limit = 10,
+        CancellationToken cancellationToken = default)
     {
         var palettesDto = await _paletteService
             .GetAllAsync(warehouseId, offset, limit);
@@ -45,7 +51,10 @@ public sealed class PaletteController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IReadOnlyCollection<PaletteResponse>>> GetAllDeleted(
-        [FromRoute] Guid warehouseId, int offset = 0, int limit = 10)
+        [FromRoute] Guid warehouseId, 
+        [FromQuery] int offset = 0, 
+        [FromQuery] int limit = 10,
+        CancellationToken cancellationToken = default)
     {
         var palettesDto = await _paletteService
             .GetAllAsync(warehouseId, offset, limit, true);
@@ -60,7 +69,8 @@ public sealed class PaletteController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<PaletteResponse>> GetByIdAsync(
         [FromRoute] Guid paletteId, 
-        int boxListOffset = 0, int boxListSize = 10, 
+        [FromQuery] int boxListOffset = 0, 
+        [FromQuery] int boxListSize = 10, 
         CancellationToken cancellationToken = default)
     {
         var paletteDto = await _paletteService.GetByIdAsync(paletteId, cancellationToken);
@@ -128,7 +138,9 @@ public sealed class PaletteController : ControllerBase
     [HttpDelete("palettes/{paletteId}", Name = "DeletePalette")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteAsync(Guid paletteId, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> DeleteAsync(
+        [FromRoute] Guid paletteId, 
+        CancellationToken cancellationToken = default)
     {
         await _paletteService.DeleteAsync(paletteId, cancellationToken);
 

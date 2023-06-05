@@ -9,6 +9,9 @@ using Wms.Web.Contracts.Responses;
 
 namespace Wms.Web.Api.Controllers;
 
+/// <summary>
+/// Warehouse controller with CRUD operations
+/// </summary>
 [ApiController]
 [Route("api/v1/warehouses/")]
 [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -30,8 +33,10 @@ public sealed class WarehouseController : ControllerBase
     
     [HttpGet(Name = "GetNotDeletedWarehouses")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<IReadOnlyCollection<WarehouseResponse>>> 
-        GetNotDeletedAsync(int offset = 0, int size = 10, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<IReadOnlyCollection<WarehouseResponse>>> GetNotDeletedAsync(
+        [FromQuery] int offset = 0,
+        [FromQuery] int size = 10,
+        CancellationToken cancellationToken = default)
     {
         var warehousesDto = await _warehouseService
             .GetAllAsync(offset, size, cancellationToken: cancellationToken);
@@ -43,8 +48,10 @@ public sealed class WarehouseController : ControllerBase
     
     [HttpGet("archive/",Name = "GetDeletedWarehouses")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<IReadOnlyCollection<WarehouseResponse>>> 
-        GetDeletedAsync(int offset = 0, int limit = 10, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<IReadOnlyCollection<WarehouseResponse>>> GetDeletedAsync(
+        [FromQuery] int offset = 0, 
+        [FromQuery] int limit = 10, 
+        CancellationToken cancellationToken = default)
     {
         var warehousesDto = await _warehouseService
             .GetAllAsync(offset, limit, true, cancellationToken);
@@ -59,8 +66,8 @@ public sealed class WarehouseController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WarehouseResponse>> GetByIdAsync(
         [FromRoute] Guid warehouseId,
-        int palettesOffset = 0,
-        int palettesSize = 10,
+        [FromQuery] int palettesOffset = 0,
+        [FromQuery] int palettesSize = 10,
         CancellationToken cancellationToken = default)
     {
         var warehouseDto = await _warehouseService.GetByIdAsync(warehouseId, cancellationToken);
@@ -123,7 +130,7 @@ public sealed class WarehouseController : ControllerBase
     [HttpDelete("{warehouseId:guid}", Name = "DeleteWarehouse")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> DeleteAsync(Guid warehouseId)
+    public async Task<ActionResult> DeleteAsync([FromRoute] Guid warehouseId)
     {
         await _warehouseService.DeleteAsync(warehouseId);
 

@@ -21,7 +21,8 @@ internal sealed class PaletteClient : IPaletteClient
     
     public async Task<IReadOnlyCollection<PaletteResponse>?> GetAllAsync(
         Guid warehouseId,
-        int? offset, int? size, 
+        int? offset, 
+        int? size, 
         CancellationToken cancellationToken)
         => await _client.GetFromJsonAsync<IReadOnlyCollection<PaletteResponse>>(
             $"{Ver1}warehouses/{warehouseId}/palettes?" +

@@ -9,6 +9,9 @@ using Wms.Web.Contracts.Responses;
 
 namespace Wms.Web.Api.Controllers;
 
+/// <summary>
+/// Box controller with CRUD operations
+/// </summary>
 [ApiController]
 [Route("api/v1/")]
 [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -17,7 +20,8 @@ public sealed class BoxController : ControllerBase
     private readonly IBoxService _boxService;
     private readonly IMapper _mapper;
 
-    public BoxController(IBoxService boxService, 
+    public BoxController(
+        IBoxService boxService, 
         IMapper mapper)
     {
         _boxService = boxService;
@@ -28,8 +32,8 @@ public sealed class BoxController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IReadOnlyCollection<BoxResponse>>> GetNotDeletedAsync(
         [FromRoute] Guid paletteId,
-        int offset = 0, 
-        int size = 10,
+        [FromQuery] int offset = 0, 
+        [FromQuery] int size = 10,
         CancellationToken cancellationToken = default)
     {
         var boxesDto = await _boxService
@@ -44,8 +48,8 @@ public sealed class BoxController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IReadOnlyCollection<BoxResponse>>> GetDeletedAsync(
         [FromRoute] Guid paletteId,
-        int offset = 0,
-        int size = 10,
+        [FromRoute] int offset = 0,
+        [FromRoute] int size = 10,
         CancellationToken cancellationToken = default)
     {
         var boxDto = await _boxService
@@ -96,7 +100,7 @@ public sealed class BoxController : ControllerBase
     }
 
     [HttpPut("boxes/{boxId:guid}", Name = "UpdateBox")]
-    [ProducesResponseType(StatusCodes.Status202Accepted)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<BoxResponse>> UpdateAsync(
         [FromRoute] Guid boxId,
