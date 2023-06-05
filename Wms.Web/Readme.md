@@ -35,8 +35,12 @@ dotnet ef database update
 - Microsoft.EntityFrameworkCore
 - Dependency Injection + Autofac
 - Swashbuckle.AspNetCore
-- [Directory.Build.props](https://github.com/Demosfen/cs10dotnet6/blob/Wms.CleanArchitecture/Wms.Web/Directory.Build.props)
-- [Directory.Packages.props](https://github.com/Demosfen/cs10dotnet6/blob/Wms.CleanArchitecture/Wms.Web/Directory.Packages.props)
+
+## Tech Stack
+- .Net7
+- Central package management - [Directory.Packages.props](https://github.com/Demosfen/cs10dotnet6/blob/Wms.CleanArchitecture/Wms.Web/Directory.Packages.props)
+- Build customization - [Directory.Build.props](https://github.com/Demosfen/cs10dotnet6/blob/Wms.CleanArchitecture/Wms.Web/Directory.Build.props)
+- Nullable reference types
 
 ## Testing
 - FluentAssertions
