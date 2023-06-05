@@ -5,64 +5,30 @@ Warehouse management system operates (CRUD) with array of warehouses containing 
 <details>
 <summary>Setup / Add / Update</summary>
 
+### Setup
+```bash
+dotnet tool install --global dotnet-ef
+```
+
+### Add new migrations in src/ (Sqlite)
+```bash
+dotnet ef migrations add InitialCreate --startup-project src/Api/Api.csproj --project src/Store.Sqlite/Store.Sqlite.csproj --context Wms.Web.Store.Sqlite.WarehouseDbContext
+```
+
+### Add new migrations in src/ (Postgres)
+```bash
+dotnet ef migrations add InitialMigration --startup-project src/Api/Api.csproj --project src/Store.Postgres/Store.Postgres.csproj --context Wms.Web.Store.Postgres.WarehouseDbContext
+```
+
+### Update database
+```bash
+dotnet ef database update
+```
+</details>
+
 ## Db Providers
 - Postgresql
 - Sqlite
 
 ## Key Technologies
-
-### Setup
-```
-dotnet tool install --global dotnet-ef
-```
-
-### Add new migrations in src/ (Sqlite)
-```
-dotnet ef migrations add InitialCreate --startup-project Api/Api.csproj --project Store.Sqlite/Store.Sqlite.csproj --context Wms.Web.Store.Sqlite.WarehouseDbContext
-```
-
-### Add new migrations in src/ (Postgres)
-```
-dotnet ef migrations add InitialMigration --startup-project Api/Api.csproj --project Store.Postgres/Store.Postgres.csproj --context Wms.Web.Store.Postgres.WarehouseDbContext
-```
-
-### Update database
-```
-dotnet ef database update
-```
-</details>
-
-## WMS structure
-#### Project coupling diagram
-![Wms.png](..%2Fdocs%2Fdiagrams%2FWms.png)
-<details>
-  <summary>Click to expand detailed diagram</summary>
-  <div>
-    <h3>Api</h3>
-    <img src="../docs/diagrams/Wms.Api.png" alt="Api">
-  </div>
-  <div>
-    <h3>Client</h3>
-    <img src="../docs/diagrams/Wms.Client.png" alt="Client">
-  </div>
-  <div>
-    <h3>Business</h3>
-    <img src="../docs/diagrams/Wms.Business.png" alt="Business">
-  </div>
-  <div>
-    <h3>Store.Common</h3>
-    <img src="../docs/diagrams/Wms.Store.Common.png" alt="Store.Common">
-  </div>
-  <div>
-    <h3>Store.Sqlite</h3>
-    <img src="../docs/diagrams/Wms.Store.Sqlite.png" alt="Sqlite">
-  </div>
-  <div>
-    <h3>Store.Postgres</h3>
-    <img src="../docs/diagrams/Wms.Store.Postgres.png" alt="Postgres">
-  </div>
-  <div>
-    <h3>Repositories.Interfaces</h3>
-    <img src="../docs/diagrams/Wms.IGenericRepository.png" alt="IGenericRepository">
-  </div>
-</details>
+- 
