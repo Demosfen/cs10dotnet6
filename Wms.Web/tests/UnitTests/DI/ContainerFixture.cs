@@ -9,7 +9,4 @@ namespace Wms.Web.UnitTests.DI;
 public sealed class ContainerFixture : WebApplicationFactory<IApiMarker>
 {
     public IServiceProvider Container => Services;
-    
-    // protected override void ConfigureWebHost(IWebHostBuilder builder) 
-    //     => builder.UseSetting("SkipMigration", "true");
 }

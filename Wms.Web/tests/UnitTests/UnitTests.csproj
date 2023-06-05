@@ -15,4 +15,8 @@
         <ProjectReference Include="..\..\src\Api\Api.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Business\" />
+    </ItemGroup>
+
 </Project>
