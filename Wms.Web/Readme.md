@@ -1,6 +1,6 @@
 # Warehouse Management System (WMS)
 Warehouse management system operates (CRUD) with array of warehouses containing palettes and boxes on them.
-The functional diagram of the project presented [here](https://github.com/Demosfen/cs10dotnet6/blob/Wms.CleanArchitecture/Wms.Web/Structure.md) 
+The functional diagram of the project presented [here](https://github.com/Demosfen/cs10dotnet6/blob/Wms.CleanArchitecture/Wms.Web/Structure.md). 
 
 ## Migrations
 <details>
@@ -34,7 +34,6 @@ dotnet ef database update
 ## Key Technologies
 - Microsoft.EntityFrameworkCore
 - Dependency Injection + Autofac
-- Swashbuckle.AspNetCore
 
 ## Tech Stack
 - .Net7
@@ -45,6 +44,7 @@ dotnet ef database update
 ## Testing
 - FluentAssertions
 - FluentValidations
+- Swashbuckle.AspNetCore
 - [TestContainers + Docker](https://github.com/Demosfen/cs10dotnet6/tree/Wms.CleanArchitecture/Wms.Web/tests/IntegrationTests)
 - [UnitTests](https://github.com/Demosfen/cs10dotnet6/tree/Wms.CleanArchitecture/Wms.Web/tests/UnitTests)
 - [Moq (under construction)]()
