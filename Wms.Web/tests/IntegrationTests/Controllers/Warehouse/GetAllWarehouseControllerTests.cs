@@ -22,7 +22,7 @@ public sealed class GetAllWarehouseControllerTests : TestControllerBase
         
         // Act
         var existingWarehouses = await Sut.WarehouseClient
-            .GetAllAsync(offset, size, CancellationToken.None);
+            .GetAllAsync(0, 10, CancellationToken.None);
         
         await GenerateWarehouse(warehouseId1);
 
@@ -48,7 +48,7 @@ public sealed class GetAllWarehouseControllerTests : TestControllerBase
         
         // Act
         var existingWarehouses = await Sut.WarehouseClient
-            .GetAllDeletedAsync(offset, size, CancellationToken.None);
+            .GetAllDeletedAsync(0, 10, CancellationToken.None);
 
         await GenerateWarehouse(warehouseId1);
         var createdSecond = await GenerateWarehouse(warehouseId2);
