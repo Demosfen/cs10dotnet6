@@ -10,8 +10,6 @@ namespace Wms.Web.Business.Concrete;
 
 internal sealed class WarehouseService : IWarehouseService
 {
-    //TODO implement ILogger https://github.com/Demosfen/cs10dotnet6/pull/6#discussion_r1173487786
-    
     private readonly IGenericRepository<Warehouse> _warehouseRepository;
     private readonly IGenericRepository<Palette> _paletteRepository;
     private readonly IMapper _mapper;

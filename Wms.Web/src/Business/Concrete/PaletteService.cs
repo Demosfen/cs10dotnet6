@@ -11,8 +11,6 @@ namespace Wms.Web.Business.Concrete;
 internal sealed class PaletteService : IPaletteService
 {
     private const int DefaultWeight = 30;
-    
-    //TODO implement ILogger https://github.com/Demosfen/cs10dotnet6/pull/6#discussion_r1173487786
 
     private readonly IGenericRepository<Warehouse> _warehouseRepository;
     private readonly IGenericRepository<Palette> _paletteRepository;
