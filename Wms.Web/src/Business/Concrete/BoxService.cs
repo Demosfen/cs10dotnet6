@@ -11,8 +11,6 @@ namespace Wms.Web.Business.Concrete;
 
 internal sealed class BoxService : IBoxService
 {
-    private const int ExpiryDays = 100;         //TODO Finish business logic
-
     private readonly IPaletteService _paletteService;
     
     //TODO implement ILogger https://github.com/Demosfen/cs10dotnet6/pull/6#discussion_r1173487786
@@ -43,23 +41,21 @@ internal sealed class BoxService : IBoxService
     {
         IEnumerable<Box?> entities;
 
-        switch (deleted)
+        if (deleted)
         {
-            case false:
-                entities = await _boxRepository
-                    .GetAllAsync(
-                        x => x.PaletteId == id,
-                        q => q.NotDeleted().Skip(offset).Take(size).OrderBy(p => p.CreatedAt),
-                        cancellationToken: cancellationToken);
-                break;
-            
-            case true:
-                entities = await _boxRepository
-                    .GetAllAsync(
-                        x => x.PaletteId == id,
-                        q => q.Deleted().Skip(offset).Take(size).OrderBy(p => p.CreatedAt),
-                        cancellationToken: cancellationToken);
-                break;
+            entities = await _boxRepository
+                .GetAllAsync(
+                    x => x.PaletteId == id,
+                    q => q.Deleted().Skip(offset).Take(size).OrderBy(p => p.CreatedAt),
+                    cancellationToken: cancellationToken);
+        }
+        else
+        {
+            entities = await _boxRepository
+                .GetAllAsync(
+                    x => x.PaletteId == id,
+                    q => q.NotDeleted().Skip(offset).Take(size).OrderBy(p => p.CreatedAt),
+                    cancellationToken: cancellationToken);
         }
         
         return _mapper.Map<IReadOnlyCollection<BoxDto>>(entities);
@@ -83,9 +79,8 @@ internal sealed class BoxService : IBoxService
         {
             throw new EntityWasDeletedException(palette.Id);
         }
-        
-        BoxValidations.BoxSizeValidation(palette, boxDto);
-        BoxValidations.BoxExpiryValidation(palette, boxDto);
+
+        boxDto.Validate(palette);
 
         boxDto.Volume = boxDto.Width * boxDto.Height * boxDto.Depth;   
 
@@ -126,8 +121,7 @@ internal sealed class BoxService : IBoxService
             throw new EntityWasDeletedException(palette.Id);
         }
         
-        BoxValidations.BoxSizeValidation(palette, boxDto);
-        BoxValidations.BoxExpiryValidation(palette, boxDto);
+        boxDto.Validate(palette);
         
         boxDto.Volume = boxDto.Width * boxDto.Height * boxDto.Depth;
         
@@ -146,7 +140,10 @@ internal sealed class BoxService : IBoxService
         var box = await _boxRepository.GetByIdAsync(id, cancellationToken)
             ?? throw new EntityNotFoundException(id);
         
-        if (box.DeletedAt is not null) return;
+        if (box.DeletedAt is not null)
+        {
+            return;
+        }
 
         await _boxRepository.DeleteAsync(id, cancellationToken);
 

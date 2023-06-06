@@ -3,15 +3,30 @@ using Wms.Web.Contracts.Extensions;
 
 namespace Wms.Web.Common.Exceptions;
 
+/// <summary>
+/// Request validation error
+/// </summary>
 public class ApiValidationException : DomainException
 {
+    /// <summary>
+    /// Problem details
+    /// </summary>
     public WmsProblemDetails? ProblemDetails { get; }
 
+    /// <summary>
+    /// API request failure exception
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="problemDetails"></param>
     public ApiValidationException(string message, WmsProblemDetails? problemDetails) : base(message)
     {
         ProblemDetails = problemDetails;
     }
 
+    /// <summary>
+    /// API request failure exception
+    /// </summary>
+    /// <param name="response"></param>
     public ApiValidationException(HttpResponseMessage response) : base("API request failed")
     {
         var responseContent = response.Content.ReadAsStringAsync().Result;

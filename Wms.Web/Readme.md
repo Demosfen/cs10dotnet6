@@ -32,19 +32,29 @@ dotnet ef database update
 - Sqlite
 
 ## Key Technologies
-- Microsoft.EntityFrameworkCore
-- Dependency Injection + Autofac
 
 ## Tech Stack
-- .Net7
+- .NET 7
+- ASP.NET Core 7
+    - FluentValidation
+    - Swagger
+    - Exception filters & [ProblemDetails](https://www.rfc-editor.org/rfc/rfc7807)
+- Entity Framework Core 7
 - Central package management - [Directory.Packages.props](https://github.com/Demosfen/cs10dotnet6/blob/Wms.CleanArchitecture/Wms.Web/Directory.Packages.props)
 - Build customization - [Directory.Build.props](https://github.com/Demosfen/cs10dotnet6/blob/Wms.CleanArchitecture/Wms.Web/Directory.Build.props)
 - Nullable reference types
+- DI:
+    - ServiceCollection
+    - Autofac
+- IOptions pattern
+
+### Multiple database support
+- Postgresql
+- Sqlite
 
 ## Testing
+- xUnit
 - FluentAssertions
-- FluentValidations
-- Swashbuckle.AspNetCore
 - [TestContainers + Docker](https://github.com/Demosfen/cs10dotnet6/tree/Wms.CleanArchitecture/Wms.Web/tests/IntegrationTests)
 - [UnitTests](https://github.com/Demosfen/cs10dotnet6/tree/Wms.CleanArchitecture/Wms.Web/tests/UnitTests)
 - [Moq (under construction)]()

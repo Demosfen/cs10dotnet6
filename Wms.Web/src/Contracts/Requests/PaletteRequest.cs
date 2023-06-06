@@ -3,7 +3,7 @@ namespace Wms.Web.Contracts.Requests;
 /// <summary>
 /// Palette dto (contract) for create/update/delete operations
 /// </summary>
-public class PaletteRequest
+public sealed class PaletteRequest
 {
     /// <summary>
     /// Palette width

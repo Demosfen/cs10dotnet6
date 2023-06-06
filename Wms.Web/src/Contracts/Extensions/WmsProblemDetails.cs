@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace Wms.Web.Contracts.Extensions;
 
-public class WmsProblemDetails
+public sealed class WmsProblemDetails
 {
     [JsonPropertyName("type")]
     public string? Type { get; set; }

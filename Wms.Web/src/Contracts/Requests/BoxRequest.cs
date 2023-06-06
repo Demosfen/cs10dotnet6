@@ -3,7 +3,7 @@ namespace Wms.Web.Contracts.Requests;
 /// <summary>
 /// Box dto (contract) for create/update/delete operations
 /// </summary>
-public class BoxRequest
+public sealed class BoxRequest
 {
     /// <summary>
     /// Box width (should be lower than palette width)

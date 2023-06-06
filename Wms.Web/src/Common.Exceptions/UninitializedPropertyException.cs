@@ -1,9 +1,19 @@
 ﻿namespace Wms.Web.Common.Exceptions;
 
+/// <summary>
+/// Initialization property error
+/// </summary>
 public class UninitializedPropertyException : DomainException
 {
+    /// <summary>
+    /// Type name
+    /// </summary>
     public string TypeName { get; }
 
+    /// <summary>
+    /// Initialization property exception
+    /// </summary>
+    /// <param name="typeName"></param>
     public UninitializedPropertyException(string typeName)
         : base($"The "+typeName+" was not initialized")
     {

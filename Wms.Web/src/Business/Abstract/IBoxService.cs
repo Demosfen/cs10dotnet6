@@ -13,7 +13,10 @@ public interface IBoxService : IBusinessService
     /// </summary>
     /// <param name="boxDto">Box Dto</param>
     /// <param name="cancellationToken">Cancellation Token</param>
+    /// <exception cref="EntityAlreadyExistException"></exception>
     /// <exception cref="UnitOversizeException"></exception>
+    /// <exception cref="EntityWasDeletedException"></exception>
+    /// <exception cref="EntityExpiryDateException"></exception> 
     Task CreateAsync(BoxDto boxDto, CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -37,6 +40,7 @@ public interface IBoxService : IBusinessService
     /// </summary>
     /// <param name="id">Box Id</param>
     /// <param name="cancellationToken">Cancellation token</param>
+    /// <exception cref="EntityNotFoundException"></exception>
     /// <returns>Box dto</returns>
     Task<BoxDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 
@@ -44,9 +48,12 @@ public interface IBoxService : IBusinessService
     /// Updates box entity in Database
     /// </summary>
     /// <param name="boxDto">Box</param>
-    /// <param name="ct">Cancellation Token</param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
+    /// <param name="cancellationToken">Cancellation Token</param>
+    /// <exception cref="EntityAlreadyExistException"></exception>
+    /// <exception cref="UnitOversizeException"></exception>
+    /// <exception cref="EntityWasDeletedException"></exception>
+    /// <exception cref="EntityExpiryDateException"></exception> 
+    /// <returns>boxDto</returns>
     Task UpdateAsync(BoxDto boxDto, CancellationToken cancellationToken);
     
     /// <summary>

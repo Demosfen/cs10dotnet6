@@ -4,21 +4,27 @@ using Wms.Web.Store.Entities.Concrete;
 
 namespace Wms.Web.Business.Extensions;
 
-internal sealed class BoxValidations
+internal static class BoxValidationExtensions
 {
     private const int ExpiryDays = 100;
 
-    public static void BoxSizeValidation(Palette paletteDto, BoxDto boxDto)
+    public static void Validate(this BoxDto boxDto, Palette palette)
     {
-        if (boxDto.Width > paletteDto.Width 
-            | boxDto.Height > paletteDto.Height 
-            | boxDto.Depth > paletteDto.Depth)
+        BoxSizeValidation(boxDto, palette);
+        BoxExpiryValidation(boxDto, palette);
+    }
+
+    private static void BoxSizeValidation(BoxDto boxDto, Palette palette)
+    {
+        if (boxDto.Width > palette.Width 
+            | boxDto.Height > palette.Height 
+            | boxDto.Depth > palette.Depth)
         {
             throw new UnitOversizeException(boxDto.Id);
         }
     }
 
-    public static void BoxExpiryValidation(Palette paletteDto, BoxDto boxDto)
+    private static void BoxExpiryValidation(BoxDto boxDto, Palette palette)
     {
         if (boxDto.ProductionDate != null)
         {

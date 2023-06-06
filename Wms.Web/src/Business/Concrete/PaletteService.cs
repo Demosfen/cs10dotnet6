@@ -62,25 +62,23 @@ internal sealed class PaletteService : IPaletteService
     {
         IEnumerable<Palette?> entities;
 
-        switch (deleted)
+        if (deleted)
         {
-            case false:
-                entities = await _paletteRepository
-                    .GetAllAsync(
-                        x => x.WarehouseId == id,
-                        q => q.NotDeleted().Skip(offset).Take(size).OrderBy(p => p.CreatedAt),
-                        cancellationToken: cancellationToken);
-                break;
-            
-            case true:
-                entities = await _paletteRepository
-                    .GetAllAsync(
-                        x => x.WarehouseId == id,
-                        q => q.Deleted().Skip(offset).Take(size).OrderBy(p => p.CreatedAt),
-                        cancellationToken: cancellationToken);
-                break;
+            entities = await _paletteRepository
+                .GetAllAsync(
+                    x => x.WarehouseId == id,
+                    q => q.Deleted().Skip(offset).Take(size).OrderBy(p => p.CreatedAt),
+                    cancellationToken: cancellationToken);
         }
-        
+        else
+        {
+            entities = await _paletteRepository
+                .GetAllAsync(
+                    x => x.WarehouseId == id,
+                    q => q.NotDeleted().Skip(offset).Take(size).OrderBy(p => p.CreatedAt),
+                    cancellationToken: cancellationToken);
+        }
+
         return _mapper.Map<IReadOnlyCollection<PaletteDto>>(entities);
     }
 
@@ -102,7 +100,7 @@ internal sealed class PaletteService : IPaletteService
         var paletteDto = await _paletteRepository.GetByIdAsync(id, cancellationToken)
                          ?? throw new EntityNotFoundException(id);
 
-        paletteDto.Weight = 30;
+        paletteDto.Weight = DefaultWeight;
         paletteDto.Volume = paletteDto.Width * paletteDto.Height * paletteDto.Depth;
 
         var boxesDto = boxDto.ToList();
@@ -131,7 +129,7 @@ internal sealed class PaletteService : IPaletteService
             throw new EntityWasDeletedException(palette.Id);
         }
         
-        if (palette.Boxes.Count != 0)
+        if (palette.Boxes.Any())
         {
             throw new EntityNotEmptyException(palette.Id);
         }
@@ -157,7 +155,10 @@ internal sealed class PaletteService : IPaletteService
         var palette = await _paletteRepository.GetByIdAsync(id, cancellationToken)
             ?? throw new EntityNotFoundException(id);
 
-        if (palette.DeletedAt is not null) return;
+        if (palette.DeletedAt is not null)
+        {
+            return;
+        }
 
         var box = await _boxRepository.GetAllAsync(
             f => f.PaletteId == id,

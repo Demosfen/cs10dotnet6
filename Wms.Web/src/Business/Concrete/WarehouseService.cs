@@ -43,21 +43,19 @@ internal sealed class WarehouseService : IWarehouseService
     {
         IEnumerable<Warehouse?> entities;
 
-        switch (deleted)
+        if (deleted)
         {
-            case true:
-                entities = await _warehouseRepository
-                    .GetAllAsync(null,
-                        q => q.Deleted().Skip(offset).Take(size).OrderBy(x => x.CreatedAt),
-                        cancellationToken: cancellationToken);
-                break;
-            
-            case false: 
-                entities = await _warehouseRepository
-                    .GetAllAsync(null,
-                        q => q.NotDeleted().Skip(offset).Take(size).OrderBy(x => x.CreatedAt),
-                        cancellationToken: cancellationToken);
-                break;
+            entities = await _warehouseRepository
+                .GetAllAsync(null,
+                    q => q.Deleted().Skip(offset).Take(size).OrderBy(x => x.CreatedAt),
+                    cancellationToken: cancellationToken);
+        }
+        else
+        {
+            entities = await _warehouseRepository
+                                .GetAllAsync(null,
+                                    q => q.NotDeleted().Skip(offset).Take(size).OrderBy(x => x.CreatedAt),
+                                    cancellationToken: cancellationToken);
         }
 
         return _mapper.Map<IReadOnlyCollection<WarehouseDto>>(entities);
@@ -91,7 +89,10 @@ internal sealed class WarehouseService : IWarehouseService
         var warehouse = await _warehouseRepository.GetByIdAsync(id, cancellationToken)
                      ?? throw new EntityNotFoundException(id);
         
-        if (warehouse.DeletedAt is not null) return;
+        if (warehouse.DeletedAt is not null)
+        {
+            return;
+        }
 
         var palette = await _paletteRepository.GetAllAsync(
             f => f.WarehouseId == warehouse.Id,
