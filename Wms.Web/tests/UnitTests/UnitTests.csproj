@@ -4,6 +4,7 @@
         <PackageReference Include="FluentAssertions" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+        <PackageReference Include="Moq" />
         <PackageReference Include="xunit" />
         <PackageReference Include="xunit.runner.visualstudio">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -13,10 +14,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\src\Api\Api.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Business\" />
     </ItemGroup>
 
 </Project>
