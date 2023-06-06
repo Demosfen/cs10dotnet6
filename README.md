@@ -8,7 +8,7 @@ Basic theory: [Mark J. Price](https://www.amazon.com/10-NET-Cross-Platform-Devel
 Master a set of modern software development technologies.
 
 #### Learning project: 
-Development of a [Warehouse Management System (WMS)](https://github.com/alex1ozr/LearnDotNet/blob/main/Exercises/Exercise_6.md) controlling warehouses, palettes inside it and boxes on the palettes.
+[Development of a Warehouse Management System (WMS)](https://github.com/alex1ozr/LearnDotNet/blob/main/Exercises/Exercise_6.md) controlling warehouses, palettes inside it and boxes on the palettes.
 
 #### The result: 
 [Warehouse Management System (WMS)](https://github.com/Demosfen/cs10dotnet6/blob/Wms.CleanArchitecture/Wms.Web/Readme.md)
