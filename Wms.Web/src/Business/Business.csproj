@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+        <ProjectReference Include="..\Common.Exceptions\Common.Exceptions.csproj" />
+        <ProjectReference Include="..\Repositories.Interfaces\Repositories.Interfaces.csproj" />
+        <ProjectReference Include="..\Store.Entities\Store.Entities.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Autofac.Extensions.DependencyInjection" />
+        <PackageReference Include="AutoMapper" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Wms.Web.UnitTests" />
+    </ItemGroup>
+
+</Project>

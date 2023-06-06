@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+      <PackageReference Include="Autofac" />
+      <PackageReference Include="Autofac.Extensions.DependencyInjection" />
+      <PackageReference Include="AutoMapper" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+        <PrivateAssets>all</PrivateAssets>
+          
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.Extensions.Configuration" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Common.Exceptions\Common.Exceptions.csproj" />
+      <ProjectReference Include="..\Repositories.Interfaces\Repositories.Interfaces.csproj" />
+      <ProjectReference Include="..\Store.Entities\Store.Entities.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Wms.Web.IntegrationTests" />
+        <InternalsVisibleTo Include="Wms.Web.Store.Postgres" />
+        <InternalsVisibleTo Include="Wms.Web.Store.Sqlite" />
+    </ItemGroup>
+
+</Project>
