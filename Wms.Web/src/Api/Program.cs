@@ -12,9 +12,7 @@ using Wms.Web.Api.Validators.Warehouse;
 using Wms.Web.Business.Infrastructure.DI;
 using Wms.Web.Business.Infrastructure.Mapping;
 using Wms.Web.Store.Common.Interfaces;
-using Wms.Web.Store.Postgres;
 using Wms.Web.Store.Postgres.DI;
-using Wms.Web.Store.Sqlite;
 using Wms.Web.Store.Sqlite.DI;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
@@ -22,6 +20,8 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions
     Args = args,
     ContentRootPath = Directory.GetCurrentDirectory()
 });
+
+builder.Logging.ClearProviders().AddConsole();
 
 builder.Configuration.AddEnvironmentVariables();
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
