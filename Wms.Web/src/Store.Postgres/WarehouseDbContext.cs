@@ -45,21 +45,30 @@ internal sealed class WarehouseDbContext : DbContext, IWarehouseDbContext
         
         foreach (var item in markedAsCreated)
         {
-            if (item.Entity is not IAuditableEntity entity) continue;
-            entity.CreatedAt = DateTime.Now.ToUniversalTime();
+            if (item.Entity is not IAuditableEntity entity)
+            {
+                continue;
+            }
+            entity.CreatedAt = DateTime.UtcNow;
         }
         
         foreach (var item in markedAsModified)
         {
-            if (item.Entity is not IAuditableEntity entity) continue;
-            entity.UpdatedAt = DateTime.Now.ToUniversalTime();
+            if (item.Entity is not IAuditableEntity entity)
+            {
+                continue;
+            }
+            entity.UpdatedAt = DateTime.UtcNow;
         }
 
         foreach (var item in markedAsDeleted)
         {
-            if (item.Entity is not IAuditableEntity entity) continue;
+            if (item.Entity is not IAuditableEntity entity)
+            {
+                continue;
+            }
             item.State = EntityState.Unchanged;
-            entity.DeletedAt = DateTime.Now.ToUniversalTime();
+            entity.DeletedAt = DateTime.UtcNow;
         }
 
         return await base.SaveChangesAsync(cancellationToken);

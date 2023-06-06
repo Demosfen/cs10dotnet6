@@ -3,13 +3,12 @@ using Autofac.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Wms.Web.Store.Postgres.DI;
 
-namespace Wms.Web.Store.Postgres;
+namespace Wms.Web.Store.Postgres.DI;
 
 public sealed class PostgresDbContextModule : Module
 {
-    private static readonly string ConnectionStringName = "WmsPgsql";
+    public static readonly string ConnectionStringName = "WmsPgsql";
 
     protected override void Load(ContainerBuilder containerBuilder)
     {

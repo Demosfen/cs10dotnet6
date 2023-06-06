@@ -1,5 +1,8 @@
 namespace Wms.Web.Store.Entities.Interfaces;
 
+/// <summary>
+/// Entities containing ID
+/// </summary>
 public interface IEntityWithId
 {
     /// <summary>

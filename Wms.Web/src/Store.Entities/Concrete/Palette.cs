@@ -1,5 +1,8 @@
 namespace Wms.Web.Store.Entities.Concrete;
 
+/// <summary>
+/// Palette class
+/// </summary>
 public sealed class Palette : StorageUnit
 {
    /// <summary>
@@ -30,6 +33,7 @@ public sealed class Palette : StorageUnit
     /// </summary>
     public override DateTime? ExpiryDate { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         if (Boxes is { Count: 0 })

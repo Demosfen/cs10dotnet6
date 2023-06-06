@@ -13,7 +13,9 @@ using Wms.Web.Business.Infrastructure.DI;
 using Wms.Web.Business.Infrastructure.Mapping;
 using Wms.Web.Store.Common.Interfaces;
 using Wms.Web.Store.Postgres;
+using Wms.Web.Store.Postgres.DI;
 using Wms.Web.Store.Sqlite;
+using Wms.Web.Store.Sqlite.DI;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {

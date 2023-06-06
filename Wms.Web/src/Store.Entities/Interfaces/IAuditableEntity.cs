@@ -1,5 +1,8 @@
 namespace Wms.Web.Store.Entities.Interfaces;
 
+/// <summary>
+/// Auditable entity properties: created, updated, deleted
+/// </summary>
 public interface IAuditableEntity
 {
     /// <summary>

@@ -2,6 +2,9 @@ using Wms.Web.Store.Entities.Interfaces;
 
 namespace Wms.Web.Store.Entities.Specifications;
 
+/// <summary>
+/// Entities specifications
+/// </summary>
 public static class EntitySpecifications
 {
     public static IQueryable<T> ById<T>(this IQueryable<T> source, Guid id)

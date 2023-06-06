@@ -1,5 +1,8 @@
 namespace Wms.Web.Store.Entities.Concrete;
 
+/// <summary>
+/// Box class
+/// </summary>
 public sealed class Box : StorageUnit
 {
     /// <summary>
@@ -20,6 +23,7 @@ public sealed class Box : StorageUnit
     /// <inheritdoc />
     public override DateTime? ExpiryDate { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return $"Box ID: {Id},\n" +

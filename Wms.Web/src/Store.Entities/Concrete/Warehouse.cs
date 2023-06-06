@@ -2,6 +2,9 @@ using Wms.Web.Store.Entities.Interfaces;
 
 namespace Wms.Web.Store.Entities.Concrete;
 
+/// <summary>
+/// Warehouse class
+/// </summary>
 public sealed class Warehouse : IEntityWithId, IAuditableEntity
 {
     public required Guid Id { get; init; } 
@@ -16,13 +19,16 @@ public sealed class Warehouse : IEntityWithId, IAuditableEntity
     /// </summary>
     public List<Palette> Palettes { get; set; } = new();
 
-
+    /// <inheritdoc />
     public DateTime CreatedAt { get; set; }
     
+    /// <inheritdoc />
     public DateTime? UpdatedAt { get; set; }
     
+    /// <inheritdoc />
     public DateTime? DeletedAt { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         if (Palettes is { Count: 0 })

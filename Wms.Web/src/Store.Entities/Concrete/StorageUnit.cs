@@ -40,9 +40,18 @@ public abstract class StorageUnit: IEntityWithId, IAuditableEntity
     /// </summary>
     public abstract DateTime? ExpiryDate { get; set; }
 
+    /// <summary>
+    /// Entity creation UTC time
+    /// </summary>
     public DateTime CreatedAt { get; set; }
     
+    /// <summary>
+    /// Entity update UTC time
+    /// </summary>
     public DateTime? UpdatedAt { get; set; }
     
+    /// <summary>
+    /// Entity delete UTC time
+    /// </summary>
     public DateTime? DeletedAt { get; set; }
 }

@@ -7,6 +7,7 @@ using Wms.Web.Store.Entities.Interfaces;
 
 namespace Wms.Web.Store.Sqlite.Repositories;
 
+/// <inheritdoc />
 public class GenericRepository<TEntity> : IGenericRepository<TEntity>
     where TEntity : class, IEntityWithId, IAuditableEntity
 {
@@ -21,6 +22,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
         UnitOfWork = dbContext;
     }
 
+    /// <inheritdoc />
     public async Task<IEnumerable<TEntity>> GetAllAsync(
         Expression<Func<TEntity, bool>>? filter,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy,
@@ -46,9 +48,11 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
                 .ToListAsync(cancellationToken);
     }
 
+    /// <inheritdoc />
     public async Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken) 
         => await _dbSet.SingleOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
     
+    /// <inheritdoc />
     public async Task<TEntity?> GetByIdAsync(
         Guid id,
         int offset, 
@@ -64,6 +68,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
         return entities.SingleOrDefault(x => x.Id == id);
     }
 
+    /// <inheritdoc />
     public async Task CreateAsync(TEntity entity, CancellationToken cancellationToken)
     {
         await _dbSet.AddAsync(entity, cancellationToken);
@@ -71,6 +76,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
         await UnitOfWork.SaveChangesAsync(cancellationToken);
     }
 
+    /// <inheritdoc />
     public async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken)
     {
         _dbSet.Update(entity);
@@ -78,6 +84,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
         await UnitOfWork.SaveChangesAsync(cancellationToken);
     }
 
+    /// <inheritdoc />
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
         TEntity entity = await _dbSet.FindAsync(id)

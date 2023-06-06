@@ -1,13 +1,12 @@
 using Autofac;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Wms.Web.Store.Sqlite.DI;
 
-namespace Wms.Web.Store.Sqlite;
+namespace Wms.Web.Store.Sqlite.DI;
 
 public sealed class SqliteDbContextModule : Module
 {
-    private static readonly string ConnectionStringName = "WmsSqlite";
+    public static readonly string ConnectionStringName = "WmsSqlite";
 
     protected override void Load(ContainerBuilder containerBuilder)
     {
