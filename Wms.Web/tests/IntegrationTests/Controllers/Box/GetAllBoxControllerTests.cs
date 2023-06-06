@@ -54,12 +54,19 @@ public sealed class GetAllBoxControllerTests : TestControllerBase
         
         var boxTwo = await GenerateBox(paletteId, boxIdSecond);
 
+        // Act
+        var existingDeletedBoxes = await Sut.BoxClient
+            .GetAllDeletedAsync(paletteId, 0, 10, CancellationToken.None);
+
         await DeleteBox(boxIdFirst);
         await DeleteBox(boxIdSecond);
-
-        // Act
+        
         var boxes =
-            await Sut.BoxClient.GetAllDeletedAsync(paletteId, offset, size, CancellationToken.None);
+            await Sut.BoxClient.GetAllDeletedAsync(
+                paletteId, 
+                existingDeletedBoxes?.Count + offset, 
+                size, 
+                CancellationToken.None);
 
         // Assert
         boxes?.Count.Should().Be(expectedCount);

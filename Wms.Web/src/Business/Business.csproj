@@ -12,4 +12,8 @@
         <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" />
     </ItemGroup>
 
+    <ItemGroup>
+        <InternalsVisibleTo Include="Wms.Web.UnitTests" />
+    </ItemGroup>
+
 </Project>

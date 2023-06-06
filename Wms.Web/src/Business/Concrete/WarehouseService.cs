@@ -26,7 +26,9 @@ internal sealed class WarehouseService : IWarehouseService
         _mapper = mapper;
     }
 
-    public async Task CreateAsync(WarehouseDto warehouseDto, CancellationToken cancellationToken)
+    public async Task CreateAsync(
+        WarehouseDto warehouseDto, 
+        CancellationToken cancellationToken)
     {
         if (await _warehouseRepository.GetByIdAsync(warehouseDto.Id, cancellationToken) != null)
         {
@@ -37,7 +39,8 @@ internal sealed class WarehouseService : IWarehouseService
     }
 
     public async Task<IReadOnlyCollection<WarehouseDto>?> GetAllAsync(
-        int offset, int size, 
+        int offset, 
+        int size, 
         bool deleted, 
         CancellationToken cancellationToken)
     {
@@ -61,7 +64,9 @@ internal sealed class WarehouseService : IWarehouseService
         return _mapper.Map<IReadOnlyCollection<WarehouseDto>>(entities);
     }
 
-    public async Task<WarehouseDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<WarehouseDto?> GetByIdAsync(
+        Guid id, 
+        CancellationToken cancellationToken)
     {
         var entity = await _warehouseRepository.GetByIdAsync(id, cancellationToken)
             ?? throw new EntityNotFoundException(id);
@@ -69,7 +74,9 @@ internal sealed class WarehouseService : IWarehouseService
         return _mapper.Map<WarehouseDto>(entity);
     }
 
-    public async Task UpdateAsync(WarehouseDto warehouseDto, CancellationToken cancellationToken)
+    public async Task UpdateAsync(
+        WarehouseDto warehouseDto, 
+        CancellationToken cancellationToken)
     {
         var warehouse = await _warehouseRepository.GetByIdAsync(warehouseDto.Id, cancellationToken)
                      ?? throw new EntityNotFoundException(warehouseDto.Id);
@@ -84,7 +91,9 @@ internal sealed class WarehouseService : IWarehouseService
         await _warehouseRepository.UpdateAsync(warehouse, cancellationToken);
     }
 
-    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
+    public async Task DeleteAsync(
+        Guid id, 
+        CancellationToken cancellationToken)
     {
         var warehouse = await _warehouseRepository.GetByIdAsync(id, cancellationToken)
                      ?? throw new EntityNotFoundException(id);

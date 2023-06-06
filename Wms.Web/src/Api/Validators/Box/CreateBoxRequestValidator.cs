@@ -3,7 +3,7 @@ using Wms.Web.Api.Contracts;
 
 namespace Wms.Web.Api.Validators.Box;
 
-internal sealed class CreateBoxRequestValidator : AbstractValidator<CreateBoxRequest>
+public sealed class CreateBoxRequestValidator : AbstractValidator<CreateBoxRequest>
 {
     public CreateBoxRequestValidator()
     {

@@ -3,7 +3,7 @@ using Wms.Web.Contracts.Requests;
 
 namespace Wms.Web.Api.Validators.Warehouse;
 
-internal sealed class WarehouseRequestValidator : AbstractValidator<WarehouseRequest>
+public sealed class WarehouseRequestValidator : AbstractValidator<WarehouseRequest>
 {
     public WarehouseRequestValidator()
     {

@@ -35,7 +35,8 @@ internal sealed class BoxService : IBoxService
     /// <inheritdoc />
     public async Task<IReadOnlyCollection<BoxDto>> GetAllAsync(
         Guid id,
-        int offset, int size,
+        int offset, 
+        int size,
         bool deleted,
         CancellationToken cancellationToken)
     {
@@ -62,7 +63,9 @@ internal sealed class BoxService : IBoxService
     }
 
     /// <inheritdoc />
-    public async Task CreateAsync(BoxDto boxDto, CancellationToken cancellationToken)
+    public async Task CreateAsync(
+        BoxDto boxDto, 
+        CancellationToken cancellationToken)
     {
         var box = await _boxRepository.GetByIdAsync(boxDto.Id, cancellationToken);
         
@@ -92,7 +95,9 @@ internal sealed class BoxService : IBoxService
     }
 
     /// <inheritdoc />
-    public async Task<BoxDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<BoxDto?> GetByIdAsync(
+        Guid id, 
+        CancellationToken cancellationToken)
     {
         var box = await _boxRepository.GetByIdAsync(id, cancellationToken) 
             ?? throw new EntityNotFoundException(id);
@@ -101,7 +106,9 @@ internal sealed class BoxService : IBoxService
     }
 
     /// <inheritdoc />
-    public async Task UpdateAsync(BoxDto boxDto, CancellationToken cancellationToken)
+    public async Task UpdateAsync(
+        BoxDto boxDto, 
+        CancellationToken cancellationToken)
     {
         var box = await _boxRepository.GetByIdAsync(boxDto.Id, cancellationToken)
                   ?? throw new EntityNotFoundException(boxDto.Id);
@@ -135,7 +142,9 @@ internal sealed class BoxService : IBoxService
     }
 
     /// <inheritdoc />
-    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
+    public async Task DeleteAsync(
+        Guid id, 
+        CancellationToken cancellationToken)
     {
         var box = await _boxRepository.GetByIdAsync(id, cancellationToken)
             ?? throw new EntityNotFoundException(id);

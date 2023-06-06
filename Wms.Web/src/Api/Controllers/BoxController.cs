@@ -48,8 +48,8 @@ public sealed class BoxController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IReadOnlyCollection<BoxResponse>>> GetDeletedAsync(
         [FromRoute] Guid paletteId,
-        [FromRoute] int offset = 0,
-        [FromRoute] int size = 10,
+        [FromQuery] int offset = 0,
+        [FromQuery] int size = 10,
         CancellationToken cancellationToken = default)
     {
         var boxDto = await _boxService
