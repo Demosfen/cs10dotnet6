@@ -20,18 +20,15 @@ public sealed class PaletteController : ControllerBase
     private readonly IPaletteService _paletteService;
     private readonly IBoxService _boxService;
     private readonly IMapper _mapper;
-    private readonly ILogger<PaletteController> _logger;
 
     public PaletteController(
         IPaletteService paletteService, 
         IMapper mapper, 
-        IBoxService boxService,
-        ILogger<PaletteController> logger)
+        IBoxService boxService)
     {
         _paletteService = paletteService;
         _mapper = mapper;
         _boxService = boxService;
-        _logger = logger;
     }
     
     [HttpGet("warehouses/{warehouseId:guid}/palettes/", Name = "GetNotDeletedPalettes")]
@@ -48,8 +45,6 @@ public sealed class PaletteController : ControllerBase
         
         var paletteResponse = _mapper.Map<IReadOnlyCollection<PaletteResponse>>(palettesDto);
         
-        _logger.LogInformation("Palettes count: {Count}", paletteResponse.Count.ToString());
-
         return Ok(paletteResponse);
     }
     
@@ -66,9 +61,6 @@ public sealed class PaletteController : ControllerBase
             .GetAllAsync(warehouseId, offset, limit, true);
         
         var paletteResponse = _mapper.Map<IReadOnlyCollection<PaletteResponse>>(palettesDto);
-        
-        _logger.LogInformation(
-            "Deleted palettes count: {Count}", paletteResponse.Count.ToString());
 
         return Ok(paletteResponse);
     }
@@ -117,8 +109,6 @@ public sealed class PaletteController : ControllerBase
         
         var locationUri = Url.Link("GetPaletteById", new { paletteId });
         
-        _logger.LogInformation("Created palette: \n {Palette}", paletteDto.ToString());
-        
         return Created(locationUri ?? throw new InvalidOperationException(),  
             _mapper.Map<PaletteResponse>(paletteDto));
     }
@@ -142,8 +132,6 @@ public sealed class PaletteController : ControllerBase
         var paletteDto = _mapper.Map<PaletteDto>(updateRequest);
 
         await _paletteService.UpdateAsync(paletteDto, cancellationToken);
-        
-        _logger.LogInformation("Updated palette: \n {Palette}", paletteDto.ToString());
 
         return Ok(_mapper.Map<PaletteResponse>(paletteDto));
     }
@@ -156,8 +144,6 @@ public sealed class PaletteController : ControllerBase
         CancellationToken cancellationToken = default)
     {
         await _paletteService.DeleteAsync(paletteId, cancellationToken);
-        
-        _logger.LogInformation("Deleted palette: ID={Palette}", paletteId);
 
         return NoContent();
     }

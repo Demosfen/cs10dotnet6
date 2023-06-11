@@ -6,6 +6,7 @@ using Wms.Web.Common.Exceptions;
 using Wms.Web.Repositories.Interfaces;
 using Wms.Web.Store.Entities.Concrete;
 using Wms.Web.Store.Entities.Specifications;
+using static Serilog.ILogger;
 
 namespace Wms.Web.Business.Concrete;
 

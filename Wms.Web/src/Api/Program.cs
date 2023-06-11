@@ -14,6 +14,7 @@ using Wms.Web.Business.Infrastructure.Mapping;
 using Wms.Web.Store.Common.Interfaces;
 using Wms.Web.Store.Postgres.DI;
 using Wms.Web.Store.Sqlite.DI;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
@@ -21,7 +22,17 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions
     ContentRootPath = Directory.GetCurrentDirectory()
 });
 
-builder.Logging.ClearProviders().AddConsole();
+builder.Logging.ClearProviders();
+
+builder.Host.UseSerilog();
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .CreateLogger();
+
+Log.Logger.Information("The global logger has been set to Serilog");
 
 builder.Configuration.AddEnvironmentVariables();
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
@@ -75,27 +86,20 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 
 var app = builder.Build();
 
-app.Logger.LogInformation("Configure the HTTP request pipeline");
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.Logger.LogInformation("Add routing");
 app.UseRouting();
 
-app.Logger.LogInformation("Map controllers");
 app.MapControllers();
 
 var mapper = app.Services.GetRequiredService<IMapper>();
 mapper.ConfigurationProvider.AssertConfigurationIsValid();
 
-app.Logger.LogInformation("Get DbContext from Services");
 await using var dbContext = app.Services.GetRequiredService<Func<Owned<IWarehouseDbContext>>>()();
-
-app.Logger.LogInformation("Migrations call");
 await dbContext.Value.Database.MigrateAsync();
 
 app.Run();

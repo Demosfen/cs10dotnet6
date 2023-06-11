@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using Wms.Web.Api.Contracts;
 using Wms.Web.Business.Abstract;
 using Wms.Web.Business.Dto;
@@ -19,16 +20,13 @@ public sealed class BoxController : ControllerBase
 {
     private readonly IBoxService _boxService;
     private readonly IMapper _mapper;
-    private readonly ILogger _logger;
 
     public BoxController(
         IBoxService boxService, 
-        IMapper mapper,
-        ILogger<BoxController> logger)
+        IMapper mapper)
     {
         _boxService = boxService;
         _mapper = mapper;
-        _logger = logger;
     }
     
     [HttpGet("palettes/{paletteId}/boxes", Name = "GetAllBoxes")]
@@ -43,8 +41,6 @@ public sealed class BoxController : ControllerBase
             .GetAllAsync(paletteId, offset, size, false, cancellationToken);
         
         var boxResponse = _mapper.Map<IReadOnlyCollection<BoxResponse>>(boxesDto);
-        
-        _logger.LogInformation("Boxes count: {Count}", boxResponse.Count.ToString());
 
         return Ok(boxResponse);
     }
@@ -61,10 +57,7 @@ public sealed class BoxController : ControllerBase
             .GetAllAsync(paletteId, offset, size, true, cancellationToken);
        
         var boxResponse = _mapper.Map<IReadOnlyCollection<BoxResponse>>(boxDto);
-        
-        _logger.LogInformation(
-            "Deleted boxes count: {Count}", boxResponse.Count.ToString());
-    
+
         return Ok(boxResponse);
     }
     
@@ -103,8 +96,6 @@ public sealed class BoxController : ControllerBase
         
         var locationUri = Url.Link("GetBoxById", new { boxId });
         
-        _logger.LogInformation("Created box: \n {Box}", boxDto.ToString());
-        
         return Created(locationUri ?? throw new InvalidOperationException(),  
             _mapper.Map<BoxResponse>(boxDto));
     }
@@ -128,8 +119,6 @@ public sealed class BoxController : ControllerBase
         var boxDto = _mapper.Map<BoxDto>(updateRequest);
 
         await _boxService.UpdateAsync(boxDto, cancellationToken);
-        
-        _logger.LogInformation("Updated box: \n {Box}", boxDto.ToString());
 
         return Ok(_mapper.Map<BoxResponse>(boxDto));
     }
@@ -140,8 +129,6 @@ public sealed class BoxController : ControllerBase
     public async Task<IActionResult> DeleteAsync([FromRoute] Guid boxId)
     {
         await _boxService.DeleteAsync(boxId);
-        
-        _logger.LogInformation("Deleted box: ID={Box}", boxId);
     
         return NoContent();
     }
