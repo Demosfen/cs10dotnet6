@@ -23,7 +23,8 @@ public sealed class PaletteController : ControllerBase
 
     public PaletteController(
         IPaletteService paletteService, 
-        IMapper mapper, IBoxService boxService)
+        IMapper mapper, 
+        IBoxService boxService)
     {
         _paletteService = paletteService;
         _mapper = mapper;
@@ -40,10 +41,10 @@ public sealed class PaletteController : ControllerBase
         CancellationToken cancellationToken = default)
     {
         var palettesDto = await _paletteService
-            .GetAllAsync(warehouseId, offset, limit);
+            .GetAllAsync(warehouseId, offset, limit, cancellationToken: cancellationToken);
         
         var paletteResponse = _mapper.Map<IReadOnlyCollection<PaletteResponse>>(palettesDto);
-
+        
         return Ok(paletteResponse);
     }
     

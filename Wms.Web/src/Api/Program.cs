@@ -14,6 +14,7 @@ using Wms.Web.Business.Infrastructure.Mapping;
 using Wms.Web.Store.Common.Interfaces;
 using Wms.Web.Store.Postgres.DI;
 using Wms.Web.Store.Sqlite.DI;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
@@ -21,7 +22,17 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions
     ContentRootPath = Directory.GetCurrentDirectory()
 });
 
-builder.Logging.ClearProviders().AddConsole();
+builder.Logging.ClearProviders();
+
+builder.Host.UseSerilog();
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .CreateLogger();
+
+Log.Logger.Information("The global logger has been set to Serilog");
 
 builder.Configuration.AddEnvironmentVariables();
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
@@ -75,7 +86,6 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -83,6 +93,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseRouting();
+
 app.MapControllers();
 
 var mapper = app.Services.GetRequiredService<IMapper>();

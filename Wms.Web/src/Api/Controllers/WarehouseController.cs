@@ -42,7 +42,7 @@ public sealed class WarehouseController : ControllerBase
             .GetAllAsync(offset, size, cancellationToken: cancellationToken);
         
         var warehouseResponse = _mapper.Map<IReadOnlyCollection<WarehouseResponse>>(warehousesDto);
-
+        
         return Ok(warehouseResponse);
     }
     
@@ -57,7 +57,7 @@ public sealed class WarehouseController : ControllerBase
             .GetAllAsync(offset, limit, true, cancellationToken);
         
         var warehouseResponse = _mapper.Map<IReadOnlyCollection<WarehouseResponse>>(warehousesDto);
-
+        
         return Ok(warehouseResponse);
     }
     

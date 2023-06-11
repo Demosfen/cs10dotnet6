@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Logging;
+using Serilog;
 using Wms.Web.Business.Dto;
 using Wms.Web.Common.Exceptions;
 using Wms.Web.Store.Entities.Concrete;
@@ -20,6 +22,10 @@ internal static class BoxValidationExtensions
             | boxDto.Height > palette.Height 
             | boxDto.Depth > palette.Depth)
         {
+            Log.Logger.Error("Box oversize. \n {Box} \n {Palette}",
+                boxDto.ToString(),
+                palette.ToString());
+
             throw new UnitOversizeException(boxDto.Id);
         }
     }
@@ -34,12 +40,19 @@ internal static class BoxValidationExtensions
         {
             if (boxDto.ExpiryDate == null)
             {
+                Log.Logger.Error("Box expiry and production is null");
+                
                 throw new EntityExpiryDateException(boxDto.Id);
             }
         }
         
         if (boxDto.ExpiryDate <= boxDto.ProductionDate)
         {
+            Log.Logger.Error("Box Expiry lower than box Production date: " +
+                             "\n {Expiry} \n {Production}",
+                boxDto.ExpiryDate,
+                boxDto.ProductionDate);
+            
             throw new EntityExpiryDateException(boxDto.Id);
         }
     }

@@ -56,7 +56,7 @@ public sealed class BoxController : ControllerBase
             .GetAllAsync(paletteId, offset, size, true, cancellationToken);
        
         var boxResponse = _mapper.Map<IReadOnlyCollection<BoxResponse>>(boxDto);
-    
+
         return Ok(boxResponse);
     }
     
