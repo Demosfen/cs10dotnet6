@@ -39,8 +39,6 @@ public sealed class BoxController : ControllerBase
         [FromQuery] int size = 10,
         CancellationToken cancellationToken = default)
     {
-        _logger.LogInformation("Get all boxes at {DT}", DateTime.UtcNow.ToLongTimeString());
-
         var boxesDto = await _boxService
             .GetAllAsync(paletteId, offset, size, false, cancellationToken);
         
@@ -59,16 +57,13 @@ public sealed class BoxController : ControllerBase
         [FromQuery] int size = 10,
         CancellationToken cancellationToken = default)
     {
-        _logger.LogInformation(
-            "Get all deleted boxes at {DT}", 
-            DateTime.UtcNow.ToLongTimeString());
-        
         var boxDto = await _boxService
             .GetAllAsync(paletteId, offset, size, true, cancellationToken);
        
         var boxResponse = _mapper.Map<IReadOnlyCollection<BoxResponse>>(boxDto);
         
-        _logger.LogInformation("Boxes count: {BoxesCount}", boxResponse.Count.ToString());
+        _logger.LogInformation(
+            "Deleted boxes count: {Count}", boxResponse.Count.ToString());
     
         return Ok(boxResponse);
     }
@@ -80,15 +75,7 @@ public sealed class BoxController : ControllerBase
         [FromRoute] Guid boxId, 
         CancellationToken cancellationToken = default)
     {
-        _logger.LogInformation(
-            "Get box by id at {DT}", 
-            DateTime.UtcNow.ToLongTimeString());
-        
         var boxDto = await _boxService.GetByIdAsync(boxId, cancellationToken);
-        
-        _logger.LogInformation("Box successfully gotten. " +
-                               "Expiry date: {BoxDtoExpiryDate}, Production date: {BoxDtoProductionDate}", 
-            boxDto?.ExpiryDate.ToString(), boxDto?.ProductionDate.ToString());
 
         return Ok(_mapper.Map<BoxResponse>(boxDto));
     }
@@ -116,7 +103,7 @@ public sealed class BoxController : ControllerBase
         
         var locationUri = Url.Link("GetBoxById", new { boxId });
         
-        _logger.LogInformation("Created box at {DT}", DateTime.UtcNow.ToLongTimeString());
+        _logger.LogInformation("Created box: \n {Box}", boxDto.ToString());
         
         return Created(locationUri ?? throw new InvalidOperationException(),  
             _mapper.Map<BoxResponse>(boxDto));
@@ -141,7 +128,8 @@ public sealed class BoxController : ControllerBase
         var boxDto = _mapper.Map<BoxDto>(updateRequest);
 
         await _boxService.UpdateAsync(boxDto, cancellationToken);
-        _logger.LogInformation("Box updated at {DT}", DateTime.UtcNow.ToLongTimeString());
+        
+        _logger.LogInformation("Updated box: \n {Box}", boxDto.ToString());
 
         return Ok(_mapper.Map<BoxResponse>(boxDto));
     }
@@ -153,7 +141,7 @@ public sealed class BoxController : ControllerBase
     {
         await _boxService.DeleteAsync(boxId);
         
-        _logger.LogInformation("Box deleted at {DT}", DateTime.UtcNow.ToLongTimeString());
+        _logger.LogInformation("Deleted box: ID={Box}", boxId);
     
         return NoContent();
     }

@@ -39,6 +39,6 @@ public sealed class Warehouse : IEntityWithId, IAuditableEntity
         var msg = $"Warehouse contains {Palettes!.Count} palettes:\n";
 
         return Palettes.Aggregate(
-            msg, (current, palette) => current + palette.ToString());
+            msg, (current, palette) => current + palette);
     }
 }

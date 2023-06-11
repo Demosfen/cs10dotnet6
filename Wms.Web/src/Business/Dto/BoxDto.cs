@@ -19,4 +19,14 @@ public sealed class BoxDto
     public DateTime? ProductionDate { get; set; }
     
     public DateTime? ExpiryDate { get; set; }
+    
+    public override string ToString()
+    {
+        return $"ID: {Id},\n" +
+               $"Size (WxHxD): {Width}x{Height}x{Depth},\n" +
+               $"Volume: {Volume},\n" +
+               $"Weight: {Weight},\n" +
+               $"Production date: {ProductionDate},\n" +
+               $"Expiry date: {ExpiryDate}.\n";
+    }
 }
