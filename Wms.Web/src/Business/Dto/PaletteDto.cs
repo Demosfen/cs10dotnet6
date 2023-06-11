@@ -28,6 +28,7 @@ public sealed class PaletteDto
         }
 
         var msg = $"Palette {Id}:\n" +
+                  $"Warehouse ID: {WarehouseId}, \n" +
                   $"Boxes count: {Boxes!.Count},\n" +
                   $"WxHxD: {Width}x{Height}x{Depth},\n" +
                   $"Volume: {Volume},\n" +

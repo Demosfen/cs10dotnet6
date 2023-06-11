@@ -23,6 +23,7 @@ public sealed class BoxDto
     public override string ToString()
     {
         return $"ID: {Id},\n" +
+               $"Palette ID: {PaletteId}, \n" +
                $"Size (WxHxD): {Width}x{Height}x{Depth},\n" +
                $"Volume: {Volume},\n" +
                $"Weight: {Weight},\n" +

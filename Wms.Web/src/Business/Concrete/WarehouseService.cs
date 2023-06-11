@@ -1,4 +1,5 @@
 using AutoMapper;
+using Serilog;
 using Wms.Web.Business.Abstract;
 using Wms.Web.Business.Dto;
 using Wms.Web.Common.Exceptions;
@@ -34,6 +35,8 @@ internal sealed class WarehouseService : IWarehouseService
         }
 
         await _warehouseRepository.CreateAsync(_mapper.Map<Warehouse>(warehouseDto), cancellationToken);
+                
+        Log.Logger.Information("Warehouse created: \n {Warehouse}", warehouseDto.ToString());
     }
 
     public async Task<IReadOnlyCollection<WarehouseDto>?> GetAllAsync(
@@ -58,8 +61,12 @@ internal sealed class WarehouseService : IWarehouseService
                                     q => q.NotDeleted().Skip(offset).Take(size).OrderBy(x => x.CreatedAt),
                                     cancellationToken: cancellationToken);
         }
+        
+        var warehouses = _mapper.Map<IReadOnlyCollection<WarehouseDto>>(entities);
+        
+        Log.Logger.Information("Got {Count} palettes", warehouses.Count);
 
-        return _mapper.Map<IReadOnlyCollection<WarehouseDto>>(entities);
+        return warehouses;
     }
 
     public async Task<WarehouseDto?> GetByIdAsync(
@@ -81,23 +88,37 @@ internal sealed class WarehouseService : IWarehouseService
 
         if (warehouse.DeletedAt is not null)
         {
+            Log.Logger.Error("Warehouse was deleted: id={Id}", warehouse.Id);
+            
             throw new EntityWasDeletedException(warehouse.Id);
         }
         
         _mapper.Map(warehouseDto, warehouse);
 
         await _warehouseRepository.UpdateAsync(warehouse, cancellationToken);
+        
+        Log.Logger.Information(
+            "Warehouse was updated: \n {Palette}", 
+            warehouse.ToString());
     }
 
     public async Task DeleteAsync(
         Guid id, 
         CancellationToken cancellationToken)
     {
-        var warehouse = await _warehouseRepository.GetByIdAsync(id, cancellationToken)
-                     ?? throw new EntityNotFoundException(id);
+        var warehouse = await _warehouseRepository.GetByIdAsync(id, cancellationToken);
+            
+        if(warehouse is null)
+        {
+            Log.Logger.Error("Warehouse wasn't found: id={Id}", id);
+            
+            throw new EntityNotFoundException(id);
+        }
         
         if (warehouse.DeletedAt is not null)
         {
+            Log.Logger.Warning("Warehouse already deleted: id={Id}. Return", id);
+            
             return;
         }
 
@@ -106,11 +127,14 @@ internal sealed class WarehouseService : IWarehouseService
             q => q.NotDeleted().Take(1).OrderBy(x => x.CreatedAt),
             cancellationToken: cancellationToken);
 
-        if (!palette.Count().Equals(0))
+        if (palette.Any())
         {
+            Log.Logger.Error("Warehouse not empty: id={Id}", id);
+            
             throw new EntityNotEmptyException(id);
         } 
         
         await _warehouseRepository.DeleteAsync(id, cancellationToken);
+        Log.Logger.Information("Success. Warehouse was deleted: id={Id}", id);
     }
 }
