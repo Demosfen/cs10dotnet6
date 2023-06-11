@@ -20,18 +20,15 @@ public sealed class WarehouseController : ControllerBase
     private readonly IWarehouseService _warehouseService;
     private readonly IPaletteService _paletteService;
     private readonly IMapper _mapper;
-    private readonly ILogger<WarehouseController> _logger;
 
     public WarehouseController(
         IWarehouseService warehouseService,
         IPaletteService paletteService,
-        IMapper mapper, 
-        ILogger<WarehouseController> logger)
+        IMapper mapper)
     {
         _warehouseService = warehouseService;
         _paletteService = paletteService;
         _mapper = mapper;
-        _logger = logger;
     }
     
     [HttpGet(Name = "GetNotDeletedWarehouses")]
@@ -46,8 +43,6 @@ public sealed class WarehouseController : ControllerBase
         
         var warehouseResponse = _mapper.Map<IReadOnlyCollection<WarehouseResponse>>(warehousesDto);
         
-        _logger.LogInformation("Warehouses count: {Count}", warehouseResponse.Count.ToString());
-
         return Ok(warehouseResponse);
     }
     
@@ -63,9 +58,6 @@ public sealed class WarehouseController : ControllerBase
         
         var warehouseResponse = _mapper.Map<IReadOnlyCollection<WarehouseResponse>>(warehousesDto);
         
-        _logger.LogInformation("Deleted warehouses count: {Count}", warehouseResponse.Count.ToString());
-
-
         return Ok(warehouseResponse);
     }
     
@@ -110,8 +102,6 @@ public sealed class WarehouseController : ControllerBase
         
         var locationUri = Url.Link("GetWarehouseById", new { warehouseId });
         
-        _logger.LogInformation("Created warehouse: \n {Warehouse}", warehouseDto.ToString());
-        
         return Created(locationUri ?? throw new InvalidOperationException(),  
             _mapper.Map<WarehouseResponse>(warehouseDto));
     }
@@ -133,9 +123,6 @@ public sealed class WarehouseController : ControllerBase
         var warehouseDto = _mapper.Map<WarehouseDto>(updateRequest);
 
         await _warehouseService.UpdateAsync(warehouseDto, cancellationToken);
-        
-        _logger.LogInformation("Updated warehouse: \n {Warehouse}", warehouseDto.ToString());
-
 
         return Ok(_mapper.Map<WarehouseResponse>(warehouseDto));
     }
@@ -146,8 +133,6 @@ public sealed class WarehouseController : ControllerBase
     public async Task<ActionResult> DeleteAsync([FromRoute] Guid warehouseId)
     {
         await _warehouseService.DeleteAsync(warehouseId);
-        
-        _logger.LogInformation("Deleted warehouse: ID={Warehouse}", warehouseId);
 
         return NoContent();
     }

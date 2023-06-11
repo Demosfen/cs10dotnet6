@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Serilog;
 using Wms.Web.Api.Contracts;
 using Wms.Web.Business.Abstract;
 using Wms.Web.Business.Dto;

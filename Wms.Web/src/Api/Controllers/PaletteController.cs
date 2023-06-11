@@ -41,7 +41,7 @@ public sealed class PaletteController : ControllerBase
         CancellationToken cancellationToken = default)
     {
         var palettesDto = await _paletteService
-            .GetAllAsync(warehouseId, offset, limit);
+            .GetAllAsync(warehouseId, offset, limit, cancellationToken: cancellationToken);
         
         var paletteResponse = _mapper.Map<IReadOnlyCollection<PaletteResponse>>(palettesDto);
         
