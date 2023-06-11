@@ -75,20 +75,27 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.Logger.LogInformation("Configure the HTTP request pipeline");
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+app.Logger.LogInformation("Add routing");
 app.UseRouting();
+
+app.Logger.LogInformation("Map controllers");
 app.MapControllers();
 
 var mapper = app.Services.GetRequiredService<IMapper>();
 mapper.ConfigurationProvider.AssertConfigurationIsValid();
 
+app.Logger.LogInformation("Get DbContext from Services");
 await using var dbContext = app.Services.GetRequiredService<Func<Owned<IWarehouseDbContext>>>()();
+
+app.Logger.LogInformation("Migrations call");
 await dbContext.Value.Database.MigrateAsync();
 
 app.Run();
