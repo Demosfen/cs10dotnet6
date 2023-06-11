@@ -51,7 +51,7 @@ internal sealed class PaletteService : IPaletteService
 
         if (await _paletteRepository.GetByIdAsync(paletteDto.Id, cancellationToken) is not null)
         {
-            Log.Logger.Error("Paletted already exist: id={Palette}", paletteDto.Id);
+            Log.Logger.Error("Palette already exist: id={Palette}", paletteDto.Id);
 
             throw new EntityAlreadyExistException(paletteDto.Id);
         }
