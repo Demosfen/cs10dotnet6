@@ -5,7 +5,6 @@ using AutoMapper;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
-using Wms.Web.Api;
 using Wms.Web.Api.Infrastructure.Filters;
 using Wms.Web.Api.Infrastructure.Mapping;
 using Wms.Web.Api.Validators.Warehouse;
@@ -15,6 +14,7 @@ using Wms.Web.Store.Common.Interfaces;
 using Wms.Web.Store.Postgres.DI;
 using Wms.Web.Store.Sqlite.DI;
 using Serilog;
+using Wms.Web.Api.Infrastructure.Options;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {

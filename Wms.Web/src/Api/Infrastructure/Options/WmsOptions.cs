@@ -1,14 +1,16 @@
-namespace Wms.Web.Api;
+namespace Wms.Web.Api.Infrastructure.Options;
 
 public sealed class WmsOptions
 {
     public const string SectionName = "Wms";
     
     public DbProviderEnum DbProvider { get; set; }
-    public enum DbProviderEnum
+    
+    [System.Flags]
+    public enum DbProviderEnum : byte
     {
-        Unknown = 0,
-        Postgres = 1,
-        Sqlite = 2
+        Unknown = 0b_0000_0000,
+        Postgres = 0b_0000_0001,
+        Sqlite = 0b_0000_0010
     }
 }
